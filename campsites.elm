@@ -1,4 +1,4 @@
-import Html exposing (li, text, ul)
+import Html exposing (li, text, ul, Html)
 import Html.Attributes exposing (class)
 
 type alias Campsite = {name: String}
@@ -14,5 +14,6 @@ main =
     , campsiteListItem c3
     ]
 
+campsiteListItem : Campsite -> Html msg
 campsiteListItem campsite =
   li [] [text campsite.name]
