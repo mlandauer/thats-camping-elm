@@ -8,21 +8,13 @@ type alias Campsite =
     { name : String }
 
 
-c1 =
-    Campsite "Acacia Flats"
-
-
-c2 =
-    Campsite "Alexanders Hut"
-
-
-c3 =
-    Campsite "Apsley Falls"
+campsites =
+    [ Campsite "Acacia Flats", Campsite "Alexanders Hut", Campsite "Apsley Falls" ]
 
 
 main =
     ul [ class "campsite-list" ]
-        (List.map campsiteListItem [ c1, c2, c3 ])
+        (List.map campsiteListItem campsites)
 
 
 campsiteListItem : Campsite -> Html msg
