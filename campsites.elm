@@ -20,6 +20,10 @@ campsites =
 
 
 main =
+    view campsites
+
+
+view campsites =
     ul [ class "campsite-list" ]
         (List.map campsiteListItem campsites)
 
