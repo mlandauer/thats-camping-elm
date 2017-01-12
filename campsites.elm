@@ -26,4 +26,14 @@ main =
 
 campsiteListItem : Campsite -> Html msg
 campsiteListItem campsite =
-    li [] [ text campsite.name ]
+    li [] [ text (campsite.name ++ ", " ++ locationAsText campsite.location) ]
+
+
+locationAsText : Maybe Location -> String
+locationAsText location =
+    case location of
+        Just l ->
+            toString l.latitude ++ ", " ++ toString l.longitude
+
+        Nothing ->
+            "unknown"
