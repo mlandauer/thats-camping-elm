@@ -9,10 +9,7 @@ c3 = Campsite "Apsley Falls"
 
 main =
   ul [class "campsite-list"]
-    [ campsiteListItem c1
-    , campsiteListItem c2
-    , campsiteListItem c3
-    ]
+    (List.map campsiteListItem [c1, c2, c3])
 
 campsiteListItem : Campsite -> Html msg
 campsiteListItem campsite =
