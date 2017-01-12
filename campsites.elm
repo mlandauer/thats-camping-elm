@@ -1,9 +1,11 @@
 import Html exposing (li, text, ul)
 import Html.Attributes exposing (class)
 
-c1 = {name = "Acacia Flats"}
-c2 = {name = "Alexanders Hut"}
-c3 = {name = "Apsley Falls"}
+type alias Campsite = {name: String}
+
+c1 = Campsite "Acacia Flats"
+c2 = Campsite "Alexanders Hut"
+c3 = Campsite "Apsley Falls"
 
 main =
   ul [class "campsite-list"]
