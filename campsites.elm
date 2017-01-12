@@ -5,11 +5,14 @@ import Html.Attributes exposing (class)
 
 
 type alias Campsite =
-    { name : String }
+    { name : String, latitude : Maybe Float, longitude : Maybe Float }
 
 
 campsites =
-    [ Campsite "Acacia Flats", Campsite "Alexanders Hut", Campsite "Apsley Falls" ]
+    [ Campsite "Acacia Flats" (Just -33.6149) (Just 150.3553)
+    , Campsite "Alexanders Hut" Nothing Nothing
+    , Campsite "Apsley Falls" (Just -31.0540415000018) (Just 151.762134053333)
+    ]
 
 
 main =
