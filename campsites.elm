@@ -118,7 +118,7 @@ locationAsText location =
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
 bearingAndDistanceAsText location userLocation =
     -- TODO: Actually implement the thing
-    distanceAsText location userLocation
+    (distanceAsText location userLocation) ++ " " ++ (bearingAsText location userLocation)
 
 
 distanceAsText : Maybe Location -> Maybe Location -> String
@@ -130,6 +130,20 @@ distanceAsText position1 position2 =
         case d of
             Just d ->
                 (toString d) ++ " metres"
+
+            Nothing ->
+                ""
+
+
+bearingAsText : Maybe Location -> Maybe Location -> String
+bearingAsText position1 position2 =
+    let
+        bearing =
+            Maybe.map2 bearingInDegrees position1 position2
+    in
+        case bearing of
+            Just bearing ->
+                (toString bearing) ++ " degrees"
 
             Nothing ->
                 ""
@@ -154,3 +168,35 @@ distanceInMetres position1 position2 =
             2 * atan2 (sqrt a) (sqrt (1 - a))
     in
         r * c
+
+
+bearingInDegrees : Location -> Location -> Float
+bearingInDegrees position1 position2 =
+    let
+        lon2 =
+            degrees position2.longitude
+
+        lat2 =
+            degrees position2.latitude
+
+        lon1 =
+            degrees position1.longitude
+
+        lat1 =
+            degrees position1.latitude
+
+        dLon =
+            lon1 - lon2
+
+        y =
+            sin (dLon) * cos (lat1)
+
+        x =
+            cos (lat2) * sin (lat1) - sin (lat2) * cos (lat1) * cos (dLon)
+
+        -- This is a number between 0 and 360
+        -- TODO: Convert this so that it goes between 0 and 360
+        bearing =
+            (atan2 y x) / pi * 180
+    in
+        bearing
