@@ -37,6 +37,13 @@ view campsites =
         (List.map campsiteListItem campsites)
 
 
+update : Msg -> Model -> Model
+update msg model =
+    case msg of
+        NewCampsite campsite ->
+            campsite :: model
+
+
 campsiteListItem : Campsite -> Html msg
 campsiteListItem campsite =
     li [] [ text (campsite.name ++ ", " ++ locationAsText campsite.location) ]
