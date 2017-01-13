@@ -18,7 +18,6 @@ type alias Campsite =
 
 type alias Model =
     { campsites : List Campsite
-    , time : Maybe Time.Time
     , location : Maybe Location
     , error : Maybe Geolocation.Error
     }
@@ -26,7 +25,6 @@ type alias Model =
 
 type Msg
     = NewCampsite Campsite
-    | Tick Time.Time
     | UpdateLocation (Result Geolocation.Error Geolocation.Location)
 
 
@@ -39,14 +37,14 @@ campsites =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = campsites, time = Nothing, location = Nothing, error = Nothing }
+    ( { campsites = campsites, location = Nothing, error = Nothing }
     , Task.attempt UpdateLocation Geolocation.now
     )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Time.every Time.second Tick
+    Sub.none
 
 
 main =
@@ -56,22 +54,11 @@ main =
 view : Model -> Html Msg
 view model =
     div []
-        [ p [] [ text (formatTime model.time) ]
-        , p [] [ text (locationAsText model.location) ]
+        [ p [] [ text (locationAsText model.location) ]
         , ul
             [ class "campsite-list" ]
             (List.map campsiteListItem model.campsites)
         ]
-
-
-formatTime : Maybe Time.Time -> String
-formatTime t =
-    case t of
-        Just time ->
-            toString (Date.second (Date.fromTime time))
-
-        Nothing ->
-            ""
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -79,9 +66,6 @@ update msg model =
     case msg of
         NewCampsite campsite ->
             ( { model | campsites = campsite :: model.campsites }, Cmd.none )
-
-        Tick time ->
-            ( { model | time = Just time }, Cmd.none )
 
         UpdateLocation result ->
             case result of
