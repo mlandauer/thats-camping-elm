@@ -28,6 +28,32 @@ all =
                 \() ->
                     Expect.equal "54 km" (Location.distanceInMetresToText 53850)
             ]
+        , describe "bearingToText"
+            [ test "north 1" <|
+                \() ->
+                    Expect.equal "N" (Location.bearingToText 0)
+            , test "north 2" <|
+                \() ->
+                    Expect.equal "N" (Location.bearingToText -22.5)
+            , test "north 3" <|
+                \() ->
+                    Expect.equal "N" (Location.bearingToText 22.4)
+            , test "north east 1" <|
+                \() ->
+                    Expect.equal "NE" (Location.bearingToText 22.5)
+            , test "north east 2" <|
+                \() ->
+                    Expect.equal "NE" (Location.bearingToText 45)
+            , test "north east 3" <|
+                \() ->
+                    Expect.equal "NE" (Location.bearingToText 67.4)
+            , test "east" <|
+                \() ->
+                    Expect.equal "E" (Location.bearingToText 67.5)
+            , test "north west" <|
+                \() ->
+                    Expect.equal "NW" (Location.bearingToText -22.6)
+            ]
         , describe "modulo"
             [ test "number between 0 and 360" <|
                 \() ->

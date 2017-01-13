@@ -6,8 +6,11 @@ module Location
         , distanceText
         , bearingText
         , distanceInMetresToText
+        , bearingToText
         , modulo
         )
+
+import Array
 
 
 type alias Location =
@@ -98,7 +101,21 @@ distanceText from to =
 
 bearingToText : Float -> String
 bearingToText bearing =
-    (toString bearing) ++ " degrees"
+    let
+        -- Dividing the compass into 8 sectors that are centred on north
+        sector =
+            floor ((modulo (bearing + 22.5) 360) / 45.0)
+
+        sectorNames =
+            Array.fromList [ "N", "NE", "E", "SE", "S", "SW", "W", "NW" ]
+    in
+        case (Array.get sector sectorNames) of
+            Just v ->
+                v
+
+            Nothing ->
+                -- We should never reach this code
+                "Something weird going on"
 
 
 bearingText : Location -> Location -> String
