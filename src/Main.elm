@@ -98,8 +98,8 @@ update msg model =
 
 
 campsiteListItem : Maybe Location -> Campsite -> Html msg
-campsiteListItem userLocation campsite =
-    li [] [ text (campsite.name ++ ": " ++ bearingAndDistanceAsText campsite.location userLocation) ]
+campsiteListItem location campsite =
+    li [] [ text (campsite.name ++ ": " ++ bearingAndDistanceAsText location campsite.location) ]
 
 
 locationAsText : Maybe Location -> String
@@ -113,16 +113,16 @@ locationAsText location =
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
-bearingAndDistanceAsText location userLocation =
+bearingAndDistanceAsText from to =
     -- TODO: Actually implement the thing
-    (distanceAsText location userLocation) ++ " " ++ (bearingAsText location userLocation)
+    (distanceAsText from to) ++ " " ++ (bearingAsText from to)
 
 
 distanceAsText : Maybe Location -> Maybe Location -> String
-distanceAsText position1 position2 =
+distanceAsText from to =
     let
         d =
-            Maybe.map2 Location.distanceInMetres position2 position1
+            Maybe.map2 Location.distanceInMetres from to
     in
         case d of
             Just d ->
@@ -133,10 +133,10 @@ distanceAsText position1 position2 =
 
 
 bearingAsText : Maybe Location -> Maybe Location -> String
-bearingAsText position1 position2 =
+bearingAsText from to =
     let
         bearing =
-            Maybe.map2 Location.bearingInDegrees position2 position1
+            Maybe.map2 Location.bearingInDegrees from to
     in
         case bearing of
             Just bearing ->
