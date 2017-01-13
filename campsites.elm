@@ -27,8 +27,18 @@ campsites =
     ]
 
 
+init : ( Model, Cmd Msg )
+init =
+    ( campsites, Cmd.none )
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.none
+
+
 main =
-    beginnerProgram { model = campsites, view = view, update = update }
+    program { init = init, view = view, update = update, subscriptions = subscriptions }
 
 
 view : Model -> Html Msg
@@ -37,11 +47,11 @@ view model =
         (List.map campsiteListItem model)
 
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NewCampsite campsite ->
-            campsite :: model
+            ( campsite :: model, Cmd.none )
 
 
 campsiteListItem : Campsite -> Html msg
