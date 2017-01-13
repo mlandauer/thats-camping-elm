@@ -3,6 +3,7 @@ module Main exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (class)
 import Time
+import Date
 
 
 type alias Location =
@@ -14,7 +15,7 @@ type alias Campsite =
 
 
 type alias Model =
-    { campsites : List Campsite }
+    { campsites : List Campsite, time : Time.Time }
 
 
 type Msg
@@ -31,7 +32,7 @@ campsites =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = campsites }, Cmd.none )
+    ( { campsites = campsites, time = 0 }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -45,8 +46,17 @@ main =
 
 view : Model -> Html Msg
 view model =
-    ul [ class "campsite-list" ]
-        (List.map campsiteListItem model.campsites)
+    div []
+        [ p [] [ text (formatTime model.time) ]
+        , ul
+            [ class "campsite-list" ]
+            (List.map campsiteListItem model.campsites)
+        ]
+
+
+formatTime : Time.Time -> String
+formatTime time =
+    toString (Date.second (Date.fromTime time))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -56,8 +66,7 @@ update msg model =
             ( { model | campsites = campsite :: model.campsites }, Cmd.none )
 
         Tick time ->
-            -- For the time being do nothing at all
-            ( model, Cmd.none )
+            ( { model | time = time }, Cmd.none )
 
 
 campsiteListItem : Campsite -> Html msg
