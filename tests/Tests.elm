@@ -20,6 +20,14 @@ all =
                 \() ->
                     approxEqual 1 305 (Location.bearingInDegrees (Location -34 151) (Location -33.6149 150.3553))
             ]
+        , describe "distanceInMetresToText"
+            [ test "distance in metres should be rounded to nearest integer" <|
+                \() ->
+                    Expect.equal "23 m" (Location.distanceInMetresToText 23.2)
+            , test "distance in km should be rounded to nearest km" <|
+                \() ->
+                    Expect.equal "54 km" (Location.distanceInMetresToText 53850)
+            ]
         ]
 
 

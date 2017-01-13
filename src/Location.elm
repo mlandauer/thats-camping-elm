@@ -5,6 +5,7 @@ module Location
         , bearingInDegrees
         , distanceText
         , bearingText
+        , distanceInMetresToText
         )
 
 
@@ -72,9 +73,21 @@ bearingInDegrees from to =
             bearing
 
 
+
+-- TODO: Use type to represent distance in metres
+
+
+distanceInMetresToText : Float -> String
+distanceInMetresToText distance =
+    if distance > 1000 then
+        (toString (round (distance / 1000))) ++ " km"
+    else
+        (toString (round distance)) ++ " m"
+
+
 distanceText : Location -> Location -> String
 distanceText from to =
-    (toString (distanceInMetres from to)) ++ " metres"
+    distanceInMetresToText (distanceInMetres from to)
 
 
 bearingText : Location -> Location -> String
