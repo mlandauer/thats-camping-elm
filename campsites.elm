@@ -16,6 +16,10 @@ type alias Model =
     List Campsite
 
 
+type Msg
+    = NewCampsite Campsite
+
+
 campsites =
     [ Campsite "Acacia Flats" (Just (Location -33.6149 150.3553))
     , Campsite "Alexanders Hut" Nothing
@@ -27,7 +31,7 @@ main =
     view campsites
 
 
-view : Model -> Html msg
+view : Model -> Html Msg
 view campsites =
     ul [ class "campsite-list" ]
         (List.map campsiteListItem campsites)
