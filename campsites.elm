@@ -56,4 +56,4 @@ locationAsText location =
             toString l.latitude ++ ", " ++ toString l.longitude
 
         Nothing ->
-            ""
+            "unknown"
