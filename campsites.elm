@@ -17,7 +17,7 @@ type alias Campsite =
 
 
 type alias Model =
-    { campsites : List Campsite, time : Maybe Time.Time }
+    { campsites : List Campsite, time : Maybe Time.Time, location : Maybe Location }
 
 
 type Msg
@@ -35,7 +35,9 @@ campsites =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = campsites, time = Nothing }, Task.attempt UpdateLocation Geolocation.now )
+    ( { campsites = campsites, time = Nothing, location = Nothing }
+    , Task.attempt UpdateLocation Geolocation.now
+    )
 
 
 subscriptions : Model -> Sub Msg
@@ -83,8 +85,7 @@ update msg model =
                     ( model, Cmd.none )
 
                 Ok location ->
-                    -- Do nothing for the time being
-                    ( model, Cmd.none )
+                    ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
 
 
 campsiteListItem : Campsite -> Html msg
