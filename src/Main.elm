@@ -121,12 +121,12 @@ bearingAndDistanceAsText from to =
 distanceAsText : Maybe Location -> Maybe Location -> String
 distanceAsText from to =
     let
-        d =
-            Maybe.map2 Location.distanceInMetres from to
+        s =
+            Maybe.map2 Location.distanceText from to
     in
-        case d of
-            Just d ->
-                (toString d) ++ " metres"
+        case s of
+            Just s ->
+                s
 
             Nothing ->
                 ""
@@ -135,12 +135,12 @@ distanceAsText from to =
 bearingAsText : Maybe Location -> Maybe Location -> String
 bearingAsText from to =
     let
-        bearing =
-            Maybe.map2 Location.bearingInDegrees from to
+        s =
+            Maybe.map2 Location.bearingText from to
     in
-        case bearing of
-            Just bearing ->
-                (toString bearing) ++ " degrees"
+        case s of
+            Just s ->
+                s
 
             Nothing ->
                 ""

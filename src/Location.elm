@@ -4,6 +4,8 @@ module Location
         , distanceInMetres
         , bearingInDegrees
         , toString
+        , distanceText
+        , bearingText
         )
 
 
@@ -74,3 +76,13 @@ bearingInDegrees from to =
             bearing + 360
         else
             bearing
+
+
+distanceText : Location -> Location -> String
+distanceText from to =
+    (Basics.toString (distanceInMetres from to)) ++ " metres"
+
+
+bearingText : Location -> Location -> String
+bearingText from to =
+    (Basics.toString (bearingInDegrees from to)) ++ " degrees"
