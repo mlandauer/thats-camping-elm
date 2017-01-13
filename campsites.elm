@@ -53,6 +53,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ p [] [ text (formatTime model.time) ]
+        , p [] [ text (locationAsText model.location) ]
         , ul
             [ class "campsite-list" ]
             (List.map campsiteListItem model.campsites)
