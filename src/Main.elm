@@ -104,12 +104,21 @@ campsiteListItem location campsite =
 
 locationAsText : Maybe Location -> String
 locationAsText location =
-    case location of
-        Just l ->
-            Location.toString l
+    maybeString (Maybe.map Location.toString location) "unknown"
+
+
+
+--   Convert a Maybe String to String given a value to show for Nothing
+
+
+maybeString : Maybe String -> String -> String
+maybeString text nothingText =
+    case text of
+        Just text ->
+            text
 
         Nothing ->
-            "unknown"
+            nothingText
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
@@ -120,27 +129,9 @@ bearingAndDistanceAsText from to =
 
 distanceAsText : Maybe Location -> Maybe Location -> String
 distanceAsText from to =
-    let
-        s =
-            Maybe.map2 Location.distanceText from to
-    in
-        case s of
-            Just s ->
-                s
-
-            Nothing ->
-                ""
+    maybeString (Maybe.map2 Location.distanceText from to) ""
 
 
 bearingAsText : Maybe Location -> Maybe Location -> String
 bearingAsText from to =
-    let
-        s =
-            Maybe.map2 Location.bearingText from to
-    in
-        case s of
-            Just s ->
-                s
-
-            Nothing ->
-                ""
+    maybeString (Maybe.map2 Location.bearingText from to) ""
