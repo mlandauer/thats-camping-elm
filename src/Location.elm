@@ -61,9 +61,11 @@ bearingInDegrees position1 position2 =
         x =
             cos (lat2) * sin (lat1) - sin (lat2) * cos (lat1) * cos (dLon)
 
-        -- This is a number between 0 and 360
-        -- TODO: Convert this so that it goes between 0 and 360
         bearing =
             (atan2 y x) / pi * 180
     in
-        bearing
+        -- This returns a number between 0 and 360
+        if bearing < 0 then
+            bearing + 360
+        else
+            bearing
