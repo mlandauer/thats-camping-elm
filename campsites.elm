@@ -4,6 +4,8 @@ import Html exposing (..)
 import Html.Attributes exposing (class)
 import Time
 import Date
+import Geolocation
+import Task
 
 
 type alias Location =
@@ -21,6 +23,7 @@ type alias Model =
 type Msg
     = NewCampsite Campsite
     | Tick Time.Time
+    | UpdateLocation (Result Geolocation.Error Geolocation.Location)
 
 
 campsites =
@@ -32,7 +35,7 @@ campsites =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = campsites, time = Nothing }, Cmd.none )
+    ( { campsites = campsites, time = Nothing }, Task.attempt UpdateLocation Geolocation.now )
 
 
 subscriptions : Model -> Sub Msg
@@ -72,6 +75,16 @@ update msg model =
 
         Tick time ->
             ( { model | time = Just time }, Cmd.none )
+
+        UpdateLocation result ->
+            case result of
+                Err err ->
+                    -- Do nothing for the time being
+                    ( model, Cmd.none )
+
+                Ok location ->
+                    -- Do nothing for the time being
+                    ( model, Cmd.none )
 
 
 campsiteListItem : Campsite -> Html msg
