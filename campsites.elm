@@ -15,7 +15,7 @@ type alias Campsite =
 
 
 type alias Model =
-    { campsites : List Campsite, time : Time.Time }
+    { campsites : List Campsite, time : Maybe Time.Time }
 
 
 type Msg
@@ -32,7 +32,7 @@ campsites =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = campsites, time = 0 }, Cmd.none )
+    ( { campsites = campsites, time = Nothing }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -54,9 +54,14 @@ view model =
         ]
 
 
-formatTime : Time.Time -> String
-formatTime time =
-    toString (Date.second (Date.fromTime time))
+formatTime : Maybe Time.Time -> String
+formatTime t =
+    case t of
+        Just time ->
+            toString (Date.second (Date.fromTime time))
+
+        Nothing ->
+            ""
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -66,7 +71,7 @@ update msg model =
             ( { model | campsites = campsite :: model.campsites }, Cmd.none )
 
         Tick time ->
-            ( { model | time = time }, Cmd.none )
+            ( { model | time = Just time }, Cmd.none )
 
 
 campsiteListItem : Campsite -> Html msg
