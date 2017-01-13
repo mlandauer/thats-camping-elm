@@ -122,7 +122,7 @@ distanceAsText : Maybe Location -> Maybe Location -> String
 distanceAsText position1 position2 =
     let
         d =
-            Maybe.map2 Location.distanceInMetres position1 position2
+            Maybe.map2 Location.distanceInMetres position2 position1
     in
         case d of
             Just d ->
@@ -136,7 +136,7 @@ bearingAsText : Maybe Location -> Maybe Location -> String
 bearingAsText position1 position2 =
     let
         bearing =
-            Maybe.map2 Location.bearingInDegrees position1 position2
+            Maybe.map2 Location.bearingInDegrees position2 position1
     in
         case bearing of
             Just bearing ->

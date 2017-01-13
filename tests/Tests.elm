@@ -13,12 +13,12 @@ all =
         [ describe "distanceInMetres"
             [ test "example" <|
                 \() ->
-                    approxEqual 1 73360 (Location.distanceInMetres (Location -33.6149 150.3553) (Location -34 151))
+                    approxEqual 1 73360 (Location.distanceInMetres (Location -34 151) (Location -33.6149 150.3553))
             ]
         , describe "bearingInDegrees"
             [ test "example" <|
                 \() ->
-                    approxEqual 1 305 (Location.bearingInDegrees (Location -33.6149 150.3553) (Location -34 151))
+                    approxEqual 1 305 (Location.bearingInDegrees (Location -34 151) (Location -33.6149 150.3553))
             ]
         ]
 

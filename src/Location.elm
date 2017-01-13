@@ -22,7 +22,7 @@ degrees location =
 
 
 distanceInMetres : Location -> Location -> Float
-distanceInMetres to from =
+distanceInMetres from to =
     let
         t =
             degrees to
@@ -49,7 +49,7 @@ distanceInMetres to from =
 
 
 bearingInDegrees : Location -> Location -> Float
-bearingInDegrees to from =
+bearingInDegrees from to =
     let
         t =
             degrees to
