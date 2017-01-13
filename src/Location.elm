@@ -6,7 +6,7 @@ module Location
         , distanceText
         , bearingText
         , distanceInMetresToText
-        , mod360
+        , modulo
         )
 
 
@@ -67,13 +67,12 @@ bearingInDegrees from to =
         bearing =
             (atan2 y x) / pi * 180
     in
-        mod360 bearing
+        modulo bearing 360
 
 
-mod360 : Float -> Float
-mod360 v =
-    -- This returns a number between 0 and 360
-    v - toFloat (360 * floor (v / 360))
+modulo : Float -> Float -> Float
+modulo value mod =
+    value - mod * toFloat (floor (value / mod))
 
 
 
