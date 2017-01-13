@@ -16,20 +16,31 @@ toString location =
     "(" ++ Basics.toString location.latitude ++ ", " ++ Basics.toString location.longitude ++ ")"
 
 
+degrees : Location -> Location
+degrees location =
+    Location (Basics.degrees location.latitude) (Basics.degrees location.longitude)
+
+
 distanceInMetres : Location -> Location -> Float
 distanceInMetres position1 position2 =
     let
+        p1 =
+            degrees position1
+
+        p2 =
+            degrees position2
+
         r =
             6371000
 
         dLat =
-            degrees (position2.latitude - position1.latitude)
+            p2.latitude - p1.latitude
 
         dLon =
-            degrees (position2.longitude - position1.longitude)
+            p2.longitude - p1.longitude
 
         a =
-            sin (dLat / 2) * sin (dLat / 2) + cos (degrees (position1.latitude)) * cos (degrees (position2.latitude)) * sin (dLon / 2) * sin (dLon / 2)
+            sin (dLat / 2) * sin (dLat / 2) + cos (p1.latitude) * cos (p2.latitude) * sin (dLon / 2) * sin (dLon / 2)
 
         c =
             2 * atan2 (sqrt a) (sqrt (1 - a))
@@ -40,26 +51,20 @@ distanceInMetres position1 position2 =
 bearingInDegrees : Location -> Location -> Float
 bearingInDegrees position1 position2 =
     let
-        lon2 =
-            degrees position2.longitude
+        p1 =
+            degrees position1
 
-        lat2 =
-            degrees position2.latitude
-
-        lon1 =
-            degrees position1.longitude
-
-        lat1 =
-            degrees position1.latitude
+        p2 =
+            degrees position2
 
         dLon =
-            lon1 - lon2
+            p1.longitude - p2.longitude
 
         y =
-            sin (dLon) * cos (lat1)
+            sin (dLon) * cos (p1.latitude)
 
         x =
-            cos (lat2) * sin (lat1) - sin (lat2) * cos (lat1) * cos (dLon)
+            cos (p2.latitude) * sin (p1.latitude) - sin (p2.latitude) * cos (p1.latitude) * cos (dLon)
 
         bearing =
             (atan2 y x) / pi * 180
