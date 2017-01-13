@@ -14,7 +14,7 @@ type alias Campsite =
 
 
 type alias Model =
-    List Campsite
+    { campsites : List Campsite }
 
 
 type Msg
@@ -31,7 +31,7 @@ campsites =
 
 init : ( Model, Cmd Msg )
 init =
-    ( campsites, Cmd.none )
+    ( { campsites = campsites }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -46,14 +46,14 @@ main =
 view : Model -> Html Msg
 view model =
     ul [ class "campsite-list" ]
-        (List.map campsiteListItem model)
+        (List.map campsiteListItem model.campsites)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NewCampsite campsite ->
-            ( campsite :: model, Cmd.none )
+            ( { model | campsites = campsite :: model.campsites }, Cmd.none )
 
         Tick time ->
             -- For the time being do nothing at all
