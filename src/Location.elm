@@ -90,6 +90,15 @@ distanceText from to =
     distanceInMetresToText (distanceInMetres from to)
 
 
+
+-- TODO: Use type to represent bearing in degrees
+
+
+bearingToText : Float -> String
+bearingToText bearing =
+    (toString bearing) ++ " degrees"
+
+
 bearingText : Location -> Location -> String
 bearingText from to =
-    (toString (bearingInDegrees from to)) ++ " degrees"
+    bearingToText (bearingInDegrees from to)
