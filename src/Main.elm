@@ -57,7 +57,6 @@ view : Model -> Html Msg
 view model =
     div []
         [ p [] [ text (formatError model.error) ]
-        , p [] [ text (locationAsText model.location) ]
         , ul
             [ class "campsite-list" ]
             (List.map (campsiteListItem model.location) model.campsites)
@@ -100,11 +99,6 @@ update msg model =
 campsiteListItem : Maybe Location -> Campsite -> Html msg
 campsiteListItem location campsite =
     li [] [ text (campsite.name ++ ": " ++ bearingAndDistanceAsText location campsite.location) ]
-
-
-locationAsText : Maybe Location -> String
-locationAsText location =
-    maybeString (Maybe.map Location.toString location) "unknown"
 
 
 

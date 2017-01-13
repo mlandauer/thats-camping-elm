@@ -3,7 +3,6 @@ module Location
         ( Location
         , distanceInMetres
         , bearingInDegrees
-        , toString
         , distanceText
         , bearingText
         )
@@ -11,11 +10,6 @@ module Location
 
 type alias Location =
     { latitude : Float, longitude : Float }
-
-
-toString : Location -> String
-toString location =
-    "(" ++ Basics.toString location.latitude ++ ", " ++ Basics.toString location.longitude ++ ")"
 
 
 degrees : Location -> Location
@@ -80,9 +74,9 @@ bearingInDegrees from to =
 
 distanceText : Location -> Location -> String
 distanceText from to =
-    (Basics.toString (distanceInMetres from to)) ++ " metres"
+    (toString (distanceInMetres from to)) ++ " metres"
 
 
 bearingText : Location -> Location -> String
 bearingText from to =
-    (Basics.toString (bearingInDegrees from to)) ++ " degrees"
+    (toString (bearingInDegrees from to)) ++ " degrees"
