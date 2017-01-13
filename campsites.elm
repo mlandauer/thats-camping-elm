@@ -21,10 +21,10 @@ type Msg
 
 
 campsites =
-    [ Campsite "Acacia Flats" (Just (Location -33.6149 150.3553))
-    , Campsite "Alexanders Hut" Nothing
-    , Campsite "Apsley Falls" (Just (Location -31.0540415000018 151.762134053333))
-    ]
+    []
+        |> update (NewCampsite (Campsite "Apsley Falls" (Just (Location -31.0540415000018 151.762134053333))))
+        |> update (NewCampsite (Campsite "Alexanders Hut" Nothing))
+        |> update (NewCampsite (Campsite "Acacia Flats" (Just (Location -33.6149 150.3553))))
 
 
 main =
