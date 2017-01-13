@@ -104,7 +104,7 @@ bearingToText bearing =
     let
         -- Dividing the compass into 8 sectors that are centred on north
         sector =
-            floor ((modulo (bearing + 22.5) 360) / 45.0)
+            round (bearing * 8 / 360) % 8
 
         sectorNames =
             Array.fromList [ "N", "NE", "E", "SE", "S", "SW", "W", "NW" ]
@@ -115,7 +115,7 @@ bearingToText bearing =
 
             Nothing ->
                 -- We should never reach this code
-                "Something weird going on"
+                ""
 
 
 bearingText : Location -> Location -> String
