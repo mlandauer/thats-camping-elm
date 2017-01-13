@@ -1,8 +1,19 @@
-module Location exposing (Location, distanceInMetres, bearingInDegrees)
+module Location
+    exposing
+        ( Location
+        , distanceInMetres
+        , bearingInDegrees
+        , toString
+        )
 
 
 type alias Location =
     { latitude : Float, longitude : Float }
+
+
+toString : Location -> String
+toString location =
+    "(" ++ Basics.toString location.latitude ++ ", " ++ Basics.toString location.longitude ++ ")"
 
 
 distanceInMetres : Location -> Location -> Float

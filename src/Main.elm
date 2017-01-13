@@ -106,7 +106,7 @@ locationAsText : Maybe Location -> String
 locationAsText location =
     case location of
         Just l ->
-            toString l.latitude ++ ", " ++ toString l.longitude
+            Location.toString l
 
         Nothing ->
             "unknown"
