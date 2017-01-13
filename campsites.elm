@@ -2,6 +2,7 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class)
+import Time
 
 
 type alias Location =
@@ -18,6 +19,7 @@ type alias Model =
 
 type Msg
     = NewCampsite Campsite
+    | Tick Time.Time
 
 
 campsites =
@@ -34,7 +36,7 @@ init =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every Time.second Tick
 
 
 main =
@@ -52,6 +54,10 @@ update msg model =
     case msg of
         NewCampsite campsite ->
             ( campsite :: model, Cmd.none )
+
+        Tick time ->
+            -- For the time being do nothing at all
+            ( model, Cmd.none )
 
 
 campsiteListItem : Campsite -> Html msg
