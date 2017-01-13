@@ -118,4 +118,39 @@ locationAsText location =
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
 bearingAndDistanceAsText location userLocation =
     -- TODO: Actually implement the thing
-    "(" ++ (locationAsText userLocation) ++ ") -> (" ++ (locationAsText location) ++ ")"
+    distanceAsText location userLocation
+
+
+distanceAsText : Maybe Location -> Maybe Location -> String
+distanceAsText position1 position2 =
+    let
+        d =
+            Maybe.map2 distanceInMetres position1 position2
+    in
+        case d of
+            Just d ->
+                (toString d) ++ " metres"
+
+            Nothing ->
+                ""
+
+
+distanceInMetres : Location -> Location -> Float
+distanceInMetres position1 position2 =
+    let
+        r =
+            6371000
+
+        dLat =
+            degrees (position2.latitude - position1.latitude)
+
+        dLon =
+            degrees (position2.longitude - position1.longitude)
+
+        a =
+            sin (dLat / 2) * sin (dLat / 2) + cos (degrees (position1.latitude)) * cos (degrees (position2.latitude)) * sin (dLon / 2) * sin (dLon / 2)
+
+        c =
+            2 * atan2 (sqrt a) (sqrt (1 - a))
+    in
+        r * c
