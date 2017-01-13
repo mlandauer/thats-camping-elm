@@ -13,11 +13,20 @@ all =
         [ describe "distanceInMetres"
             [ test "example" <|
                 \() ->
-                    Expect.lessThan 1 (abs ((Location.distanceInMetres (Location -33.6149 150.3553) (Location -34 151)) - 73360))
+                    approxEqual 1 73360 (Location.distanceInMetres (Location -33.6149 150.3553) (Location -34 151))
             ]
         , describe "bearingInDegrees"
             [ test "example" <|
                 \() ->
-                    Expect.lessThan 1 (abs ((Location.bearingInDegrees (Location -33.6149 150.3553) (Location -34 151)) - 305))
+                    approxEqual 1 305 (Location.bearingInDegrees (Location -33.6149 150.3553) (Location -34 151))
             ]
         ]
+
+
+
+-- Should approxEqual really be in the Expect module?
+
+
+approxEqual : Float -> Float -> Float -> Expect.Expectation
+approxEqual tolerance expected actual =
+    Expect.lessThan tolerance (abs (actual - expected))
