@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Html exposing (li, text, ul, Html)
+import Html exposing (..)
 import Html.Attributes exposing (class)
 
 
@@ -28,13 +28,13 @@ campsites =
 
 
 main =
-    view campsites
+    beginnerProgram { model = campsites, view = view, update = update }
 
 
 view : Model -> Html Msg
-view campsites =
+view model =
     ul [ class "campsite-list" ]
-        (List.map campsiteListItem campsites)
+        (List.map campsiteListItem model)
 
 
 update : Msg -> Model -> Model
