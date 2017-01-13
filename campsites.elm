@@ -16,10 +16,15 @@ type alias Campsite =
     { name : String, location : Maybe Location }
 
 
+type alias Error =
+    -- We could have more kind of errors here
+    Geolocation.Error
+
+
 type alias Model =
     { campsites : List Campsite
     , location : Maybe Location
-    , error : Maybe Geolocation.Error
+    , error : Maybe Error
     }
 
 
@@ -54,11 +59,30 @@ main =
 view : Model -> Html Msg
 view model =
     div []
-        [ p [] [ text (locationAsText model.location) ]
+        [ p [] [ text (formatError model.error) ]
+        , p [] [ text (locationAsText model.location) ]
         , ul
             [ class "campsite-list" ]
             (List.map campsiteListItem model.campsites)
         ]
+
+
+formatError : Maybe Error -> String
+formatError error =
+    case error of
+        Just err ->
+            case err of
+                Geolocation.PermissionDenied text ->
+                    "Permission denied: " ++ text
+
+                Geolocation.LocationUnavailable text ->
+                    "Location unavailable: " ++ text
+
+                Geolocation.Timeout text ->
+                    "Timeout: " ++ text
+
+        Nothing ->
+            ""
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
