@@ -28,6 +28,30 @@ all =
                 \() ->
                     Expect.equal "54 km" (Location.distanceInMetresToText 53850)
             ]
+        , describe "mod360"
+            [ test "number between 0 and 360" <|
+                \() ->
+                    Expect.equal 350 (Location.mod360 350)
+            , test "number 360" <|
+                \() ->
+                    Expect.equal 0 (Location.mod360 360)
+            , test "number between 360 and 720" <|
+                \() ->
+                    Expect.equal 40 (Location.mod360 400)
+              -- We're making this more general than we strictly need to
+            , test "number between 720 and 1080" <|
+                \() ->
+                    Expect.equal 50 (Location.mod360 770)
+            , test "number between -360 and 0" <|
+                \() ->
+                    Expect.equal 10 (Location.mod360 -350)
+            , test "number -360" <|
+                \() ->
+                    Expect.equal 0 (Location.mod360 -360)
+            , test "number between -720 and -360" <|
+                \() ->
+                    Expect.equal 220 (Location.mod360 -500)
+            ]
         ]
 
 
