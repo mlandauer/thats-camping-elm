@@ -118,4 +118,4 @@ locationAsText location =
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
 bearingAndDistanceAsText location userLocation =
     -- TODO: Actually implement the thing
-    locationAsText location
+    "(" ++ (locationAsText userLocation) ++ ") -> (" ++ (locationAsText location) ++ ")"
