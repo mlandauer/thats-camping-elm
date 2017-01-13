@@ -63,7 +63,7 @@ view model =
         , p [] [ text (locationAsText model.location) ]
         , ul
             [ class "campsite-list" ]
-            (List.map campsiteListItem model.campsites)
+            (List.map (campsiteListItem model.location) model.campsites)
         ]
 
 
@@ -100,9 +100,9 @@ update msg model =
                     ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
 
 
-campsiteListItem : Campsite -> Html msg
-campsiteListItem campsite =
-    li [] [ text (campsite.name ++ ", " ++ locationAsText campsite.location) ]
+campsiteListItem : Maybe Location -> Campsite -> Html msg
+campsiteListItem userLocation campsite =
+    li [] [ text (campsite.name ++ ": " ++ bearingAndDistanceAsText campsite.location userLocation) ]
 
 
 locationAsText : Maybe Location -> String
@@ -113,3 +113,9 @@ locationAsText location =
 
         Nothing ->
             "unknown"
+
+
+bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
+bearingAndDistanceAsText location userLocation =
+    -- TODO: Actually implement the thing
+    locationAsText location
