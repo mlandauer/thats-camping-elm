@@ -2,9 +2,6 @@ module TestsData exposing (..)
 
 import Test exposing (..)
 import Expect
-import Fuzz exposing (list, int, tuple, string)
-import String
-import Location exposing (Location)
 import Json.Decode
 import Data
 
