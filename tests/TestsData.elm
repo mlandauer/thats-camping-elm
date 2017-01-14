@@ -45,4 +45,16 @@ all =
                     in
                         Expect.equal expected (Json.Decode.decodeString Data.campsiteDecoder json)
             ]
+        , describe "campsitesDecoder"
+            [ test "example" <|
+                \() ->
+                    let
+                        json =
+                            """{"campsites": [{ "shortName": "Campsite", "latitude": -33, "longitude": 150 }]}"""
+
+                        expected =
+                            Ok ([ Campsite "Campsite" (Just (Location -33 150)) ])
+                    in
+                        Expect.equal expected (Json.Decode.decodeString Data.campsitesDecoder json)
+            ]
         ]

@@ -2,6 +2,7 @@ module Data
     exposing
         ( locationDecoder
         , campsiteDecoder
+        , campsitesDecoder
         )
 
 import Json.Decode
@@ -23,3 +24,8 @@ campsiteDecoder =
     Json.Decode.map2 Campsite
         (Json.Decode.field "shortName" Json.Decode.string)
         locationDecoder
+
+
+campsitesDecoder : Json.Decode.Decoder (List Campsite)
+campsitesDecoder =
+    Json.Decode.at [ "campsites" ] (Json.Decode.list campsiteDecoder)
