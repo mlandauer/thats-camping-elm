@@ -5,14 +5,14 @@ import Expect
 import Fuzz exposing (list, int, tuple, string)
 import String
 import Location exposing (Location)
-import DataTests
+import TestsData
 
 
 all : Test
 all =
     describe "Test Suite"
         -- TODO: Move tests for different modules into different files
-        [ DataTests.all
+        [ TestsData.all
         , describe "Location"
             [ describe "distanceInMetres"
                 [ test "example" <|

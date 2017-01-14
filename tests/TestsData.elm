@@ -1,4 +1,4 @@
-module DataTests exposing (..)
+module TestsData exposing (..)
 
 import Test exposing (..)
 import Expect
