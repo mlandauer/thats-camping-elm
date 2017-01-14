@@ -101,20 +101,11 @@ campsiteListItem location campsite =
     li [] [ text (campsite.name ++ " (" ++ campsite.parkName ++ "): " ++ bearingAndDistanceAsText location campsite.location) ]
 
 
-
---   Convert a Maybe String to String given a value to show for Nothing
-
-
-maybeString : Maybe String -> String -> String
-maybeString text nothingText =
-    case text of
+bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
+bearingAndDistanceAsText from to =
+    case (Maybe.map2 Location.bearingAndDistanceText from to) of
         Just text ->
             text
 
         Nothing ->
-            nothingText
-
-
-bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
-bearingAndDistanceAsText from to =
-    maybeString (Maybe.map2 Location.bearingAndDistanceText from to) ""
+            ""
