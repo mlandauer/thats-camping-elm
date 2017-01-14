@@ -8,6 +8,8 @@ import Geolocation
 import Task
 import Location exposing (Location)
 import Campsite exposing (Campsite)
+import Http
+import Data
 
 
 type alias Error =
@@ -25,23 +27,14 @@ type alias Model =
 type Msg
     = NewCampsite Campsite
     | UpdateLocation (Result Geolocation.Error Geolocation.Location)
-
-
-campsites =
-    -- [ Campsite "Acacia Flats" "Blue Mountains NP" (Just (Location -33.6149 150.3553))
-    -- , Campsite "Alexanders Hut" "South East Forest NP" Nothing
-    -- , Campsite "Apsley Falls" "Oxley Wild Rivers NP" (Just (Location -31.0540415000018 151.762134053333))
-    -- ]
-    [ Campsite "Acacia Flats" (Just (Location -33.6149 150.3553))
-    , Campsite "Alexanders Hut" Nothing
-    , Campsite "Apsley Falls" (Just (Location -31.0540415000018 151.762134053333))
-    ]
+    | NewData (Result Http.Error (List Campsite))
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = campsites, location = Nothing, error = Nothing }
-    , Task.attempt UpdateLocation Geolocation.now
+    ( { campsites = [], location = Nothing, error = Nothing }
+      -- On startup immediately try to get the location and the campsite data
+    , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
     )
 
 
@@ -92,6 +85,14 @@ update msg model =
         UpdateLocation (Ok location) ->
             ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
 
+        NewData (Err error) ->
+            -- TODO: Make it show the error. For the time being does nothing
+            ( model, Cmd.none )
+
+        NewData (Ok campsites) ->
+            -- Replace the current campsites with the new ones
+            ( { model | campsites = campsites }, Cmd.none )
+
 
 campsiteListItem : Maybe Location -> Campsite -> Html msg
 campsiteListItem location campsite =
@@ -107,3 +108,16 @@ bearingAndDistanceAsText from to =
 
         Nothing ->
             ""
+
+
+syncData =
+    let
+        -- Just load the json data from github for the time being. Should do something
+        -- more sensible than this in the longer term but it's good enough for now
+        url =
+            "https://raw.githubusercontent.com/mlandauer/thats-camping-react/master/data.json"
+
+        request =
+            Http.get url Data.campsitesDecoder
+    in
+        Http.send NewData request
