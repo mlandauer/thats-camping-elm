@@ -5,21 +5,14 @@ import Expect
 import Fuzz exposing (list, int, tuple, string)
 import String
 import Location exposing (Location)
-import Json.Decode
-import Data
+import DataTests
 
 
 all : Test
 all =
     describe "Test Suite"
         -- TODO: Move tests for different modules into different files
-        [ describe "Data"
-            [ describe "locationDecoder"
-                [ test "example" <|
-                    \() ->
-                        Expect.equal (Ok { latitude = -33, longitude = 150 }) (Json.Decode.decodeString Data.locationDecoder """{ "latitude": -33, "longitude": 150 }""")
-                ]
-            ]
+        [ DataTests.all
         , describe "Location"
             [ describe "distanceInMetres"
                 [ test "example" <|
