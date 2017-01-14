@@ -5,6 +5,7 @@ import Expect
 import Json.Decode
 import Data
 import Location exposing (Location)
+import Campsite exposing (Campsite)
 
 
 all : Test
@@ -31,5 +32,17 @@ all =
                             Ok (Nothing)
                     in
                         Expect.equal expected (Json.Decode.decodeString Data.locationDecoder json)
+            ]
+        , describe "campsiteDecoder"
+            [ test "example" <|
+                \() ->
+                    let
+                        json =
+                            """{ "shortName": "Campsite", "latitude": -33, "longitude": 150 }"""
+
+                        expected =
+                            Ok (Campsite "Campsite" (Just (Location -33 150)))
+                    in
+                        Expect.equal expected (Json.Decode.decodeString Data.campsiteDecoder json)
             ]
         ]

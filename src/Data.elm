@@ -1,7 +1,12 @@
-module Data exposing (locationDecoder)
+module Data
+    exposing
+        ( locationDecoder
+        , campsiteDecoder
+        )
 
 import Json.Decode
 import Location exposing (Location)
+import Campsite exposing (Campsite)
 
 
 locationDecoder : Json.Decode.Decoder (Maybe Location)
@@ -11,3 +16,10 @@ locationDecoder =
             (Json.Decode.field "latitude" Json.Decode.float)
             (Json.Decode.field "longitude" Json.Decode.float)
         )
+
+
+campsiteDecoder : Json.Decode.Decoder Campsite
+campsiteDecoder =
+    Json.Decode.map2 Campsite
+        (Json.Decode.field "shortName" Json.Decode.string)
+        locationDecoder
