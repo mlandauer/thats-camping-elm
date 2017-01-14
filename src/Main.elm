@@ -28,9 +28,13 @@ type Msg
 
 
 campsites =
-    [ Campsite "Acacia Flats" "Blue Mountains NP" (Just (Location -33.6149 150.3553))
-    , Campsite "Alexanders Hut" "South East Forest NP" Nothing
-    , Campsite "Apsley Falls" "Oxley Wild Rivers NP" (Just (Location -31.0540415000018 151.762134053333))
+    -- [ Campsite "Acacia Flats" "Blue Mountains NP" (Just (Location -33.6149 150.3553))
+    -- , Campsite "Alexanders Hut" "South East Forest NP" Nothing
+    -- , Campsite "Apsley Falls" "Oxley Wild Rivers NP" (Just (Location -31.0540415000018 151.762134053333))
+    -- ]
+    [ Campsite "Acacia Flats" (Just (Location -33.6149 150.3553))
+    , Campsite "Alexanders Hut" Nothing
+    , Campsite "Apsley Falls" (Just (Location -31.0540415000018 151.762134053333))
     ]
 
 
@@ -91,7 +95,8 @@ update msg model =
 
 campsiteListItem : Maybe Location -> Campsite -> Html msg
 campsiteListItem location campsite =
-    li [] [ text (campsite.name ++ " (" ++ campsite.parkName ++ "): " ++ bearingAndDistanceAsText location campsite.location) ]
+    -- li [] [ text (campsite.name ++ " (" ++ campsite.parkName ++ "): " ++ bearingAndDistanceAsText location campsite.location) ]
+    li [] [ text (campsite.name ++ ": " ++ bearingAndDistanceAsText location campsite.location) ]
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
