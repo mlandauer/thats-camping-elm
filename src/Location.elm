@@ -5,6 +5,7 @@ module Location
         , bearingInDegrees
         , distanceText
         , bearingText
+        , bearingAndDistanceText
         , distanceInMetresToText
         , bearingToText
         , modulo
@@ -121,3 +122,8 @@ bearingToText bearing =
 bearingText : Location -> Location -> String
 bearingText from to =
     bearingToText (bearingInDegrees from to)
+
+
+bearingAndDistanceText : Location -> Location -> String
+bearingAndDistanceText from to =
+    (distanceText from to) ++ " " ++ (bearingText from to)

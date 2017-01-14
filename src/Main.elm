@@ -117,15 +117,4 @@ maybeString text nothingText =
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
 bearingAndDistanceAsText from to =
-    -- TODO: Actually implement the thing
-    (distanceAsText from to) ++ " " ++ (bearingAsText from to)
-
-
-distanceAsText : Maybe Location -> Maybe Location -> String
-distanceAsText from to =
-    maybeString (Maybe.map2 Location.distanceText from to) ""
-
-
-bearingAsText : Maybe Location -> Maybe Location -> String
-bearingAsText from to =
-    maybeString (Maybe.map2 Location.bearingText from to) ""
+    maybeString (Maybe.map2 Location.bearingAndDistanceText from to) ""
