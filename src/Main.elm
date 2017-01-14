@@ -66,16 +66,14 @@ view model =
 formatError : Maybe Error -> String
 formatError error =
     case error of
-        Just err ->
-            case err of
-                Geolocation.PermissionDenied text ->
-                    "Permission denied: " ++ text
+        Just (Geolocation.PermissionDenied text) ->
+            "Permission denied: " ++ text
 
-                Geolocation.LocationUnavailable text ->
-                    "Location unavailable: " ++ text
+        Just (Geolocation.LocationUnavailable text) ->
+            "Location unavailable: " ++ text
 
-                Geolocation.Timeout text ->
-                    "Timeout: " ++ text
+        Just (Geolocation.Timeout text) ->
+            "Timeout: " ++ text
 
         Nothing ->
             ""
@@ -87,13 +85,11 @@ update msg model =
         NewCampsite campsite ->
             ( { model | campsites = campsite :: model.campsites }, Cmd.none )
 
-        UpdateLocation result ->
-            case result of
-                Err error ->
-                    ( { model | error = Just error }, Cmd.none )
+        UpdateLocation (Err error) ->
+            ( { model | error = Just error }, Cmd.none )
 
-                Ok location ->
-                    ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
+        UpdateLocation (Ok location) ->
+            ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
 
 
 campsiteListItem : Maybe Location -> Campsite -> Html msg
