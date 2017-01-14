@@ -7,10 +7,7 @@ import Date
 import Geolocation
 import Task
 import Location exposing (Location)
-
-
-type alias Campsite =
-    { name : String, parkName : String, location : Maybe Location }
+import Campsite exposing (Campsite)
 
 
 type alias Error =
