@@ -1,4 +1,4 @@
-module Data exposing (..)
+module Data exposing (locationDecoder)
 
 import Json.Decode
 import Location exposing (Location)
