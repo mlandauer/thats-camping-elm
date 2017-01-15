@@ -1,5 +1,5 @@
 ## Develop
 
 ```
-elm-live src/Main.elm --output=app.js --open
+elm-live src/App.elm --output=app.js --open
 ```
