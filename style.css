@@ -1,0 +1,153 @@
+.content {
+  padding-top: 59px;
+}
+
+/*.container p:first-child{
+  margin-top: 20px;
+}*/
+
+h1 {
+  font-size: 22px;
+  text-align: center;
+  margin: 15px auto 15px auto;
+  color: white;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  z-index: -1000;
+  letter-spacing: 0.01em;
+}
+
+nav {
+  height: 60px;
+}
+
+/* When we're running in fullscreen mode we need an extra 20px at the top
+   of the screen because we're using the special apple meta tag that puts
+   the status bar over the top of the content */
+
+#app.fullscreen nav {
+  padding-top: 20px;
+  height: 80px;
+}
+
+#app.fullscreen .content {
+  padding-top: 79px;
+}
+
+#app, nav, .container {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar-text {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+nav .btn {
+  padding: 0;
+  font-size: 22px;
+  width: 40%;
+}
+
+nav .btn.pull-left {
+  text-align: left;
+}
+
+nav .btn.pull-right {
+  text-align: right;
+}
+
+/* Don't want to show border on desktop on clicking on desktop */
+nav .btn:focus, nav .btn:active:focus {
+  outline-style: none;
+}
+
+.campsite {
+  margin: 4px;
+}
+
+.campsite .name {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.campsite .park {
+  font-size: 20px;
+  color: #aaa;
+}
+
+.campsite .distance {
+  color: #aaa;
+}
+
+.campsite .distance {
+  font-size: 20px;
+}
+
+p {
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+.directions {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-size: 18px;
+}
+
+.park-campsite-list {
+  margin-top: 2em;
+}
+
+.campsite-detail .star {
+  float: right;
+  font-size: 20px;
+}
+
+.campsite .star {
+  font-size: 20px;
+  float: right;
+  margin-left: 10px;
+}
+
+.campsite .star-off {
+  display: none;
+}
+
+.star {
+  color: #97b13d;
+}
+
+/*
+   Override bootstrap styles directly below. It would be better to do this
+   by using less but we'll leave that as an exercise for another day.
+*/
+
+a, a:focus, a:hover {
+  color: #333;
+  text-decoration: underline;
+}
+
+a.list-group-item, .btn {
+  text-decoration: none;
+}
+
+.navbar-default {
+    background-color: #97b13d;
+}
+
+.navbar-default .navbar-link {
+  color: white;
+}
+
+.btn:active {
+  box-shadow: none;
+}
