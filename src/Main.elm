@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (..)
 import Time
 import Date
 import Geolocation
@@ -49,11 +49,22 @@ main =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ p [] [ text (formatError model.error) ]
-        , ul
-            [ class "campsite-list" ]
-            (List.map (campsiteListItem model.location) (sortCampsites model.location model.campsites))
+    div [ id "app" ]
+        [ div [ class "campsite-list" ]
+            [ nav [ class "navbar navbar-default navbar-fixed-top" ]
+                [ div [ class "container" ]
+                    [ a [ href "#", class "btn navbar-link navbar-text pull-right" ]
+                        [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
+                    , h1 [] [ text "Camping near you" ]
+                    ]
+                ]
+            , div [ class "content" ]
+                [ p [] [ text (formatError model.error) ]
+                  -- Not sure about ul here (because there's currently no matching li's)
+                , ul [ class "list-group" ]
+                    (List.map (campsiteListItem model.location) (sortCampsites model.location model.campsites))
+                ]
+            ]
         ]
 
 
@@ -101,8 +112,13 @@ update msg model =
 
 campsiteListItem : Maybe Location -> Campsite -> Html msg
 campsiteListItem location campsite =
-    -- li [] [ text (campsite.name ++ " (" ++ campsite.parkName ++ "): " ++ bearingAndDistanceAsText location campsite.location) ]
-    li [] [ text (campsite.name ++ ": " ++ bearingAndDistanceAsText location campsite.location) ]
+    a [ href "#", class "list-group-item" ]
+        [ div [ class "campsite" ]
+            [ div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
+            , div [ class "name" ] [ text campsite.name ]
+            , div [ class "park" ] [ text "" ]
+            ]
+        ]
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
