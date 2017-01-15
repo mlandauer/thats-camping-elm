@@ -5,6 +5,7 @@ import Test.Runner.Node exposing (run, TestProgram)
 import Json.Encode exposing (Value)
 import TestsData
 import TestsLocation
+import TestsCampsite
 
 
 main : TestProgram
@@ -17,6 +18,7 @@ all =
     describe "Test Suite"
         [ TestsData.all
         , TestsLocation.all
+        , TestsCampsite.all
         ]
 
 
