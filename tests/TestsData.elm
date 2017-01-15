@@ -6,6 +6,7 @@ import Json.Decode
 import Data
 import Location exposing (Location)
 import Campsite exposing (Campsite)
+import Park exposing (Park)
 
 
 all : Test
@@ -56,5 +57,29 @@ all =
                             Ok ([ Campsite "Campsite" (Just (Location -33 150)) ])
                     in
                         Expect.equal expected (Json.Decode.decodeString Data.campsitesDecoder json)
+            ]
+        , describe "parkDecoder"
+            [ test "example" <|
+                \() ->
+                    let
+                        json =
+                            """{ "id": 15, "shortName": "A park" }"""
+
+                        expected =
+                            Ok (Park 15 "A park")
+                    in
+                        Expect.equal expected (Json.Decode.decodeString Data.parkDecoder json)
+            ]
+        , describe "parksDecoder"
+            [ test "example" <|
+                \() ->
+                    let
+                        json =
+                            """{"parks": [{ "id": 15, "shortName": "A park" }]}"""
+
+                        expected =
+                            Ok ([ Park 15 "A park" ])
+                    in
+                        Expect.equal expected (Json.Decode.decodeString Data.parksDecoder json)
             ]
         ]
