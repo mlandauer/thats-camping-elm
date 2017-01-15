@@ -53,8 +53,13 @@ view model =
         [ p [] [ text (formatError model.error) ]
         , ul
             [ class "campsite-list" ]
-            (List.map (campsiteListItem model.location) model.campsites)
+            (List.map (campsiteListItem model.location) (sortCampsites model.location model.campsites))
         ]
+
+
+sortCampsites : Maybe Location -> List Campsite -> List Campsite
+sortCampsites location campsites =
+    List.sortWith (Campsite.compareCampsite location) campsites
 
 
 formatError : Maybe Error -> String
