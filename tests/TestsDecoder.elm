@@ -12,7 +12,7 @@ import Park exposing (Park)
 all : Test
 all =
     describe "Data"
-        [ describe "locationDecoder"
+        [ describe "location"
             [ test "location data is present" <|
                 \() ->
                     let
@@ -22,7 +22,7 @@ all =
                         expected =
                             Ok (Just (Location -33 150))
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.locationDecoder json)
+                        Expect.equal expected (Json.Decode.decodeString Decoder.location json)
             , test "location data is absent" <|
                 \() ->
                     let
@@ -32,9 +32,9 @@ all =
                         expected =
                             Ok (Nothing)
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.locationDecoder json)
+                        Expect.equal expected (Json.Decode.decodeString Decoder.location json)
             ]
-        , describe "campsiteDecoder"
+        , describe "campsite"
             [ test "example" <|
                 \() ->
                     let
@@ -44,9 +44,9 @@ all =
                         expected =
                             Ok (Campsite "Campsite" (Just (Location -33 150)))
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.campsiteDecoder json)
+                        Expect.equal expected (Json.Decode.decodeString Decoder.campsite json)
             ]
-        , describe "campsitesDecoder"
+        , describe "campsites"
             [ test "example" <|
                 \() ->
                     let
@@ -56,9 +56,9 @@ all =
                         expected =
                             Ok ([ Campsite "Campsite" (Just (Location -33 150)) ])
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.campsitesDecoder json)
+                        Expect.equal expected (Json.Decode.decodeString Decoder.campsites json)
             ]
-        , describe "parkDecoder"
+        , describe "park"
             [ test "example" <|
                 \() ->
                     let
@@ -68,9 +68,9 @@ all =
                         expected =
                             Ok (Park 15 "A park")
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.parkDecoder json)
+                        Expect.equal expected (Json.Decode.decodeString Decoder.park json)
             ]
-        , describe "parksDecoder"
+        , describe "parks"
             [ test "example" <|
                 \() ->
                     let
@@ -80,6 +80,6 @@ all =
                         expected =
                             Ok ([ Park 15 "A park" ])
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.parksDecoder json)
+                        Expect.equal expected (Json.Decode.decodeString Decoder.parks json)
             ]
         ]

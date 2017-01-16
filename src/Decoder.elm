@@ -1,10 +1,10 @@
 module Decoder
     exposing
-        ( locationDecoder
-        , campsiteDecoder
-        , campsitesDecoder
-        , parkDecoder
-        , parksDecoder
+        ( location
+        , campsite
+        , campsites
+        , park
+        , parks
         )
 
 import Json.Decode exposing (..)
@@ -13,8 +13,8 @@ import Campsite exposing (Campsite)
 import Park exposing (Park)
 
 
-locationDecoder : Decoder (Maybe Location)
-locationDecoder =
+location : Decoder (Maybe Location)
+location =
     maybe
         (map2 Location
             (field "latitude" float)
@@ -22,25 +22,25 @@ locationDecoder =
         )
 
 
-campsiteDecoder : Decoder Campsite
-campsiteDecoder =
+campsite : Decoder Campsite
+campsite =
     map2 Campsite
         (field "shortName" string)
-        locationDecoder
+        location
 
 
-campsitesDecoder : Decoder (List Campsite)
-campsitesDecoder =
-    at [ "campsites" ] (list campsiteDecoder)
+campsites : Decoder (List Campsite)
+campsites =
+    at [ "campsites" ] (list campsite)
 
 
-parkDecoder : Decoder Park
-parkDecoder =
+park : Decoder Park
+park =
     map2 Park
         (field "id" int)
         (field "shortName" string)
 
 
-parksDecoder : Decoder (List Park)
-parksDecoder =
-    at [ "parks" ] (list parkDecoder)
+parks : Decoder (List Park)
+parks =
+    at [ "parks" ] (list park)
