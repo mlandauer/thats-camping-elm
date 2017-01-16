@@ -62,7 +62,7 @@ view model =
                     ]
                 ]
             , div [ class "content" ]
-                [ p [] [ text (formatError model.error) ]
+                [ div [] [ text (formatError model.error) ]
                   -- Not sure about ul here (because there's currently no matching li's)
                 , ul [ class "list-group" ]
                     (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
