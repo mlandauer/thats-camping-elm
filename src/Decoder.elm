@@ -2,9 +2,7 @@ module Decoder
     exposing
         ( location
         , campsite
-        , campsites
         , park
-        , parks
         , parksAndCampsites
         )
 
@@ -30,21 +28,11 @@ campsite =
         location
 
 
-campsites : Decoder (List Campsite)
-campsites =
-    at [ "campsites" ] (list campsite)
-
-
 park : Decoder Park
 park =
     map2 Park
         (field "id" int)
         (field "shortName" string)
-
-
-parks : Decoder (List Park)
-parks =
-    at [ "parks" ] (list park)
 
 
 type alias ParksAndCampsites =

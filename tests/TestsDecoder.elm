@@ -46,18 +46,6 @@ all =
                     in
                         Expect.equal expected (Json.Decode.decodeString Decoder.campsite json)
             ]
-        , describe "campsites"
-            [ test "example" <|
-                \() ->
-                    let
-                        json =
-                            """{"campsites": [{ "shortName": "Campsite", "latitude": -33, "longitude": 150 }]}"""
-
-                        expected =
-                            Ok ([ Campsite "Campsite" (Just (Location -33 150)) ])
-                    in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.campsites json)
-            ]
         , describe "park"
             [ test "example" <|
                 \() ->
@@ -69,18 +57,6 @@ all =
                             Ok (Park 15 "A park")
                     in
                         Expect.equal expected (Json.Decode.decodeString Decoder.park json)
-            ]
-        , describe "parks"
-            [ test "example" <|
-                \() ->
-                    let
-                        json =
-                            """{"parks": [{ "id": 15, "shortName": "A park" }]}"""
-
-                        expected =
-                            Ok ([ Park 15 "A park" ])
-                    in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.parks json)
             ]
         , describe "parksAndCampsites"
             [ test "example" <|
