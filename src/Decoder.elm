@@ -5,6 +5,7 @@ module Decoder
         , campsites
         , park
         , parks
+        , parksAndCampsites
         )
 
 import Json.Decode exposing (..)
@@ -44,3 +45,14 @@ park =
 parks : Decoder (List Park)
 parks =
     at [ "parks" ] (list park)
+
+
+type alias ParksAndCampsites =
+    { parks : List Park, campsites : List Campsite }
+
+
+parksAndCampsites : Decoder { parks : List Park, campsites : List Campsite }
+parksAndCampsites =
+    map2 ParksAndCampsites
+        (field "parks" (list park))
+        (field "campsites" (list campsite))
