@@ -65,7 +65,7 @@ view model =
                 [ p [] [ text (formatError model.error) ]
                   -- Not sure about ul here (because there's currently no matching li's)
                 , ul [ class "list-group" ]
-                    (List.map (campsiteListItem model.location) (sortCampsites model.location model.campsites))
+                    (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
                 ]
             ]
         ]
@@ -118,15 +118,25 @@ transformParks parks =
     Dict.fromList (List.map (\park -> ( park.id, park )) parks)
 
 
-campsiteListItem : Maybe Location -> Campsite -> Html msg
-campsiteListItem location campsite =
+campsiteListItem : Maybe Location -> Dict Int Park -> Campsite -> Html msg
+campsiteListItem location parks campsite =
     a [ href "#", class "list-group-item" ]
         [ div [ class "campsite" ]
             [ div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
             , div [ class "name" ] [ text campsite.name ]
-            , div [ class "park" ] [ text "" ]
+            , div [ class "park" ] [ text (parkNameFromId campsite.parkId parks) ]
             ]
         ]
+
+
+parkNameFromId : Int -> Dict Int Park -> String
+parkNameFromId id parks =
+    case Dict.get id parks of
+        Just park ->
+            park.name
+
+        Nothing ->
+            ""
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
