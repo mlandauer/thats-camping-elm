@@ -1,4 +1,4 @@
-module Data
+module Decoder
     exposing
         ( locationDecoder
         , campsiteDecoder

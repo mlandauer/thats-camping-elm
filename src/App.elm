@@ -139,6 +139,6 @@ syncData =
             "https://raw.githubusercontent.com/mlandauer/thats-camping-react/master/data.json"
 
         request =
-            Http.get url Data.campsitesDecoder
+            Http.get url Decoder.campsitesDecoder
     in
         Http.send NewData request
