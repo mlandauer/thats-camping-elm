@@ -7,40 +7,40 @@ module Data
         , parksDecoder
         )
 
-import Json.Decode
+import Json.Decode exposing (..)
 import Location exposing (Location)
 import Campsite exposing (Campsite)
 import Park exposing (Park)
 
 
-locationDecoder : Json.Decode.Decoder (Maybe Location)
+locationDecoder : Decoder (Maybe Location)
 locationDecoder =
-    Json.Decode.maybe
-        (Json.Decode.map2 Location
-            (Json.Decode.field "latitude" Json.Decode.float)
-            (Json.Decode.field "longitude" Json.Decode.float)
+    maybe
+        (map2 Location
+            (field "latitude" float)
+            (field "longitude" float)
         )
 
 
-campsiteDecoder : Json.Decode.Decoder Campsite
+campsiteDecoder : Decoder Campsite
 campsiteDecoder =
-    Json.Decode.map2 Campsite
-        (Json.Decode.field "shortName" Json.Decode.string)
+    map2 Campsite
+        (field "shortName" string)
         locationDecoder
 
 
-campsitesDecoder : Json.Decode.Decoder (List Campsite)
+campsitesDecoder : Decoder (List Campsite)
 campsitesDecoder =
-    Json.Decode.at [ "campsites" ] (Json.Decode.list campsiteDecoder)
+    at [ "campsites" ] (list campsiteDecoder)
 
 
-parkDecoder : Json.Decode.Decoder Park
+parkDecoder : Decoder Park
 parkDecoder =
-    Json.Decode.map2 Park
-        (Json.Decode.field "id" Json.Decode.int)
-        (Json.Decode.field "shortName" Json.Decode.string)
+    map2 Park
+        (field "id" int)
+        (field "shortName" string)
 
 
-parksDecoder : Json.Decode.Decoder (List Park)
+parksDecoder : Decoder (List Park)
 parksDecoder =
-    Json.Decode.at [ "parks" ] (Json.Decode.list parkDecoder)
+    at [ "parks" ] (list parkDecoder)
