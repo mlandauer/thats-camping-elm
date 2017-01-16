@@ -8,8 +8,9 @@ import Geolocation
 import Task
 import Location exposing (Location)
 import Campsite exposing (Campsite)
+import Park exposing (Park)
 import Http
-import Data
+import Decoder
 
 
 type alias Error =
@@ -27,7 +28,7 @@ type alias Model =
 type Msg
     = NewCampsite Campsite
     | UpdateLocation (Result Geolocation.Error Geolocation.Location)
-    | NewData (Result Http.Error (List Campsite))
+    | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
 
 
 init : ( Model, Cmd Msg )
@@ -105,9 +106,9 @@ update msg model =
             -- TODO: Make it show the error. For the time being does nothing
             ( model, Cmd.none )
 
-        NewData (Ok campsites) ->
+        NewData (Ok data) ->
             -- Replace the current campsites with the new ones
-            ( { model | campsites = campsites }, Cmd.none )
+            ( { model | campsites = data.campsites }, Cmd.none )
 
 
 campsiteListItem : Maybe Location -> Campsite -> Html msg
@@ -139,6 +140,6 @@ syncData =
             "https://raw.githubusercontent.com/mlandauer/thats-camping-react/master/data.json"
 
         request =
-            Http.get url Decoder.campsites
+            Http.get url Decoder.parksAndCampsites
     in
         Http.send NewData request
