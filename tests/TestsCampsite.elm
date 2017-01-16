@@ -14,10 +14,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite "campsite 1" (Just (Location 1 2))
+                            Campsite "campsite 1" (Just (Location 1 2)) 1
 
                         c2 =
-                            Campsite "campsite 2" (Just (Location 1.5 2))
+                            Campsite "campsite 2" (Just (Location 1.5 2)) 1
 
                         location =
                             Just (Location 1.1 2)
@@ -27,10 +27,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite "campsite 1" (Just (Location 1.5 2))
+                            Campsite "campsite 1" (Just (Location 1.5 2)) 1
 
                         c2 =
-                            Campsite "campsite 2" (Just (Location 1 2))
+                            Campsite "campsite 2" (Just (Location 1 2)) 1
 
                         location =
                             Just (Location 1.1 2)
@@ -40,10 +40,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite "campsite 1" Nothing
+                            Campsite "campsite 1" Nothing 1
 
                         c2 =
-                            Campsite "campsite 2" (Just (Location 1.5 2))
+                            Campsite "campsite 2" (Just (Location 1.5 2)) 1
 
                         location =
                             Just (Location 1.1 2)
@@ -53,10 +53,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite "campsite 1" (Just (Location 1 2))
+                            Campsite "campsite 1" (Just (Location 1 2)) 1
 
                         c2 =
-                            Campsite "campsite 2" Nothing
+                            Campsite "campsite 2" Nothing 1
 
                         location =
                             Just (Location 1.1 2)
@@ -66,10 +66,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite "campsite 1" Nothing
+                            Campsite "campsite 1" Nothing 1
 
                         c2 =
-                            Campsite "campsite 2" Nothing
+                            Campsite "campsite 2" Nothing 1
 
                         location =
                             Just (Location 1.1 2)
