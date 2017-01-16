@@ -11,6 +11,7 @@ import Campsite exposing (Campsite)
 import Park exposing (Park)
 import Http
 import Decoder
+import Dict exposing (Dict)
 
 
 type alias Error =
@@ -20,6 +21,7 @@ type alias Error =
 
 type alias Model =
     { campsites : List Campsite
+    , parks : Dict Int Park
     , location : Maybe Location
     , error : Maybe Error
     }
@@ -33,7 +35,7 @@ type Msg
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = [], location = Nothing, error = Nothing }
+    ( { campsites = [], parks = Dict.empty, location = Nothing, error = Nothing }
       -- On startup immediately try to get the location and the campsite data
     , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
     )
@@ -108,7 +110,12 @@ update msg model =
 
         NewData (Ok data) ->
             -- Replace the current campsites with the new ones
-            ( { model | campsites = data.campsites }, Cmd.none )
+            ( { model | campsites = data.campsites, parks = (transformParks data.parks) }, Cmd.none )
+
+
+transformParks : List Park -> Dict Int Park
+transformParks parks =
+    Dict.fromList (List.map (\park -> ( park.id, park )) parks)
 
 
 campsiteListItem : Maybe Location -> Campsite -> Html msg
