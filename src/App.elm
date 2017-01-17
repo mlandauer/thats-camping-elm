@@ -2,6 +2,7 @@ module App exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Time
 import Date
 import Geolocation
@@ -19,11 +20,17 @@ type alias Error =
     Geolocation.Error
 
 
+type Page
+    = Campsites
+    | About
+
+
 type alias Model =
     { campsites : List Campsite
     , parks : Dict Int Park
     , location : Maybe Location
     , error : Maybe Error
+    , page : Page
     }
 
 
@@ -31,11 +38,12 @@ type Msg
     = NewCampsite Campsite
     | UpdateLocation (Result Geolocation.Error Geolocation.Location)
     | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
+    | ChangePage Page
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = [], parks = Dict.empty, location = Nothing, error = Nothing }
+    ( { campsites = [], parks = Dict.empty, location = Nothing, error = Nothing, page = Campsites }
       -- On startup immediately try to get the location and the campsite data
     , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
     )
@@ -52,11 +60,21 @@ main =
 
 view : Model -> Html Msg
 view model =
+    case model.page of
+        Campsites ->
+            campsitesView model
+
+        About ->
+            aboutView model
+
+
+campsitesView : Model -> Html Msg
+campsitesView model =
     div [ id "app" ]
         [ div [ class "campsite-list" ]
             [ nav [ class "navbar navbar-default navbar-fixed-top" ]
                 [ div [ class "container" ]
-                    [ a [ href "#", class "btn navbar-link navbar-text pull-right" ]
+                    [ a [ onClick (ChangePage About), href "#", class "btn navbar-link navbar-text pull-right" ]
                         [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
                     , h1 [] [ text "Camping near you" ]
                     ]
@@ -65,6 +83,45 @@ view model =
                 [ div [] [ text (formatError model.error) ]
                 , div [ class "list-group" ]
                     (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
+                ]
+            ]
+        ]
+
+
+aboutView model =
+    div [ id "app" ]
+        [ div [ class "campsite-list" ]
+            [ nav [ class "navbar navbar-default navbar-fixed-top" ]
+                [ div [ class "container" ]
+                    [ button [ onClick (ChangePage Campsites), class "btn btn-link navbar-link navbar-text pull-left" ] [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
+                    , h1 [] [ text "About" ]
+                    ]
+                ]
+            , div [ class "content" ]
+                [ h2 [] [ text "About That's Camping" ]
+                , p [] [ text "Find campsites near you in New South Wales, Australia. It covers camping on public, common land such as National Parks, State Forests and Local Council land." ]
+                , p []
+                    [ text "It works "
+                    , strong [] [ text "completely offline" ]
+                    , text ", even when you're far far away from a mobile phone tower. When does that ever happen while camping?"
+                    ]
+                , p []
+                    [ text "Made by "
+                    , a [ href "https://twitter.com/matthewlandauer" ] [ text "Matthew Landauer" ]
+                    , text " based on an iOS app. It's free and "
+                    , a [ href "https://github.com/mlandauer/thats-camping-elm" ] [ text "open source" ]
+                    , text " because that's the way it ought to be."
+                    ]
+                  -- TODO: Show current version of the app here
+                , h2 [] [ text "Things you might want to do" ]
+                , p []
+                    [ a [ href "https://github.com/mlandauer/thats-camping-elm/issues" ]
+                        [ text "Suggest a "
+                        , strong [] [ text "feature" ]
+                        , text " or report an "
+                        , strong [] [ text "issue" ]
+                        ]
+                    ]
                 ]
             ]
         ]
@@ -110,6 +167,9 @@ update msg model =
         NewData (Ok data) ->
             -- Replace the current campsites with the new ones
             ( { model | campsites = data.campsites, parks = (transformParks data.parks) }, Cmd.none )
+
+        ChangePage page ->
+            ( { model | page = page }, Cmd.none )
 
 
 transformParks : List Park -> Dict Int Park
