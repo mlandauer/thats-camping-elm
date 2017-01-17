@@ -106,12 +106,7 @@ campsitesView : Model -> Html Msg
 campsitesView model =
     div [ id "app" ]
         [ div [ class "campsite-list" ]
-            [ nav [ class "navbar navbar-default navbar-fixed-top" ]
-                [ div [ class "container" ]
-                    [ aboutButton
-                    , h1 [] [ text "Camping near you" ]
-                    ]
-                ]
+            [ navBar "Camping near you" False True
             , div [ class "content" ]
                 [ div [] [ text (formatError model.error) ]
                 , div [ class "list-group" ]
@@ -139,15 +134,30 @@ link page attributes html =
     a ((href (page2url page)) :: attributes) html
 
 
+navBar : String -> Bool -> Bool -> Html Msg
+navBar title showBack showAbout =
+    -- TODO: Turn showBack and showAbout into a record for legibility
+    nav [ class "navbar navbar-default navbar-fixed-top" ]
+        [ div [ class "container" ]
+            ((if showBack then
+                [ backButton ]
+              else
+                []
+             )
+                ++ (if showAbout then
+                        [ aboutButton ]
+                    else
+                        []
+                   )
+                ++ [ h1 [] [ text title ] ]
+            )
+        ]
+
+
 aboutView model =
     div [ id "app" ]
         [ div [ class "campsite-list" ]
-            [ nav [ class "navbar navbar-default navbar-fixed-top" ]
-                [ div [ class "container" ]
-                    [ backButton
-                    , h1 [] [ text "About" ]
-                    ]
-                ]
+            [ navBar "About" True False
             , div [ class "content" ]
                 [ h2 [] [ text "About That's Camping" ]
                 , p [] [ text "Find campsites near you in New South Wales, Australia. It covers camping on public, common land such as National Parks, State Forests and Local Council land." ]
