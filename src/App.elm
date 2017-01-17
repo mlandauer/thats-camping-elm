@@ -108,9 +108,7 @@ campsitesView model =
         [ div [ class "campsite-list" ]
             [ nav [ class "navbar navbar-default navbar-fixed-top" ]
                 [ div [ class "container" ]
-                    [ link About
-                        [ class "btn navbar-link navbar-text pull-right" ]
-                        [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
+                    [ aboutButton
                     , h1 [] [ text "Camping near you" ]
                     ]
                 ]
@@ -123,6 +121,19 @@ campsitesView model =
         ]
 
 
+aboutButton : Html Msg
+aboutButton =
+    link About
+        [ class "btn navbar-link navbar-text pull-right" ]
+        [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
+
+
+backButton : Html Msg
+backButton =
+    button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ]
+        [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
+
+
 link : Page -> List (Attribute Msg) -> List (Html Msg) -> Html Msg
 link page attributes html =
     a ((href (page2url page)) :: attributes) html
@@ -133,7 +144,7 @@ aboutView model =
         [ div [ class "campsite-list" ]
             [ nav [ class "navbar navbar-default navbar-fixed-top" ]
                 [ div [ class "container" ]
-                    [ button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ] [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
+                    [ backButton
                     , h1 [] [ text "About" ]
                     ]
                 ]
