@@ -66,9 +66,9 @@ hash2messages : Navigation.Location -> List Msg
 hash2messages location =
     let
         hash =
-            RouteUrl.Builder.path (RouteUrl.Builder.fromHash (Debug.log "location.href" location.href))
+            RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href)
     in
-        if (Debug.log "hash" hash) == [ "campsites" ] then
+        if hash == [ "campsites" ] then
             [ ChangePage Campsites ]
         else if hash == [ "about" ] then
             [ ChangePage About ]
