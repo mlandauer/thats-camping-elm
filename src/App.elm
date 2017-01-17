@@ -42,6 +42,7 @@ type Msg
     | UpdateLocation (Result Geolocation.Error Geolocation.Location)
     | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
     | ChangePage Page
+    | PageBack
 
 
 init : ( Model, Cmd Msg )
@@ -132,7 +133,7 @@ aboutView model =
         [ div [ class "campsite-list" ]
             [ nav [ class "navbar navbar-default navbar-fixed-top" ]
                 [ div [ class "container" ]
-                    [ button [ onClick (ChangePage Campsites), class "btn btn-link navbar-link navbar-text pull-left" ] [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
+                    [ button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ] [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
                     , h1 [] [ text "About" ]
                     ]
                 ]
@@ -209,6 +210,9 @@ update msg model =
 
         ChangePage page ->
             ( { model | page = page }, Cmd.none )
+
+        PageBack ->
+            ( model, Navigation.back 1 )
 
 
 transformParks : List Park -> Dict Int Park
