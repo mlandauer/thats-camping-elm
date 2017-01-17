@@ -13,6 +13,9 @@ import Park exposing (Park)
 import Http
 import Decoder
 import Dict exposing (Dict)
+import RouteUrl
+import RouteUrl.Builder
+import Navigation
 
 
 type alias Error =
@@ -55,7 +58,37 @@ subscriptions model =
 
 
 main =
-    program { init = init, view = view, update = update, subscriptions = subscriptions }
+    RouteUrl.program { delta2url = delta2hash, location2messages = hash2messages, init = init, view = view, update = update, subscriptions = subscriptions }
+
+
+hash2messages : Navigation.Location -> List Msg
+hash2messages location =
+    let
+        hash =
+            RouteUrl.Builder.path (RouteUrl.Builder.fromHash (Debug.log "location.href" location.href))
+    in
+        if (Debug.log "hash" hash) == [ "campsites" ] then
+            [ ChangePage Campsites ]
+        else if hash == [ "about" ] then
+            [ ChangePage About ]
+        else
+            -- TODO: Show a 404 page here instead of doing nothing
+            []
+
+
+delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
+delta2hash previous current =
+    Just (RouteUrl.UrlChange RouteUrl.NewEntry (page2url current.page))
+
+
+page2url : Page -> String
+page2url page =
+    case page of
+        Campsites ->
+            "#/campsites"
+
+        About ->
+            "#/about"
 
 
 view : Model -> Html Msg
@@ -74,7 +107,8 @@ campsitesView model =
         [ div [ class "campsite-list" ]
             [ nav [ class "navbar navbar-default navbar-fixed-top" ]
                 [ div [ class "container" ]
-                    [ a [ onClick (ChangePage About), href "#", class "btn navbar-link navbar-text pull-right" ]
+                    [ link About
+                        [ class "btn navbar-link navbar-text pull-right" ]
                         [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
                     , h1 [] [ text "Camping near you" ]
                     ]
@@ -86,6 +120,11 @@ campsitesView model =
                 ]
             ]
         ]
+
+
+link : Page -> List (Attribute Msg) -> List (Html Msg) -> Html Msg
+link page attributes html =
+    a ((href (page2url page)) :: attributes) html
 
 
 aboutView model =
