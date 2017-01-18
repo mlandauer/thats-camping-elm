@@ -1,10 +1,8 @@
 module App exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
 import Geolocation
 import Task
-import Location
 import Http
 import Decoder
 import Dict exposing (Dict)
@@ -13,7 +11,6 @@ import Pages.About.View
 import Pages.Campsites.View
 import App.Model exposing (..)
 import App.Update exposing (..)
-import App.View exposing (..)
 
 
 init : ( Model, Cmd Msg )
