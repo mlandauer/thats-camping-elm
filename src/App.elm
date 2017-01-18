@@ -2,9 +2,6 @@ module App exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
-import Time
-import Date
 import Geolocation
 import Task
 import Location
