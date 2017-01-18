@@ -7,9 +7,9 @@ module Decoder
         )
 
 import Json.Decode exposing (..)
-import Location exposing (Location)
-import Campsite exposing (Campsite)
-import Park exposing (Park)
+import Location
+import Campsite
+import App.Model exposing (Campsite, Location, Park)
 
 
 location : Decoder (Maybe Location)

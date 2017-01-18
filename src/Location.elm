@@ -1,7 +1,6 @@
 module Location
     exposing
-        ( Location
-        , distanceInMetres
+        ( distanceInMetres
         , bearingInDegrees
         , distanceText
         , bearingText
@@ -12,10 +11,7 @@ module Location
         )
 
 import Array
-
-
-type alias Location =
-    { latitude : Float, longitude : Float }
+import App.Model exposing (Location)
 
 
 degrees : Location -> Location

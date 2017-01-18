@@ -7,25 +7,23 @@ import Time
 import Date
 import Geolocation
 import Task
-import Location exposing (Location)
-import Campsite exposing (Campsite)
-import Park exposing (Park)
+import Location
+import Campsite
 import Http
 import Decoder
 import Dict exposing (Dict)
 import RouteUrl
 import RouteUrl.Builder
 import Navigation
+import Pages.About.View
+import App.Model exposing (..)
+import App.Update exposing (..)
+import App.View exposing (..)
 
 
 type alias Error =
     -- We could have more kind of errors here
     Geolocation.Error
-
-
-type Page
-    = Campsites
-    | About
 
 
 type alias Model =
@@ -35,14 +33,6 @@ type alias Model =
     , error : Maybe Error
     , page : Page
     }
-
-
-type Msg
-    = NewCampsite Campsite
-    | UpdateLocation (Result Geolocation.Error Geolocation.Location)
-    | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
-    | ChangePage Page
-    | PageBack
 
 
 init : ( Model, Cmd Msg )
@@ -82,16 +72,6 @@ delta2hash previous current =
     Just (RouteUrl.UrlChange RouteUrl.NewEntry (page2url current.page))
 
 
-page2url : Page -> String
-page2url page =
-    case page of
-        Campsites ->
-            "#/campsites"
-
-        About ->
-            "#/about"
-
-
 view : Model -> Html Msg
 view model =
     case model.page of
@@ -99,7 +79,7 @@ view model =
             campsitesView model
 
         About ->
-            aboutView model
+            Pages.About.View.view
 
 
 campsitesView : Model -> Html Msg
@@ -111,78 +91,6 @@ campsitesView model =
                 [ div [] [ text (formatError model.error) ]
                 , div [ class "list-group" ]
                     (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
-                ]
-            ]
-        ]
-
-
-aboutButton : Html Msg
-aboutButton =
-    link About
-        [ class "btn navbar-link navbar-text pull-right" ]
-        [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
-
-
-backButton : Html Msg
-backButton =
-    button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ]
-        [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
-
-
-link : Page -> List (Attribute Msg) -> List (Html Msg) -> Html Msg
-link page attributes html =
-    a ((href (page2url page)) :: attributes) html
-
-
-navBar : String -> Bool -> Bool -> Html Msg
-navBar title showBack showAbout =
-    -- TODO: Turn showBack and showAbout into a record for legibility
-    nav [ class "navbar navbar-default navbar-fixed-top" ]
-        [ div [ class "container" ]
-            ((if showBack then
-                [ backButton ]
-              else
-                []
-             )
-                ++ (if showAbout then
-                        [ aboutButton ]
-                    else
-                        []
-                   )
-                ++ [ h1 [] [ text title ] ]
-            )
-        ]
-
-
-aboutView model =
-    div [ id "app" ]
-        [ div [ class "campsite-list" ]
-            [ navBar "About" True False
-            , div [ class "content" ]
-                [ h2 [] [ text "About That's Camping" ]
-                , p [] [ text "Find campsites near you in New South Wales, Australia. It covers camping on public, common land such as National Parks, State Forests and Local Council land." ]
-                , p []
-                    [ text "It works "
-                    , strong [] [ text "completely offline" ]
-                    , text ", even when you're far far away from a mobile phone tower. When does that ever happen while camping?"
-                    ]
-                , p []
-                    [ text "Made by "
-                    , a [ href "https://twitter.com/matthewlandauer" ] [ text "Matthew Landauer" ]
-                    , text " based on an iOS app. It's free and "
-                    , a [ href "https://github.com/mlandauer/thats-camping-elm" ] [ text "open source" ]
-                    , text " because that's the way it ought to be."
-                    ]
-                  -- TODO: Show current version of the app here
-                , h2 [] [ text "Things you might want to do" ]
-                , p []
-                    [ a [ href "https://github.com/mlandauer/thats-camping-elm/issues" ]
-                        [ text "Suggest a "
-                        , strong [] [ text "feature" ]
-                        , text " or report an "
-                        , strong [] [ text "issue" ]
-                        ]
-                    ]
                 ]
             ]
         ]

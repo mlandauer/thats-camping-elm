@@ -1,10 +1,7 @@
-module Campsite exposing (Campsite, compareCampsite)
+module Campsite exposing (compareCampsite)
 
-import Location exposing (Location)
-
-
-type alias Campsite =
-    { name : String, location : Maybe Location, parkId : Int }
+import Location
+import App.Model exposing (Campsite, Location)
 
 
 compareCampsite : Maybe Location -> Campsite -> Campsite -> Order
