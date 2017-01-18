@@ -5,7 +5,6 @@ import Html.Attributes exposing (..)
 import Geolocation
 import Task
 import Location
-import Campsite
 import Http
 import Decoder
 import Dict exposing (Dict)

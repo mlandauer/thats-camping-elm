@@ -8,7 +8,6 @@ module Decoder
 
 import Json.Decode exposing (..)
 import Location
-import Campsite
 import App.Model exposing (Campsite, Location, Park)
 
 

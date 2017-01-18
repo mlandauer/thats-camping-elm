@@ -3,7 +3,6 @@ module Pages.Campsites.View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import App.Model exposing (Model, Campsite, Location, Park, Error)
-import Campsite
 import Dict exposing (Dict)
 import Location
 import Geolocation
@@ -42,7 +41,7 @@ campsiteListItem location parks campsite =
 
 sortCampsites : Maybe Location -> List Campsite -> List Campsite
 sortCampsites location campsites =
-    List.sortWith (Campsite.compareCampsite location) campsites
+    List.sortWith (compareCampsite location) campsites
 
 
 parkNameFromId : Int -> Dict Int Park -> String
@@ -79,3 +78,30 @@ formatError error =
 
         Nothing ->
             ""
+
+
+compareCampsite : Maybe Location -> Campsite -> Campsite -> Order
+compareCampsite location c1 c2 =
+    let
+        d1 =
+            Maybe.map2 Location.distanceInMetres location c1.location
+
+        d2 =
+            Maybe.map2 Location.distanceInMetres location c2.location
+    in
+        case d1 of
+            Just d1 ->
+                case d2 of
+                    Just d2 ->
+                        compare d1 d2
+
+                    Nothing ->
+                        LT
+
+            Nothing ->
+                case d2 of
+                    Just d2 ->
+                        GT
+
+                    Nothing ->
+                        compare c1.name c2.name
