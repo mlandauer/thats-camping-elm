@@ -2,6 +2,8 @@ module App.Update
     exposing
         ( Msg(..)
         , update
+        , hash2messages
+        , delta2hash
         , page2url
         )
 
@@ -10,6 +12,8 @@ import Http
 import Geolocation
 import Navigation
 import Dict exposing (Dict)
+import RouteUrl
+import RouteUrl.Builder
 
 
 type Msg
@@ -50,6 +54,26 @@ update msg model =
 transformParks : List Park -> Dict Int Park
 transformParks parks =
     Dict.fromList (List.map (\park -> ( park.id, park )) parks)
+
+
+hash2messages : Navigation.Location -> List Msg
+hash2messages location =
+    let
+        hash =
+            RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href)
+    in
+        if hash == [ "campsites" ] then
+            [ ChangePage Campsites ]
+        else if hash == [ "about" ] then
+            [ ChangePage About ]
+        else
+            -- TODO: Show a 404 page here instead of doing nothing
+            []
+
+
+delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
+delta2hash previous current =
+    Just (RouteUrl.UrlChange RouteUrl.NewEntry (page2url current.page))
 
 
 page2url : Page -> String

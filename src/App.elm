@@ -10,8 +10,6 @@ import Http
 import Decoder
 import Dict exposing (Dict)
 import RouteUrl
-import RouteUrl.Builder
-import Navigation
 import Pages.About.View
 import App.Model exposing (..)
 import App.Update exposing (..)
@@ -33,26 +31,6 @@ subscriptions model =
 
 main =
     RouteUrl.program { delta2url = delta2hash, location2messages = hash2messages, init = init, view = view, update = update, subscriptions = subscriptions }
-
-
-hash2messages : Navigation.Location -> List Msg
-hash2messages location =
-    let
-        hash =
-            RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href)
-    in
-        if hash == [ "campsites" ] then
-            [ ChangePage Campsites ]
-        else if hash == [ "about" ] then
-            [ ChangePage About ]
-        else
-            -- TODO: Show a 404 page here instead of doing nothing
-            []
-
-
-delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
-delta2hash previous current =
-    Just (RouteUrl.UrlChange RouteUrl.NewEntry (page2url current.page))
 
 
 view : Model -> Html Msg
