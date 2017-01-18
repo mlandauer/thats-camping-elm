@@ -18,20 +18,6 @@ import App.Update exposing (..)
 import App.View exposing (..)
 
 
-type alias Error =
-    -- We could have more kind of errors here
-    Geolocation.Error
-
-
-type alias Model =
-    { campsites : List Campsite
-    , parks : Dict Int Park
-    , location : Maybe Location
-    , error : Maybe Error
-    , page : Page
-    }
-
-
 init : ( Model, Cmd Msg )
 init =
     ( { campsites = [], parks = Dict.empty, location = Nothing, error = Nothing, page = Campsites }
@@ -112,38 +98,6 @@ formatError error =
 
         Nothing ->
             ""
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        NewCampsite campsite ->
-            ( { model | campsites = campsite :: model.campsites }, Cmd.none )
-
-        UpdateLocation (Err error) ->
-            ( { model | error = Just error }, Cmd.none )
-
-        UpdateLocation (Ok location) ->
-            ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
-
-        NewData (Err error) ->
-            -- TODO: Make it show the error. For the time being does nothing
-            ( model, Cmd.none )
-
-        NewData (Ok data) ->
-            -- Replace the current campsites with the new ones
-            ( { model | campsites = data.campsites, parks = (transformParks data.parks) }, Cmd.none )
-
-        ChangePage page ->
-            ( { model | page = page }, Cmd.none )
-
-        PageBack ->
-            ( model, Navigation.back 1 )
-
-
-transformParks : List Park -> Dict Int Park
-transformParks parks =
-    Dict.fromList (List.map (\park -> ( park.id, park )) parks)
 
 
 campsiteListItem : Maybe Location -> Dict Int Park -> Campsite -> Html msg
