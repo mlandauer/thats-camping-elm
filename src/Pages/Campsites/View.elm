@@ -6,9 +6,9 @@ import App.Model exposing (Campsite, Location, Park, Error)
 import Dict exposing (Dict)
 import Location
 import Geolocation
-import App.View exposing (navBar)
 import App.Update exposing (Msg)
 import Pages.Campsites.Model exposing (..)
+import App.ViewHelpers exposing (navBar)
 
 
 -- We're using the app wide Model here. Is that really a sensible thing

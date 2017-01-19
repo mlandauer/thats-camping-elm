@@ -7,10 +7,9 @@ import Http
 import Decoder
 import Dict exposing (Dict)
 import RouteUrl
-import Pages.About.View
-import Pages.Campsites.View
 import App.Model exposing (..)
 import App.Update exposing (..)
+import App.View exposing (..)
 
 
 init : ( Model, Cmd Msg )
@@ -28,21 +27,6 @@ subscriptions model =
 
 main =
     RouteUrl.program { delta2url = delta2hash, location2messages = hash2messages, init = init, view = view, update = update, subscriptions = subscriptions }
-
-
-view : Model -> Html Msg
-view model =
-    case model.page of
-        Campsites ->
-            Pages.Campsites.View.view
-                { campsites = model.campsites
-                , parks = model.parks
-                , location = model.location
-                , error = model.error
-                }
-
-        About ->
-            Pages.About.View.view
 
 
 syncData =

@@ -2,13 +2,13 @@ module Pages.About.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import App.View
+import App.ViewHelpers exposing (navBar)
 
 
 view =
     div [ id "app" ]
         [ div [ class "campsite-list" ]
-            [ App.View.navBar "About" True False
+            [ navBar "About" True False
             , div [ class "content" ]
                 [ h2 [] [ text "About That's Camping" ]
                 , p [] [ text "Find campsites near you in New South Wales, Australia. It covers camping on public, common land such as National Parks, State Forests and Local Council land." ]
