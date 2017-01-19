@@ -9,7 +9,7 @@ import App.View exposing (..)
 main =
     RouteUrl.program
         { delta2url = delta2hash
-        , location2messages = hash2messages
+        , location2messages = location2messages
         , init = init
         , view = view
         , update = update

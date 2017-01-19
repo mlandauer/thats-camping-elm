@@ -2,7 +2,7 @@ module App.Update
     exposing
         ( Msg(..)
         , update
-        , hash2messages
+        , location2messages
         , delta2hash
         , page2url
         , init
@@ -67,8 +67,8 @@ transformParks parks =
     Dict.fromList (List.map (\park -> ( park.id, park )) parks)
 
 
-hash2messages : Navigation.Location -> List Msg
-hash2messages location =
+location2messages : Navigation.Location -> List Msg
+location2messages location =
     let
         hash =
             RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href)
