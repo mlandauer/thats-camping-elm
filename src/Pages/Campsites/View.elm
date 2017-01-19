@@ -2,12 +2,13 @@ module Pages.Campsites.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import App.Model exposing (Model, Campsite, Location, Park, Error)
+import App.Model exposing (Campsite, Location, Park, Error)
 import Dict exposing (Dict)
 import Location
 import Geolocation
 import App.View exposing (navBar)
 import App.Update exposing (Msg)
+import Pages.Campsites.Model exposing (..)
 
 
 -- We're using the app wide Model here. Is that really a sensible thing

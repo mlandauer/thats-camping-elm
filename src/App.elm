@@ -34,7 +34,12 @@ view : Model -> Html Msg
 view model =
     case model.page of
         Campsites ->
-            Pages.Campsites.View.view model
+            Pages.Campsites.View.view
+                { campsites = model.campsites
+                , parks = model.parks
+                , location = model.location
+                , error = model.error
+                }
 
         About ->
             Pages.About.View.view
