@@ -1,6 +1,5 @@
 module App exposing (..)
 
-import Html exposing (..)
 import Geolocation
 import Task
 import Http
