@@ -4,7 +4,7 @@ import Html exposing (..)
 import Geolocation
 import Task
 import Http
-import Decoder
+import App.Decoder
 import Dict exposing (Dict)
 import RouteUrl
 import App.Model exposing (..)
@@ -37,6 +37,6 @@ syncData =
             "https://raw.githubusercontent.com/mlandauer/thats-camping-react/master/data.json"
 
         request =
-            Http.get url Decoder.parksAndCampsites
+            Http.get url App.Decoder.parksAndCampsites
     in
         Http.send NewData request

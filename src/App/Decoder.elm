@@ -1,4 +1,4 @@
-module Decoder
+module App.Decoder
     exposing
         ( location
         , campsite
