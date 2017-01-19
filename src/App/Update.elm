@@ -5,15 +5,18 @@ module App.Update
         , hash2messages
         , delta2hash
         , page2url
+        , init
         )
 
 import App.Model exposing (..)
+import App.Decoder exposing (parksAndCampsites)
 import Http
 import Geolocation
 import Navigation
 import Dict exposing (Dict)
 import RouteUrl
 import RouteUrl.Builder
+import Task
 
 
 type Msg
@@ -22,6 +25,14 @@ type Msg
     | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
     | ChangePage Page
     | PageBack
+
+
+init : ( Model, Cmd Msg )
+init =
+    ( { campsites = [], parks = Dict.empty, location = Nothing, error = Nothing, page = Campsites }
+      -- On startup immediately try to get the location and the campsite data
+    , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
+    )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -84,3 +95,16 @@ page2url page =
 
         About ->
             "#/about"
+
+
+syncData =
+    let
+        -- Just load the json data from github for the time being. Should do something
+        -- more sensible than this in the longer term but it's good enough for now
+        url =
+            "https://raw.githubusercontent.com/mlandauer/thats-camping-react/master/data.json"
+
+        request =
+            Http.get url App.Decoder.parksAndCampsites
+    in
+        Http.send NewData request
