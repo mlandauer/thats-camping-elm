@@ -11,10 +11,6 @@ import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar)
 
 
--- We're using the app wide Model here. Is that really a sensible thing
--- to be doing?
-
-
 view : Model -> Html Msg
 view model =
     div [ id "app" ]
