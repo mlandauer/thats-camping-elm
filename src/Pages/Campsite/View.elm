@@ -26,17 +26,17 @@ view model =
                             Nothing ->
                                 []
                         )
+                    , div []
+                        -- TODO: Add the actual description
+                        [ p [] [ text "Main description goes here" ] ]
+                    , h2 [] [ text "Facilities" ]
+                      -- TODO: Add facilities description
+                    , p [] [ text "Facilities description goes here" ]
+                    , h2 [] [ text "Access" ]
+                      -- TODO: Add access description
+                    , p [] [ text "Access description goes here" ]
+                      -- TODO: Add directions button
                     ]
                 ]
             ]
         ]
-
-
-
---   <p>in <Link to={"/parks/" + this.props.campsite.park.id}>{this.props.campsite.park.longName}</Link>.</p>
---   <div dangerouslySetInnerHTML={this.getDescription()}/>
---   <h2>Facilities</h2>
---   <p>{this.facilitiesText()}</p>
---   <h2>Access</h2>
---   <p>{this.accessText()}</p>
---   <a href={this.mapUrl()} className="directions btn btn-default" disabled={this.directionsEnabled() ? "" : "disabled"}>Directions to campsite</a>
