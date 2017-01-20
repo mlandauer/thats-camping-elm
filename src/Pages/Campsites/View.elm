@@ -1,4 +1,4 @@
-module Pages.Campsites.View exposing (view)
+module Pages.Campsites.View exposing (view, compareCampsite)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)

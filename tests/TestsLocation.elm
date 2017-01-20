@@ -2,7 +2,8 @@ module TestsLocation exposing (..)
 
 import Test exposing (..)
 import Expect
-import Location exposing (Location)
+import Location
+import App.Model exposing (Location)
 
 
 all : Test

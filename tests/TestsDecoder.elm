@@ -3,10 +3,8 @@ module TestsDecoder exposing (..)
 import Test exposing (..)
 import Expect
 import Json.Decode
-import Decoder
-import Location exposing (Location)
-import Campsite exposing (Campsite)
-import Park exposing (Park)
+import App.Decoder
+import App.Model exposing (Location, Campsite, Park)
 
 
 all : Test
@@ -22,7 +20,7 @@ all =
                         expected =
                             Ok (Just (Location -33 150))
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.location json)
+                        Expect.equal expected (Json.Decode.decodeString App.Decoder.location json)
             , test "location data is absent" <|
                 \() ->
                     let
@@ -32,19 +30,19 @@ all =
                         expected =
                             Ok (Nothing)
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.location json)
+                        Expect.equal expected (Json.Decode.decodeString App.Decoder.location json)
             ]
         , describe "campsite"
             [ test "example" <|
                 \() ->
                     let
                         json =
-                            """{ "shortName": "Campsite", "latitude": -33, "longitude": 150, "park": 12 }"""
+                            """{ "id": 4, "shortName": "Campsite", "latitude": -33, "longitude": 150, "park": 12 }"""
 
                         expected =
-                            Ok (Campsite "Campsite" (Just (Location -33 150)) 12)
+                            Ok (Campsite 4 "Campsite" (Just (Location -33 150)) 12)
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.campsite json)
+                        Expect.equal expected (Json.Decode.decodeString App.Decoder.campsite json)
             ]
         , describe "park"
             [ test "example" <|
@@ -56,18 +54,18 @@ all =
                         expected =
                             Ok (Park 15 "A park")
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.park json)
+                        Expect.equal expected (Json.Decode.decodeString App.Decoder.park json)
             ]
         , describe "parksAndCampsites"
             [ test "example" <|
                 \() ->
                     let
                         json =
-                            """{"campsites": [{ "shortName": "Campsite", "latitude": -33, "longitude": 150, "park": 12 }], "parks": [{ "id": 15, "shortName": "A park" }]}"""
+                            """{"campsites": [{ "id": 4, "shortName": "Campsite", "latitude": -33, "longitude": 150, "park": 12 }], "parks": [{ "id": 15, "shortName": "A park" }]}"""
 
                         expected =
-                            Ok ({ campsites = [ Campsite "Campsite" (Just (Location -33 150)) 12 ], parks = [ Park 15 "A park" ] })
+                            Ok ({ campsites = [ Campsite 4 "Campsite" (Just (Location -33 150)) 12 ], parks = [ Park 15 "A park" ] })
                     in
-                        Expect.equal expected (Json.Decode.decodeString Decoder.parksAndCampsites json)
+                        Expect.equal expected (Json.Decode.decodeString App.Decoder.parksAndCampsites json)
             ]
         ]
