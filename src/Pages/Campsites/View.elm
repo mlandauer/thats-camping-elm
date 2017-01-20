@@ -13,14 +13,12 @@ import App.ViewHelpers exposing (navBar, link)
 
 view : Model -> Html Msg
 view model =
-    div [ id "app" ]
-        [ div [ class "campsite-list" ]
-            [ navBar "Camping near you" False True
-            , div [ class "content" ]
-                [ div [] [ text (formatError model.error) ]
-                , div [ class "list-group" ]
-                    (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
-                ]
+    div [ class "campsite-list" ]
+        [ navBar "Camping near you" False True
+        , div [ class "content" ]
+            [ div [] [ text (formatError model.error) ]
+            , div [ class "list-group" ]
+                (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
             ]
         ]
 

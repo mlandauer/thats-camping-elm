@@ -11,28 +11,30 @@ import Dict
 
 view : Model -> Html Msg
 view model =
-    case model.page of
-        Campsites ->
-            Pages.Campsites.View.view
-                { campsites = (Dict.values model.campsites)
-                , parks = model.parks
-                , location = model.location
-                , error = model.error
-                }
+    div [ id "app" ]
+        [ case model.page of
+            Campsites ->
+                Pages.Campsites.View.view
+                    { campsites = (Dict.values model.campsites)
+                    , parks = model.parks
+                    , location = model.location
+                    , error = model.error
+                    }
 
-        CampsitePage id ->
-            case Dict.get id model.campsites of
-                Just campsite ->
-                    Pages.Campsite.View.view { campsite = campsite }
+            CampsitePage id ->
+                case Dict.get id model.campsites of
+                    Just campsite ->
+                        Pages.Campsite.View.view { campsite = campsite }
 
-                Nothing ->
-                    view404
+                    Nothing ->
+                        view404
 
-        About ->
-            Pages.About.View.view
+            About ->
+                Pages.About.View.view
 
-        UnknownPage ->
-            view404
+            UnknownPage ->
+                view404
+        ]
 
 
 view404 : Html Msg
