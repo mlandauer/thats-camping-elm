@@ -20,8 +20,7 @@ import Task
 
 
 type Msg
-    = NewCampsite Campsite
-    | UpdateLocation (Result Geolocation.Error Geolocation.Location)
+    = UpdateLocation (Result Geolocation.Error Geolocation.Location)
     | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
     | ChangePage Page
     | PageBack
@@ -38,9 +37,6 @@ init =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NewCampsite campsite ->
-            ( { model | campsites = campsite :: model.campsites }, Cmd.none )
-
         UpdateLocation (Err error) ->
             ( { model | error = Just error }, Cmd.none )
 
