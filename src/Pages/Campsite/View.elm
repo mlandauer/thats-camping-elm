@@ -9,4 +9,4 @@ view : Model -> Html msg
 view model =
     -- TODO: Move top level div up to app view
     div [ id "app" ]
-        [ p [] [ text ("This is the campsite page for campsite " ++ (toString model.id)) ] ]
+        [ p [] [ text ("This is the campsite page for campsite " ++ (toString model.campsite.id)) ] ]

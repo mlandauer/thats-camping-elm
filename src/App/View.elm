@@ -21,11 +21,21 @@ view model =
                 }
 
         CampsitePage id ->
-            Pages.Campsite.View.view { id = id }
+            case Dict.get id model.campsites of
+                Just campsite ->
+                    Pages.Campsite.View.view { campsite = campsite }
+
+                Nothing ->
+                    view404
 
         About ->
             Pages.About.View.view
 
         UnknownPage ->
-            -- TODO: Make this page less ugly
-            p [] [ text "This is a 404" ]
+            view404
+
+
+view404 : Html Msg
+view404 =
+    -- TODO: Make this page less ugly
+    p [] [ text "This is a 404" ]
