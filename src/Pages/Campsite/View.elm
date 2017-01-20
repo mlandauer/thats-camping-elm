@@ -10,13 +10,12 @@ import App.Update exposing (Msg)
 view : Model -> Html Msg
 view model =
     div [ class "campsite-detail-page" ]
-        [ App.ViewHelpers.navBar model.campsite.name True True
+        [ App.ViewHelpers.navBar model.campsite.shortName True True
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]
                     [ -- TODO: Add star
-                      -- TODO: This should be the long name of the campsite here
-                      h2 [] [ text model.campsite.name ]
+                      h2 [] [ text model.campsite.longName ]
                     ]
                 ]
             ]

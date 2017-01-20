@@ -29,7 +29,7 @@ campsiteListItem location parks campsite =
         [ class "list-group-item" ]
         [ div [ class "campsite" ]
             [ div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
-            , div [ class "name" ] [ text campsite.name ]
+            , div [ class "name" ] [ text campsite.shortName ]
             , div [ class "park" ] [ text (parkNameFromId campsite.parkId parks) ]
             ]
         ]
@@ -100,4 +100,4 @@ compareCampsite location c1 c2 =
                         GT
 
                     Nothing ->
-                        compare c1.name c2.name
+                        compare c1.shortName c2.shortName
