@@ -31,7 +31,7 @@ type alias Campsite =
 
 
 type alias Park =
-    { id : Int, name : String }
+    { id : Int, shortName : String, longName : String }
 
 
 type alias Error =

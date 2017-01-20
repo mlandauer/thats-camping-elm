@@ -15,7 +15,17 @@ view model =
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]
                     [ -- TODO: Add star
-                      h2 [] [ text model.campsite.longName ]
+                      h2 []
+                        [ text model.campsite.longName ]
+                      -- TODO: Add link to park
+                    , p []
+                        (case model.park of
+                            Just park ->
+                                [ text ("in " ++ park.longName ++ ".") ]
+
+                            Nothing ->
+                                []
+                        )
                     ]
                 ]
             ]

@@ -44,7 +44,7 @@ parkNameFromId : Int -> Dict Int Park -> String
 parkNameFromId id parks =
     case Dict.get id parks of
         Just park ->
-            park.name
+            park.shortName
 
         Nothing ->
             ""
