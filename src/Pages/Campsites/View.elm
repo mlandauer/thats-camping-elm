@@ -2,13 +2,13 @@ module Pages.Campsites.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import App.Model exposing (Campsite, Location, Park, Error)
+import App.Model exposing (Campsite, Location, Park, Error, Page(..))
 import Dict exposing (Dict)
 import Location
 import Geolocation
 import App.Update exposing (Msg)
 import Pages.Campsites.Model exposing (..)
-import App.ViewHelpers exposing (navBar)
+import App.ViewHelpers exposing (navBar, link)
 
 
 view : Model -> Html Msg
@@ -27,7 +27,8 @@ view model =
 
 campsiteListItem : Maybe Location -> Dict Int Park -> Campsite -> Html msg
 campsiteListItem location parks campsite =
-    a [ href "#", class "list-group-item" ]
+    link (CampsitePage campsite.id)
+        [ class "list-group-item" ]
         [ div [ class "campsite" ]
             [ div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
             , div [ class "name" ] [ text campsite.name ]

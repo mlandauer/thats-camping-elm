@@ -12,9 +12,14 @@ import Dict exposing (Dict)
 import Geolocation
 
 
-type Page
+type
+    Page
+    -- TODO: Rename Campsites to CampsitesPage and About to AboutPage
     = Campsites
+    | CampsitePage Int
     | About
+      -- This is the 404 page
+    | UnknownPage
 
 
 type alias Location =

@@ -1,4 +1,4 @@
-module App.ViewHelpers exposing (navBar)
+module App.ViewHelpers exposing (navBar, link)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)

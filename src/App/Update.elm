@@ -78,8 +78,7 @@ location2messages location =
         else if hash == [ "about" ] then
             [ ChangePage About ]
         else
-            -- TODO: Show a 404 page here instead of doing nothing
-            []
+            [ ChangePage UnknownPage ]
 
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
@@ -93,8 +92,14 @@ page2url page =
         Campsites ->
             "#/campsites"
 
+        CampsitePage id ->
+            "#/campsites/" ++ toString id
+
         About ->
             "#/about"
+
+        UnknownPage ->
+            "#/404"
 
 
 syncData =
