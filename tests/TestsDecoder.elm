@@ -37,10 +37,10 @@ all =
                 \() ->
                     let
                         json =
-                            """{ "id": 4, "shortName": "Campsite", "longName": "Long Campsite", "latitude": -33, "longitude": 150, "park": 12 }"""
+                            """{ "id": 4, "shortName": "Campsite", "longName": "Long Campsite", "description": "description", "latitude": -33, "longitude": 150, "park": 12 }"""
 
                         expected =
-                            Ok (Campsite 4 "Campsite" "Long Campsite" (Just (Location -33 150)) 12)
+                            Ok (Campsite 4 "Campsite" "Long Campsite" "description" (Just (Location -33 150)) 12)
                     in
                         Expect.equal expected (Json.Decode.decodeString App.Decoder.campsite json)
             ]
@@ -61,10 +61,10 @@ all =
                 \() ->
                     let
                         json =
-                            """{"campsites": [{ "id": 4, "shortName": "Campsite", "longName": "Long Campsite", "latitude": -33, "longitude": 150, "park": 12 }], "parks": [{ "id": 15, "shortName": "A park", "longName": "A long park" }]}"""
+                            """{"campsites": [{ "id": 4, "shortName": "Campsite", "longName": "Long Campsite", "description": "description", "latitude": -33, "longitude": 150, "park": 12 }], "parks": [{ "id": 15, "shortName": "A park", "longName": "A long park" }]}"""
 
                         expected =
-                            Ok ({ campsites = [ Campsite 4 "Campsite" "Long Campsite" (Just (Location -33 150)) 12 ], parks = [ Park 15 "A park" "A long park" ] })
+                            Ok ({ campsites = [ Campsite 4 "Campsite" "Long Campsite" "description" (Just (Location -33 150)) 12 ], parks = [ Park 15 "A park" "A long park" ] })
                     in
                         Expect.equal expected (Json.Decode.decodeString App.Decoder.parksAndCampsites json)
             ]

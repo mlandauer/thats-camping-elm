@@ -27,8 +27,8 @@ view model =
                                 []
                         )
                     , div []
-                        -- TODO: Add the actual description
-                        [ p [] [ text "Main description goes here" ] ]
+                        -- TODO: Format the description
+                        [ p [] [ text model.campsite.description ] ]
                     , h2 [] [ text "Facilities" ]
                       -- TODO: Add facilities description
                     , p [] [ text "Facilities description goes here" ]
