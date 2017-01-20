@@ -20,7 +20,7 @@ view model =
                 }
 
         CampsitePage id ->
-            Pages.Campsite.View.view
+            Pages.Campsite.View.view { id = id }
 
         About ->
             Pages.About.View.view
