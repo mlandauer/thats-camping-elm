@@ -6,6 +6,7 @@ import Json.Encode exposing (Value)
 import TestsDecoder
 import TestsLocation
 import TestsCampsite
+import Libs.SimpleFormat.Tests
 
 
 main : Test.Runner.Html.TestProgram
@@ -19,6 +20,7 @@ all =
         [ TestsDecoder.all
         , TestsLocation.all
         , TestsCampsite.all
+        , Libs.SimpleFormat.Tests.all
         ]
 
 
