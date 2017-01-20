@@ -22,7 +22,7 @@ type alias Location =
 
 
 type alias Campsite =
-    { name : String, location : Maybe Location, parkId : Int }
+    { id : Int, name : String, location : Maybe Location, parkId : Int }
 
 
 type alias Park =

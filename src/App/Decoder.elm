@@ -22,7 +22,8 @@ location =
 
 campsite : Decoder Campsite
 campsite =
-    map3 Campsite
+    map4 Campsite
+        (field "id" int)
         (field "shortName" string)
         location
         (field "park" int)
