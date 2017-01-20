@@ -76,14 +76,18 @@ formatError error =
             ""
 
 
-compareCampsite : Maybe Location -> Campsite -> Campsite -> Order
-compareCampsite location c1 c2 =
+
+-- We're being a bit flexible with the form of the campsite record so that we can make testing a little less cumbersome
+
+
+compareCampsite : Maybe Location -> { c | location : Maybe Location, shortName : String } -> { c | location : Maybe Location, shortName : String } -> Order
+compareCampsite userLocation c1 c2 =
     let
         d1 =
-            Maybe.map2 Location.distanceInMetres location c1.location
+            Maybe.map2 Location.distanceInMetres userLocation c1.location
 
         d2 =
-            Maybe.map2 Location.distanceInMetres location c2.location
+            Maybe.map2 Location.distanceInMetres userLocation c2.location
     in
         case d1 of
             Just d1 ->

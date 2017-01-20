@@ -17,10 +17,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite 1 "campsite 1" "campsite 1" (Just (Location 1 2)) 1
+                            { location = (Just (Location 1 2)), shortName = "" }
 
                         c2 =
-                            Campsite 2 "campsite 2" "campsite 2" (Just (Location 1.5 2)) 1
+                            { location = (Just (Location 1.5 2)), shortName = "" }
 
                         location =
                             Just (Location 1.1 2)
@@ -30,10 +30,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite 1 "campsite 1" "campsite 1" (Just (Location 1.5 2)) 1
+                            { location = (Just (Location 1.5 2)), shortName = "" }
 
                         c2 =
-                            Campsite 2 "campsite 2" "campsite 2" (Just (Location 1 2)) 1
+                            { location = (Just (Location 1 2)), shortName = "" }
 
                         location =
                             Just (Location 1.1 2)
@@ -43,10 +43,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite 1 "campsite 1" "campsite 1" Nothing 1
+                            { location = Nothing, shortName = "" }
 
                         c2 =
-                            Campsite 2 "campsite 2" "campsite 2" (Just (Location 1.5 2)) 1
+                            { location = (Just (Location 1.5 2)), shortName = "" }
 
                         location =
                             Just (Location 1.1 2)
@@ -56,10 +56,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite 1 "campsite 1" "campsite 1" (Just (Location 1 2)) 1
+                            { location = (Just (Location 1 2)), shortName = "" }
 
                         c2 =
-                            Campsite 2 "campsite 2" "campsite 2" Nothing 1
+                            { location = Nothing, shortName = "" }
 
                         location =
                             Just (Location 1.1 2)
@@ -69,10 +69,10 @@ all =
                 \() ->
                     let
                         c1 =
-                            Campsite 1 "campsite 1" "campsite 1" Nothing 1
+                            { location = Nothing, shortName = "campsite 1" }
 
                         c2 =
-                            Campsite 2 "campsite 2" "campsite 2" Nothing 1
+                            { location = Nothing, shortName = "campsite 2" }
 
                         location =
                             Just (Location 1.1 2)
