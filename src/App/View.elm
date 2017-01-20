@@ -1,6 +1,7 @@
 module App.View exposing (view)
 
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import App.Update exposing (..)
 import App.Model exposing (..)
 import Pages.About.View
