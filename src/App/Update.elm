@@ -28,7 +28,7 @@ type Msg
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = [], parks = Dict.empty, location = Nothing, error = Nothing, page = Campsites }
+    ( { campsites = Dict.empty, parks = Dict.empty, location = Nothing, error = Nothing, page = Campsites }
       -- On startup immediately try to get the location and the campsite data
     , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
     )
@@ -49,7 +49,7 @@ update msg model =
 
         NewData (Ok data) ->
             -- Replace the current campsites with the new ones
-            ( { model | campsites = data.campsites, parks = (transformParks data.parks) }, Cmd.none )
+            ( { model | campsites = (transformCampsites data.campsites), parks = (transformParks data.parks) }, Cmd.none )
 
         ChangePage page ->
             ( { model | page = page }, Cmd.none )
@@ -61,6 +61,11 @@ update msg model =
 transformParks : List Park -> Dict Int Park
 transformParks parks =
     Dict.fromList (List.map (\park -> ( park.id, park )) parks)
+
+
+transformCampsites : List Campsite -> Dict Int Campsite
+transformCampsites campsites =
+    Dict.fromList (List.map (\campsite -> ( campsite.id, campsite )) campsites)
 
 
 location2messages : Navigation.Location -> List Msg

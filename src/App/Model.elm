@@ -40,7 +40,7 @@ type alias Error =
 
 
 type alias Model =
-    { campsites : List Campsite
+    { campsites : Dict Int Campsite
     , parks : Dict Int Park
     , location : Maybe Location
     , error : Maybe Error

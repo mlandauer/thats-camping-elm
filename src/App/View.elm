@@ -6,6 +6,7 @@ import App.Model exposing (..)
 import Pages.About.View
 import Pages.Campsites.View
 import Pages.Campsite.View
+import Dict
 
 
 view : Model -> Html Msg
@@ -13,7 +14,7 @@ view model =
     case model.page of
         Campsites ->
             Pages.Campsites.View.view
-                { campsites = model.campsites
+                { campsites = (Dict.values model.campsites)
                 , parks = model.parks
                 , location = model.location
                 , error = model.error
