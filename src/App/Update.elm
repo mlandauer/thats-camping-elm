@@ -69,16 +69,27 @@ transformParks parks =
 
 location2messages : Navigation.Location -> List Msg
 location2messages location =
-    let
-        hash =
-            RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href)
-    in
-        if hash == [ "campsites" ] then
+    case RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href) of
+        [ "campsites" ] ->
             [ ChangePage Campsites ]
-        else if hash == [ "about" ] then
+
+        [ "campsites", id ] ->
+            case String.toInt id of
+                Ok id ->
+                    [ ChangePage (CampsitePage id) ]
+
+                Err _ ->
+                    [ ChangePage UnknownPage ]
+
+        [ "about" ] ->
             [ ChangePage About ]
-        else
+
+        id :: _ ->
             [ ChangePage UnknownPage ]
+
+        -- Default route
+        [] ->
+            [ ChangePage Campsites ]
 
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
