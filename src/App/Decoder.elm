@@ -1,8 +1,6 @@
 module App.Decoder
     exposing
         ( location
-        , campsite
-        , park
         , parksAndCampsites
         )
 
