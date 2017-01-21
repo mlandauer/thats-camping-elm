@@ -41,4 +41,20 @@ all =
                             ]
                 in
                     Expect.equal (expected) (format "Paragraph\nNew line")
+        , test "should work with cr and lf" <|
+            \() ->
+                let
+                    expected =
+                        Html.div []
+                            [ Html.p []
+                                [ Html.text "Paragraph"
+                                , Html.br [] []
+                                , Html.text "New line"
+                                ]
+                            , Html.p []
+                                [ Html.text "Hello"
+                                ]
+                            ]
+                in
+                    Expect.equal (expected) (format "Paragraph\x0D\nNew line\x0D\n\x0D\nHello")
         ]
