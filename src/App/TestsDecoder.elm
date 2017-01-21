@@ -1,4 +1,4 @@
-module TestsDecoder exposing (..)
+module App.TestsDecoder exposing (..)
 
 import Test exposing (..)
 import Expect

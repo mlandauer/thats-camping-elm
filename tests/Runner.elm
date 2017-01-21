@@ -3,7 +3,7 @@ port module Runner exposing (..)
 import Test exposing (..)
 import Test.Runner.Html
 import Json.Encode exposing (Value)
-import TestsDecoder
+import App.TestsDecoder
 import TestsLocation
 import TestsCampsite
 import Libs.SimpleFormat.Tests
@@ -17,7 +17,7 @@ main =
 all : Test
 all =
     describe "Test Suite"
-        [ TestsDecoder.all
+        [ App.TestsDecoder.all
         , TestsLocation.all
         , TestsCampsite.all
         , Libs.SimpleFormat.Tests.all
