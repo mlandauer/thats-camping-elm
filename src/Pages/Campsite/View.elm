@@ -5,6 +5,7 @@ import Html.Attributes exposing (..)
 import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg)
+import Libs.SimpleFormat.Format
 
 
 view : Model -> Html Msg
@@ -26,9 +27,7 @@ view model =
                             Nothing ->
                                 []
                         )
-                    , div []
-                        -- TODO: Format the description
-                        [ p [] [ text model.campsite.description ] ]
+                    , Libs.SimpleFormat.Format.format model.campsite.description
                     , h2 [] [ text "Facilities" ]
                       -- TODO: Add facilities description
                     , p [] [ text "Facilities description goes here" ]
