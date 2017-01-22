@@ -16,10 +16,11 @@ view model =
     div [ class "campsite-list" ]
         [ navBar "Camping near you" False True
         , div [ class "content" ]
-            [ div [] [ text (formatError model.error) ]
-            , div [ class "list-group" ]
-                (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
-            ]
+            ((List.map (\error -> (div [] [ text (formatError error) ])) model.errors)
+                ++ [ div [ class "list-group" ]
+                        (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
+                   ]
+            )
         ]
 
 
@@ -60,8 +61,8 @@ bearingAndDistanceAsText from to =
             ""
 
 
-formatGeolocationError : Geolocation.Error -> String
-formatGeolocationError error =
+formatError : Geolocation.Error -> String
+formatError error =
     case error of
         Geolocation.PermissionDenied text ->
             "Permission denied: " ++ text
@@ -71,16 +72,6 @@ formatGeolocationError error =
 
         Geolocation.Timeout text ->
             "Timeout: " ++ text
-
-
-formatError : Maybe Error -> String
-formatError error =
-    case error of
-        Just error ->
-            formatGeolocationError error
-
-        Nothing ->
-            ""
 
 
 

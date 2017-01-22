@@ -19,7 +19,7 @@ view model =
                     { campsites = (Dict.values model.campsites)
                     , parks = model.parks
                     , location = model.location
-                    , error = model.error
+                    , errors = model.errors
                     }
 
             CampsitePage id ->

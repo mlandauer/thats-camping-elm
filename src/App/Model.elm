@@ -63,6 +63,6 @@ type alias Model =
     { campsites : Dict Int Campsite
     , parks : Dict Int Park
     , location : Maybe Location
-    , error : Maybe Error
+    , errors : List Error
     , page : Page
     }

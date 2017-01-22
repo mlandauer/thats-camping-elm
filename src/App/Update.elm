@@ -28,7 +28,7 @@ type Msg
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = Dict.empty, parks = Dict.empty, location = Nothing, error = Nothing, page = Campsites }
+    ( { campsites = Dict.empty, parks = Dict.empty, location = Nothing, errors = [], page = Campsites }
       -- On startup immediately try to get the location and the campsite data
     , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
     )
@@ -38,7 +38,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateLocation (Err error) ->
-            ( { model | error = Just error }, Cmd.none )
+            ( { model | errors = (error :: model.errors) }, Cmd.none )
 
         UpdateLocation (Ok location) ->
             ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
