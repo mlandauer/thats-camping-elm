@@ -45,6 +45,7 @@ type alias Campsite =
     , longName : String
     , description : String
     , location : Maybe Location
+    , facilities : Facilities
     , parkId : Int
     }
 

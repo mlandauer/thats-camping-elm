@@ -4,7 +4,7 @@ import Test exposing (..)
 import Expect
 import Json.Decode
 import App.Decoder
-import App.Model exposing (Location, Campsite, Park, Toilets(..))
+import App.Model exposing (Location, Campsite, Park, Toilets(..), Facilities)
 
 
 all : Test
@@ -65,7 +65,7 @@ all =
 "campsites": [{
   "id": 4, "shortName": "Campsite", "longName":"Long Campsite",
   "description": "description", "latitude": -33, "longitude": 150,
-  "park": 12
+  "park": 12, "toilets": "flush"
   }],
 "parks": [{
   "id": 15, "shortName": "A park", "longName": "A long park"
@@ -81,6 +81,7 @@ all =
                                         "Long Campsite"
                                         "description"
                                         (Just (Location -33 150))
+                                        (Facilities Flush)
                                         12
                                     ]
                                  , parks = [ Park 15 "A park" "A long park" ]

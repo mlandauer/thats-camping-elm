@@ -44,12 +44,13 @@ facilities =
 
 campsite : Decoder Campsite
 campsite =
-    map6 Campsite
+    map7 Campsite
         (field "id" int)
         (field "shortName" string)
         (field "longName" string)
         (field "description" string)
         location
+        facilities
         (field "park" int)
 
 
