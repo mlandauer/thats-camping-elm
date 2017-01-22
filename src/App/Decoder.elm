@@ -1,12 +1,13 @@
 module App.Decoder
     exposing
         ( location
+        , toilets
         , parksAndCampsites
         )
 
 import Json.Decode exposing (..)
 import Location
-import App.Model exposing (Campsite, Location, Park)
+import App.Model exposing (Campsite, Location, Park, Toilets(..))
 
 
 location : Decoder (Maybe Location)
@@ -16,6 +17,22 @@ location =
             (field "latitude" float)
             (field "longitude" float)
         )
+
+
+toilets : Decoder Toilets
+toilets =
+    map
+        (\text ->
+            if text == "non_flush" then
+                NonFlush
+            else if text == "flush" then
+                Flush
+            else if text == "none" then
+                None
+            else
+                Unknown
+        )
+        string
 
 
 campsite : Decoder Campsite

@@ -4,7 +4,7 @@ import Test exposing (..)
 import Expect
 import Json.Decode
 import App.Decoder
-import App.Model exposing (Location, Campsite, Park)
+import App.Model exposing (Location, Campsite, Park, Toilets(..))
 
 
 all : Test
@@ -31,6 +31,20 @@ all =
                             Ok (Nothing)
                     in
                         Expect.equal expected (Json.Decode.decodeString App.Decoder.location json)
+            ]
+        , describe "toilets"
+            [ test "non flush" <|
+                \() ->
+                    Expect.equal (Ok NonFlush) (Json.Decode.decodeString App.Decoder.toilets "\"non_flush\"")
+            , test "flush" <|
+                \() ->
+                    Expect.equal (Ok Flush) (Json.Decode.decodeString App.Decoder.toilets "\"flush\"")
+            , test "none" <|
+                \() ->
+                    Expect.equal (Ok None) (Json.Decode.decodeString App.Decoder.toilets "\"none\"")
+            , test "invalid value" <|
+                \() ->
+                    Expect.equal (Ok Unknown) (Json.Decode.decodeString App.Decoder.toilets "\"foo\"")
             ]
         , describe "parksAndCampsites"
             [ test "example" <|

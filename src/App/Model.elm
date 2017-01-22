@@ -1,6 +1,7 @@
 module App.Model
     exposing
         ( Page(..)
+        , Toilets(..)
         , Location
         , Campsite
         , Park
@@ -24,6 +25,13 @@ type
 
 type alias Location =
     { latitude : Float, longitude : Float }
+
+
+type Toilets
+    = NonFlush
+    | Flush
+    | None
+    | Unknown
 
 
 type alias Campsite =
