@@ -16,13 +16,16 @@ view model =
     div [ class "campsite-list" ]
         [ navBar "Camping near you" False True
         , div [ class "content" ]
-            -- TODO: Place all the errors under a single div
-            ((List.map (\error -> (div [] [ text error ])) model.errors)
-                ++ [ div [ class "list-group" ]
-                        (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
-                   ]
-            )
+            [ errorsView model.errors
+            , div [ class "list-group" ]
+                (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
+            ]
         ]
+
+
+errorsView : List String -> Html msg
+errorsView errors =
+    div [] (List.map (\error -> (p [] [ text error ])) errors)
 
 
 campsiteListItem : Maybe Location -> Dict Int Park -> Campsite -> Html msg
