@@ -36,9 +36,9 @@ toilets =
     map
         (\text ->
             if text == "non_flush" then
-                NonFlush
+                NonFlushToilets
             else if text == "flush" then
-                Flush
+                FlushToilets
             else if text == "none" then
                 NoToilets
             else
@@ -52,13 +52,13 @@ barbecues =
     map
         (\text ->
             if text == "wood" then
-                Wood
+                WoodBarbecues
             else if text == "wood_supplied" then
-                WoodSupplied
+                WoodSuppliedBarbecues
             else if text == "wood_bring_your_own" then
-                WoodBringYourOwn
+                WoodBringYourOwnBarbecues
             else if text == "gas_electric" then
-                GasElectric
+                GasElectricBarbecues
             else if text == "none" then
                 NoBarbecues
             else
@@ -72,9 +72,9 @@ showers =
     map
         (\text ->
             if text == "hot" then
-                Hot
+                HotShowers
             else if text == "cold" then
-                Cold
+                ColdShowers
             else if text == "none" then
                 NoShowers
             else

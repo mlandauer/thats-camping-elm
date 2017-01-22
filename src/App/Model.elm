@@ -40,24 +40,24 @@ type alias Location =
 
 
 type Toilets
-    = NonFlush
-    | Flush
+    = NonFlushToilets
+    | FlushToilets
     | NoToilets
     | UnknownToilets
 
 
 type Barbecues
-    = Wood
-    | WoodSupplied
-    | WoodBringYourOwn
-    | GasElectric
+    = WoodBarbecues
+    | WoodSuppliedBarbecues
+    | WoodBringYourOwnBarbecues
+    | GasElectricBarbecues
     | NoBarbecues
     | UnknownBarbecues
 
 
 type Showers
-    = Hot
-    | Cold
+    = HotShowers
+    | ColdShowers
     | NoShowers
     | UnknownShowers
 

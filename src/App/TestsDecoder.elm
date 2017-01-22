@@ -44,10 +44,10 @@ all =
         , describe "toilets"
             [ test "non flush" <|
                 \() ->
-                    Expect.equal (Ok NonFlush) (Json.Decode.decodeString App.Decoder.toilets "\"non_flush\"")
+                    Expect.equal (Ok NonFlushToilets) (Json.Decode.decodeString App.Decoder.toilets "\"non_flush\"")
             , test "flush" <|
                 \() ->
-                    Expect.equal (Ok Flush) (Json.Decode.decodeString App.Decoder.toilets "\"flush\"")
+                    Expect.equal (Ok FlushToilets) (Json.Decode.decodeString App.Decoder.toilets "\"flush\"")
             , test "none" <|
                 \() ->
                     Expect.equal (Ok NoToilets) (Json.Decode.decodeString App.Decoder.toilets "\"none\"")
@@ -58,16 +58,16 @@ all =
         , describe "barbecues"
             [ test "wood" <|
                 \() ->
-                    Expect.equal (Ok Wood) (Json.Decode.decodeString App.Decoder.barbecues "\"wood\"")
+                    Expect.equal (Ok WoodBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"wood\"")
             , test "wood_supplied" <|
                 \() ->
-                    Expect.equal (Ok WoodSupplied) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_supplied\"")
+                    Expect.equal (Ok WoodSuppliedBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_supplied\"")
             , test "wood_bring_your_own" <|
                 \() ->
-                    Expect.equal (Ok WoodBringYourOwn) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_bring_your_own\"")
+                    Expect.equal (Ok WoodBringYourOwnBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_bring_your_own\"")
             , test "gas_electric" <|
                 \() ->
-                    Expect.equal (Ok GasElectric) (Json.Decode.decodeString App.Decoder.barbecues "\"gas_electric\"")
+                    Expect.equal (Ok GasElectricBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"gas_electric\"")
             , test "none" <|
                 \() ->
                     Expect.equal (Ok NoBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"none\"")
@@ -78,10 +78,10 @@ all =
         , describe "showers"
             [ test "hot" <|
                 \() ->
-                    Expect.equal (Ok Hot) (Json.Decode.decodeString App.Decoder.showers "\"hot\"")
+                    Expect.equal (Ok HotShowers) (Json.Decode.decodeString App.Decoder.showers "\"hot\"")
             , test "cold" <|
                 \() ->
-                    Expect.equal (Ok Cold) (Json.Decode.decodeString App.Decoder.showers "\"cold\"")
+                    Expect.equal (Ok ColdShowers) (Json.Decode.decodeString App.Decoder.showers "\"cold\"")
             , test "none" <|
                 \() ->
                     Expect.equal (Ok NoShowers) (Json.Decode.decodeString App.Decoder.showers "\"none\"")
@@ -125,7 +125,7 @@ all =
                                         "Long Campsite"
                                         "description"
                                         (Just (Location -33 150))
-                                        (Facilities Flush False Wood Hot)
+                                        (Facilities FlushToilets False WoodBarbecues HotShowers)
                                         12
                                     ]
                                  , parks = [ Park 15 "A park" "A long park" ]
