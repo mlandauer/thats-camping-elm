@@ -2,6 +2,7 @@ module App.Model
     exposing
         ( Page(..)
         , Toilets(..)
+        , Barbecues(..)
         , Facilities
         , Location
         , Campsite
@@ -27,15 +28,28 @@ type alias Location =
     { latitude : Float, longitude : Float }
 
 
+
+-- TODO: Types for Toilets and Barbecues don't feel right. What would be better?
+
+
 type Toilets
     = NonFlush
     | Flush
-    | None
-    | Unknown
+    | NoToilets
+    | UnknownToilets
+
+
+type Barbecues
+    = Wood
+    | WoodSupplied
+    | WoodBringYourOwn
+    | GasElectric
+    | NoBarbecues
+    | UnknownBarbecues
 
 
 type alias Facilities =
-    { toilets : Toilets, picnicTables : Bool }
+    { toilets : Toilets, picnicTables : Bool, barbecues : Barbecues }
 
 
 type alias Campsite =
