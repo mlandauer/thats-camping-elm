@@ -1,4 +1,4 @@
-module Pages.Campsite.View exposing (view, toiletsText)
+module Pages.Campsite.View exposing (view, toiletsText, picnicTablesText)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -6,7 +6,7 @@ import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg)
 import Libs.SimpleFormat.Format
-import App.Model exposing (Facilities, Toilets(..))
+import App.Model exposing (Facilities, Toilets(..), PicnicTables(..))
 
 
 view : Model -> Html Msg
@@ -60,4 +60,17 @@ toiletsText toilets =
             "No toilets."
 
         UnknownToilets ->
+            ""
+
+
+picnicTablesText : PicnicTables -> String
+picnicTablesText picnicTables =
+    case picnicTables of
+        PicnicTables ->
+            "Has picnic tables."
+
+        NoPicnicTables ->
+            "No picnic tables."
+
+        UnknownPicnicTables ->
             ""
