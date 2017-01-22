@@ -6,6 +6,7 @@ import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg)
 import Libs.SimpleFormat.Format
+import App.Model exposing (Facilities)
 
 
 view : Model -> Html Msg
@@ -29,8 +30,7 @@ view model =
                         )
                     , Libs.SimpleFormat.Format.format model.campsite.description
                     , h2 [] [ text "Facilities" ]
-                      -- TODO: Add facilities description
-                    , p [] [ text "Facilities description goes here" ]
+                    , p [] [ text (facilitiesText model.campsite.facilities) ]
                     , h2 [] [ text "Access" ]
                       -- TODO: Add access description
                     , p [] [ text "Access description goes here" ]
@@ -39,3 +39,9 @@ view model =
                 ]
             ]
         ]
+
+
+facilitiesText : Facilities -> String
+facilitiesText facilities =
+    -- TODO: Add facilities description
+    "Facilities description goes here"
