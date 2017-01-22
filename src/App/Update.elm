@@ -38,7 +38,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateLocation (Err error) ->
-            ( { model | errors = (error :: model.errors) }, Cmd.none )
+            ( { model | errors = ((formatError error) :: model.errors) }, Cmd.none )
 
         UpdateLocation (Ok location) ->
             ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
@@ -56,6 +56,19 @@ update msg model =
 
         PageBack ->
             ( model, Navigation.back 1 )
+
+
+formatError : Geolocation.Error -> String
+formatError error =
+    case error of
+        Geolocation.PermissionDenied text ->
+            "Permission denied: " ++ text
+
+        Geolocation.LocationUnavailable text ->
+            "Location unavailable: " ++ text
+
+        Geolocation.Timeout text ->
+            "Timeout: " ++ text
 
 
 transformParks : List Park -> Dict Int Park

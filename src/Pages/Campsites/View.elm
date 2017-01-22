@@ -2,7 +2,7 @@ module Pages.Campsites.View exposing (view, compareCampsite)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import App.Model exposing (Campsite, Location, Park, Error, Page(..))
+import App.Model exposing (Campsite, Location, Park, Page(..))
 import Dict exposing (Dict)
 import Location
 import Geolocation
@@ -16,7 +16,8 @@ view model =
     div [ class "campsite-list" ]
         [ navBar "Camping near you" False True
         , div [ class "content" ]
-            ((List.map (\error -> (div [] [ text (formatError error) ])) model.errors)
+            -- TODO: Place all the errors under a single div
+            ((List.map (\error -> (div [] [ text error ])) model.errors)
                 ++ [ div [ class "list-group" ]
                         (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
                    ]
@@ -59,19 +60,6 @@ bearingAndDistanceAsText from to =
 
         Nothing ->
             ""
-
-
-formatError : Geolocation.Error -> String
-formatError error =
-    case error of
-        Geolocation.PermissionDenied text ->
-            "Permission denied: " ++ text
-
-        Geolocation.LocationUnavailable text ->
-            "Location unavailable: " ++ text
-
-        Geolocation.Timeout text ->
-            "Timeout: " ++ text
 
 
 

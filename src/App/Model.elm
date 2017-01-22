@@ -6,7 +6,6 @@ module App.Model
         , Location
         , Campsite
         , Park
-        , Error
         , Model
         )
 
@@ -54,15 +53,10 @@ type alias Park =
     { id : Int, shortName : String, longName : String }
 
 
-type alias Error =
-    -- We could have more kind of errors here
-    Geolocation.Error
-
-
 type alias Model =
     { campsites : Dict Int Campsite
     , parks : Dict Int Park
     , location : Maybe Location
-    , errors : List Error
+    , errors : List String
     , page : Page
     }
