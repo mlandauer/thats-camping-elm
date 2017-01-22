@@ -60,17 +60,24 @@ bearingAndDistanceAsText from to =
             ""
 
 
+formatGeolocationError : Geolocation.Error -> String
+formatGeolocationError error =
+    case error of
+        Geolocation.PermissionDenied text ->
+            "Permission denied: " ++ text
+
+        Geolocation.LocationUnavailable text ->
+            "Location unavailable: " ++ text
+
+        Geolocation.Timeout text ->
+            "Timeout: " ++ text
+
+
 formatError : Maybe Error -> String
 formatError error =
     case error of
-        Just (Geolocation.PermissionDenied text) ->
-            "Permission denied: " ++ text
-
-        Just (Geolocation.LocationUnavailable text) ->
-            "Location unavailable: " ++ text
-
-        Just (Geolocation.Timeout text) ->
-            "Timeout: " ++ text
+        Just error ->
+            formatGeolocationError error
 
         Nothing ->
             ""
