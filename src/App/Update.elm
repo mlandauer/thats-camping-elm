@@ -38,14 +38,13 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateLocation (Err error) ->
-            ( { model | errors = ((formatError error) :: model.errors) }, Cmd.none )
+            ( { model | errors = ((formatGeolocationError error) :: model.errors) }, Cmd.none )
 
         UpdateLocation (Ok location) ->
             ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
 
         NewData (Err error) ->
-            -- TODO: Make it show the error. For the time being does nothing
-            ( model, Cmd.none )
+            ( { model | errors = ((formatHttpError error) :: model.errors) }, Cmd.none )
 
         NewData (Ok data) ->
             -- Replace the current campsites with the new ones
@@ -58,8 +57,8 @@ update msg model =
             ( model, Navigation.back 1 )
 
 
-formatError : Geolocation.Error -> String
-formatError error =
+formatGeolocationError : Geolocation.Error -> String
+formatGeolocationError error =
     case error of
         Geolocation.PermissionDenied text ->
             "Permission denied: " ++ text
@@ -69,6 +68,25 @@ formatError error =
 
         Geolocation.Timeout text ->
             "Timeout: " ++ text
+
+
+formatHttpError : Http.Error -> String
+formatHttpError error =
+    case error of
+        Http.BadUrl text ->
+            "Bad URL: " ++ text
+
+        Http.Timeout ->
+            "Timeout"
+
+        Http.NetworkError ->
+            "Network Error"
+
+        Http.BadStatus response ->
+            "Bad Status"
+
+        Http.BadPayload text response ->
+            "Bad payload: " ++ text
 
 
 transformParks : List Park -> Dict Int Park
