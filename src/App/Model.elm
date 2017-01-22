@@ -2,6 +2,7 @@ module App.Model
     exposing
         ( Page(..)
         , Toilets(..)
+        , Facilities
         , Location
         , Campsite
         , Park
@@ -32,6 +33,10 @@ type Toilets
     | Flush
     | None
     | Unknown
+
+
+type alias Facilities =
+    { toilets : Toilets }
 
 
 type alias Campsite =

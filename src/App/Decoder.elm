@@ -2,12 +2,13 @@ module App.Decoder
     exposing
         ( location
         , toilets
+        , facilities
         , parksAndCampsites
         )
 
 import Json.Decode exposing (..)
 import Location
-import App.Model exposing (Campsite, Location, Park, Toilets(..))
+import App.Model exposing (Campsite, Location, Park, Toilets(..), Facilities)
 
 
 location : Decoder (Maybe Location)
@@ -33,6 +34,12 @@ toilets =
                 Unknown
         )
         string
+
+
+facilities : Decoder Facilities
+facilities =
+    map Facilities
+        (field "toilets" toilets)
 
 
 campsite : Decoder Campsite

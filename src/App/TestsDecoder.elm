@@ -46,6 +46,15 @@ all =
                 \() ->
                     Expect.equal (Ok Unknown) (Json.Decode.decodeString App.Decoder.toilets "\"foo\"")
             ]
+        , describe "facilities"
+            [ test "example" <|
+                \() ->
+                    let
+                        json =
+                            """{"toilets": "flush"}"""
+                    in
+                        Expect.equal (Ok { toilets = Flush }) (Json.Decode.decodeString App.Decoder.facilities json)
+            ]
         , describe "parksAndCampsites"
             [ test "example" <|
                 \() ->
