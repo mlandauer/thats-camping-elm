@@ -38,8 +38,9 @@ toilets =
 
 facilities : Decoder Facilities
 facilities =
-    map Facilities
+    map2 Facilities
         (field "toilets" toilets)
+        (field "picnicTables" bool)
 
 
 campsite : Decoder Campsite

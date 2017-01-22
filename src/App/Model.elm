@@ -35,7 +35,7 @@ type Toilets
 
 
 type alias Facilities =
-    { toilets : Toilets }
+    { toilets : Toilets, picnicTables : Bool }
 
 
 type alias Campsite =

@@ -46,15 +46,6 @@ all =
                 \() ->
                     Expect.equal (Ok Unknown) (Json.Decode.decodeString App.Decoder.toilets "\"foo\"")
             ]
-        , describe "facilities"
-            [ test "example" <|
-                \() ->
-                    let
-                        json =
-                            """{"toilets": "flush"}"""
-                    in
-                        Expect.equal (Ok { toilets = Flush }) (Json.Decode.decodeString App.Decoder.facilities json)
-            ]
         , describe "parksAndCampsites"
             [ test "example" <|
                 \() ->
@@ -65,7 +56,7 @@ all =
 "campsites": [{
   "id": 4, "shortName": "Campsite", "longName":"Long Campsite",
   "description": "description", "latitude": -33, "longitude": 150,
-  "park": 12, "toilets": "flush"
+  "park": 12, "toilets": "flush", "picnicTables": false
   }],
 "parks": [{
   "id": 15, "shortName": "A park", "longName": "A long park"
@@ -81,7 +72,7 @@ all =
                                         "Long Campsite"
                                         "description"
                                         (Just (Location -33 150))
-                                        (Facilities Flush)
+                                        (Facilities Flush False)
                                         12
                                     ]
                                  , parks = [ Park 15 "A park" "A long park" ]
