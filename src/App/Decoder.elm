@@ -2,6 +2,7 @@ module App.Decoder
     exposing
         ( location
         , toilets
+        , picnicTables
         , barbecues
         , showers
         , facilities
@@ -16,6 +17,7 @@ import App.Model
         , Location
         , Park
         , Toilets(..)
+        , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
         , Facilities
@@ -45,6 +47,18 @@ toilets =
                 UnknownToilets
         )
         string
+
+
+picnicTables : Decoder PicnicTables
+picnicTables =
+    map
+        (\present ->
+            if present then
+                PicnicTables
+            else
+                NoPicnicTables
+        )
+        bool
 
 
 barbecues : Decoder Barbecues
@@ -87,7 +101,7 @@ facilities : Decoder Facilities
 facilities =
     map4 Facilities
         (field "toilets" toilets)
-        (field "picnicTables" bool)
+        (field "picnicTables" picnicTables)
         (field "barbecues" barbecues)
         (field "showers" showers)
 

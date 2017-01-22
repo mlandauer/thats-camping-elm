@@ -2,6 +2,7 @@ module App.Model
     exposing
         ( Page(..)
         , Toilets(..)
+        , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
         , Facilities
@@ -46,6 +47,12 @@ type Toilets
     | UnknownToilets
 
 
+type PicnicTables
+    = PicnicTables
+    | NoPicnicTables
+    | UnknownPicnicTables
+
+
 type Barbecues
     = WoodBarbecues
     | WoodSuppliedBarbecues
@@ -63,7 +70,7 @@ type Showers
 
 
 type alias Facilities =
-    { toilets : Toilets, picnicTables : Bool, barbecues : Barbecues, showers : Showers }
+    { toilets : Toilets, picnicTables : PicnicTables, barbecues : Barbecues, showers : Showers }
 
 
 type alias Campsite =

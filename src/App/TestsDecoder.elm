@@ -10,6 +10,7 @@ import App.Model
         , Campsite
         , Park
         , Toilets(..)
+        , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
         , Facilities
@@ -54,6 +55,14 @@ all =
             , test "invalid value" <|
                 \() ->
                     Expect.equal (Ok UnknownToilets) (Json.Decode.decodeString App.Decoder.toilets "\"foo\"")
+            ]
+        , describe "picnic tables"
+            [ test "true" <|
+                \() ->
+                    Expect.equal (Ok PicnicTables) (Json.Decode.decodeString App.Decoder.picnicTables "true")
+            , test "false" <|
+                \() ->
+                    Expect.equal (Ok NoPicnicTables) (Json.Decode.decodeString App.Decoder.picnicTables "false")
             ]
         , describe "barbecues"
             [ test "wood" <|
@@ -116,7 +125,7 @@ all =
                                         "Long Campsite"
                                         "description"
                                         (Just (Location -33 150))
-                                        (Facilities FlushToilets False WoodBarbecues HotShowers)
+                                        (Facilities FlushToilets NoPicnicTables WoodBarbecues HotShowers)
                                         12
                                     ]
                                  , parks = [ Park 15 "A park" "A long park" ]
