@@ -1,4 +1,4 @@
-module Pages.Campsite.View exposing (view)
+module Pages.Campsite.View exposing (view, toiletsText)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -6,7 +6,7 @@ import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg)
 import Libs.SimpleFormat.Format
-import App.Model exposing (Facilities)
+import App.Model exposing (Facilities, Toilets(..))
 
 
 view : Model -> Html Msg
@@ -45,3 +45,19 @@ facilitiesText : Facilities -> String
 facilitiesText facilities =
     -- TODO: Add facilities description
     "Facilities description goes here"
+
+
+toiletsText : Toilets -> String
+toiletsText toilets =
+    case toilets of
+        FlushToilets ->
+            "Has flush toilets."
+
+        NonFlushToilets ->
+            "Has non-flush toilets."
+
+        NoToilets ->
+            "No toilets."
+
+        UnknownToilets ->
+            ""

@@ -7,6 +7,7 @@ import App.TestsDecoder
 import TestsLocation
 import TestsCampsite
 import Libs.SimpleFormat.Tests
+import Pages.Campsite.Tests
 
 
 main : Test.Runner.Html.TestProgram
@@ -21,6 +22,7 @@ all =
         , TestsLocation.all
         , TestsCampsite.all
         , Libs.SimpleFormat.Tests.all
+        , Pages.Campsite.Tests.all
         ]
 
 
