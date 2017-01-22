@@ -13,6 +13,7 @@ import App.Model
         , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
+        , DrinkingWater(..)
         , Facilities
         )
 
@@ -98,6 +99,14 @@ all =
                 \() ->
                     Expect.equal (Ok UnknownShowers) (Json.Decode.decodeString App.Decoder.showers "\"blah\"")
             ]
+        , describe "drinking water"
+            [ test "true" <|
+                \() ->
+                    Expect.equal (Ok DrinkingWater) (Json.Decode.decodeString App.Decoder.drinkingWater "true")
+            , test "false" <|
+                \() ->
+                    Expect.equal (Ok NoDrinkingWater) (Json.Decode.decodeString App.Decoder.drinkingWater "false")
+            ]
         , describe "parksAndCampsites"
             [ test "example" <|
                 \() ->
@@ -109,7 +118,7 @@ all =
   "id": 4, "shortName": "Campsite", "longName":"Long Campsite",
   "description": "description", "latitude": -33, "longitude": 150,
   "park": 12, "toilets": "flush", "picnicTables": false, "barbecues": "wood",
-  "showers": "hot"
+  "showers": "hot", "drinkingWater": false
   }],
 "parks": [{
   "id": 15, "shortName": "A park", "longName": "A long park"
@@ -125,7 +134,7 @@ all =
                                         "Long Campsite"
                                         "description"
                                         (Just (Location -33 150))
-                                        (Facilities FlushToilets NoPicnicTables WoodBarbecues HotShowers)
+                                        (Facilities FlushToilets NoPicnicTables WoodBarbecues HotShowers NoDrinkingWater)
                                         12
                                     ]
                                  , parks = [ Park 15 "A park" "A long park" ]

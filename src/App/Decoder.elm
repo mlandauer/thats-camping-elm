@@ -5,6 +5,7 @@ module App.Decoder
         , picnicTables
         , barbecues
         , showers
+        , drinkingWater
         , facilities
         , parksAndCampsites
         )
@@ -20,6 +21,7 @@ import App.Model
         , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
+        , DrinkingWater(..)
         , Facilities
         )
 
@@ -97,13 +99,26 @@ showers =
         string
 
 
+drinkingWater : Decoder DrinkingWater
+drinkingWater =
+    map
+        (\present ->
+            if present then
+                DrinkingWater
+            else
+                NoDrinkingWater
+        )
+        bool
+
+
 facilities : Decoder Facilities
 facilities =
-    map4 Facilities
+    map5 Facilities
         (field "toilets" toilets)
         (field "picnicTables" picnicTables)
         (field "barbecues" barbecues)
         (field "showers" showers)
+        (field "drinkingWater" drinkingWater)
 
 
 campsite : Decoder Campsite

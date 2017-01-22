@@ -5,6 +5,7 @@ module App.Model
         , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
+        , DrinkingWater(..)
         , Facilities
         , Location
         , Campsite
@@ -69,8 +70,18 @@ type Showers
     | UnknownShowers
 
 
+type DrinkingWater
+    = DrinkingWater
+    | NoDrinkingWater
+
+
 type alias Facilities =
-    { toilets : Toilets, picnicTables : PicnicTables, barbecues : Barbecues, showers : Showers }
+    { toilets : Toilets
+    , picnicTables : PicnicTables
+    , barbecues : Barbecues
+    , showers : Showers
+    , drinkingWater : DrinkingWater
+    }
 
 
 type alias Campsite =
