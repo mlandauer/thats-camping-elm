@@ -89,15 +89,6 @@ all =
                 \() ->
                     Expect.equal (Ok UnknownShowers) (Json.Decode.decodeString App.Decoder.showers "\"blah\"")
             ]
-          -- if (showers == "hot") {
-          --   have.push("hot showers");
-          -- }
-          -- else if (showers == "cold") {
-          --   have.push("cold showers");
-          -- }
-          -- else if (showers == "none") {
-          --   notHave.push("showers");
-          -- }
         , describe "parksAndCampsites"
             [ test "example" <|
                 \() ->
