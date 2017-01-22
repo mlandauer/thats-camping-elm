@@ -4,7 +4,16 @@ import Test exposing (..)
 import Expect
 import Json.Decode
 import App.Decoder
-import App.Model exposing (Location, Campsite, Park, Toilets(..), Barbecues(..), Facilities)
+import App.Model
+    exposing
+        ( Location
+        , Campsite
+        , Park
+        , Toilets(..)
+        , Barbecues(..)
+        , Showers(..)
+        , Facilities
+        )
 
 
 all : Test
@@ -66,6 +75,29 @@ all =
                 \() ->
                     Expect.equal (Ok UnknownBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"foo\"")
             ]
+        , describe "showers"
+            [ test "hot" <|
+                \() ->
+                    Expect.equal (Ok Hot) (Json.Decode.decodeString App.Decoder.showers "\"hot\"")
+            , test "cold" <|
+                \() ->
+                    Expect.equal (Ok Cold) (Json.Decode.decodeString App.Decoder.showers "\"cold\"")
+            , test "none" <|
+                \() ->
+                    Expect.equal (Ok NoShowers) (Json.Decode.decodeString App.Decoder.showers "\"none\"")
+            , test "unknown" <|
+                \() ->
+                    Expect.equal (Ok UnknownShowers) (Json.Decode.decodeString App.Decoder.showers "\"blah\"")
+            ]
+          -- if (showers == "hot") {
+          --   have.push("hot showers");
+          -- }
+          -- else if (showers == "cold") {
+          --   have.push("cold showers");
+          -- }
+          -- else if (showers == "none") {
+          --   notHave.push("showers");
+          -- }
         , describe "parksAndCampsites"
             [ test "example" <|
                 \() ->
@@ -76,7 +108,8 @@ all =
 "campsites": [{
   "id": 4, "shortName": "Campsite", "longName":"Long Campsite",
   "description": "description", "latitude": -33, "longitude": 150,
-  "park": 12, "toilets": "flush", "picnicTables": false, "barbecues": "wood"
+  "park": 12, "toilets": "flush", "picnicTables": false, "barbecues": "wood",
+  "showers": "hot"
   }],
 "parks": [{
   "id": 15, "shortName": "A park", "longName": "A long park"
@@ -92,7 +125,7 @@ all =
                                         "Long Campsite"
                                         "description"
                                         (Just (Location -33 150))
-                                        (Facilities Flush False Wood)
+                                        (Facilities Flush False Wood Hot)
                                         12
                                     ]
                                  , parks = [ Park 15 "A park" "A long park" ]

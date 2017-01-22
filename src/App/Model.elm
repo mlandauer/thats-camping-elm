@@ -3,6 +3,7 @@ module App.Model
         ( Page(..)
         , Toilets(..)
         , Barbecues(..)
+        , Showers(..)
         , Facilities
         , Location
         , Campsite
@@ -30,6 +31,12 @@ type alias Location =
 
 
 -- TODO: Types for Toilets and Barbecues don't feel right. What would be better?
+-- We're mixing up their presence with information about their properties
+-- Maybe we want something like this instead:
+-- type Toilets
+--     = Toilets Bool
+--     | NoToilets
+--     | UnknownToilets
 
 
 type Toilets
@@ -48,8 +55,15 @@ type Barbecues
     | UnknownBarbecues
 
 
+type Showers
+    = Hot
+    | Cold
+    | NoShowers
+    | UnknownShowers
+
+
 type alias Facilities =
-    { toilets : Toilets, picnicTables : Bool, barbecues : Barbecues }
+    { toilets : Toilets, picnicTables : Bool, barbecues : Barbecues, showers : Showers }
 
 
 type alias Campsite =

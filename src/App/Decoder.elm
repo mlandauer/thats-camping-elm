@@ -3,13 +3,23 @@ module App.Decoder
         ( location
         , toilets
         , barbecues
+        , showers
         , facilities
         , parksAndCampsites
         )
 
 import Json.Decode exposing (..)
 import Location
-import App.Model exposing (Campsite, Location, Park, Toilets(..), Barbecues(..), Facilities)
+import App.Model
+    exposing
+        ( Campsite
+        , Location
+        , Park
+        , Toilets(..)
+        , Barbecues(..)
+        , Showers(..)
+        , Facilities
+        )
 
 
 location : Decoder (Maybe Location)
@@ -57,12 +67,29 @@ barbecues =
         string
 
 
+showers : Decoder Showers
+showers =
+    map
+        (\text ->
+            if text == "hot" then
+                Hot
+            else if text == "cold" then
+                Cold
+            else if text == "none" then
+                NoShowers
+            else
+                UnknownShowers
+        )
+        string
+
+
 facilities : Decoder Facilities
 facilities =
-    map3 Facilities
+    map4 Facilities
         (field "toilets" toilets)
         (field "picnicTables" bool)
         (field "barbecues" barbecues)
+        (field "showers" showers)
 
 
 campsite : Decoder Campsite
