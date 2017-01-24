@@ -35,7 +35,7 @@ all =
                     Expect.equal "" (picnicTablesText UnknownPicnicTables)
             ]
         , describe "have lists"
-            [ test "example" <|
+            [ test "example 1" <|
                 \() ->
                     Expect.equal
                         { have = [ "flush toilets", "picnic tables" ]
@@ -44,6 +44,28 @@ all =
                         (haveLists
                             { toilets = FlushToilets
                             , picnicTables = PicnicTables
+                            }
+                        )
+            , test "example 2" <|
+                \() ->
+                    Expect.equal
+                        { have = [ "non-flush toilets" ]
+                        , notHave = [ "picnic tables" ]
+                        }
+                        (haveLists
+                            { toilets = NonFlushToilets
+                            , picnicTables = NoPicnicTables
+                            }
+                        )
+            , test "example 3" <|
+                \() ->
+                    Expect.equal
+                        { have = []
+                        , notHave = [ "toilets" ]
+                        }
+                        (haveLists
+                            { toilets = NoToilets
+                            , picnicTables = UnknownPicnicTables
                             }
                         )
             ]
