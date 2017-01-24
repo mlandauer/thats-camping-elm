@@ -3,8 +3,7 @@ module Pages.Campsite.View
         ( view
         , toiletsText
         , picnicTablesText
-        , haveList
-        , notHaveList
+        , haveLists
         )
 
 import Html exposing (..)
@@ -110,11 +109,11 @@ haveListsPicnicTables picnicTables =
             { have = [], notHave = [] }
 
 
-haveList { toilets, picnicTables } =
-    (.have (haveListsToilets toilets))
-        ++ (.have (haveListsPicnicTables picnicTables))
-
-
-notHaveList { toilets, picnicTables } =
-    (.notHave (haveListsToilets toilets))
-        ++ (.notHave (haveListsPicnicTables picnicTables))
+haveLists { toilets, picnicTables } =
+    { have =
+        (.have (haveListsToilets toilets))
+            ++ (.have (haveListsPicnicTables picnicTables))
+    , notHave =
+        (.notHave (haveListsToilets toilets))
+            ++ (.notHave (haveListsPicnicTables picnicTables))
+    }

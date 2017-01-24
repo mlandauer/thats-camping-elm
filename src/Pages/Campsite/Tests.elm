@@ -37,18 +37,11 @@ all =
         , describe "have lists"
             [ test "example" <|
                 \() ->
-                    Expect.equal [ "flush toilets", "picnic tables" ]
-                        (haveList
-                            { toilets = FlushToilets
-                            , picnicTables = PicnicTables
-                            }
-                        )
-            ]
-        , describe "not have lists"
-            [ test "example" <|
-                \() ->
-                    Expect.equal []
-                        (notHaveList
+                    Expect.equal
+                        { have = [ "flush toilets", "picnic tables" ]
+                        , notHave = []
+                        }
+                        (haveLists
                             { toilets = FlushToilets
                             , picnicTables = PicnicTables
                             }
