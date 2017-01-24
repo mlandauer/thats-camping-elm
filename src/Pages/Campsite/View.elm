@@ -83,65 +83,38 @@ picnicTablesText picnicTables =
             ""
 
 
-haveListToilets toilets =
+haveListsToilets toilets =
     case toilets of
         FlushToilets ->
-            [ "flush toilets" ]
+            { have = [ "flush toilets" ], notHave = [] }
 
         NonFlushToilets ->
-            [ "non-flush toilets" ]
+            { have = [ "non-flush toilets" ], notHave = [] }
 
         NoToilets ->
-            []
+            { have = [], notHave = [ "toilets" ] }
 
         UnknownToilets ->
-            []
+            { have = [], notHave = [] }
 
 
-notHaveListToilets toilets =
-    case toilets of
-        FlushToilets ->
-            []
-
-        NonFlushToilets ->
-            []
-
-        NoToilets ->
-            [ "toilets" ]
-
-        UnknownToilets ->
-            []
-
-
-haveListPicnicTables picnicTables =
+haveListsPicnicTables picnicTables =
     case picnicTables of
         PicnicTables ->
-            [ "picnic tables" ]
+            { have = [ "picnic tables" ], notHave = [] }
 
         NoPicnicTables ->
-            []
+            { have = [], notHave = [ "picnic tables" ] }
 
         UnknownPicnicTables ->
-            []
-
-
-notHaveListPicnicTables picnicTables =
-    case picnicTables of
-        PicnicTables ->
-            []
-
-        NoPicnicTables ->
-            [ "picnic tables" ]
-
-        UnknownPicnicTables ->
-            []
+            { have = [], notHave = [] }
 
 
 haveList { toilets, picnicTables } =
-    (haveListToilets toilets)
-        ++ (haveListPicnicTables picnicTables)
+    (.have (haveListsToilets toilets))
+        ++ (.have (haveListsPicnicTables picnicTables))
 
 
 notHaveList { toilets, picnicTables } =
-    (notHaveListToilets toilets)
-        ++ (notHaveListPicnicTables picnicTables)
+    (.notHave (haveListsToilets toilets))
+        ++ (.notHave (haveListsPicnicTables picnicTables))
