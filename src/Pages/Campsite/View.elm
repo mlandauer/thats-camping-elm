@@ -96,24 +96,39 @@ capitalise text =
     (String.toUpper (String.left 1 text)) ++ (String.dropLeft 1 text)
 
 
-haveAndHaveNotSentence2 : Maybe String -> Maybe String -> Maybe String
-haveAndHaveNotSentence2 have notHave =
-    case have of
-        Just have ->
-            case notHave of
-                Just notHave ->
-                    Just ("has " ++ have ++ " but no " ++ notHave)
+haveSentence : Maybe String -> Maybe String
+haveSentence have =
+    Maybe.map (\text -> "has " ++ text) have
+
+
+notHaveSentence : Maybe String -> Maybe String
+notHaveSentence notHave =
+    Maybe.map (\text -> "no " ++ text) notHave
+
+
+joinWords : Maybe String -> Maybe String -> Maybe String
+joinWords a b =
+    case a of
+        Just a ->
+            case b of
+                Just b ->
+                    Just (a ++ " but " ++ b)
 
                 Nothing ->
-                    Just ("has " ++ have)
+                    Just a
 
         Nothing ->
-            case notHave of
-                Just notHave ->
-                    Just ("no " ++ notHave)
+            case b of
+                Just b ->
+                    Just b
 
                 Nothing ->
                     Nothing
+
+
+haveAndHaveNotSentence2 : Maybe String -> Maybe String -> Maybe String
+haveAndHaveNotSentence2 have notHave =
+    joinWords (haveSentence have) (notHaveSentence notHave)
 
 
 haveAndHaveNotSentence : Maybe String -> Maybe String -> Maybe String
