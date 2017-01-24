@@ -91,21 +91,26 @@ concat a b =
     { have = (a.have ++ b.have), notHave = (a.notHave ++ b.notHave) }
 
 
+capitalise : String -> String
+capitalise text =
+    (String.toUpper (String.left 1 text)) ++ (String.dropLeft 1 text)
+
+
 haveAndHaveNotSentence : Maybe String -> Maybe String -> Maybe String
 haveAndHaveNotSentence have notHave =
     case have of
         Just have ->
             case notHave of
                 Just notHave ->
-                    Just ("Has " ++ have ++ " but no " ++ notHave ++ ".")
+                    Just (capitalise ("has " ++ have ++ " but no " ++ notHave ++ "."))
 
                 Nothing ->
-                    Just ("Has " ++ have ++ ".")
+                    Just (capitalise ("has " ++ have ++ "."))
 
         Nothing ->
             case notHave of
                 Just notHave ->
-                    Just ("No " ++ notHave ++ ".")
+                    Just (capitalise ("no " ++ notHave ++ "."))
 
                 Nothing ->
                     Nothing
