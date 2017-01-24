@@ -9,7 +9,7 @@ import Pages.Campsite.View exposing (..)
 all : Test
 all =
     describe "Facilities text"
-        [ describe "have lists"
+        [ describe "haveLists"
             [ test "example 1" <|
                 \() ->
                     Expect.equal
@@ -43,5 +43,23 @@ all =
                             , picnicTables = UnknownPicnicTables
                             }
                         )
+            ]
+        , describe "haveAndHaveNotSentence"
+            [ test "Has books" <|
+                \() ->
+                    Expect.equal (Just "Has books.")
+                        (haveAndHaveNotSentence (Just "books") Nothing)
+            , test "No oranges" <|
+                \() ->
+                    Expect.equal (Just "No oranges.")
+                        (haveAndHaveNotSentence Nothing (Just "oranges"))
+            , test "Oranges but no books" <|
+                \() ->
+                    Expect.equal (Just "Has oranges but no books.")
+                        (haveAndHaveNotSentence (Just "oranges") (Just "books"))
+            , test "nothing" <|
+                \() ->
+                    Expect.equal Nothing
+                        (haveAndHaveNotSentence Nothing Nothing)
             ]
         ]

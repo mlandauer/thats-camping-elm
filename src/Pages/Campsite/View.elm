@@ -1,9 +1,8 @@
 module Pages.Campsite.View
     exposing
         ( view
-        , toiletsText
-        , picnicTablesText
         , haveLists
+        , haveAndHaveNotSentence
         )
 
 import Html exposing (..)
@@ -90,3 +89,23 @@ concat :
     -> { have : List String, notHave : List String }
 concat a b =
     { have = (a.have ++ b.have), notHave = (a.notHave ++ b.notHave) }
+
+
+haveAndHaveNotSentence : Maybe String -> Maybe String -> Maybe String
+haveAndHaveNotSentence have notHave =
+    case have of
+        Just have ->
+            case notHave of
+                Just notHave ->
+                    Just ("Has " ++ have ++ " but no " ++ notHave ++ ".")
+
+                Nothing ->
+                    Just ("Has " ++ have ++ ".")
+
+        Nothing ->
+            case notHave of
+                Just notHave ->
+                    Just ("No " ++ notHave ++ ".")
+
+                Nothing ->
+                    Nothing
