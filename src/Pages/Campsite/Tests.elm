@@ -44,4 +44,14 @@ all =
                             }
                         )
             ]
+        , describe "not have lists"
+            [ test "example" <|
+                \() ->
+                    Expect.equal []
+                        (notHaveList
+                            { toilets = FlushToilets
+                            , picnicTables = PicnicTables
+                            }
+                        )
+            ]
         ]

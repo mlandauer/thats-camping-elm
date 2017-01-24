@@ -1,4 +1,11 @@
-module Pages.Campsite.View exposing (view, toiletsText, picnicTablesText, haveList)
+module Pages.Campsite.View
+    exposing
+        ( view
+        , toiletsText
+        , picnicTablesText
+        , haveList
+        , notHaveList
+        )
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -91,6 +98,21 @@ haveListToilets toilets =
             []
 
 
+notHaveListToilets toilets =
+    case toilets of
+        FlushToilets ->
+            []
+
+        NonFlushToilets ->
+            []
+
+        NoToilets ->
+            [ "toilets" ]
+
+        UnknownToilets ->
+            []
+
+
 haveListPicnicTables picnicTables =
     case picnicTables of
         PicnicTables ->
@@ -103,6 +125,23 @@ haveListPicnicTables picnicTables =
             []
 
 
+notHaveListPicnicTables picnicTables =
+    case picnicTables of
+        PicnicTables ->
+            []
+
+        NoPicnicTables ->
+            [ "picnic tables" ]
+
+        UnknownPicnicTables ->
+            []
+
+
 haveList { toilets, picnicTables } =
     (haveListToilets toilets)
         ++ (haveListPicnicTables picnicTables)
+
+
+notHaveList { toilets, picnicTables } =
+    (notHaveListToilets toilets)
+        ++ (notHaveListPicnicTables picnicTables)
