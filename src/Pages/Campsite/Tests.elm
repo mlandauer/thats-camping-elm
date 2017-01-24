@@ -34,4 +34,14 @@ all =
                 \() ->
                     Expect.equal "" (picnicTablesText UnknownPicnicTables)
             ]
+        , describe "have lists"
+            [ test "example" <|
+                \() ->
+                    Expect.equal [ "flush toilets", "picnic tables" ]
+                        (haveList
+                            { toilets = FlushToilets
+                            , picnicTables = PicnicTables
+                            }
+                        )
+            ]
         ]
