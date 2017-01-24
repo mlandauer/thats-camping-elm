@@ -110,10 +110,12 @@ haveListsPicnicTables picnicTables =
 
 
 haveLists { toilets, picnicTables } =
-    { have =
-        (.have (haveListsToilets toilets))
-            ++ (.have (haveListsPicnicTables picnicTables))
-    , notHave =
-        (.notHave (haveListsToilets toilets))
-            ++ (.notHave (haveListsPicnicTables picnicTables))
-    }
+    concat (haveListsToilets toilets) (haveListsPicnicTables picnicTables)
+
+
+concat :
+    { have : List String, notHave : List String }
+    -> { have : List String, notHave : List String }
+    -> { have : List String, notHave : List String }
+concat a b =
+    { have = (a.have ++ b.have), notHave = (a.notHave ++ b.notHave) }
