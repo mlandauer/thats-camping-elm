@@ -96,16 +96,6 @@ capitalise text =
     (String.toUpper (String.left 1 text)) ++ (String.dropLeft 1 text)
 
 
-haveSentence : Maybe String -> Maybe String
-haveSentence have =
-    Maybe.map (\text -> "has " ++ text) have
-
-
-notHaveSentence : Maybe String -> Maybe String
-notHaveSentence notHave =
-    Maybe.map (\text -> "no " ++ text) notHave
-
-
 joinWords : Maybe String -> Maybe String -> Maybe String
 joinWords a b =
     case a of
@@ -126,11 +116,10 @@ joinWords a b =
                     Nothing
 
 
-haveAndHaveNotSentence2 : Maybe String -> Maybe String -> Maybe String
-haveAndHaveNotSentence2 have notHave =
-    joinWords (haveSentence have) (notHaveSentence notHave)
-
-
 haveAndHaveNotSentence : Maybe String -> Maybe String -> Maybe String
 haveAndHaveNotSentence have notHave =
-    Maybe.map (\text -> capitalise (text ++ ".")) (haveAndHaveNotSentence2 have notHave)
+    Maybe.map (\text -> capitalise (text ++ "."))
+        (joinWords
+            (Maybe.map (\text -> "has " ++ text) have)
+            (Maybe.map (\text -> "no " ++ text) notHave)
+        )
