@@ -96,13 +96,13 @@ capitalise text =
     (String.toUpper (String.left 1 text)) ++ (String.dropLeft 1 text)
 
 
-joinWords : Maybe String -> Maybe String -> Maybe String
-joinWords a b =
+joinWords : Maybe String -> String -> Maybe String -> Maybe String
+joinWords a word b =
     case a of
         Just a ->
             case b of
                 Just b ->
-                    Just (a ++ " but " ++ b)
+                    Just (a ++ " " ++ word ++ " " ++ b)
 
                 Nothing ->
                     Just a
@@ -121,5 +121,6 @@ haveAndHaveNotSentence have notHave =
     Maybe.map (\text -> capitalise (text ++ "."))
         (joinWords
             (Maybe.map (\text -> "has " ++ text) have)
+            "but"
             (Maybe.map (\text -> "no " ++ text) notHave)
         )
