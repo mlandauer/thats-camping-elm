@@ -53,35 +53,6 @@ facilitiesText facilities =
     "Facilities description goes here"
 
 
-toiletsText : Toilets -> String
-toiletsText toilets =
-    case toilets of
-        FlushToilets ->
-            "Has flush toilets."
-
-        NonFlushToilets ->
-            "Has non-flush toilets."
-
-        NoToilets ->
-            "No toilets."
-
-        UnknownToilets ->
-            ""
-
-
-picnicTablesText : PicnicTables -> String
-picnicTablesText picnicTables =
-    case picnicTables of
-        PicnicTables ->
-            "Has picnic tables."
-
-        NoPicnicTables ->
-            "No picnic tables."
-
-        UnknownPicnicTables ->
-            ""
-
-
 haveListsToilets toilets =
     case toilets of
         FlushToilets ->
