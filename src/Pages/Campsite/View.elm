@@ -213,10 +213,15 @@ notHaveList facilities =
     .notHave (haveLists facilities)
 
 
+handleUnknown2 : (a -> List String) -> Maybe a -> List String
+handleUnknown2 f facility =
+    Maybe.withDefault [] (Maybe.map f facility)
+
+
 handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
 handleUnknown f facility =
-    { have = (Maybe.withDefault [] (Maybe.map (\facility -> .have (f facility)) facility))
-    , notHave = (Maybe.withDefault [] (Maybe.map (\facility -> .notHave (f facility)) facility))
+    { have = handleUnknown2 (\facility -> .have (f facility)) facility
+    , notHave = handleUnknown2 (\facility -> .notHave (f facility)) facility
     }
 
 
