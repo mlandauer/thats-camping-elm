@@ -193,16 +193,6 @@ transformToList p present description facility =
         []
 
 
-transformToHaveList : (f -> Bool) -> (f -> String) -> f -> List String
-transformToHaveList present description facility =
-    transformToList True present description facility
-
-
-transformToNotHaveList : (f -> Bool) -> (f -> String) -> f -> List String
-transformToNotHaveList present description facility =
-    transformToList False present description facility
-
-
 handleUnknown2 : (a -> List String) -> Maybe a -> List String
 handleUnknown2 f facility =
     Maybe.withDefault [] (Maybe.map f facility)
