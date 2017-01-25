@@ -11,7 +11,13 @@ import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg)
 import Libs.SimpleFormat.Format
-import App.Model exposing (Facilities, Toilets(..), PicnicTables(..))
+import App.Model
+    exposing
+        ( Facilities
+        , Toilets(..)
+        , PicnicTables(..)
+        , Barbecues(..)
+        )
 
 
 view : Model -> Html Msg
@@ -79,8 +85,30 @@ haveListsPicnicTables picnicTables =
             { have = [], notHave = [] }
 
 
-haveLists { toilets, picnicTables } =
-    concat (haveListsToilets toilets) (haveListsPicnicTables picnicTables)
+haveListsBarbecues barbecues =
+    case barbecues of
+        WoodBarbecues ->
+            { have = [ "wood BBQs" ], notHave = [] }
+
+        WoodSuppliedBarbecues ->
+            { have = [ "wood BBQs" ], notHave = [] }
+
+        WoodBringYourOwnBarbecues ->
+            { have = [ "wood BBQs" ], notHave = [] }
+
+        GasElectricBarbecues ->
+            { have = [ "gas/electric BBQs" ], notHave = [] }
+
+        NoBarbecues ->
+            { have = [], notHave = [ "BBQs" ] }
+
+        UnknownBarbecues ->
+            { have = [], notHave = [] }
+
+
+haveLists { toilets, picnicTables, barbecues } =
+    concat (concat (haveListsToilets toilets) (haveListsPicnicTables picnicTables))
+        (haveListsBarbecues barbecues)
 
 
 concat :

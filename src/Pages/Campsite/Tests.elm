@@ -2,7 +2,7 @@ module Pages.Campsite.Tests exposing (..)
 
 import Test exposing (..)
 import Expect
-import App.Model exposing (Toilets(..), PicnicTables(..))
+import App.Model exposing (Toilets(..), PicnicTables(..), Barbecues(..))
 import Pages.Campsite.View exposing (..)
 
 
@@ -13,12 +13,13 @@ all =
             [ test "example 1" <|
                 \() ->
                     Expect.equal
-                        { have = [ "flush toilets", "picnic tables" ]
+                        { have = [ "flush toilets", "picnic tables", "wood BBQs" ]
                         , notHave = []
                         }
                         (haveLists
                             { toilets = FlushToilets
                             , picnicTables = PicnicTables
+                            , barbecues = WoodBarbecues
                             }
                         )
             , test "example 2" <|
@@ -30,17 +31,19 @@ all =
                         (haveLists
                             { toilets = NonFlushToilets
                             , picnicTables = NoPicnicTables
+                            , barbecues = UnknownBarbecues
                             }
                         )
             , test "example 3" <|
                 \() ->
                     Expect.equal
-                        { have = []
+                        { have = [ "gas/electric BBQs" ]
                         , notHave = [ "toilets" ]
                         }
                         (haveLists
                             { toilets = NoToilets
                             , picnicTables = UnknownPicnicTables
+                            , barbecues = GasElectricBarbecues
                             }
                         )
             ]
