@@ -205,11 +205,6 @@ transformToNotHaveList present description =
         [ description ]
 
 
-abstractHandleUnknown : (a -> List String) -> Maybe a -> List String
-abstractHandleUnknown f facility =
-    Maybe.withDefault [] (Maybe.map f facility)
-
-
 haveList facilities =
     .have (haveLists facilities)
 
@@ -220,8 +215,8 @@ notHaveList facilities =
 
 handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
 handleUnknown f facility =
-    { have = (abstractHandleUnknown (\facility -> .have (f facility)) facility)
-    , notHave = (abstractHandleUnknown (\facility -> .notHave (f facility)) facility)
+    { have = (Maybe.withDefault [] (Maybe.map (\facility -> .have (f facility)) facility))
+    , notHave = (Maybe.withDefault [] (Maybe.map (\facility -> .notHave (f facility)) facility))
     }
 
 
