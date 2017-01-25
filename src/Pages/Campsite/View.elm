@@ -205,13 +205,6 @@ transformToNotHaveList present description =
         [ description ]
 
 
-transformToHaveLists : (f -> Bool) -> (f -> String) -> f -> HaveNotHave
-transformToHaveLists present description facility =
-    { have = (transformToHaveList (present facility) (description facility))
-    , notHave = (transformToNotHaveList (present facility) (description facility))
-    }
-
-
 abstractHandleUnknown : (a -> List String) -> Maybe a -> List String
 abstractHandleUnknown f facility =
     case facility of
@@ -222,6 +215,14 @@ abstractHandleUnknown f facility =
             []
 
 
+haveList facilities =
+    .have (haveLists facilities)
+
+
+notHaveList facilities =
+    .notHave (haveLists facilities)
+
+
 handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
 handleUnknown f facility =
     { have = (abstractHandleUnknown (\facility -> .have (f facility)) facility)
@@ -229,12 +230,11 @@ handleUnknown f facility =
     }
 
 
-haveList facilities =
-    .have (haveLists facilities)
-
-
-notHaveList facilities =
-    .notHave (haveLists facilities)
+transformToHaveLists : (f -> Bool) -> (f -> String) -> f -> HaveNotHave
+transformToHaveLists present description facility =
+    { have = (transformToHaveList (present facility) (description facility))
+    , notHave = (transformToNotHaveList (present facility) (description facility))
+    }
 
 
 haveLists : Facilities -> HaveNotHave
