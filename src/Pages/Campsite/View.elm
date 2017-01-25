@@ -193,32 +193,32 @@ transformToList p present description facility =
         []
 
 
-handleUnknown2 : (a -> List String) -> Maybe a -> List String
-handleUnknown2 f facility =
+handleUnknown : (a -> List String) -> Maybe a -> List String
+handleUnknown f facility =
     Maybe.withDefault [] (Maybe.map f facility)
 
 
 list p facilities =
-    handleUnknown2
+    handleUnknown
         (transformToList p presentDrinkingWater descriptionDrinkingWater)
         facilities.drinkingWater
         |> (++)
-            (handleUnknown2
+            (handleUnknown
                 (transformToList p presentShowers descriptionShowers)
                 facilities.showers
             )
         |> (++)
-            (handleUnknown2
+            (handleUnknown
                 (transformToList p presentBarbecues descriptionBarbecues)
                 facilities.barbecues
             )
         |> (++)
-            (handleUnknown2
+            (handleUnknown
                 (transformToList p presentPicnicTables descriptionPicnicTables)
                 facilities.picnicTables
             )
         |> (++)
-            (handleUnknown2
+            (handleUnknown
                 (transformToList p presentToilets descriptionToilets)
                 facilities.toilets
             )
