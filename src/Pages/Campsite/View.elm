@@ -58,15 +58,11 @@ view model =
 
 facilitiesText : Facilities -> String
 facilitiesText facilities =
-    let
-        l =
-            (haveLists facilities)
-    in
-        Maybe.withDefault ""
-            (haveAndHaveNotSentence
-                (listAsText (.have l))
-                (listAsText (.notHave l))
-            )
+    Maybe.withDefault ""
+        (haveAndHaveNotSentence
+            (listAsText (haveList facilities))
+            (listAsText (notHaveList facilities))
+        )
 
 
 type alias HaveNotHave =
@@ -201,14 +197,37 @@ transformToHaveLists present description facility =
         { have = [], notHave = [ description facility ] }
 
 
-handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
-handleUnknown f facility =
+handleHaveUnknown : (a -> HaveNotHave) -> Maybe a -> List String
+handleHaveUnknown f facility =
     case facility of
         Just facility ->
-            f facility
+            (.have (f facility))
 
         Nothing ->
-            { have = [], notHave = [] }
+            []
+
+
+handleNotHaveUnknown : (a -> HaveNotHave) -> Maybe a -> List String
+handleNotHaveUnknown f facility =
+    case facility of
+        Just facility ->
+            (.notHave (f facility))
+
+        Nothing ->
+            []
+
+
+handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
+handleUnknown f facility =
+    { have = (handleHaveUnknown f facility), notHave = (handleNotHaveUnknown f facility) }
+
+
+haveList facilities =
+    .have (haveLists facilities)
+
+
+notHaveList facilities =
+    .notHave (haveLists facilities)
 
 
 haveLists : Facilities -> HaveNotHave
