@@ -184,20 +184,6 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-transformToList p present description facility =
-    -- p is which list to generate - either the "have" or "not have" List
-    -- depending on whether it is True or False
-    if (present facility) == p then
-        [ description facility ]
-    else
-        []
-
-
-handleUnknown : (a -> List String) -> Maybe a -> List String
-handleUnknown f facility =
-    Maybe.withDefault [] (Maybe.map f facility)
-
-
 inList : Bool -> Maybe f -> (f -> Bool) -> Bool
 inList p facility present =
     -- Tell me whether a particular facility is in the current list or not
@@ -211,7 +197,16 @@ inList p facility present =
 
 transformList2 : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> List String
 transformList2 p present description facility =
-    handleUnknown (transformToList p present description) facility
+    Maybe.withDefault []
+        (Maybe.map
+            (\facility ->
+                if (present facility) == p then
+                    [ description facility ]
+                else
+                    []
+            )
+            facility
+        )
 
 
 list : Bool -> Facilities -> List String
