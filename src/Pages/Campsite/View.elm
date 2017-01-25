@@ -72,8 +72,8 @@ type alias HaveNotHave =
     { have : List String, notHave : List String }
 
 
-haveListsToilets2 : Toilets -> HaveNotHave
-haveListsToilets2 toilets =
+haveListsToilets : Toilets -> HaveNotHave
+haveListsToilets toilets =
     case toilets of
         FlushToilets ->
             { have = [ "flush toilets" ], notHave = [] }
@@ -85,8 +85,8 @@ haveListsToilets2 toilets =
             { have = [], notHave = [ "toilets" ] }
 
 
-haveListsPicnicTables2 : PicnicTables -> HaveNotHave
-haveListsPicnicTables2 picnicTables =
+haveListsPicnicTables : PicnicTables -> HaveNotHave
+haveListsPicnicTables picnicTables =
     case picnicTables of
         PicnicTables ->
             { have = [ "picnic tables" ], notHave = [] }
@@ -95,8 +95,8 @@ haveListsPicnicTables2 picnicTables =
             { have = [], notHave = [ "picnic tables" ] }
 
 
-haveListsBarbecues2 : Barbecues -> HaveNotHave
-haveListsBarbecues2 barbecues =
+haveListsBarbecues : Barbecues -> HaveNotHave
+haveListsBarbecues barbecues =
     case barbecues of
         WoodBarbecues ->
             { have = [ "wood BBQs" ], notHave = [] }
@@ -114,8 +114,8 @@ haveListsBarbecues2 barbecues =
             { have = [], notHave = [ "BBQs" ] }
 
 
-haveListsShowers2 : Showers -> HaveNotHave
-haveListsShowers2 showers =
+haveListsShowers : Showers -> HaveNotHave
+haveListsShowers showers =
     case showers of
         HotShowers ->
             { have = [ "hot showers" ], notHave = [] }
@@ -127,8 +127,8 @@ haveListsShowers2 showers =
             { have = [], notHave = [ "showers" ] }
 
 
-haveListsDrinkingWater2 : DrinkingWater -> HaveNotHave
-haveListsDrinkingWater2 drinkingWater =
+haveListsDrinkingWater : DrinkingWater -> HaveNotHave
+haveListsDrinkingWater drinkingWater =
     case drinkingWater of
         DrinkingWater ->
             { have = [ "drinking water" ], notHave = [] }
@@ -147,38 +147,13 @@ handleUnknown f facility =
             { have = [], notHave = [] }
 
 
-haveListsToilets : Maybe Toilets -> HaveNotHave
-haveListsToilets toilets =
-    handleUnknown haveListsToilets2 toilets
-
-
-haveListsPicnicTables : Maybe PicnicTables -> HaveNotHave
-haveListsPicnicTables picnicTables =
-    handleUnknown haveListsPicnicTables2 picnicTables
-
-
-haveListsBarbecues : Maybe Barbecues -> HaveNotHave
-haveListsBarbecues barbecues =
-    handleUnknown haveListsBarbecues2 barbecues
-
-
-haveListsShowers : Maybe Showers -> HaveNotHave
-haveListsShowers showers =
-    handleUnknown haveListsShowers2 showers
-
-
-haveListsDrinkingWater : Maybe DrinkingWater -> HaveNotHave
-haveListsDrinkingWater drinkingWater =
-    handleUnknown haveListsDrinkingWater2 drinkingWater
-
-
 haveLists : Facilities -> HaveNotHave
 haveLists facilities =
-    haveListsToilets facilities.toilets
-        |> concat (haveListsPicnicTables facilities.picnicTables)
-        |> concat (haveListsBarbecues facilities.barbecues)
-        |> concat (haveListsShowers facilities.showers)
-        |> concat (haveListsDrinkingWater facilities.drinkingWater)
+    handleUnknown haveListsToilets facilities.toilets
+        |> concat (handleUnknown haveListsPicnicTables facilities.picnicTables)
+        |> concat (handleUnknown haveListsBarbecues facilities.barbecues)
+        |> concat (handleUnknown haveListsShowers facilities.showers)
+        |> concat (handleUnknown haveListsDrinkingWater facilities.drinkingWater)
 
 
 concat : HaveNotHave -> HaveNotHave -> HaveNotHave
