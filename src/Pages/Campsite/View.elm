@@ -197,24 +197,24 @@ transformToHaveLists present description facility =
         { have = [], notHave = [ description facility ] }
 
 
-handleHaveUnknown : (a -> HaveNotHave) -> Maybe a -> List String
-handleHaveUnknown f facility =
+abstractHandleUnknown : (a -> List String) -> Maybe a -> List String
+abstractHandleUnknown f facility =
     case facility of
         Just facility ->
-            (.have (f facility))
+            f facility
 
         Nothing ->
             []
+
+
+handleHaveUnknown : (a -> HaveNotHave) -> Maybe a -> List String
+handleHaveUnknown f facility =
+    abstractHandleUnknown (\facility -> .have (f facility)) facility
 
 
 handleNotHaveUnknown : (a -> HaveNotHave) -> Maybe a -> List String
 handleNotHaveUnknown f facility =
-    case facility of
-        Just facility ->
-            (.notHave (f facility))
-
-        Nothing ->
-            []
+    abstractHandleUnknown (\facility -> .notHave (f facility)) facility
 
 
 handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
