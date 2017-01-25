@@ -137,54 +137,39 @@ haveListsDrinkingWater2 drinkingWater =
             { have = [], notHave = [ "drinking water" ] }
 
 
-haveListsToilets : Maybe Toilets -> HaveNotHave
-haveListsToilets toilets =
-    case toilets of
-        Just toilets ->
-            haveListsToilets2 toilets
+handleUnknown : Maybe a -> (a -> HaveNotHave) -> HaveNotHave
+handleUnknown facility f =
+    case facility of
+        Just facility ->
+            f facility
 
         Nothing ->
             { have = [], notHave = [] }
+
+
+haveListsToilets : Maybe Toilets -> HaveNotHave
+haveListsToilets toilets =
+    handleUnknown toilets haveListsToilets2
 
 
 haveListsPicnicTables : Maybe PicnicTables -> HaveNotHave
 haveListsPicnicTables picnicTables =
-    case picnicTables of
-        Just picnicTables ->
-            haveListsPicnicTables2 picnicTables
-
-        Nothing ->
-            { have = [], notHave = [] }
+    handleUnknown picnicTables haveListsPicnicTables2
 
 
 haveListsBarbecues : Maybe Barbecues -> HaveNotHave
 haveListsBarbecues barbecues =
-    case barbecues of
-        Just barbecues ->
-            haveListsBarbecues2 barbecues
-
-        Nothing ->
-            { have = [], notHave = [] }
+    handleUnknown barbecues haveListsBarbecues2
 
 
 haveListsShowers : Maybe Showers -> HaveNotHave
 haveListsShowers showers =
-    case showers of
-        Just showers ->
-            haveListsShowers2 showers
-
-        Nothing ->
-            { have = [], notHave = [] }
+    handleUnknown showers haveListsShowers2
 
 
 haveListsDrinkingWater : Maybe DrinkingWater -> HaveNotHave
 haveListsDrinkingWater drinkingWater =
-    case drinkingWater of
-        Just drinkingWater ->
-            haveListsDrinkingWater2 drinkingWater
-
-        Nothing ->
-            { have = [], notHave = [] }
+    handleUnknown drinkingWater haveListsDrinkingWater2
 
 
 haveLists : Facilities -> HaveNotHave
