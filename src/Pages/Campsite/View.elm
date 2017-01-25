@@ -172,5 +172,11 @@ insertSeparatingWords list =
         )
 
 
+listAsText : List String -> Maybe String
 listAsText list =
-    List.foldr (++) "" (insertSeparatingWords list)
+    case list of
+        [] ->
+            Nothing
+
+        list ->
+            Just (List.foldr (++) "" (insertSeparatingWords list))

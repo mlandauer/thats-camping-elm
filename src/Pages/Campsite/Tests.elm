@@ -68,15 +68,15 @@ all =
         , describe "listAsText"
             [ test "list of length zero" <|
                 \() ->
-                    Expect.equal "" (listAsText [])
+                    Expect.equal Nothing (listAsText [])
             , test "list of length one" <|
                 \() ->
-                    Expect.equal "oranges" (listAsText [ "oranges" ])
+                    Expect.equal (Just "oranges") (listAsText [ "oranges" ])
             , test "list of length two" <|
                 \() ->
-                    Expect.equal "oranges and books" (listAsText [ "oranges", "books" ])
+                    Expect.equal (Just "oranges and books") (listAsText [ "oranges", "books" ])
             , test "list of length three" <|
                 \() ->
-                    Expect.equal "oranges, books and kiwis" (listAsText [ "oranges", "books", "kiwis" ])
+                    Expect.equal (Just "oranges, books and kiwis") (listAsText [ "oranges", "books", "kiwis" ])
             ]
         ]
