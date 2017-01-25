@@ -26,7 +26,7 @@ import App.Model
 view : Model -> Html Msg
 view model =
     div [ class "campsite-detail-page" ]
-        [ App.ViewHelpers.navBar model.campsite.shortName True True
+        [ App.ViewHelpers.navBar model.campsite.shortName True False
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]
