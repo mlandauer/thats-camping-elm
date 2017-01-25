@@ -209,10 +209,12 @@ inList p facility present =
             False
 
 
+transformList2 : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> List String
 transformList2 p present description facility =
     handleUnknown (transformToList p present description) facility
 
 
+list : Bool -> Facilities -> List String
 list p facilities =
     transformList2 p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater
         |> (++)
