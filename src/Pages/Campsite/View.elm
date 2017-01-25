@@ -107,8 +107,9 @@ haveListsBarbecues barbecues =
 
 
 haveLists { toilets, picnicTables, barbecues } =
-    concat (haveListsBarbecues barbecues)
-        (concat (haveListsPicnicTables picnicTables) (haveListsToilets toilets))
+    haveListsToilets toilets
+        |> concat (haveListsPicnicTables picnicTables)
+        |> concat (haveListsBarbecues barbecues)
 
 
 concat :
