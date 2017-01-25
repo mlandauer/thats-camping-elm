@@ -2,7 +2,13 @@ module Pages.Campsite.Tests exposing (..)
 
 import Test exposing (..)
 import Expect
-import App.Model exposing (Toilets(..), PicnicTables(..), Barbecues(..))
+import App.Model
+    exposing
+        ( Toilets(..)
+        , PicnicTables(..)
+        , Barbecues(..)
+        , Showers(..)
+        )
 import Pages.Campsite.View exposing (..)
 
 
@@ -13,37 +19,40 @@ all =
             [ test "example 1" <|
                 \() ->
                     Expect.equal
-                        { have = [ "flush toilets", "picnic tables", "wood BBQs" ]
+                        { have = [ "flush toilets", "picnic tables", "wood BBQs", "hot showers" ]
                         , notHave = []
                         }
                         (haveLists
                             { toilets = FlushToilets
                             , picnicTables = PicnicTables
                             , barbecues = WoodBarbecues
+                            , showers = HotShowers
                             }
                         )
             , test "example 2" <|
                 \() ->
                     Expect.equal
                         { have = [ "non-flush toilets" ]
-                        , notHave = [ "picnic tables" ]
+                        , notHave = [ "picnic tables", "showers" ]
                         }
                         (haveLists
                             { toilets = NonFlushToilets
                             , picnicTables = NoPicnicTables
                             , barbecues = UnknownBarbecues
+                            , showers = NoShowers
                             }
                         )
             , test "example 3" <|
                 \() ->
                     Expect.equal
-                        { have = [ "gas/electric BBQs" ]
+                        { have = [ "gas/electric BBQs", "cold showers" ]
                         , notHave = [ "toilets" ]
                         }
                         (haveLists
                             { toilets = NoToilets
                             , picnicTables = UnknownPicnicTables
                             , barbecues = GasElectricBarbecues
+                            , showers = ColdShowers
                             }
                         )
             ]
