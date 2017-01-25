@@ -16,14 +16,12 @@ import Pages.Campsite.View exposing (..)
 all : Test
 all =
     describe "Facilities text"
-        [ describe "haveLists"
+        [ describe "facilitiesText"
             [ test "example 1" <|
                 \() ->
                     Expect.equal
-                        { have = [ "flush toilets", "picnic tables", "wood BBQs", "hot showers", "drinking water" ]
-                        , notHave = []
-                        }
-                        (haveLists
+                        "Has flush toilets, picnic tables, wood BBQs, hot showers and drinking water."
+                        (facilitiesText
                             { toilets = Just FlushToilets
                             , picnicTables = Just PicnicTables
                             , barbecues = Just WoodBarbecues
@@ -34,10 +32,8 @@ all =
             , test "example 2" <|
                 \() ->
                     Expect.equal
-                        { have = [ "non-flush toilets" ]
-                        , notHave = [ "picnic tables", "showers", "drinking water" ]
-                        }
-                        (haveLists
+                        "Has non-flush toilets but no picnic tables, showers and drinking water."
+                        (facilitiesText
                             { toilets = Just NonFlushToilets
                             , picnicTables = Just NoPicnicTables
                             , barbecues = Nothing
@@ -48,10 +44,8 @@ all =
             , test "example 3" <|
                 \() ->
                     Expect.equal
-                        { have = [ "gas/electric BBQs", "cold showers" ]
-                        , notHave = [ "toilets" ]
-                        }
-                        (haveLists
+                        "Has gas/electric BBQs and cold showers but no toilets."
+                        (facilitiesText
                             { toilets = Just NoToilets
                             , picnicTables = Nothing
                             , barbecues = Just GasElectricBarbecues

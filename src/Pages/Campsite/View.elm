@@ -4,6 +4,7 @@ module Pages.Campsite.View
         , haveLists
         , haveAndHaveNotSentence
         , listAsText
+        , facilitiesText
         )
 
 import Html exposing (..)
