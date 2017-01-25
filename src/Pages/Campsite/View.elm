@@ -198,30 +198,31 @@ handleUnknown f facility =
     Maybe.withDefault [] (Maybe.map f facility)
 
 
+inList : Bool -> Maybe f -> (f -> Bool) -> Bool
+inList p facility present =
+    -- Tell me whether a particular facility is in the current list or not
+    case facility of
+        Just facility ->
+            present facility == p
+
+        Nothing ->
+            False
+
+
+transformList2 p present description facility =
+    handleUnknown (transformToList p present description) facility
+
+
 list p facilities =
-    handleUnknown
-        (transformToList p presentDrinkingWater descriptionDrinkingWater)
-        facilities.drinkingWater
+    transformList2 p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater
         |> (++)
-            (handleUnknown
-                (transformToList p presentShowers descriptionShowers)
-                facilities.showers
-            )
+            (transformList2 p presentShowers descriptionShowers facilities.showers)
         |> (++)
-            (handleUnknown
-                (transformToList p presentBarbecues descriptionBarbecues)
-                facilities.barbecues
-            )
+            (transformList2 p presentBarbecues descriptionBarbecues facilities.barbecues)
         |> (++)
-            (handleUnknown
-                (transformToList p presentPicnicTables descriptionPicnicTables)
-                facilities.picnicTables
-            )
+            (transformList2 p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
         |> (++)
-            (handleUnknown
-                (transformToList p presentToilets descriptionToilets)
-                facilities.toilets
-            )
+            (transformList2 p presentToilets descriptionToilets facilities.toilets)
 
 
 capitalise : String -> String
