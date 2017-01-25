@@ -184,17 +184,6 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-inList : Bool -> Maybe f -> (f -> Bool) -> Bool
-inList p facility present =
-    -- Tell me whether a particular facility is in the current list or not
-    case facility of
-        Just facility ->
-            present facility == p
-
-        Nothing ->
-            False
-
-
 transformList2 : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> List String
 transformList2 p present description facility =
     Maybe.withDefault []
