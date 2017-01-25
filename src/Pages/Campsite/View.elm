@@ -200,31 +200,6 @@ transformToHaveLists present description facility =
         { have = [], notHave = [ description facility ] }
 
 
-haveListsToilets : Toilets -> HaveNotHave
-haveListsToilets toilets =
-    transformToHaveLists presentToilets descriptionToilets toilets
-
-
-haveListsPicnicTables : PicnicTables -> HaveNotHave
-haveListsPicnicTables picnicTables =
-    transformToHaveLists presentPicnicTables descriptionPicnicTables picnicTables
-
-
-haveListsBarbecues : Barbecues -> HaveNotHave
-haveListsBarbecues barbecues =
-    transformToHaveLists presentBarbecues descriptionBarbecues barbecues
-
-
-haveListsShowers : Showers -> HaveNotHave
-haveListsShowers showers =
-    transformToHaveLists presentShowers descriptionShowers showers
-
-
-haveListsDrinkingWater : DrinkingWater -> HaveNotHave
-haveListsDrinkingWater drinkingWater =
-    transformToHaveLists presentDrinkingWater descriptionDrinkingWater drinkingWater
-
-
 handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
 handleUnknown f facility =
     case facility of
@@ -237,11 +212,27 @@ handleUnknown f facility =
 
 haveLists : Facilities -> HaveNotHave
 haveLists facilities =
-    handleUnknown haveListsToilets facilities.toilets
-        |> concat (handleUnknown haveListsPicnicTables facilities.picnicTables)
-        |> concat (handleUnknown haveListsBarbecues facilities.barbecues)
-        |> concat (handleUnknown haveListsShowers facilities.showers)
-        |> concat (handleUnknown haveListsDrinkingWater facilities.drinkingWater)
+    handleUnknown (transformToHaveLists presentToilets descriptionToilets) facilities.toilets
+        |> concat
+            (handleUnknown
+                (transformToHaveLists presentPicnicTables descriptionPicnicTables)
+                facilities.picnicTables
+            )
+        |> concat
+            (handleUnknown
+                (transformToHaveLists presentBarbecues descriptionBarbecues)
+                facilities.barbecues
+            )
+        |> concat
+            (handleUnknown
+                (transformToHaveLists presentShowers descriptionShowers)
+                facilities.showers
+            )
+        |> concat
+            (handleUnknown
+                (transformToHaveLists presentDrinkingWater descriptionDrinkingWater)
+                facilities.drinkingWater
+            )
 
 
 concat : HaveNotHave -> HaveNotHave -> HaveNotHave
