@@ -205,16 +205,11 @@ transformToNotHaveList present description =
         [ description ]
 
 
-transformToHaveLists2 : Bool -> String -> HaveNotHave
-transformToHaveLists2 present description =
-    { have = (transformToHaveList present description)
-    , notHave = (transformToNotHaveList present description)
-    }
-
-
 transformToHaveLists : (f -> Bool) -> (f -> String) -> f -> HaveNotHave
 transformToHaveLists present description facility =
-    transformToHaveLists2 (present facility) (description facility)
+    { have = (transformToHaveList (present facility) (description facility))
+    , notHave = (transformToNotHaveList (present facility) (description facility))
+    }
 
 
 abstractHandleUnknown : (a -> List String) -> Maybe a -> List String
