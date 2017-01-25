@@ -68,6 +68,11 @@ facilitiesText facilities =
             )
 
 
+type alias HaveNotHave =
+    { have : List String, notHave : List String }
+
+
+haveListsToilets : Toilets -> HaveNotHave
 haveListsToilets toilets =
     case toilets of
         FlushToilets ->
@@ -83,6 +88,7 @@ haveListsToilets toilets =
             { have = [], notHave = [] }
 
 
+haveListsPicnicTables : PicnicTables -> HaveNotHave
 haveListsPicnicTables picnicTables =
     case picnicTables of
         PicnicTables ->
@@ -95,6 +101,7 @@ haveListsPicnicTables picnicTables =
             { have = [], notHave = [] }
 
 
+haveListsBarbecues : Barbecues -> HaveNotHave
 haveListsBarbecues barbecues =
     case barbecues of
         WoodBarbecues ->
@@ -116,6 +123,7 @@ haveListsBarbecues barbecues =
             { have = [], notHave = [] }
 
 
+haveListsShowers : Showers -> HaveNotHave
 haveListsShowers showers =
     case showers of
         HotShowers ->
@@ -131,6 +139,7 @@ haveListsShowers showers =
             { have = [], notHave = [] }
 
 
+haveListsDrinkingWater : DrinkingWater -> HaveNotHave
 haveListsDrinkingWater drinkingWater =
     case drinkingWater of
         DrinkingWater ->
@@ -143,18 +152,16 @@ haveListsDrinkingWater drinkingWater =
             { have = [], notHave = [] }
 
 
-haveLists { toilets, picnicTables, barbecues, showers, drinkingWater } =
-    haveListsToilets toilets
-        |> concat (haveListsPicnicTables picnicTables)
-        |> concat (haveListsBarbecues barbecues)
-        |> concat (haveListsShowers showers)
-        |> concat (haveListsDrinkingWater drinkingWater)
+haveLists : Facilities -> HaveNotHave
+haveLists facilities =
+    haveListsToilets facilities.toilets
+        |> concat (haveListsPicnicTables facilities.picnicTables)
+        |> concat (haveListsBarbecues facilities.barbecues)
+        |> concat (haveListsShowers facilities.showers)
+        |> concat (haveListsDrinkingWater facilities.drinkingWater)
 
 
-concat :
-    { have : List String, notHave : List String }
-    -> { have : List String, notHave : List String }
-    -> { have : List String, notHave : List String }
+concat : HaveNotHave -> HaveNotHave -> HaveNotHave
 concat a b =
     { have = (b.have ++ a.have), notHave = (b.notHave ++ a.notHave) }
 
