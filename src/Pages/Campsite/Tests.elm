@@ -24,11 +24,11 @@ all =
                         , notHave = []
                         }
                         (haveLists
-                            { toilets = FlushToilets
-                            , picnicTables = PicnicTables
-                            , barbecues = WoodBarbecues
-                            , showers = HotShowers
-                            , drinkingWater = DrinkingWater
+                            { toilets = Just FlushToilets
+                            , picnicTables = Just PicnicTables
+                            , barbecues = Just WoodBarbecues
+                            , showers = Just HotShowers
+                            , drinkingWater = Just DrinkingWater
                             }
                         )
             , test "example 2" <|
@@ -38,11 +38,11 @@ all =
                         , notHave = [ "picnic tables", "showers", "drinking water" ]
                         }
                         (haveLists
-                            { toilets = NonFlushToilets
-                            , picnicTables = NoPicnicTables
-                            , barbecues = UnknownBarbecues
-                            , showers = NoShowers
-                            , drinkingWater = NoDrinkingWater
+                            { toilets = Just NonFlushToilets
+                            , picnicTables = Just NoPicnicTables
+                            , barbecues = Nothing
+                            , showers = Just NoShowers
+                            , drinkingWater = Just NoDrinkingWater
                             }
                         )
             , test "example 3" <|
@@ -52,11 +52,11 @@ all =
                         , notHave = [ "toilets" ]
                         }
                         (haveLists
-                            { toilets = NoToilets
-                            , picnicTables = UnknownPicnicTables
-                            , barbecues = GasElectricBarbecues
-                            , showers = ColdShowers
-                            , drinkingWater = UnknownDrinkingWater
+                            { toilets = Just NoToilets
+                            , picnicTables = Nothing
+                            , barbecues = Just GasElectricBarbecues
+                            , showers = Just ColdShowers
+                            , drinkingWater = Nothing
                             }
                         )
             ]

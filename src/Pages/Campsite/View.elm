@@ -72,83 +72,83 @@ type alias HaveNotHave =
     { have : List String, notHave : List String }
 
 
-haveListsToilets : Toilets -> HaveNotHave
+haveListsToilets : Maybe Toilets -> HaveNotHave
 haveListsToilets toilets =
     case toilets of
-        FlushToilets ->
+        Just FlushToilets ->
             { have = [ "flush toilets" ], notHave = [] }
 
-        NonFlushToilets ->
+        Just NonFlushToilets ->
             { have = [ "non-flush toilets" ], notHave = [] }
 
-        NoToilets ->
+        Just NoToilets ->
             { have = [], notHave = [ "toilets" ] }
 
-        UnknownToilets ->
+        Nothing ->
             { have = [], notHave = [] }
 
 
-haveListsPicnicTables : PicnicTables -> HaveNotHave
+haveListsPicnicTables : Maybe PicnicTables -> HaveNotHave
 haveListsPicnicTables picnicTables =
     case picnicTables of
-        PicnicTables ->
+        Just PicnicTables ->
             { have = [ "picnic tables" ], notHave = [] }
 
-        NoPicnicTables ->
+        Just NoPicnicTables ->
             { have = [], notHave = [ "picnic tables" ] }
 
-        UnknownPicnicTables ->
+        Nothing ->
             { have = [], notHave = [] }
 
 
-haveListsBarbecues : Barbecues -> HaveNotHave
+haveListsBarbecues : Maybe Barbecues -> HaveNotHave
 haveListsBarbecues barbecues =
     case barbecues of
-        WoodBarbecues ->
+        Just WoodBarbecues ->
             { have = [ "wood BBQs" ], notHave = [] }
 
-        WoodSuppliedBarbecues ->
+        Just WoodSuppliedBarbecues ->
             { have = [ "wood BBQs" ], notHave = [] }
 
-        WoodBringYourOwnBarbecues ->
+        Just WoodBringYourOwnBarbecues ->
             { have = [ "wood BBQs" ], notHave = [] }
 
-        GasElectricBarbecues ->
+        Just GasElectricBarbecues ->
             { have = [ "gas/electric BBQs" ], notHave = [] }
 
-        NoBarbecues ->
+        Just NoBarbecues ->
             { have = [], notHave = [ "BBQs" ] }
 
-        UnknownBarbecues ->
+        Nothing ->
             { have = [], notHave = [] }
 
 
-haveListsShowers : Showers -> HaveNotHave
+haveListsShowers : Maybe Showers -> HaveNotHave
 haveListsShowers showers =
     case showers of
-        HotShowers ->
+        Just HotShowers ->
             { have = [ "hot showers" ], notHave = [] }
 
-        ColdShowers ->
+        Just ColdShowers ->
             { have = [ "cold showers" ], notHave = [] }
 
-        NoShowers ->
+        Just NoShowers ->
             { have = [], notHave = [ "showers" ] }
 
-        UnknownShowers ->
+        Nothing ->
             { have = [], notHave = [] }
 
 
-haveListsDrinkingWater : DrinkingWater -> HaveNotHave
+haveListsDrinkingWater : Maybe DrinkingWater -> HaveNotHave
 haveListsDrinkingWater drinkingWater =
     case drinkingWater of
-        DrinkingWater ->
+        Just DrinkingWater ->
             { have = [ "drinking water" ], notHave = [] }
 
-        NoDrinkingWater ->
+        Just NoDrinkingWater ->
             { have = [], notHave = [ "drinking water" ] }
 
-        UnknownDrinkingWater ->
+        Nothing ->
             { have = [], notHave = [] }
 
 

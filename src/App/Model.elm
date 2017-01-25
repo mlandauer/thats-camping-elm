@@ -45,13 +45,11 @@ type Toilets
     = NonFlushToilets
     | FlushToilets
     | NoToilets
-    | UnknownToilets
 
 
 type PicnicTables
     = PicnicTables
     | NoPicnicTables
-    | UnknownPicnicTables
 
 
 type Barbecues
@@ -60,28 +58,25 @@ type Barbecues
     | WoodBringYourOwnBarbecues
     | GasElectricBarbecues
     | NoBarbecues
-    | UnknownBarbecues
 
 
 type Showers
     = HotShowers
     | ColdShowers
     | NoShowers
-    | UnknownShowers
 
 
 type DrinkingWater
     = DrinkingWater
     | NoDrinkingWater
-    | UnknownDrinkingWater
 
 
 type alias Facilities =
-    { toilets : Toilets
-    , picnicTables : PicnicTables
-    , barbecues : Barbecues
-    , showers : Showers
-    , drinkingWater : DrinkingWater
+    { toilets : Maybe Toilets
+    , picnicTables : Maybe PicnicTables
+    , barbecues : Maybe Barbecues
+    , showers : Maybe Showers
+    , drinkingWater : Maybe DrinkingWater
     }
 
 

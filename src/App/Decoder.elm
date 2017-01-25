@@ -35,78 +35,78 @@ location =
         )
 
 
-toilets : Decoder Toilets
+toilets : Decoder (Maybe Toilets)
 toilets =
     map
         (\text ->
             if text == "non_flush" then
-                NonFlushToilets
+                Just NonFlushToilets
             else if text == "flush" then
-                FlushToilets
+                Just FlushToilets
             else if text == "none" then
-                NoToilets
+                Just NoToilets
             else
-                UnknownToilets
+                Nothing
         )
         string
 
 
-picnicTables : Decoder PicnicTables
+picnicTables : Decoder (Maybe PicnicTables)
 picnicTables =
     map
         (\present ->
             if present then
-                PicnicTables
+                Just PicnicTables
             else
-                NoPicnicTables
+                Just NoPicnicTables
         )
         bool
 
 
-barbecues : Decoder Barbecues
+barbecues : Decoder (Maybe Barbecues)
 barbecues =
     map
         (\text ->
             if text == "wood" then
-                WoodBarbecues
+                Just WoodBarbecues
             else if text == "wood_supplied" then
-                WoodSuppliedBarbecues
+                Just WoodSuppliedBarbecues
             else if text == "wood_bring_your_own" then
-                WoodBringYourOwnBarbecues
+                Just WoodBringYourOwnBarbecues
             else if text == "gas_electric" then
-                GasElectricBarbecues
+                Just GasElectricBarbecues
             else if text == "none" then
-                NoBarbecues
+                Just NoBarbecues
             else
-                UnknownBarbecues
+                Nothing
         )
         string
 
 
-showers : Decoder Showers
+showers : Decoder (Maybe Showers)
 showers =
     map
         (\text ->
             if text == "hot" then
-                HotShowers
+                Just HotShowers
             else if text == "cold" then
-                ColdShowers
+                Just ColdShowers
             else if text == "none" then
-                NoShowers
+                Just NoShowers
             else
-                UnknownShowers
+                Nothing
         )
         string
 
 
-drinkingWater : Decoder DrinkingWater
+drinkingWater : Decoder (Maybe DrinkingWater)
 drinkingWater =
     map
         (\present ->
             if present then
-                DrinkingWater
+                Just DrinkingWater
             else
-                NoDrinkingWater
+                Just NoDrinkingWater
         )
         bool
 

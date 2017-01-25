@@ -46,66 +46,66 @@ all =
         , describe "toilets"
             [ test "non flush" <|
                 \() ->
-                    Expect.equal (Ok NonFlushToilets) (Json.Decode.decodeString App.Decoder.toilets "\"non_flush\"")
+                    Expect.equal (Ok (Just NonFlushToilets)) (Json.Decode.decodeString App.Decoder.toilets "\"non_flush\"")
             , test "flush" <|
                 \() ->
-                    Expect.equal (Ok FlushToilets) (Json.Decode.decodeString App.Decoder.toilets "\"flush\"")
+                    Expect.equal (Ok (Just FlushToilets)) (Json.Decode.decodeString App.Decoder.toilets "\"flush\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok NoToilets) (Json.Decode.decodeString App.Decoder.toilets "\"none\"")
+                    Expect.equal (Ok (Just NoToilets)) (Json.Decode.decodeString App.Decoder.toilets "\"none\"")
             , test "invalid value" <|
                 \() ->
-                    Expect.equal (Ok UnknownToilets) (Json.Decode.decodeString App.Decoder.toilets "\"foo\"")
+                    Expect.equal (Ok Nothing) (Json.Decode.decodeString App.Decoder.toilets "\"foo\"")
             ]
         , describe "picnic tables"
             [ test "true" <|
                 \() ->
-                    Expect.equal (Ok PicnicTables) (Json.Decode.decodeString App.Decoder.picnicTables "true")
+                    Expect.equal (Ok (Just PicnicTables)) (Json.Decode.decodeString App.Decoder.picnicTables "true")
             , test "false" <|
                 \() ->
-                    Expect.equal (Ok NoPicnicTables) (Json.Decode.decodeString App.Decoder.picnicTables "false")
+                    Expect.equal (Ok (Just NoPicnicTables)) (Json.Decode.decodeString App.Decoder.picnicTables "false")
             ]
         , describe "barbecues"
             [ test "wood" <|
                 \() ->
-                    Expect.equal (Ok WoodBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"wood\"")
+                    Expect.equal (Ok (Just WoodBarbecues)) (Json.Decode.decodeString App.Decoder.barbecues "\"wood\"")
             , test "wood_supplied" <|
                 \() ->
-                    Expect.equal (Ok WoodSuppliedBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_supplied\"")
+                    Expect.equal (Ok (Just WoodSuppliedBarbecues)) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_supplied\"")
             , test "wood_bring_your_own" <|
                 \() ->
-                    Expect.equal (Ok WoodBringYourOwnBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_bring_your_own\"")
+                    Expect.equal (Ok (Just WoodBringYourOwnBarbecues)) (Json.Decode.decodeString App.Decoder.barbecues "\"wood_bring_your_own\"")
             , test "gas_electric" <|
                 \() ->
-                    Expect.equal (Ok GasElectricBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"gas_electric\"")
+                    Expect.equal (Ok (Just GasElectricBarbecues)) (Json.Decode.decodeString App.Decoder.barbecues "\"gas_electric\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok NoBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"none\"")
+                    Expect.equal (Ok (Just NoBarbecues)) (Json.Decode.decodeString App.Decoder.barbecues "\"none\"")
             , test "invalid value" <|
                 \() ->
-                    Expect.equal (Ok UnknownBarbecues) (Json.Decode.decodeString App.Decoder.barbecues "\"foo\"")
+                    Expect.equal (Ok Nothing) (Json.Decode.decodeString App.Decoder.barbecues "\"foo\"")
             ]
         , describe "showers"
             [ test "hot" <|
                 \() ->
-                    Expect.equal (Ok HotShowers) (Json.Decode.decodeString App.Decoder.showers "\"hot\"")
+                    Expect.equal (Ok (Just HotShowers)) (Json.Decode.decodeString App.Decoder.showers "\"hot\"")
             , test "cold" <|
                 \() ->
-                    Expect.equal (Ok ColdShowers) (Json.Decode.decodeString App.Decoder.showers "\"cold\"")
+                    Expect.equal (Ok (Just ColdShowers)) (Json.Decode.decodeString App.Decoder.showers "\"cold\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok NoShowers) (Json.Decode.decodeString App.Decoder.showers "\"none\"")
+                    Expect.equal (Ok (Just NoShowers)) (Json.Decode.decodeString App.Decoder.showers "\"none\"")
             , test "unknown" <|
                 \() ->
-                    Expect.equal (Ok UnknownShowers) (Json.Decode.decodeString App.Decoder.showers "\"blah\"")
+                    Expect.equal (Ok Nothing) (Json.Decode.decodeString App.Decoder.showers "\"blah\"")
             ]
         , describe "drinking water"
             [ test "true" <|
                 \() ->
-                    Expect.equal (Ok DrinkingWater) (Json.Decode.decodeString App.Decoder.drinkingWater "true")
+                    Expect.equal (Ok (Just DrinkingWater)) (Json.Decode.decodeString App.Decoder.drinkingWater "true")
             , test "false" <|
                 \() ->
-                    Expect.equal (Ok NoDrinkingWater) (Json.Decode.decodeString App.Decoder.drinkingWater "false")
+                    Expect.equal (Ok (Just NoDrinkingWater)) (Json.Decode.decodeString App.Decoder.drinkingWater "false")
             ]
         , describe "parksAndCampsites"
             [ test "example" <|
@@ -134,7 +134,13 @@ all =
                                         "Long Campsite"
                                         "description"
                                         (Just (Location -33 150))
-                                        (Facilities FlushToilets NoPicnicTables WoodBarbecues HotShowers NoDrinkingWater)
+                                        (Facilities
+                                            (Just FlushToilets)
+                                            (Just NoPicnicTables)
+                                            (Just WoodBarbecues)
+                                            (Just HotShowers)
+                                            (Just NoDrinkingWater)
+                                        )
                                         12
                                     ]
                                  , parks = [ Park 15 "A park" "A long park" ]
