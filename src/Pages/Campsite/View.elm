@@ -3,6 +3,7 @@ module Pages.Campsite.View
         ( view
         , haveLists
         , haveAndHaveNotSentence
+        , listAsText
         )
 
 import Html exposing (..)
@@ -153,3 +154,23 @@ haveAndHaveNotSentence have notHave =
             "but"
             (Maybe.map (\text -> "no " ++ text) notHave)
         )
+
+
+insertSeparatingWords : List String -> List String
+insertSeparatingWords list =
+    -- Hmmm.. Really not sure I've made this code even faintly intelligible
+    List.reverse
+        (case (List.reverse list) of
+            [] ->
+                []
+
+            [ a0 ] ->
+                [ a0 ]
+
+            a0 :: l ->
+                [ a0, " and " ] ++ (List.intersperse ", " l)
+        )
+
+
+listAsText list =
+    List.foldr (++) "" (insertSeparatingWords list)

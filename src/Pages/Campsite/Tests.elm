@@ -65,4 +65,18 @@ all =
                     Expect.equal Nothing
                         (haveAndHaveNotSentence Nothing Nothing)
             ]
+        , describe "listAsText"
+            [ test "list of length zero" <|
+                \() ->
+                    Expect.equal "" (listAsText [])
+            , test "list of length one" <|
+                \() ->
+                    Expect.equal "oranges" (listAsText [ "oranges" ])
+            , test "list of length two" <|
+                \() ->
+                    Expect.equal "oranges and books" (listAsText [ "oranges", "books" ])
+            , test "list of length three" <|
+                \() ->
+                    Expect.equal "oranges, books and kiwis" (listAsText [ "oranges", "books", "kiwis" ])
+            ]
         ]
