@@ -207,19 +207,11 @@ abstractHandleUnknown f facility =
             []
 
 
-handleHaveUnknown : (a -> HaveNotHave) -> Maybe a -> List String
-handleHaveUnknown f facility =
-    abstractHandleUnknown (\facility -> .have (f facility)) facility
-
-
-handleNotHaveUnknown : (a -> HaveNotHave) -> Maybe a -> List String
-handleNotHaveUnknown f facility =
-    abstractHandleUnknown (\facility -> .notHave (f facility)) facility
-
-
 handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
 handleUnknown f facility =
-    { have = (handleHaveUnknown f facility), notHave = (handleNotHaveUnknown f facility) }
+    { have = (abstractHandleUnknown (\facility -> .have (f facility)) facility)
+    , notHave = (abstractHandleUnknown (\facility -> .notHave (f facility)) facility)
+    }
 
 
 haveList facilities =
