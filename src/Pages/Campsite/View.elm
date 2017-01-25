@@ -207,12 +207,7 @@ transformToNotHaveList present description =
 
 abstractHandleUnknown : (a -> List String) -> Maybe a -> List String
 abstractHandleUnknown f facility =
-    case facility of
-        Just facility ->
-            f facility
-
-        Nothing ->
-            []
+    Maybe.withDefault [] (Maybe.map f facility)
 
 
 haveList facilities =
