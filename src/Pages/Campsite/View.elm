@@ -184,20 +184,23 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-transformToHaveList : (f -> Bool) -> (f -> String) -> f -> List String
-transformToHaveList present description facility =
-    if present facility then
+transformToList p present description facility =
+    -- p is which list to generate - either the "have" or "not have" List
+    -- depending on whether it is True or False
+    if (present facility) == p then
         [ description facility ]
     else
         []
+
+
+transformToHaveList : (f -> Bool) -> (f -> String) -> f -> List String
+transformToHaveList present description facility =
+    transformToList True present description facility
 
 
 transformToNotHaveList : (f -> Bool) -> (f -> String) -> f -> List String
 transformToNotHaveList present description facility =
-    if present facility then
-        []
-    else
-        [ description facility ]
+    transformToList False present description facility
 
 
 handleUnknown2 : (a -> List String) -> Maybe a -> List String
@@ -205,56 +208,38 @@ handleUnknown2 f facility =
     Maybe.withDefault [] (Maybe.map f facility)
 
 
-haveList facilities =
+list p facilities =
     handleUnknown2
-        (transformToHaveList presentDrinkingWater descriptionDrinkingWater)
+        (transformToList p presentDrinkingWater descriptionDrinkingWater)
         facilities.drinkingWater
         |> (++)
             (handleUnknown2
-                (transformToHaveList presentShowers descriptionShowers)
+                (transformToList p presentShowers descriptionShowers)
                 facilities.showers
             )
         |> (++)
             (handleUnknown2
-                (transformToHaveList presentBarbecues descriptionBarbecues)
+                (transformToList p presentBarbecues descriptionBarbecues)
                 facilities.barbecues
             )
         |> (++)
             (handleUnknown2
-                (transformToHaveList presentPicnicTables descriptionPicnicTables)
+                (transformToList p presentPicnicTables descriptionPicnicTables)
                 facilities.picnicTables
             )
         |> (++)
             (handleUnknown2
-                (transformToHaveList presentToilets descriptionToilets)
+                (transformToList p presentToilets descriptionToilets)
                 facilities.toilets
             )
+
+
+haveList facilities =
+    list True facilities
 
 
 notHaveList facilities =
-    handleUnknown2
-        (transformToNotHaveList presentDrinkingWater descriptionDrinkingWater)
-        facilities.drinkingWater
-        |> (++)
-            (handleUnknown2
-                (transformToNotHaveList presentShowers descriptionShowers)
-                facilities.showers
-            )
-        |> (++)
-            (handleUnknown2
-                (transformToNotHaveList presentBarbecues descriptionBarbecues)
-                facilities.barbecues
-            )
-        |> (++)
-            (handleUnknown2
-                (transformToNotHaveList presentPicnicTables descriptionPicnicTables)
-                facilities.picnicTables
-            )
-        |> (++)
-            (handleUnknown2
-                (transformToNotHaveList presentToilets descriptionToilets)
-                facilities.toilets
-            )
+    list False facilities
 
 
 capitalise : String -> String
