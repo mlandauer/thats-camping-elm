@@ -1,7 +1,6 @@
 module Pages.Campsite.View
     exposing
         ( view
-        , haveLists
         , haveAndHaveNotSentence
         , listAsText
         , facilitiesText
@@ -63,10 +62,6 @@ facilitiesText facilities =
             (listAsText (haveList facilities))
             (listAsText (notHaveList facilities))
         )
-
-
-type alias HaveNotHave =
-    { have : List String, notHave : List String }
 
 
 presentToilets : Toilets -> Bool
@@ -205,61 +200,61 @@ transformToNotHaveList present description facility =
         [ description facility ]
 
 
-haveList facilities =
-    .have (haveLists facilities)
-
-
-notHaveList facilities =
-    .notHave (haveLists facilities)
-
-
 handleUnknown2 : (a -> List String) -> Maybe a -> List String
 handleUnknown2 f facility =
     Maybe.withDefault [] (Maybe.map f facility)
 
 
-handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
-handleUnknown f facility =
-    { have = handleUnknown2 (\facility -> .have (f facility)) facility
-    , notHave = handleUnknown2 (\facility -> .notHave (f facility)) facility
-    }
-
-
-transformToHaveLists : (f -> Bool) -> (f -> String) -> f -> HaveNotHave
-transformToHaveLists present description facility =
-    { have = (transformToHaveList present description facility)
-    , notHave = (transformToNotHaveList present description facility)
-    }
-
-
-haveLists : Facilities -> HaveNotHave
-haveLists facilities =
-    handleUnknown (transformToHaveLists presentToilets descriptionToilets) facilities.toilets
-        |> concat
-            (handleUnknown
-                (transformToHaveLists presentPicnicTables descriptionPicnicTables)
-                facilities.picnicTables
-            )
-        |> concat
-            (handleUnknown
-                (transformToHaveLists presentBarbecues descriptionBarbecues)
-                facilities.barbecues
-            )
-        |> concat
-            (handleUnknown
-                (transformToHaveLists presentShowers descriptionShowers)
+haveList facilities =
+    handleUnknown2
+        (transformToHaveList presentDrinkingWater descriptionDrinkingWater)
+        facilities.drinkingWater
+        |> (++)
+            (handleUnknown2
+                (transformToHaveList presentShowers descriptionShowers)
                 facilities.showers
             )
-        |> concat
-            (handleUnknown
-                (transformToHaveLists presentDrinkingWater descriptionDrinkingWater)
-                facilities.drinkingWater
+        |> (++)
+            (handleUnknown2
+                (transformToHaveList presentBarbecues descriptionBarbecues)
+                facilities.barbecues
+            )
+        |> (++)
+            (handleUnknown2
+                (transformToHaveList presentPicnicTables descriptionPicnicTables)
+                facilities.picnicTables
+            )
+        |> (++)
+            (handleUnknown2
+                (transformToHaveList presentToilets descriptionToilets)
+                facilities.toilets
             )
 
 
-concat : HaveNotHave -> HaveNotHave -> HaveNotHave
-concat a b =
-    { have = (b.have ++ a.have), notHave = (b.notHave ++ a.notHave) }
+notHaveList facilities =
+    handleUnknown2
+        (transformToNotHaveList presentDrinkingWater descriptionDrinkingWater)
+        facilities.drinkingWater
+        |> (++)
+            (handleUnknown2
+                (transformToNotHaveList presentShowers descriptionShowers)
+                facilities.showers
+            )
+        |> (++)
+            (handleUnknown2
+                (transformToNotHaveList presentBarbecues descriptionBarbecues)
+                facilities.barbecues
+            )
+        |> (++)
+            (handleUnknown2
+                (transformToNotHaveList presentPicnicTables descriptionPicnicTables)
+                facilities.picnicTables
+            )
+        |> (++)
+            (handleUnknown2
+                (transformToNotHaveList presentToilets descriptionToilets)
+                facilities.toilets
+            )
 
 
 capitalise : String -> String
