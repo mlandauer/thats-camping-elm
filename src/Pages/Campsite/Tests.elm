@@ -8,6 +8,7 @@ import App.Model
         , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
+        , DrinkingWater(..)
         )
 import Pages.Campsite.View exposing (..)
 
@@ -19,7 +20,7 @@ all =
             [ test "example 1" <|
                 \() ->
                     Expect.equal
-                        { have = [ "flush toilets", "picnic tables", "wood BBQs", "hot showers" ]
+                        { have = [ "flush toilets", "picnic tables", "wood BBQs", "hot showers", "drinking water" ]
                         , notHave = []
                         }
                         (haveLists
@@ -27,19 +28,21 @@ all =
                             , picnicTables = PicnicTables
                             , barbecues = WoodBarbecues
                             , showers = HotShowers
+                            , drinkingWater = DrinkingWater
                             }
                         )
             , test "example 2" <|
                 \() ->
                     Expect.equal
                         { have = [ "non-flush toilets" ]
-                        , notHave = [ "picnic tables", "showers" ]
+                        , notHave = [ "picnic tables", "showers", "drinking water" ]
                         }
                         (haveLists
                             { toilets = NonFlushToilets
                             , picnicTables = NoPicnicTables
                             , barbecues = UnknownBarbecues
                             , showers = NoShowers
+                            , drinkingWater = NoDrinkingWater
                             }
                         )
             , test "example 3" <|
@@ -53,6 +56,7 @@ all =
                             , picnicTables = UnknownPicnicTables
                             , barbecues = GasElectricBarbecues
                             , showers = ColdShowers
+                            , drinkingWater = UnknownDrinkingWater
                             }
                         )
             ]

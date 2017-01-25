@@ -19,6 +19,7 @@ import App.Model
         , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
+        , DrinkingWater(..)
         )
 
 
@@ -130,12 +131,24 @@ haveListsShowers showers =
             { have = [], notHave = [] }
 
 
-haveLists { toilets, picnicTables, barbecues, showers } =
-    -- TODO: Add showers, drink water
+haveListsDrinkingWater drinkingWater =
+    case drinkingWater of
+        DrinkingWater ->
+            { have = [ "drinking water" ], notHave = [] }
+
+        NoDrinkingWater ->
+            { have = [], notHave = [ "drinking water" ] }
+
+        UnknownDrinkingWater ->
+            { have = [], notHave = [] }
+
+
+haveLists { toilets, picnicTables, barbecues, showers, drinkingWater } =
     haveListsToilets toilets
         |> concat (haveListsPicnicTables picnicTables)
         |> concat (haveListsBarbecues barbecues)
         |> concat (haveListsShowers showers)
+        |> concat (haveListsDrinkingWater drinkingWater)
 
 
 concat :

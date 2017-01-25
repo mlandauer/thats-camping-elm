@@ -73,6 +73,7 @@ type Showers
 type DrinkingWater
     = DrinkingWater
     | NoDrinkingWater
+    | UnknownDrinkingWater
 
 
 type alias Facilities =
