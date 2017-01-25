@@ -192,44 +192,37 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
+transformToHaveLists : (f -> Bool) -> (f -> String) -> f -> HaveNotHave
+transformToHaveLists present description facility =
+    if present facility then
+        { have = [ description facility ], notHave = [] }
+    else
+        { have = [], notHave = [ description facility ] }
+
+
 haveListsToilets : Toilets -> HaveNotHave
 haveListsToilets toilets =
-    if presentToilets toilets then
-        { have = [ descriptionToilets toilets ], notHave = [] }
-    else
-        { have = [], notHave = [ descriptionToilets toilets ] }
+    transformToHaveLists presentToilets descriptionToilets toilets
 
 
 haveListsPicnicTables : PicnicTables -> HaveNotHave
 haveListsPicnicTables picnicTables =
-    if presentPicnicTables picnicTables then
-        { have = [ descriptionPicnicTables picnicTables ], notHave = [] }
-    else
-        { have = [], notHave = [ descriptionPicnicTables picnicTables ] }
+    transformToHaveLists presentPicnicTables descriptionPicnicTables picnicTables
 
 
 haveListsBarbecues : Barbecues -> HaveNotHave
 haveListsBarbecues barbecues =
-    if presentBarbecues barbecues then
-        { have = [ descriptionBarbecues barbecues ], notHave = [] }
-    else
-        { have = [], notHave = [ descriptionBarbecues barbecues ] }
+    transformToHaveLists presentBarbecues descriptionBarbecues barbecues
 
 
 haveListsShowers : Showers -> HaveNotHave
 haveListsShowers showers =
-    if presentShowers showers then
-        { have = [ descriptionShowers showers ], notHave = [] }
-    else
-        { have = [], notHave = [ descriptionShowers showers ] }
+    transformToHaveLists presentShowers descriptionShowers showers
 
 
 haveListsDrinkingWater : DrinkingWater -> HaveNotHave
 haveListsDrinkingWater drinkingWater =
-    if presentDrinkingWater drinkingWater then
-        { have = [ descriptionDrinkingWater drinkingWater ], notHave = [] }
-    else
-        { have = [], notHave = [ descriptionDrinkingWater drinkingWater ] }
+    transformToHaveLists presentDrinkingWater descriptionDrinkingWater drinkingWater
 
 
 handleUnknown : (a -> HaveNotHave) -> Maybe a -> HaveNotHave
