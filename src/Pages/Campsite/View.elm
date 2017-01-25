@@ -107,8 +107,8 @@ haveListsBarbecues barbecues =
 
 
 haveLists { toilets, picnicTables, barbecues } =
-    concat (concat (haveListsToilets toilets) (haveListsPicnicTables picnicTables))
-        (haveListsBarbecues barbecues)
+    concat (haveListsBarbecues barbecues)
+        (concat (haveListsPicnicTables picnicTables) (haveListsToilets toilets))
 
 
 concat :
@@ -116,7 +116,7 @@ concat :
     -> { have : List String, notHave : List String }
     -> { have : List String, notHave : List String }
 concat a b =
-    { have = (a.have ++ b.have), notHave = (a.notHave ++ b.notHave) }
+    { have = (b.have ++ a.have), notHave = (b.notHave ++ a.notHave) }
 
 
 capitalise : String -> String
