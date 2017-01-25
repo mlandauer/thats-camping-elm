@@ -59,8 +59,8 @@ facilitiesText : Facilities -> String
 facilitiesText facilities =
     Maybe.withDefault ""
         (haveAndHaveNotSentence
-            (listAsText (haveList facilities))
-            (listAsText (notHaveList facilities))
+            (listAsText (list True facilities))
+            (listAsText (list False facilities))
         )
 
 
@@ -232,14 +232,6 @@ list p facilities =
                 (transformToList p presentToilets descriptionToilets)
                 facilities.toilets
             )
-
-
-haveList facilities =
-    list True facilities
-
-
-notHaveList facilities =
-    list False facilities
 
 
 capitalise : String -> String
