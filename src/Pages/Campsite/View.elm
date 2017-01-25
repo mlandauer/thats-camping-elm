@@ -189,27 +189,32 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-transformToHaveList : (f -> Bool) -> (f -> String) -> f -> List String
-transformToHaveList present description facility =
-    if present facility then
-        [ description facility ]
+transformToHaveList : Bool -> String -> List String
+transformToHaveList present description =
+    if present then
+        [ description ]
     else
         []
 
 
-transformToNotHaveList : (f -> Bool) -> (f -> String) -> f -> List String
-transformToNotHaveList present description facility =
-    if present facility then
+transformToNotHaveList : Bool -> String -> List String
+transformToNotHaveList present description =
+    if present then
         []
     else
-        [ description facility ]
+        [ description ]
+
+
+transformToHaveLists2 : Bool -> String -> HaveNotHave
+transformToHaveLists2 present description =
+    { have = (transformToHaveList present description)
+    , notHave = (transformToNotHaveList present description)
+    }
 
 
 transformToHaveLists : (f -> Bool) -> (f -> String) -> f -> HaveNotHave
 transformToHaveLists present description facility =
-    { have = (transformToHaveList present description facility)
-    , notHave = (transformToNotHaveList present description facility)
-    }
+    transformToHaveLists2 (present facility) (description facility)
 
 
 abstractHandleUnknown : (a -> List String) -> Maybe a -> List String
