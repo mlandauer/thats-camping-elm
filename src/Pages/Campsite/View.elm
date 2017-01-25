@@ -55,8 +55,15 @@ view model =
 
 facilitiesText : Facilities -> String
 facilitiesText facilities =
-    -- TODO: Add facilities description
-    "Facilities description goes here"
+    let
+        l =
+            (haveLists facilities)
+    in
+        Maybe.withDefault ""
+            (haveAndHaveNotSentence
+                (listAsText (.have l))
+                (listAsText (.notHave l))
+            )
 
 
 haveListsToilets toilets =
@@ -108,6 +115,7 @@ haveListsBarbecues barbecues =
 
 
 haveLists { toilets, picnicTables, barbecues } =
+    -- TODO: Add showers, drink water
     haveListsToilets toilets
         |> concat (haveListsPicnicTables picnicTables)
         |> concat (haveListsBarbecues barbecues)
