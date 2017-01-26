@@ -200,15 +200,11 @@ transformList2 p present description facility =
 
 list : Bool -> Facilities -> List String
 list p facilities =
-    transformList2 p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater
-        |> (++)
-            (transformList2 p presentShowers descriptionShowers facilities.showers)
-        |> (++)
-            (transformList2 p presentBarbecues descriptionBarbecues facilities.barbecues)
-        |> (++)
-            (transformList2 p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        |> (++)
-            (transformList2 p presentToilets descriptionToilets facilities.toilets)
+    (transformList2 p presentToilets descriptionToilets facilities.toilets)
+        ++ (transformList2 p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
+        ++ (transformList2 p presentBarbecues descriptionBarbecues facilities.barbecues)
+        ++ (transformList2 p presentShowers descriptionShowers facilities.showers)
+        ++ (transformList2 p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
 
 
 capitalise : String -> String
