@@ -184,26 +184,45 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-transformList : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> List String
+transformList : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> Maybe String
 transformList p present description facility =
     case facility of
         Just facility ->
             if (present facility) == p then
-                [ description facility ]
+                Just (description facility)
             else
-                []
+                Nothing
 
         Nothing ->
+            Nothing
+
+
+values : List (Maybe a) -> List a
+values l =
+    -- Implementing something like Maybe.Extra.values
+    -- Recursive so probably not efficient
+    case l of
+        [] ->
             []
+
+        first :: rest ->
+            case first of
+                Just value ->
+                    value :: (values rest)
+
+                Nothing ->
+                    values rest
 
 
 list : Bool -> Facilities -> List String
 list p facilities =
-    (transformList p presentToilets descriptionToilets facilities.toilets)
-        ++ (transformList p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        ++ (transformList p presentBarbecues descriptionBarbecues facilities.barbecues)
-        ++ (transformList p presentShowers descriptionShowers facilities.showers)
-        ++ (transformList p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
+    values
+        [ (transformList p presentToilets descriptionToilets facilities.toilets)
+        , (transformList p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
+        , (transformList p presentBarbecues descriptionBarbecues facilities.barbecues)
+        , (transformList p presentShowers descriptionShowers facilities.showers)
+        , (transformList p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
+        ]
 
 
 capitalise : String -> String
