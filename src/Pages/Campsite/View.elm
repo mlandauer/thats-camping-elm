@@ -184,27 +184,26 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-transformList2 : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> List String
-transformList2 p present description facility =
-    Maybe.withDefault []
-        (Maybe.map
-            (\facility ->
-                if (present facility) == p then
-                    [ description facility ]
-                else
-                    []
-            )
-            facility
-        )
+transformList : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> List String
+transformList p present description facility =
+    case facility of
+        Just facility ->
+            if (present facility) == p then
+                [ description facility ]
+            else
+                []
+
+        Nothing ->
+            []
 
 
 list : Bool -> Facilities -> List String
 list p facilities =
-    (transformList2 p presentToilets descriptionToilets facilities.toilets)
-        ++ (transformList2 p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        ++ (transformList2 p presentBarbecues descriptionBarbecues facilities.barbecues)
-        ++ (transformList2 p presentShowers descriptionShowers facilities.showers)
-        ++ (transformList2 p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
+    (transformList p presentToilets descriptionToilets facilities.toilets)
+        ++ (transformList p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
+        ++ (transformList p presentBarbecues descriptionBarbecues facilities.barbecues)
+        ++ (transformList p presentShowers descriptionShowers facilities.showers)
+        ++ (transformList p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
 
 
 capitalise : String -> String
