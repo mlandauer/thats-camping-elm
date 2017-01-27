@@ -53,9 +53,17 @@ view model =
                     , p [] [ text (facilitiesText model.campsite.facilities) ]
                     , h2 [] [ text "Access" ]
                     , p [] [ text (accessText model.campsite.access) ]
-                      -- TODO: Only enable button when we have an internet connection
-                      -- TODO: Only enable button when campsite has location
-                    , a [ href (Maybe.withDefault "#" (Maybe.map mapUrl model.campsite.location)), class "directions btn btn-default" ] [ text "Directions to campsite" ]
+                    , a
+                        ([ href (Maybe.withDefault "#" (Maybe.map mapUrl model.campsite.location))
+                         , class "directions btn btn-default"
+                         ]
+                            ++ -- TODO: It's not actually valid HTML (I think) to disable a link with disabled
+                               if directionsDisabled model.campsite.location then
+                                [ attribute "disabled" "disabled" ]
+                               else
+                                []
+                        )
+                        [ text "Directions to campsite" ]
                     ]
                 ]
             ]
@@ -92,6 +100,17 @@ mapUrl location =
         ++ (toString location.latitude)
         ++ ","
         ++ (toString location.longitude)
+
+
+directionsDisabled : Maybe Location -> Bool
+directionsDisabled location =
+    -- TODO: Also disable button when we have don't an internet connection
+    case location of
+        Just _ ->
+            False
+
+        Nothing ->
+            True
 
 
 presentToilets : Toilets -> Bool
