@@ -25,6 +25,7 @@ import App.Model
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
+        , Location
         )
 
 
@@ -52,7 +53,9 @@ view model =
                     , p [] [ text (facilitiesText model.campsite.facilities) ]
                     , h2 [] [ text "Access" ]
                     , p [] [ text (accessText model.campsite.access) ]
-                      -- TODO: Add directions button
+                      -- TODO: Only enable button when we have an internet connection
+                      -- TODO: Only enable button when campsite has location
+                    , a [ href (Maybe.withDefault "#" (Maybe.map mapUrl model.campsite.location)), class "directions btn btn-default" ] [ text "Directions to campsite" ]
                     ]
                 ]
             ]
@@ -81,6 +84,14 @@ accessText access =
             "not for"
             (listAsText (accessList False access))
         )
+
+
+mapUrl : Location -> String
+mapUrl location =
+    "https://maps.google.com/maps?daddr="
+        ++ (toString location.latitude)
+        ++ ","
+        ++ (toString location.longitude)
 
 
 presentToilets : Toilets -> Bool
