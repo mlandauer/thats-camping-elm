@@ -4,6 +4,7 @@ module Pages.Campsite.View
         , haveAndHaveNotSentence
         , listAsText
         , facilitiesText
+        , accessText
         )
 
 import Html exposing (..)
@@ -20,6 +21,10 @@ import App.Model
         , Barbecues(..)
         , Showers(..)
         , DrinkingWater(..)
+        , Access
+        , Caravans(..)
+        , Trailers(..)
+        , Cars(..)
         )
 
 
@@ -46,8 +51,7 @@ view model =
                     , h2 [] [ text "Facilities" ]
                     , p [] [ text (facilitiesText model.campsite.facilities) ]
                     , h2 [] [ text "Access" ]
-                      -- TODO: Add access description
-                    , p [] [ text "Access description goes here" ]
+                    , p [] [ text (accessText model.campsite.access) ]
                       -- TODO: Add directions button
                     ]
                 ]
@@ -61,6 +65,18 @@ facilitiesText facilities =
         (haveAndHaveNotSentence
             (listAsText (list True facilities))
             (listAsText (list False facilities))
+        )
+
+
+accessText : Access -> String
+accessText access =
+    Maybe.withDefault ""
+        (haveAndHaveNotSentence2
+            (listAsText (accessList True access))
+            (listAsText (accessList False access))
+            "for"
+            "but"
+            "not for"
         )
 
 
@@ -129,6 +145,36 @@ presentDrinkingWater drinkingWater =
             False
 
 
+presentCaravans : Caravans -> Bool
+presentCaravans caravans =
+    case caravans of
+        Caravans ->
+            True
+
+        NoCaravans ->
+            False
+
+
+presentTrailers : Trailers -> Bool
+presentTrailers trailers =
+    case trailers of
+        Trailers ->
+            True
+
+        NoTrailers ->
+            False
+
+
+presentCars : Cars -> Bool
+presentCars cars =
+    case cars of
+        Cars ->
+            True
+
+        NoCars ->
+            False
+
+
 descriptionToilets : Toilets -> String
 descriptionToilets toilets =
     case toilets of
@@ -184,6 +230,21 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
+descriptionCaravans : Caravans -> String
+descriptionCaravans _ =
+    "caravans"
+
+
+descriptionTrailers : Trailers -> String
+descriptionTrailers _ =
+    "trailers"
+
+
+descriptionCars : Cars -> String
+descriptionCars _ =
+    "car camping"
+
+
 transformList : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> Maybe String
 transformList p present description facility =
     case facility of
@@ -225,6 +286,15 @@ list p facilities =
         ]
 
 
+accessList : Bool -> Access -> List String
+accessList p access =
+    values
+        [ (transformList p presentCaravans descriptionCaravans access.caravans)
+        , (transformList p presentTrailers descriptionTrailers access.trailers)
+        , (transformList p presentCars descriptionCars access.cars)
+        ]
+
+
 capitalise : String -> String
 capitalise text =
     (String.toUpper (String.left 1 text)) ++ (String.dropLeft 1 text)
@@ -252,11 +322,16 @@ joinWords a word b =
 
 haveAndHaveNotSentence : Maybe String -> Maybe String -> Maybe String
 haveAndHaveNotSentence have notHave =
+    haveAndHaveNotSentence2 have notHave "has" "but" "no"
+
+
+haveAndHaveNotSentence2 : Maybe String -> Maybe String -> String -> String -> String -> Maybe String
+haveAndHaveNotSentence2 have notHave haveWord butWord notHaveWord =
     Maybe.map (\text -> capitalise (text ++ "."))
         (joinWords
-            (Maybe.map (\text -> "has " ++ text) have)
-            "but"
-            (Maybe.map (\text -> "no " ++ text) notHave)
+            (Maybe.map (\text -> haveWord ++ " " ++ text) have)
+            butWord
+            (Maybe.map (\text -> notHaveWord ++ " " ++ text) notHave)
         )
 
 

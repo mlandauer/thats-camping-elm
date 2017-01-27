@@ -9,13 +9,16 @@ import App.Model
         , Barbecues(..)
         , Showers(..)
         , DrinkingWater(..)
+        , Caravans(..)
+        , Trailers(..)
+        , Cars(..)
         )
 import Pages.Campsite.View exposing (..)
 
 
 all : Test
 all =
-    describe "Facilities text"
+    describe "Pages.Campsite.View"
         [ describe "facilitiesText"
             [ test "example 1" <|
                 \() ->
@@ -85,5 +88,37 @@ all =
             , test "list of length three" <|
                 \() ->
                     Expect.equal (Just "oranges, books and kiwis") (listAsText [ "oranges", "books", "kiwis" ])
+            ]
+        , describe "accessText"
+            [ test "example 1" <|
+                \() ->
+                    Expect.equal
+                        "For caravans, trailers and car camping."
+                        (accessText
+                            { caravans = Just Caravans
+                            , trailers = Just Trailers
+                            , cars = Just Cars
+                            }
+                        )
+            , test "example 2" <|
+                \() ->
+                    Expect.equal
+                        "Not for caravans, trailers and car camping."
+                        (accessText
+                            { caravans = Just NoCaravans
+                            , trailers = Just NoTrailers
+                            , cars = Just NoCars
+                            }
+                        )
+            , test "example 3" <|
+                \() ->
+                    Expect.equal
+                        "For trailers and car camping but not for caravans."
+                        (accessText
+                            { caravans = Just NoCaravans
+                            , trailers = Just Trailers
+                            , cars = Just Cars
+                            }
+                        )
             ]
         ]
