@@ -63,8 +63,8 @@ facilitiesText : Facilities -> String
 facilitiesText facilities =
     Maybe.withDefault ""
         (haveAndHaveNotSentence
-            (listAsText (list True facilities))
-            (listAsText (list False facilities))
+            (listAsText (facilitiesList True facilities))
+            (listAsText (facilitiesList False facilities))
             "has"
             "but"
             "no"
@@ -248,8 +248,8 @@ descriptionCars _ =
     "car camping"
 
 
-transformList : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> Maybe String
-transformList p present description facility =
+listItem : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> Maybe String
+listItem p present description facility =
     case facility of
         Just facility ->
             if (present facility) == p then
@@ -278,23 +278,23 @@ values l =
                     values rest
 
 
-list : Bool -> Facilities -> List String
-list p facilities =
+facilitiesList : Bool -> Facilities -> List String
+facilitiesList p facilities =
     values
-        [ (transformList p presentToilets descriptionToilets facilities.toilets)
-        , (transformList p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        , (transformList p presentBarbecues descriptionBarbecues facilities.barbecues)
-        , (transformList p presentShowers descriptionShowers facilities.showers)
-        , (transformList p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
+        [ (listItem p presentToilets descriptionToilets facilities.toilets)
+        , (listItem p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
+        , (listItem p presentBarbecues descriptionBarbecues facilities.barbecues)
+        , (listItem p presentShowers descriptionShowers facilities.showers)
+        , (listItem p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
         ]
 
 
 accessList : Bool -> Access -> List String
 accessList p access =
     values
-        [ (transformList p presentCaravans descriptionCaravans access.caravans)
-        , (transformList p presentTrailers descriptionTrailers access.trailers)
-        , (transformList p presentCars descriptionCars access.cars)
+        [ (listItem p presentCaravans descriptionCaravans access.caravans)
+        , (listItem p presentTrailers descriptionTrailers access.trailers)
+        , (listItem p presentCars descriptionCars access.cars)
         ]
 
 
