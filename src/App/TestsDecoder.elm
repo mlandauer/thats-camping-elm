@@ -15,6 +15,10 @@ import App.Model
         , Showers(..)
         , DrinkingWater(..)
         , Facilities
+        , Access
+        , Caravans(..)
+        , Trailers(..)
+        , Cars(..)
         )
 
 
@@ -118,7 +122,8 @@ all =
   "id": 4, "shortName": "Campsite", "longName":"Long Campsite",
   "description": "description", "latitude": -33, "longitude": 150,
   "park": 12, "toilets": "flush", "picnicTables": false, "barbecues": "wood",
-  "showers": "hot", "drinkingWater": false
+  "showers": "hot", "drinkingWater": false, "caravans": false, "trailers": false,
+  "car": true
   }],
 "parks": [{
   "id": 15, "shortName": "A park", "longName": "A long park"
@@ -140,6 +145,11 @@ all =
                                             (Just WoodBarbecues)
                                             (Just HotShowers)
                                             (Just NoDrinkingWater)
+                                        )
+                                        (Access
+                                            (Just NoCaravans)
+                                            (Just NoTrailers)
+                                            (Just Cars)
                                         )
                                         12
                                     ]

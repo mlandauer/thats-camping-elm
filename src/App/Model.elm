@@ -7,6 +7,10 @@ module App.Model
         , Showers(..)
         , DrinkingWater(..)
         , Facilities
+        , Access
+        , Caravans(..)
+        , Trailers(..)
+        , Cars(..)
         , Location
         , Campsite
         , Park
@@ -66,9 +70,31 @@ type Showers
     | NoShowers
 
 
+
+{-
+   TODO: Doesn't really make sense to have these as custom types when a bool
+   would work just fine. It makes everything very long winded
+-}
+
+
 type DrinkingWater
     = DrinkingWater
     | NoDrinkingWater
+
+
+type Caravans
+    = Caravans
+    | NoCaravans
+
+
+type Trailers
+    = Trailers
+    | NoTrailers
+
+
+type Cars
+    = Cars
+    | NoCars
 
 
 type alias Facilities =
@@ -80,6 +106,13 @@ type alias Facilities =
     }
 
 
+type alias Access =
+    { caravans : Maybe Caravans
+    , trailers : Maybe Trailers
+    , cars : Maybe Cars
+    }
+
+
 type alias Campsite =
     { id : Int
     , shortName : String
@@ -87,6 +120,7 @@ type alias Campsite =
     , description : String
     , location : Maybe Location
     , facilities : Facilities
+    , access : Access
     , parkId : Int
     }
 

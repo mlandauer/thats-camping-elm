@@ -22,7 +22,11 @@ import App.Model
         , Barbecues(..)
         , Showers(..)
         , DrinkingWater(..)
+        , Caravans(..)
+        , Trailers(..)
+        , Cars(..)
         , Facilities
+        , Access
         )
 
 
@@ -111,6 +115,42 @@ drinkingWater =
         bool
 
 
+caravans : Decoder (Maybe Caravans)
+caravans =
+    map
+        (\present ->
+            if present then
+                Just Caravans
+            else
+                Just NoCaravans
+        )
+        bool
+
+
+trailers : Decoder (Maybe Trailers)
+trailers =
+    map
+        (\present ->
+            if present then
+                Just Trailers
+            else
+                Just NoTrailers
+        )
+        bool
+
+
+cars : Decoder (Maybe Cars)
+cars =
+    map
+        (\present ->
+            if present then
+                Just Cars
+            else
+                Just NoCars
+        )
+        bool
+
+
 facilities : Decoder Facilities
 facilities =
     map5 Facilities
@@ -121,15 +161,24 @@ facilities =
         (field "drinkingWater" drinkingWater)
 
 
+access : Decoder Access
+access =
+    map3 Access
+        (field "caravans" caravans)
+        (field "trailers" trailers)
+        (field "car" cars)
+
+
 campsite : Decoder Campsite
 campsite =
-    map7 Campsite
+    map8 Campsite
         (field "id" int)
         (field "shortName" string)
         (field "longName" string)
         (field "description" string)
         location
         facilities
+        access
         (field "park" int)
 
 
