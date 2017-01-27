@@ -61,19 +61,43 @@ all =
             [ test "Has books" <|
                 \() ->
                     Expect.equal (Just "Has books.")
-                        (haveAndHaveNotSentence (Just "books") Nothing)
+                        (haveAndHaveNotSentence
+                            (Just "books")
+                            Nothing
+                            "has"
+                            "but"
+                            "no"
+                        )
             , test "No oranges" <|
                 \() ->
                     Expect.equal (Just "No oranges.")
-                        (haveAndHaveNotSentence Nothing (Just "oranges"))
+                        (haveAndHaveNotSentence
+                            Nothing
+                            (Just "oranges")
+                            "has"
+                            "but"
+                            "no"
+                        )
             , test "Oranges but no books" <|
                 \() ->
                     Expect.equal (Just "Has oranges but no books.")
-                        (haveAndHaveNotSentence (Just "oranges") (Just "books"))
+                        (haveAndHaveNotSentence
+                            (Just "oranges")
+                            (Just "books")
+                            "has"
+                            "but"
+                            "no"
+                        )
             , test "nothing" <|
                 \() ->
                     Expect.equal Nothing
-                        (haveAndHaveNotSentence Nothing Nothing)
+                        (haveAndHaveNotSentence
+                            Nothing
+                            Nothing
+                            "has"
+                            "but"
+                            "no"
+                        )
             ]
         , describe "listAsText"
             [ test "list of length zero" <|

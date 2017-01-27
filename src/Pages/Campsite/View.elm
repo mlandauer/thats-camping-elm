@@ -65,13 +65,16 @@ facilitiesText facilities =
         (haveAndHaveNotSentence
             (listAsText (list True facilities))
             (listAsText (list False facilities))
+            "has"
+            "but"
+            "no"
         )
 
 
 accessText : Access -> String
 accessText access =
     Maybe.withDefault ""
-        (haveAndHaveNotSentence2
+        (haveAndHaveNotSentence
             (listAsText (accessList True access))
             (listAsText (accessList False access))
             "for"
@@ -320,13 +323,8 @@ joinWords a word b =
                     Nothing
 
 
-haveAndHaveNotSentence : Maybe String -> Maybe String -> Maybe String
-haveAndHaveNotSentence have notHave =
-    haveAndHaveNotSentence2 have notHave "has" "but" "no"
-
-
-haveAndHaveNotSentence2 : Maybe String -> Maybe String -> String -> String -> String -> Maybe String
-haveAndHaveNotSentence2 have notHave haveWord butWord notHaveWord =
+haveAndHaveNotSentence : Maybe String -> Maybe String -> String -> String -> String -> Maybe String
+haveAndHaveNotSentence have notHave haveWord butWord notHaveWord =
     Maybe.map (\text -> capitalise (text ++ "."))
         (joinWords
             (Maybe.map (\text -> haveWord ++ " " ++ text) have)
