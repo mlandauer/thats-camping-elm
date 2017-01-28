@@ -1,10 +1,10 @@
 ## Develop
 
 ```
-elm-live src/App.elm --output=dist/app.js --dir=dist --open
+npm run dev
 ```
 
-Then point your browser at http://localhost:8000/
+Then point your browser at http://localhost:3000/
 
 To run tests
 ```

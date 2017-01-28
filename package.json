@@ -7,6 +7,9 @@
     "test": "tests"
   },
   "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "dev": "webpack-dev-server --port 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/mlandauer/thats-camping-elm/issues"
   },
-  "homepage": "https://github.com/mlandauer/thats-camping-elm"
+  "homepage": "https://github.com/mlandauer/thats-camping-elm",
+  "devDependencies": {
+    "css-loader": "^0.26.1",
+    "elm-webpack-loader": "^4.2.0",
+    "file-loader": "^0.10.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^1.16.2"
+  }
 }
