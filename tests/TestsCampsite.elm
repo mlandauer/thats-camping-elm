@@ -3,7 +3,7 @@ module TestsCampsite exposing (..)
 import Test exposing (..)
 import Expect
 import App.Model exposing (Location, Campsite)
-import Pages.Campsites.View exposing (compareCampsite)
+import App.ViewHelpers exposing (compareCampsite)
 
 
 -- TODO: Move tests for compareCampsite to another module

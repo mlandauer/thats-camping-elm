@@ -4,8 +4,12 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import App.ViewHelpers
 import Libs.SimpleFormat.Format
+import App.Update
 
 
+view :
+    { a | description : String, longName : String, shortName : String }
+    -> Html App.Update.Msg
 view park =
     -- <div className="park-detail-page">
     --   <Header title={park.shortName}/>

@@ -1,4 +1,4 @@
-module Pages.Campsites.View exposing (view, compareCampsite)
+module Pages.Campsites.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -17,8 +17,7 @@ view model =
         [ navBar "Camping near you" False True
         , div [ class "content" ]
             [ errorsView model.errors
-            , div [ class "list-group" ]
-                (List.map (campsiteListItem model.location model.parks) (sortCampsites model.location model.campsites))
+            , App.ViewHelpers.campsiteListView model.location model.campsites model.parks
             ]
         ]
 
@@ -26,71 +25,3 @@ view model =
 errorsView : List String -> Html msg
 errorsView errors =
     div [] (List.map (\error -> (p [] [ text error ])) errors)
-
-
-campsiteListItem : Maybe Location -> Dict Int Park -> Campsite -> Html msg
-campsiteListItem location parks campsite =
-    link (CampsitePage campsite.id)
-        [ class "list-group-item" ]
-        [ div [ class "campsite" ]
-            [ div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
-            , div [ class "name" ] [ text campsite.shortName ]
-            , div [ class "park" ] [ text (parkNameFromId campsite.parkId parks) ]
-            ]
-        ]
-
-
-sortCampsites : Maybe Location -> List Campsite -> List Campsite
-sortCampsites location campsites =
-    List.sortWith (compareCampsite location) campsites
-
-
-parkNameFromId : Int -> Dict Int Park -> String
-parkNameFromId id parks =
-    case Dict.get id parks of
-        Just park ->
-            park.shortName
-
-        Nothing ->
-            ""
-
-
-bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
-bearingAndDistanceAsText from to =
-    case (Maybe.map2 Location.bearingAndDistanceText from to) of
-        Just text ->
-            text
-
-        Nothing ->
-            ""
-
-
-
--- We're being a bit flexible with the form of the campsite record so that we can make testing a little less cumbersome
-
-
-compareCampsite : Maybe Location -> { c | location : Maybe Location, shortName : String } -> { c | location : Maybe Location, shortName : String } -> Order
-compareCampsite userLocation c1 c2 =
-    let
-        d1 =
-            Maybe.map2 Location.distanceInMetres userLocation c1.location
-
-        d2 =
-            Maybe.map2 Location.distanceInMetres userLocation c2.location
-    in
-        case d1 of
-            Just d1 ->
-                case d2 of
-                    Just d2 ->
-                        compare d1 d2
-
-                    Nothing ->
-                        LT
-
-            Nothing ->
-                case d2 of
-                    Just d2 ->
-                        GT
-
-                    Nothing ->
-                        compare c1.shortName c2.shortName
