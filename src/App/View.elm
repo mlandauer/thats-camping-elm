@@ -7,6 +7,7 @@ import App.Model exposing (..)
 import Pages.About.View
 import Pages.Campsites.View
 import Pages.Campsite.View
+import Pages.Park.View
 import Dict
 
 
@@ -31,7 +32,12 @@ view model =
                         view404
 
             ParkPage id ->
-                p [] [ text "This is a park detail page" ]
+                case Dict.get id model.parks of
+                    Just park ->
+                        Pages.Park.View.view park
+
+                    Nothing ->
+                        view404
 
             About ->
                 Pages.About.View.view
