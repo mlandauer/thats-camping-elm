@@ -18,7 +18,7 @@ Then, point your browser at http://localhost:8001/Runner.elm
 
 ```
 npm run build
-git commit -a
+git commit -am "New release"
 git push
 ```
 
