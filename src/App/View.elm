@@ -30,6 +30,9 @@ view model =
                     Nothing ->
                         view404
 
+            ParkPage id ->
+                p [] [ text "This is a park detail page" ]
+
             About ->
                 Pages.About.View.view
 

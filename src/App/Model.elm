@@ -26,6 +26,7 @@ type
     -- TODO: Rename Campsites to CampsitesPage and About to AboutPage
     = Campsites
     | CampsitePage Int
+    | ParkPage Int
     | About
       -- This is the 404 page
     | UnknownPage

@@ -113,6 +113,14 @@ location2messages location =
                 Err _ ->
                     [ ChangePage UnknownPage ]
 
+        [ "parks", id ] ->
+            case String.toInt id of
+                Ok id ->
+                    [ ChangePage (ParkPage id) ]
+
+                Err _ ->
+                    [ ChangePage UnknownPage ]
+
         [ "about" ] ->
             [ ChangePage About ]
 
@@ -137,6 +145,9 @@ page2url page =
 
         CampsitePage id ->
             "#/campsites/" ++ toString id
+
+        ParkPage id ->
+            "#/parks/" ++ toString id
 
         About ->
             "#/about"

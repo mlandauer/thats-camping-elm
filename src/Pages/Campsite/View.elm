@@ -26,6 +26,7 @@ import App.Model
         , Trailers(..)
         , Cars(..)
         , Location
+        , Page(..)
         )
 
 
@@ -43,7 +44,10 @@ view model =
                     , p []
                         (case model.park of
                             Just park ->
-                                [ text ("in " ++ park.longName ++ ".") ]
+                                [ text "in "
+                                , App.ViewHelpers.link (ParkPage park.id) [] [ text park.longName ]
+                                , text "."
+                                ]
 
                             Nothing ->
                                 []
