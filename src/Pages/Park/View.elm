@@ -3,6 +3,7 @@ module Pages.Park.View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import App.ViewHelpers
+import Libs.SimpleFormat.Format
 
 
 view park =
@@ -26,9 +27,7 @@ view park =
             [ div [ class "park-details" ]
                 [ div [ class "container" ]
                     [ h2 [] [ text park.longName ]
-                      -- TODO: Add description
-                    , div []
-                        [ p [] [ text "This is where the description goes" ] ]
+                    , Libs.SimpleFormat.Format.format park.description
                       -- TODO: Add campsites list
                     , div [ class "park-campsite-list" ] []
                     ]

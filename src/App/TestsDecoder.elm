@@ -126,7 +126,8 @@ all =
   "car": true
   }],
 "parks": [{
-  "id": 15, "shortName": "A park", "longName": "A long park"
+  "id": 15, "shortName": "A park", "longName": "A long park",
+  "description": "It's a nice park"
   }]
 }
                             """
@@ -153,7 +154,7 @@ all =
                                         )
                                         12
                                     ]
-                                 , parks = [ Park 15 "A park" "A long park" ]
+                                 , parks = [ Park 15 "A park" "A long park" "It's a nice park" ]
                                  }
                                 )
                     in
