@@ -5,12 +5,11 @@ import Html.Attributes exposing (..)
 import App.ViewHelpers
 import Libs.SimpleFormat.Format
 import App.Update
+import Pages.Park.Model exposing (..)
 
 
-view :
-    { a | description : String, longName : String, shortName : String }
-    -> Html App.Update.Msg
-view park =
+view : Model -> Html App.Update.Msg
+view model =
     -- <div className="park-detail-page">
     --   <Header title={park.shortName}/>
     --   <div className="content">
@@ -26,12 +25,12 @@ view park =
     --   </div>
     -- </div>
     div [ class "park-detail-page" ]
-        [ App.ViewHelpers.navBar park.shortName True False
+        [ App.ViewHelpers.navBar model.park.shortName True False
         , div [ class "content" ]
             [ div [ class "park-details" ]
                 [ div [ class "container" ]
-                    [ h2 [] [ text park.longName ]
-                    , Libs.SimpleFormat.Format.format park.description
+                    [ h2 [] [ text model.park.longName ]
+                    , Libs.SimpleFormat.Format.format model.park.description
                       -- TODO: Add campsites list
                     , div [ class "park-campsite-list" ] []
                     ]

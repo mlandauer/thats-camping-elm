@@ -34,7 +34,7 @@ view model =
             ParkPage id ->
                 case Dict.get id model.parks of
                     Just park ->
-                        Pages.Park.View.view park
+                        Pages.Park.View.view { park = park, parks = model.parks, location = model.location }
 
                     Nothing ->
                         view404
