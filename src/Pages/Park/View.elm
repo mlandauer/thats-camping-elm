@@ -25,8 +25,7 @@ view park =
         , div [ class "content" ]
             [ div [ class "park-details" ]
                 [ div [ class "container" ]
-                    [ -- TODO: Add long name
-                      h2 [] [ text "This is where the long name of the park goes" ]
+                    [ h2 [] [ text park.longName ]
                       -- TODO: Add description
                     , div []
                         [ p [] [ text "This is where the description goes" ] ]
