@@ -19,6 +19,7 @@ module App.Model
 
 import Dict exposing (Dict)
 import Geolocation
+import Pages.Admin.Model
 
 
 type
@@ -142,4 +143,5 @@ type alias Model =
     , location : Maybe Location
     , errors : List String
     , page : Page
+    , adminModel : Pages.Admin.Model.Model
     }

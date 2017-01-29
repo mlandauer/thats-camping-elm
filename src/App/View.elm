@@ -53,7 +53,7 @@ view model =
                 Pages.About.View.view
 
             AdminPage ->
-                Pages.Admin.View.view
+                Html.map AdminMsg (Pages.Admin.View.view model.adminModel)
 
             UnknownPage ->
                 view404

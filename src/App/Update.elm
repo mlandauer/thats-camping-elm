@@ -17,6 +17,7 @@ import Dict exposing (Dict)
 import RouteUrl
 import RouteUrl.Builder
 import Task
+import Pages.Admin.Update
 
 
 type Msg
@@ -24,11 +25,18 @@ type Msg
     | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
     | ChangePage Page
     | PageBack
+    | AdminMsg Pages.Admin.Update.Msg
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { campsites = Dict.empty, parks = Dict.empty, location = Nothing, errors = [], page = Campsites }
+    ( { campsites = Dict.empty
+      , parks = Dict.empty
+      , location = Nothing
+      , errors = []
+      , page = Campsites
+      , adminModel = Pages.Admin.Update.initModel
+      }
       -- On startup immediately try to get the location and the campsite data
     , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
     )
@@ -55,6 +63,13 @@ update msg model =
 
         PageBack ->
             ( model, Navigation.back 1 )
+
+        AdminMsg msg ->
+            let
+                ( updatedAdminModel, adminCmd ) =
+                    Pages.Admin.Update.update msg model.adminModel
+            in
+                ( { model | adminModel = updatedAdminModel }, Cmd.map AdminMsg adminCmd )
 
 
 formatGeolocationError : Geolocation.Error -> String
