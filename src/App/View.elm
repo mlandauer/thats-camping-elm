@@ -8,6 +8,7 @@ import Pages.About.View
 import Pages.Campsites.View
 import Pages.Campsite.View
 import Pages.Park.View
+import Pages.Admin.View
 import Dict exposing (Dict)
 import App.ViewHelpers
 
@@ -50,6 +51,9 @@ view model =
 
             About ->
                 Pages.About.View.view
+
+            AdminPage ->
+                Pages.Admin.View.view
 
             UnknownPage ->
                 view404

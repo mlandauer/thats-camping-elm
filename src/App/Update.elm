@@ -124,6 +124,9 @@ location2messages location =
         [ "about" ] ->
             [ ChangePage About ]
 
+        [ "admin" ] ->
+            [ ChangePage AdminPage ]
+
         id :: _ ->
             [ ChangePage UnknownPage ]
 
@@ -151,6 +154,9 @@ page2url page =
 
         About ->
             "#/about"
+
+        AdminPage ->
+            "#/admin"
 
         UnknownPage ->
             "#/404"

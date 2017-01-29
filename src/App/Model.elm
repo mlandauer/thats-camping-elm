@@ -28,6 +28,7 @@ type
     | CampsitePage Int
     | ParkPage Int
     | About
+    | AdminPage
       -- This is the 404 page
     | UnknownPage
 
