@@ -102,20 +102,12 @@ campsiteListItem location parks campsite =
         [ div [ class "campsite" ]
             [ div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
             , div [ class "name" ] [ text campsite.shortName ]
-            , div [ class "park" ] [ text (parkNameFromId campsite.parkId parks) ]
+            , div [ class "park" ]
+                [ text
+                    (Maybe.withDefault "" (Maybe.map .shortName (Dict.get campsite.parkId parks)))
+                ]
             ]
         ]
-
-
-parkNameFromId : Int -> Dict Int Park -> String
-parkNameFromId id parks =
-    -- TODO: We can simplify this using Maybe.withDefault
-    case Dict.get id parks of
-        Just park ->
-            park.shortName
-
-        Nothing ->
-            ""
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
