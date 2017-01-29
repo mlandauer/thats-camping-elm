@@ -17,7 +17,7 @@ view model =
         [ navBar "Camping near you" False True
         , div [ class "content" ]
             [ errorsView model.errors
-            , App.ViewHelpers.campsiteListView model.location model.campsites model.parks
+            , App.ViewHelpers.campsiteListView model.location model.campsites model.parks True
             ]
         ]
 
