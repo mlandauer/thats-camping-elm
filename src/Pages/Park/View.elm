@@ -32,7 +32,9 @@ view model =
                     [ h2 [] [ text model.park.longName ]
                     , Libs.SimpleFormat.Format.format model.park.description
                       -- TODO: Add campsites list
-                    , div [ class "park-campsite-list" ] []
+                    , div [ class "park-campsite-list" ]
+                        [ App.ViewHelpers.campsiteListView model.location model.campsites model.parks
+                        ]
                     ]
                 ]
             ]

@@ -8,7 +8,8 @@ import Pages.About.View
 import Pages.Campsites.View
 import Pages.Campsite.View
 import Pages.Park.View
-import Dict
+import Dict exposing (Dict)
+import App.ViewHelpers
 
 
 view : Model -> Html Msg
@@ -26,7 +27,10 @@ view model =
             CampsitePage id ->
                 case Dict.get id model.campsites of
                     Just campsite ->
-                        Pages.Campsite.View.view { campsite = campsite, park = (Dict.get campsite.parkId model.parks) }
+                        Pages.Campsite.View.view
+                            { campsite = campsite
+                            , park = (Dict.get campsite.parkId model.parks)
+                            }
 
                     Nothing ->
                         view404
@@ -34,7 +38,12 @@ view model =
             ParkPage id ->
                 case Dict.get id model.parks of
                     Just park ->
-                        Pages.Park.View.view { park = park, parks = model.parks, location = model.location }
+                        Pages.Park.View.view
+                            { park = park
+                            , campsites = (campsites park model.campsites)
+                            , parks = model.parks
+                            , location = model.location
+                            }
 
                     Nothing ->
                         view404
@@ -45,6 +54,11 @@ view model =
             UnknownPage ->
                 view404
         ]
+
+
+campsites : Park -> Dict Int Campsite -> List Campsite
+campsites park campsites =
+    App.ViewHelpers.values (List.map (\campsiteId -> Dict.get campsiteId campsites) park.campsiteIds)
 
 
 view404 : Html Msg

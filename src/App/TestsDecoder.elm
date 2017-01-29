@@ -127,7 +127,7 @@ all =
   }],
 "parks": [{
   "id": 15, "shortName": "A park", "longName": "A long park",
-  "description": "It's a nice park"
+  "description": "It's a nice park", "campsites": [4]
   }]
 }
                             """
@@ -154,7 +154,7 @@ all =
                                         )
                                         12
                                     ]
-                                 , parks = [ Park 15 "A park" "A long park" "It's a nice park" ]
+                                 , parks = [ Park 15 "A park" "A long park" "It's a nice park" [ 4 ] ]
                                  }
                                 )
                     in

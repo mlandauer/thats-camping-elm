@@ -4,6 +4,7 @@ module App.ViewHelpers
         , link
         , campsiteListView
         , compareCampsite
+        , values
         )
 
 import Html exposing (..)
@@ -123,3 +124,21 @@ bearingAndDistanceAsText from to =
 
         Nothing ->
             ""
+
+
+values : List (Maybe a) -> List a
+values l =
+    -- TODO: This function doesn't really belong in view helpers
+    -- Implementing something like Maybe.Extra.values
+    -- Recursive so probably not efficient
+    case l of
+        [] ->
+            []
+
+        first :: rest ->
+            case first of
+                Just value ->
+                    value :: (values rest)
+
+                Nothing ->
+                    values rest

@@ -295,26 +295,9 @@ listItem p present description facility =
             Nothing
 
 
-values : List (Maybe a) -> List a
-values l =
-    -- Implementing something like Maybe.Extra.values
-    -- Recursive so probably not efficient
-    case l of
-        [] ->
-            []
-
-        first :: rest ->
-            case first of
-                Just value ->
-                    value :: (values rest)
-
-                Nothing ->
-                    values rest
-
-
 facilitiesList : Bool -> Facilities -> List String
 facilitiesList p facilities =
-    values
+    App.ViewHelpers.values
         [ (listItem p presentToilets descriptionToilets facilities.toilets)
         , (listItem p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
         , (listItem p presentBarbecues descriptionBarbecues facilities.barbecues)
@@ -325,7 +308,7 @@ facilitiesList p facilities =
 
 accessList : Bool -> Access -> List String
 accessList p access =
-    values
+    App.ViewHelpers.values
         [ (listItem p presentCaravans descriptionCaravans access.caravans)
         , (listItem p presentTrailers descriptionTrailers access.trailers)
         , (listItem p presentCars descriptionCars access.cars)

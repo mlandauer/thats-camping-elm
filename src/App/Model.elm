@@ -127,7 +127,12 @@ type alias Campsite =
 
 
 type alias Park =
-    { id : Int, shortName : String, longName : String, description : String }
+    { id : Int
+    , shortName : String
+    , longName : String
+    , description : String
+    , campsiteIds : List Int
+    }
 
 
 type alias Model =

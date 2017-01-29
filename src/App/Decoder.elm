@@ -184,11 +184,12 @@ campsite =
 
 park : Decoder Park
 park =
-    map4 Park
+    map5 Park
         (field "id" int)
         (field "shortName" string)
         (field "longName" string)
         (field "description" string)
+        (field "campsites" (list int))
 
 
 type alias ParksAndCampsites =
