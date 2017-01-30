@@ -1,0 +1,3 @@
+[submodule "elm-pouchdb"]
+	path = elm-pouchdb
+	url = https://github.com/powet/elm-pouchdb.git
