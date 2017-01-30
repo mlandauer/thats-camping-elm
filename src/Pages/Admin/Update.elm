@@ -13,8 +13,7 @@ import Json.Encode
 
 type Msg
     = AddData
-    | PutError Pouchdb.PutError
-    | PutSuccess Pouchdb.PutSuccess
+    | Put (Result Pouchdb.PutError Pouchdb.PutSuccess)
 
 
 initModel =
@@ -33,13 +32,13 @@ update msg model =
             in
                 ( model, Pouchdb.put value )
 
-        PutError error ->
-            ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
-
-        PutSuccess response ->
+        Put (Ok response) ->
             ( { model | text = Just "Success!" }, Cmd.none )
+
+        Put (Err error) ->
+            ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.batch [ Pouchdb.putError PutError, Pouchdb.putSuccess PutSuccess ]
+    Sub.batch [ Pouchdb.putError (\e -> Put (Err e)), Pouchdb.putSuccess (\r -> Put (Ok r)) ]
