@@ -16,8 +16,22 @@ var Elm = require('./App.elm');
 var node = document.getElementById('root');
 var app = Elm.App.embed(node);
 
+var db = new PouchDB('thats-camping');
+
+db.changes({
+  live: true,
+  include_docs: true
+}).on('change', function(change) {
+  app.ports.change.send(change);
+}).on('complete', function(info) {
+  // TODO: Send this to a port
+  console.log("complete", info);
+}).on('error', function (err) {
+  // TODO: Send this to a port
+  console.log("error", err);
+});
+
 app.ports.put.subscribe(function(data) {
-  var db = new PouchDB('thats-camping');
   // Using post at the moment so we don't have to deal with creating id's
   db.post(data)
     .then(function(response) {

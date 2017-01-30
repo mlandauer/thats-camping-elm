@@ -14,6 +14,7 @@ import Json.Encode
 type Msg
     = AddData
     | Put (Result Pouchdb.PutError Pouchdb.PutSuccess)
+    | Change Pouchdb.Change
 
 
 initModel =
@@ -38,7 +39,18 @@ update msg model =
         Put (Err error) ->
             ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
 
+        Change change ->
+            let
+                foo =
+                    Debug.log "change" change
+            in
+                ( model, Cmd.none )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.batch [ Pouchdb.putError (\e -> Put (Err e)), Pouchdb.putSuccess (\r -> Put (Ok r)) ]
+    Sub.batch
+        [ Pouchdb.putError (\e -> Put (Err e))
+        , Pouchdb.putSuccess (\r -> Put (Ok r))
+        , Pouchdb.change Change
+        ]
