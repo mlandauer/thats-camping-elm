@@ -13,7 +13,8 @@ import Json.Encode
 
 type Msg
     = AddData
-    | PutError { message : String }
+    | PutError Libs.Pouchdb.Pouchdb.PutError
+    | PutSuccess Libs.Pouchdb.Pouchdb.PutSuccess
 
 
 initModel =
@@ -27,16 +28,18 @@ update msg model =
             let
                 value =
                     Json.Encode.object
-                        [ ( "_id", Json.Encode.int 1 )
-                        , ( "text", Json.Encode.string "Hello!" )
+                        [ ( "text", Json.Encode.string "Hello!" )
                         ]
             in
-                ( { model | text = Just "Hello!" }, (Libs.Pouchdb.Pouchdb.put value) )
+                ( model, (Libs.Pouchdb.Pouchdb.put value) )
 
         PutError error ->
-            ( { model | text = Just error.message }, Cmd.none )
+            ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
+
+        PutSuccess response ->
+            ( { model | text = Just "Success!" }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Libs.Pouchdb.Pouchdb.putError PutError
+    Sub.batch [ Libs.Pouchdb.Pouchdb.putError PutError, Libs.Pouchdb.Pouchdb.putSuccess PutSuccess ]

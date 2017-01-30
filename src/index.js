@@ -17,10 +17,13 @@ var node = document.getElementById('root');
 var app = Elm.App.embed(node);
 
 app.ports.put.subscribe(function(data) {
-  console.log("Just received:", data);
   var db = new PouchDB('thats-camping');
-  db.put(data).catch(function (err) {
-    app.ports.putError.send(err);
-    console.log(err);
-  });
+  // Using post at the moment so we don't have to deal with creating id's
+  db.post(data)
+    .then(function(response) {
+      app.ports.putSuccess.send(response);
+    })
+    .catch(function (err) {
+      app.ports.putError.send(err);
+    });
 });
