@@ -4,6 +4,7 @@ import RouteUrl
 import App.Model exposing (..)
 import App.Update exposing (..)
 import App.View exposing (..)
+import Pages.Admin.Update
 
 
 main =
@@ -19,4 +20,4 @@ main =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
