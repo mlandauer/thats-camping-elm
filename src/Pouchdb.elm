@@ -1,4 +1,4 @@
-port module Libs.Pouchdb.Pouchdb
+port module Pouchdb
     exposing
         ( put
         , putError

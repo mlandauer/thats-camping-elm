@@ -7,14 +7,14 @@ module Pages.Admin.Update
         )
 
 import Pages.Admin.Model exposing (..)
-import Libs.Pouchdb.Pouchdb
+import Pouchdb
 import Json.Encode
 
 
 type Msg
     = AddData
-    | PutError Libs.Pouchdb.Pouchdb.PutError
-    | PutSuccess Libs.Pouchdb.Pouchdb.PutSuccess
+    | PutError Pouchdb.PutError
+    | PutSuccess Pouchdb.PutSuccess
 
 
 initModel =
@@ -31,7 +31,7 @@ update msg model =
                         [ ( "text", Json.Encode.string "Hello!" )
                         ]
             in
-                ( model, (Libs.Pouchdb.Pouchdb.put value) )
+                ( model, Pouchdb.put value )
 
         PutError error ->
             ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
@@ -42,4 +42,4 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.batch [ Libs.Pouchdb.Pouchdb.putError PutError, Libs.Pouchdb.Pouchdb.putSuccess PutSuccess ]
+    Sub.batch [ Pouchdb.putError PutError, Pouchdb.putSuccess PutSuccess ]
