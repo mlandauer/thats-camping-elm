@@ -53,3 +53,12 @@ app.ports.destroy.subscribe(function(_) {
     app.ports.destroyError.send(err);
   });
 });
+
+app.ports.bulkDocs.subscribe(function(data) {
+  db.bulkDocs(data)
+    .then(function(response) {
+      console.log(response);
+    }).catch(function(err) {
+      console.log(err);
+    });
+});

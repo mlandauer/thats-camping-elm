@@ -63,13 +63,8 @@ update msg model =
 
         NewData (Ok data) ->
             -- Now we load the new data into the local database
-            -- For the time being just load the first campsite
-            case List.head data.campsites of
-                Just campsite ->
-                    ( model, Pouchdb.put (App.NewEncoder.campsite campsite) )
-
-                Nothing ->
-                    ( model, Cmd.none )
+            -- For the time being just load the campsites
+            ( model, Pouchdb.bulkDocs (List.map App.NewEncoder.campsite data.campsites) )
 
         Destroy ->
             ( model, Pouchdb.destroy () )

@@ -11,6 +11,7 @@ port module Pouchdb
         , DestroyError
         , change
         , Change
+        , bulkDocs
         )
 
 import Json.Encode
@@ -67,3 +68,6 @@ putResponse a =
 
 
 port change : (Change -> msg) -> Sub msg
+
+
+port bulkDocs : List Json.Encode.Value -> Cmd msg
