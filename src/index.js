@@ -38,7 +38,11 @@ app.ports.put.subscribe(function(data) {
       app.ports.putSuccess.send(response);
     })
     .catch(function (err) {
-      app.ports.putError.send(err);
+      if (err instanceof Error) {
+        app.ports.putError.send({status: null, name: null, message: err.message, error: true});
+      } else {
+        app.ports.putError.send(err.message);
+      }
     });
 });
 

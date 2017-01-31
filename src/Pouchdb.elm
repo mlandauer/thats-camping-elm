@@ -17,7 +17,7 @@ import Json.Encode
 
 
 type alias PutError =
-    { status : Int, name : String, message : String, error : Bool }
+    { status : Maybe Int, name : Maybe String, message : String, error : Bool }
 
 
 type alias PutSuccess =
