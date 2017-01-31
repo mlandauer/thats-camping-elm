@@ -1,5 +1,8 @@
 var path = require("path");
 
+// TODO: Extract css into separate file because currently it's in the big js
+// file and when that changes everything has to be reloaded
+
 module.exports = {
   entry: {
     app: [

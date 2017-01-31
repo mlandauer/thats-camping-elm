@@ -1,5 +1,6 @@
 'use strict';
 
+require('bootstrap/dist/css/bootstrap.css');
 require('./style.css');
 // require('font-awesome/css/font-awesome.css');
 

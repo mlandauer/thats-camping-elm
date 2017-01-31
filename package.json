@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/mlandauer/thats-camping-elm",
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "css-loader": "^0.26.1",
     "elm-webpack-loader": "^4.2.0",
     "file-loader": "^0.10.0",
