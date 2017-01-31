@@ -104,12 +104,12 @@ formatHttpError error =
             "Bad payload: " ++ text
 
 
-transformParks : List Park -> Dict Int Park
+transformParks : List Park -> Dict String Park
 transformParks parks =
     Dict.fromList (List.map (\park -> ( park.id, park )) parks)
 
 
-transformCampsites : List Campsite -> Dict Int Campsite
+transformCampsites : List Campsite -> Dict String Campsite
 transformCampsites campsites =
     Dict.fromList (List.map (\campsite -> ( campsite.id, campsite )) campsites)
 
@@ -121,20 +121,10 @@ location2messages location =
             [ ChangePage Campsites ]
 
         [ "campsites", id ] ->
-            case String.toInt id of
-                Ok id ->
-                    [ ChangePage (CampsitePage id) ]
-
-                Err _ ->
-                    [ ChangePage UnknownPage ]
+            [ ChangePage (CampsitePage id) ]
 
         [ "parks", id ] ->
-            case String.toInt id of
-                Ok id ->
-                    [ ChangePage (ParkPage id) ]
-
-                Err _ ->
-                    [ ChangePage UnknownPage ]
+            [ ChangePage (ParkPage id) ]
 
         [ "about" ] ->
             [ ChangePage About ]
@@ -162,10 +152,10 @@ page2url page =
             "#/campsites"
 
         CampsitePage id ->
-            "#/campsites/" ++ toString id
+            "#/campsites/" ++ id
 
         ParkPage id ->
-            "#/parks/" ++ toString id
+            "#/parks/" ++ id
 
         About ->
             "#/about"

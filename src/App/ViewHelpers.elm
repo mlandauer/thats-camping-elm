@@ -54,7 +54,7 @@ link page attributes html =
     a ((href (page2url page)) :: attributes) html
 
 
-campsiteListView : Maybe Location -> List Campsite -> Dict Int Park -> Bool -> Html msg
+campsiteListView : Maybe Location -> List Campsite -> Dict String Park -> Bool -> Html msg
 campsiteListView location campsites parks showPark =
     -- TODO: Make it not necessary to pass in all the parks here
     div [ class "list-group" ]
@@ -97,7 +97,7 @@ compareCampsite userLocation c1 c2 =
                         compare c1.shortName c2.shortName
 
 
-campsiteListItem : Maybe Location -> Dict Int Park -> Bool -> Campsite -> Html msg
+campsiteListItem : Maybe Location -> Dict String Park -> Bool -> Campsite -> Html msg
 campsiteListItem location parks showPark campsite =
     link (CampsitePage campsite.id)
         [ class "list-group-item" ]
@@ -118,7 +118,7 @@ campsiteListItem location parks showPark campsite =
         ]
 
 
-park : Campsite -> Dict Int Park -> Maybe Park
+park : Campsite -> Dict String Park -> Maybe Park
 park campsite parks =
     Dict.get campsite.parkId parks
 

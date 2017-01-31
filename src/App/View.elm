@@ -60,7 +60,7 @@ view model =
         ]
 
 
-campsites : Park -> Dict Int Campsite -> List Campsite
+campsites : Park -> Dict String Campsite -> List Campsite
 campsites park campsites =
     App.ViewHelpers.values (List.map (\campsiteId -> Dict.get campsiteId campsites) park.campsiteIds)
 

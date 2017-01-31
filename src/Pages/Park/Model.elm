@@ -7,6 +7,6 @@ import Dict exposing (Dict)
 type alias Model =
     { park : Park
     , campsites : List Campsite
-    , parks : Dict Int Park
+    , parks : Dict String Park
     , location : Maybe Location
     }

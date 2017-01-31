@@ -171,24 +171,24 @@ access =
 campsite : Decoder Campsite
 campsite =
     map8 Campsite
-        (field "id" int)
+        (field "id" (map toString int))
         (field "shortName" string)
         (field "longName" string)
         (field "description" string)
         location
         facilities
         access
-        (field "park" int)
+        (field "park" (map toString int))
 
 
 park : Decoder Park
 park =
     map5 Park
-        (field "id" int)
+        (field "id" (map toString int))
         (field "shortName" string)
         (field "longName" string)
         (field "description" string)
-        (field "campsites" (list int))
+        (field "campsites" (list (map toString int)))
 
 
 type alias ParksAndCampsites =

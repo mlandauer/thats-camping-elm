@@ -25,8 +25,8 @@ type
     Page
     -- TODO: Rename Campsites to CampsitesPage and About to AboutPage
     = Campsites
-    | CampsitePage Int
-    | ParkPage Int
+    | CampsitePage String
+    | ParkPage String
     | About
     | AdminPage
       -- This is the 404 page
@@ -116,29 +116,29 @@ type alias Access =
 
 
 type alias Campsite =
-    { id : Int
+    { id : String
     , shortName : String
     , longName : String
     , description : String
     , location : Maybe Location
     , facilities : Facilities
     , access : Access
-    , parkId : Int
+    , parkId : String
     }
 
 
 type alias Park =
-    { id : Int
+    { id : String
     , shortName : String
     , longName : String
     , description : String
-    , campsiteIds : List Int
+    , campsiteIds : List String
     }
 
 
 type alias Model =
-    { campsites : Dict Int Campsite
-    , parks : Dict Int Park
+    { campsites : Dict String Campsite
+    , parks : Dict String Park
     , location : Maybe Location
     , errors : List String
     , page : Page
