@@ -14,6 +14,9 @@ import Json.Encode
 type Msg
     = AddData
     | Put (Result Pouchdb.PutError Pouchdb.PutSuccess)
+    | Destroy
+    | DestroySuccess Pouchdb.DestroySuccess
+    | DestroyError Pouchdb.DestroyError
     | Change Pouchdb.Change
 
 
@@ -33,8 +36,17 @@ update msg model =
             in
                 ( model, Pouchdb.put value )
 
-        Put (Ok response) ->
-            ( { model | text = Just "Success!" }, Cmd.none )
+        Destroy ->
+            ( model, Pouchdb.destroy () )
+
+        DestroySuccess _ ->
+            ( { model | text = Just "Destroyed local database" }, Cmd.none )
+
+        DestroyError _ ->
+            ( { model | text = Just "Error destroying local database" }, Cmd.none )
+
+        Put (Ok _) ->
+            ( { model | text = Just "Added data" }, Cmd.none )
 
         Put (Err error) ->
             ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
@@ -52,4 +64,6 @@ subscriptions model =
     Sub.batch
         [ Pouchdb.putResponse Put
         , Pouchdb.change Change
+        , Pouchdb.destroySuccess DestroySuccess
+        , Pouchdb.destroyError DestroyError
         ]

@@ -41,3 +41,11 @@ app.ports.put.subscribe(function(data) {
       app.ports.putError.send(err);
     });
 });
+
+app.ports.destroy.subscribe(function(_) {
+  db.destroy().then(function (response) {
+    app.ports.destroySuccess.send(response);
+  }).catch(function (err) {
+    app.ports.destroyError.send(err);
+  });
+});

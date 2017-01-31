@@ -2,9 +2,14 @@ port module Pouchdb
     exposing
         ( put
         , putResponse
-        , change
         , PutError
         , PutSuccess
+        , destroy
+        , destroySuccess
+        , destroyError
+        , DestroySuccess
+        , DestroyError
+        , change
         , Change
         )
 
@@ -27,7 +32,24 @@ type alias Change =
     { id : String, changes : List Revision, doc : Json.Encode.Value, seq : Int }
 
 
+type alias DestroySuccess =
+    { ok : Bool }
+
+
+type alias DestroyError =
+    {}
+
+
 port put : Json.Encode.Value -> Cmd msg
+
+
+port destroy : () -> Cmd msg
+
+
+port destroySuccess : (DestroySuccess -> msg) -> Sub msg
+
+
+port destroyError : (DestroyError -> msg) -> Sub msg
 
 
 port putSuccess : (PutSuccess -> msg) -> Sub msg
