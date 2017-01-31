@@ -1,10 +1,11 @@
-module App.NewEncoder exposing (campsite)
+module App.NewEncoder exposing (campsite, park)
 
 import Json.Encode
 import App.Model
     exposing
         ( Location
         , Campsite
+        , Park
         , Cars(..)
         , Trailers(..)
         , Caravans(..)
@@ -14,6 +15,7 @@ import App.Model
         , PicnicTables(..)
         , Toilets(..)
         )
+import Array
 
 
 locationEncoder : Maybe Location -> Json.Encode.Value
@@ -177,4 +179,18 @@ campsite campsite =
         , ( "facilities", facilitiesEncoder campsite.facilities )
         , ( "access", accessEncoder campsite.access )
         , ( "parkId", Json.Encode.string ("p" ++ toString campsite.parkId) )
+        ]
+
+
+park : Park -> Json.Encode.Value
+park park =
+    Json.Encode.object
+        [ ( "_id", Json.Encode.string ("p" ++ toString park.id) )
+        , ( "shortName", Json.Encode.string park.shortName )
+        , ( "longName", Json.Encode.string park.longName )
+        , ( "description", Json.Encode.string park.description )
+        , ( "campsiteIds"
+          , Json.Encode.list
+                (List.map (\id -> Json.Encode.string ("c" ++ toString id)) park.campsiteIds)
+          )
         ]

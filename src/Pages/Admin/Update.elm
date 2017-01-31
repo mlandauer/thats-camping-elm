@@ -53,8 +53,12 @@ update msg model =
 
         NewData (Ok data) ->
             -- Now we load the new data into the local database
-            -- For the time being just load the campsites
-            ( model, Pouchdb.bulkDocs (List.map App.NewEncoder.campsite data.campsites) )
+            ( model
+            , Pouchdb.bulkDocs
+                ((List.map App.NewEncoder.park data.parks)
+                    ++ (List.map App.NewEncoder.campsite data.campsites)
+                )
+            )
 
         Destroy ->
             ( model, Pouchdb.destroy () )
