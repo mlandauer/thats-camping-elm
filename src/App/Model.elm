@@ -18,7 +18,6 @@ module App.Model
         )
 
 import Dict exposing (Dict)
-import Geolocation
 import Pages.Admin.Model
 
 

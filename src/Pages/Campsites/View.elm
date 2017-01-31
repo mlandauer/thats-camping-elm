@@ -2,10 +2,6 @@ module Pages.Campsites.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import App.Model exposing (Campsite, Location, Park, Page(..))
-import Dict exposing (Dict)
-import Location
-import Geolocation
 import App.Update exposing (Msg)
 import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar, link)

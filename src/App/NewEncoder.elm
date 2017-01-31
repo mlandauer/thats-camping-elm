@@ -15,7 +15,6 @@ import App.Model
         , PicnicTables(..)
         , Toilets(..)
         )
-import Array
 
 
 locationEncoder : Maybe Location -> Json.Encode.Value

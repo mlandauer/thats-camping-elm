@@ -11,7 +11,6 @@ module App.Decoder
         )
 
 import Json.Decode exposing (..)
-import Location
 import App.Model
     exposing
         ( Campsite

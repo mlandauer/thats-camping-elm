@@ -8,7 +8,6 @@ module Pages.Admin.Update
 
 import Pages.Admin.Model exposing (..)
 import Pouchdb
-import Json.Encode
 import App.Model
     exposing
         ( Park
