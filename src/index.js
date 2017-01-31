@@ -28,7 +28,7 @@ var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
   }
 });
 
-db.sync(remoteDb).on('change', function (info) {
+db.sync(remoteDb, {live: true, retry: true}).on('change', function (info) {
   console.log("sync change:", info);
 }).on('paused', function (err) {
   // replication paused (e.g. replication up to date, user went offline)
