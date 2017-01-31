@@ -7,6 +7,7 @@ import App.View exposing (..)
 import Pages.Admin.Update
 
 
+main : RouteUrl.RouteUrlProgram Never Model Msg
 main =
     RouteUrl.program
         { delta2url = delta2hash

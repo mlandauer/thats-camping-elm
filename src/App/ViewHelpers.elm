@@ -54,6 +54,7 @@ link page attributes html =
     a ((href (page2url page)) :: attributes) html
 
 
+campsiteListView : Maybe Location -> List Campsite -> Dict Int Park -> Bool -> Html msg
 campsiteListView location campsites parks showPark =
     -- TODO: Make it not necessary to pass in all the parks here
     div [ class "list-group" ]

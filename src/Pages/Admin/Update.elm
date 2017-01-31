@@ -37,6 +37,7 @@ type Msg
     | Change Pouchdb.Change
 
 
+initModel : Model
 initModel =
     { text = Nothing }
 
@@ -82,6 +83,7 @@ update msg model =
                 ( model, Cmd.none )
 
 
+syncData : Cmd Msg
 syncData =
     let
         -- Just load the json data from github for the time being. Should do something

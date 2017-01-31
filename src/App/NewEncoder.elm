@@ -14,6 +14,8 @@ import App.Model
         , Barbecues(..)
         , PicnicTables(..)
         , Toilets(..)
+        , Facilities
+        , Access
         )
 
 
@@ -110,6 +112,7 @@ drinkingWaterEncoder drinkingWater =
             Json.Encode.null
 
 
+facilitiesEncoder : Facilities -> Json.Encode.Value
 facilitiesEncoder facilities =
     Json.Encode.object
         [ ( "toilets", toiletsEncoder facilities.toilets )
@@ -159,6 +162,7 @@ carsEncoder cars =
             Json.Encode.null
 
 
+accessEncoder : Access -> Json.Encode.Value
 accessEncoder access =
     Json.Encode.object
         [ ( "caravans", caravansEncoder access.caravans )

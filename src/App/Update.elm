@@ -177,6 +177,7 @@ page2url page =
             "#/404"
 
 
+syncData : Cmd Msg
 syncData =
     let
         -- Just load the json data from github for the time being. Should do something
