@@ -29,8 +29,7 @@ import App.NewEncoder
 
 
 type Msg
-    = AddData
-    | LoadData
+    = LoadData
     | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
     | Put (Result Pouchdb.PutError Pouchdb.PutSuccess)
     | Destroy
@@ -46,15 +45,6 @@ initModel =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        AddData ->
-            let
-                value =
-                    Json.Encode.object
-                        [ ( "text", Json.Encode.string "Hello!" )
-                        ]
-            in
-                ( model, Pouchdb.put value )
-
         LoadData ->
             ( { model | text = Just "We should be loading data now" }, syncData )
 
