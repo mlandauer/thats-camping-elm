@@ -50,7 +50,6 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Pouchdb.putError (\e -> Put (Err e))
-        , Pouchdb.putSuccess (\r -> Put (Ok r))
+        [ Pouchdb.putResponse Put
         , Pouchdb.change Change
         ]

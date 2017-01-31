@@ -1,8 +1,7 @@
 port module Pouchdb
     exposing
         ( put
-        , putError
-        , putSuccess
+        , putResponse
         , change
         , PutError
         , PutSuccess
@@ -35,6 +34,14 @@ port putSuccess : (PutSuccess -> msg) -> Sub msg
 
 
 port putError : (PutError -> msg) -> Sub msg
+
+
+putResponse : (Result PutError PutSuccess -> msg) -> Sub msg
+putResponse a =
+    Sub.batch
+        [ putError (\e -> a (Err e))
+        , putSuccess (\r -> a (Ok r))
+        ]
 
 
 port change : (Change -> msg) -> Sub msg
