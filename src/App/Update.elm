@@ -18,14 +18,17 @@ import RouteUrl
 import RouteUrl.Builder
 import Task
 import Pages.Admin.Update
+import Pouchdb
+import App.NewDecoder
+import Json.Decode
 
 
 type Msg
     = UpdateLocation (Result Geolocation.Error Geolocation.Location)
-    | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
     | ChangePage Page
     | PageBack
     | AdminMsg Pages.Admin.Update.Msg
+    | Change Pouchdb.Change
 
 
 init : ( Model, Cmd Msg )
@@ -37,8 +40,8 @@ init =
       , page = Campsites
       , adminModel = Pages.Admin.Update.initModel
       }
-      -- On startup immediately try to get the location and the campsite data
-    , Cmd.batch [ Task.attempt UpdateLocation Geolocation.now, syncData ]
+      -- On startup immediately try to get the location
+    , Task.attempt UpdateLocation Geolocation.now
     )
 
 
@@ -50,13 +53,6 @@ update msg model =
 
         UpdateLocation (Ok location) ->
             ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
-
-        NewData (Err error) ->
-            ( { model | errors = ((formatHttpError error) :: model.errors) }, Cmd.none )
-
-        NewData (Ok data) ->
-            -- Replace the current campsites with the new ones
-            ( { model | campsites = (transformCampsites data.campsites), parks = (transformParks data.parks) }, Cmd.none )
 
         ChangePage page ->
             ( { model | page = page }, Cmd.none )
@@ -71,6 +67,23 @@ update msg model =
             in
                 ( { model | adminModel = updatedAdminModel }, Cmd.map AdminMsg adminCmd )
 
+        Change change ->
+            -- TODO: Need to think how to handle deleted documents. Is this
+            -- something we actually need to handle?
+            let
+                o =
+                    Json.Decode.decodeValue App.NewDecoder.parkOrCampsite change.doc
+            in
+                case o of
+                    Ok (App.NewDecoder.Park park) ->
+                        ( { model | parks = (Dict.insert park.id park model.parks) }, Cmd.none )
+
+                    Ok (App.NewDecoder.Campsite campsite) ->
+                        ( { model | campsites = (Dict.insert campsite.id campsite model.campsites) }, Cmd.none )
+
+                    Err _ ->
+                        ( model, Cmd.none )
+
 
 formatGeolocationError : Geolocation.Error -> String
 formatGeolocationError error =
@@ -83,25 +96,6 @@ formatGeolocationError error =
 
         Geolocation.Timeout text ->
             "Timeout: " ++ text
-
-
-formatHttpError : Http.Error -> String
-formatHttpError error =
-    case error of
-        Http.BadUrl text ->
-            "Bad URL: " ++ text
-
-        Http.Timeout ->
-            "Timeout"
-
-        Http.NetworkError ->
-            "Network Error"
-
-        Http.BadStatus response ->
-            "Bad Status"
-
-        Http.BadPayload text response ->
-            "Bad payload: " ++ text
 
 
 transformParks : List Park -> Dict String Park
@@ -165,17 +159,3 @@ page2url page =
 
         UnknownPage ->
             "#/404"
-
-
-syncData : Cmd Msg
-syncData =
-    let
-        -- Just load the json data from github for the time being. Should do something
-        -- more sensible than this in the longer term but it's good enough for now
-        url =
-            "https://raw.githubusercontent.com/mlandauer/thats-camping-react/master/data.json"
-
-        request =
-            Http.get url App.Decoder.parksAndCampsites
-    in
-        Http.send NewData request

@@ -1,4 +1,4 @@
-module App.NewDecoder exposing (park, campsite, parkOrCampsite)
+module App.NewDecoder exposing (park, campsite, parkOrCampsite, ParkOrCampsite(..))
 
 import Json.Decode exposing (..)
 import App.Model

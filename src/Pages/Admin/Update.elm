@@ -36,7 +36,6 @@ type Msg
     | Destroy
     | DestroySuccess Pouchdb.DestroySuccess
     | DestroyError Pouchdb.DestroyError
-    | Change Pouchdb.Change
 
 
 initModel : Model
@@ -77,15 +76,6 @@ update msg model =
         Put (Err error) ->
             ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
 
-        Change change ->
-            -- TODO: Need to think how to handle deleted documents. Is this
-            -- something we actually need to handle?
-            let
-                o =
-                    Debug.log "o" (Json.Decode.decodeValue App.NewDecoder.parkOrCampsite change.doc)
-            in
-                ( model, Cmd.none )
-
 
 syncData : Cmd Msg
 syncData =
@@ -124,7 +114,6 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Pouchdb.putResponse Put
-        , Pouchdb.change Change
         , Pouchdb.destroySuccess DestroySuccess
         , Pouchdb.destroyError DestroyError
         ]

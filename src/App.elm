@@ -5,6 +5,7 @@ import App.Model exposing (..)
 import App.Update exposing (..)
 import App.View exposing (..)
 import Pages.Admin.Update
+import Pouchdb
 
 
 main : RouteUrl.RouteUrlProgram Never Model Msg
@@ -21,4 +22,7 @@ main =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
+    Sub.batch
+        [ Pouchdb.change Change
+        , Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
+        ]
