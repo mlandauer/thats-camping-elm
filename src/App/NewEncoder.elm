@@ -172,6 +172,7 @@ campsite : Campsite -> Json.Encode.Value
 campsite campsite =
     Json.Encode.object
         [ ( "_id", Json.Encode.string ("c" ++ toString campsite.id) )
+        , ( "type", Json.Encode.string "campsite" )
         , ( "shortName", Json.Encode.string campsite.shortName )
         , ( "longName", Json.Encode.string campsite.longName )
         , ( "description", Json.Encode.string campsite.description )
@@ -186,6 +187,7 @@ park : Park -> Json.Encode.Value
 park park =
     Json.Encode.object
         [ ( "_id", Json.Encode.string ("p" ++ toString park.id) )
+        , ( "type", Json.Encode.string "park" )
         , ( "shortName", Json.Encode.string park.shortName )
         , ( "longName", Json.Encode.string park.longName )
         , ( "description", Json.Encode.string park.description )
