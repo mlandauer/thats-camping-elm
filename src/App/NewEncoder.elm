@@ -39,7 +39,7 @@ toiletsEncoder toilets =
             Json.Encode.string "flush"
 
         Just NoToilets ->
-            Json.Encode.string "none"
+            Json.Encode.string "no"
 
         Nothing ->
             Json.Encode.null
@@ -74,7 +74,7 @@ barbecuesEncoder barbecues =
             Json.Encode.string "gas_electric"
 
         Just NoBarbecues ->
-            Json.Encode.string "none"
+            Json.Encode.string "no"
 
         Nothing ->
             Json.Encode.null
@@ -90,7 +90,7 @@ showersEncoder showers =
             Json.Encode.string "cold"
 
         Just NoShowers ->
-            Json.Encode.string "none"
+            Json.Encode.string "no"
 
         Nothing ->
             Json.Encode.null
