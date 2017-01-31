@@ -25,6 +25,8 @@ import App.Model
 import Http
 import App.Decoder
 import App.NewEncoder
+import App.NewDecoder
+import Json.Decode
 
 
 type Msg
@@ -76,9 +78,11 @@ update msg model =
             ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
 
         Change change ->
+            -- TODO: Need to think how to handle deleted documents. Is this
+            -- something we actually need to handle?
             let
-                foo =
-                    Debug.log "change" change
+                o =
+                    Debug.log "o" (Json.Decode.decodeValue App.NewDecoder.parkOrCampsite change.doc)
             in
                 ( model, Cmd.none )
 
