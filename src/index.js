@@ -15,8 +15,9 @@ var Elm = require('./App.elm');
 
 
 var node = document.getElementById('root');
-// Pass elm the current git version
-var app = Elm.App.embed(node, {version: VERSION});
+var standalone = ("standalone" in window.navigator) && window.navigator.standalone;
+// Pass elm the current git version and whether it's running fullscreen
+var app = Elm.App.embed(node, {version: VERSION, standalone: standalone});
 
 var db = new PouchDB('thats-camping');
 

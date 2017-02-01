@@ -22,7 +22,6 @@ import Pages.Admin.Update
 import Pouchdb
 import App.NewDecoder
 import Json.Decode
-import Standalone
 
 
 type Msg
@@ -31,11 +30,10 @@ type Msg
     | PageBack
     | AdminMsg Pages.Admin.Update.Msg
     | Change Pouchdb.Change
-    | Standalone Bool
 
 
 type alias Flags =
-    { version : String }
+    { version : String, standalone : Bool }
 
 
 init : Flags -> ( Model, Cmd Msg )
@@ -46,14 +44,11 @@ init flags =
       , errors = []
       , page = Campsites
       , adminModel = Pages.Admin.Update.initModel
-      , standalone = False
+      , standalone = flags.standalone
       , version = flags.version
       }
       -- On startup immediately try to get the location
-    , Cmd.batch
-        [ Task.attempt UpdateLocation Geolocation.now
-        , Task.perform Standalone Standalone.standalone
-        ]
+    , Task.attempt UpdateLocation Geolocation.now
     )
 
 
@@ -95,9 +90,6 @@ update msg model =
 
                     Err _ ->
                         ( model, Cmd.none )
-
-        Standalone standalone ->
-            ( { model | standalone = standalone }, Cmd.none )
 
 
 formatGeolocationError : Geolocation.Error -> String
