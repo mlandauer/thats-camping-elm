@@ -8,9 +8,9 @@ import Pages.Admin.Update
 import Pouchdb
 
 
-main : RouteUrl.RouteUrlProgram Never Model Msg
+main : RouteUrl.RouteUrlProgram Flags Model Msg
 main =
-    RouteUrl.program
+    RouteUrl.programWithFlags
         { delta2url = delta2hash
         , location2messages = location2messages
         , init = init

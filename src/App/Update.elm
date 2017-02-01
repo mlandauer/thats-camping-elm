@@ -6,6 +6,7 @@ module App.Update
         , delta2hash
         , page2url
         , init
+        , Flags
         )
 
 import App.Model exposing (..)
@@ -33,8 +34,12 @@ type Msg
     | Standalone Bool
 
 
-init : ( Model, Cmd Msg )
-init =
+type alias Flags =
+    { version : String }
+
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
     ( { campsites = Dict.empty
       , parks = Dict.empty
       , location = Nothing
@@ -42,6 +47,7 @@ init =
       , page = Campsites
       , adminModel = Pages.Admin.Update.initModel
       , standalone = False
+      , version = flags.version
       }
       -- On startup immediately try to get the location
     , Cmd.batch

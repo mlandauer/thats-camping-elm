@@ -6,8 +6,8 @@ import App.ViewHelpers exposing (navBar)
 import App.Update exposing (Msg)
 
 
-view : Html Msg
-view =
+view : String -> Html Msg
+view version =
     div [ class "campsite-list" ]
         [ navBar "About" True False
         , div [ class "content" ]
@@ -26,7 +26,10 @@ view =
                     , a [ href "https://github.com/mlandauer/thats-camping-elm" ] [ text "open source" ]
                     , text " because that's the way it ought to be."
                     ]
-                  -- TODO: Show current version of the app here
+                , p []
+                    [ text "You're currently using version "
+                    , a [ href ("https://github.com/mlandauer/thats-camping-elm/commit/" ++ version) ] [ text version ]
+                    ]
                 , h2 [] [ text "Things you might want to do" ]
                 , p []
                     [ a [ href "https://github.com/mlandauer/thats-camping-elm/issues" ]

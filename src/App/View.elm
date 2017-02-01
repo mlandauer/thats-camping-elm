@@ -58,7 +58,7 @@ view model =
                         view404
 
             About ->
-                Pages.About.View.view
+                Pages.About.View.view model.version
 
             AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model.adminModel)

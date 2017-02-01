@@ -1,5 +1,9 @@
 var path = require("path");
 var AppCachePlugin = require('appcache-webpack-plugin');
+var GitRevisionPlugin = require('git-revision-webpack-plugin');
+var webpack = require('webpack');
+
+var gitRevisionPlugin = new GitRevisionPlugin();
 
 // TODO: Extract css into separate file because currently it's in the big js
 // file and when that changes everything has to be reloaded
@@ -54,6 +58,10 @@ module.exports = {
   },
 
   plugins: [
-    new AppCachePlugin({})
+    new AppCachePlugin({}),
+    new GitRevisionPlugin(),
+    new webpack.DefinePlugin({
+      'VERSION': JSON.stringify(gitRevisionPlugin.version())
+    })
   ]
 };

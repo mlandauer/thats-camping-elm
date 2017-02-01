@@ -15,7 +15,8 @@ var Elm = require('./App.elm');
 
 
 var node = document.getElementById('root');
-var app = Elm.App.embed(node);
+// Pass elm the current git version
+var app = Elm.App.embed(node, {version: VERSION});
 
 var db = new PouchDB('thats-camping');
 
