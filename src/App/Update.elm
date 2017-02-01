@@ -95,7 +95,7 @@ update msg model =
                     Debug.log "standalone" standalone
             in
                 -- TODO: Make this actually do something
-                ( { model | errors = ("standalone: " ++ toString standalone) :: model.errors }, Cmd.none )
+                ( { model | errors = ("standalone2: " ++ toString standalone) :: model.errors }, Cmd.none )
 
 
 formatGeolocationError : Geolocation.Error -> String
