@@ -15,7 +15,15 @@ import App.ViewHelpers
 
 view : Model -> Html Msg
 view model =
-    div [ id "app" ]
+    div
+        [ id "app"
+        , class
+            (if model.standalone then
+                "fullscreen"
+             else
+                ""
+            )
+        ]
         [ case model.page of
             Campsites ->
                 Pages.Campsites.View.view

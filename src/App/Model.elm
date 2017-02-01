@@ -143,4 +143,5 @@ type alias Model =
     , errors : List String
     , page : Page
     , adminModel : Pages.Admin.Model.Model
+    , standalone : Bool
     }

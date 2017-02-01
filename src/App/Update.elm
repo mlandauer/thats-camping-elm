@@ -41,6 +41,7 @@ init =
       , errors = []
       , page = Campsites
       , adminModel = Pages.Admin.Update.initModel
+      , standalone = False
       }
       -- On startup immediately try to get the location
     , Cmd.batch
@@ -90,12 +91,7 @@ update msg model =
                         ( model, Cmd.none )
 
         Standalone standalone ->
-            let
-                foo =
-                    Debug.log "standalone" standalone
-            in
-                -- TODO: Make this actually do something
-                ( { model | errors = ("standalone2: " ++ toString standalone) :: model.errors }, Cmd.none )
+            ( { model | standalone = standalone }, Cmd.none )
 
 
 formatGeolocationError : Geolocation.Error -> String
