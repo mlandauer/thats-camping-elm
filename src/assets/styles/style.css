@@ -35,6 +35,11 @@ nav {
   padding-top: 79px;
 }
 
+.content {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 #app, nav, .container {
   max-width: 700px;
   margin-left: auto;
