@@ -1,17 +1,17 @@
 'use strict';
 
 require('bootstrap/dist/css/bootstrap.css');
-require('./style.css');
+require('./assets/styles/style.css');
 // require('font-awesome/css/font-awesome.css');
 
 // Require index.html so it gets copied to dist
 require('./index.html');
 
-require('./apple-touch-icon.png');
+require('./assets/images/apple-touch-icon.png');
 
 var PouchDB = require('pouchdb');
 
-var Elm = require('./App.elm');
+var Elm = require('./elm/App.elm');
 
 
 var node = document.getElementById('root');
