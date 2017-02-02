@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mlandauer/thats-camping-elm.svg?branch=master)](https://travis-ci.org/mlandauer/thats-camping-elm)
+
 # It's raining and my weetbix is wet. That's Camping!
 
 Find campsites near you in New South Wales, Australia. It covers camping on public, common land such as National Parks, State Forests and Local Councils.
