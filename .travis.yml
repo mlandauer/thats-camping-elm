@@ -4,3 +4,6 @@ node_js:
 before_script:
   - npm install -g elm elm-test
 script: elm-test
+cache:
+  directories:
+    - tests/elm-stuff/build-artifacts
