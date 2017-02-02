@@ -16,6 +16,7 @@ import Dict exposing (Dict)
 import RouteUrl
 import RouteUrl.Builder
 import Task
+import Pages.Admin.Model
 import Pages.Admin.Update
 import Pouchdb
 import App.NewDecoder
@@ -44,7 +45,7 @@ init flags =
       , location = Nothing
       , errors = []
       , page = Campsites
-      , adminModel = Pages.Admin.Update.initModel
+      , adminModel = Pages.Admin.Model.initModel
       , standalone = flags.standalone
       , version = flags.version
       }

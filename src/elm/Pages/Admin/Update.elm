@@ -1,10 +1,4 @@
-module Pages.Admin.Update
-    exposing
-        ( Msg(..)
-        , update
-        , initModel
-        , subscriptions
-        )
+module Pages.Admin.Update exposing (Msg(..), update, subscriptions)
 
 import Pages.Admin.Model exposing (..)
 import Pouchdb
@@ -33,11 +27,6 @@ type Msg
     | Destroy
     | DestroySuccess Pouchdb.DestroySuccess
     | DestroyError Pouchdb.DestroyError
-
-
-initModel : Model
-initModel =
-    { text = Nothing }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
