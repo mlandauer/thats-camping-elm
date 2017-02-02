@@ -38,6 +38,11 @@ elm-reactor
 
 Then, point your browser at http://localhost:8000/Main.elm
 
+Or, alternatively you can run the tests on the command line with
+```
+elm-test
+```
+
 ## Production
 
 It's currently hosted on [GitHub pages](https://pages.github.com/).
