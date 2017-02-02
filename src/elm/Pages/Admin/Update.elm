@@ -8,7 +8,6 @@ module Pages.Admin.Update
 
 import Pages.Admin.Model exposing (..)
 import Pouchdb
-import Location exposing (Location)
 import Campsite
     exposing
         ( Campsite
@@ -25,8 +24,6 @@ import Park exposing (Park)
 import Http
 import App.Decoder
 import App.NewEncoder
-import App.NewDecoder
-import Json.Decode
 
 
 type Msg

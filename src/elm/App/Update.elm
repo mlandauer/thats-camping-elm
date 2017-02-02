@@ -10,8 +10,6 @@ module App.Update
         )
 
 import App.Model exposing (..)
-import App.Decoder exposing (parksAndCampsites)
-import Http
 import Geolocation
 import Navigation
 import Dict exposing (Dict)
