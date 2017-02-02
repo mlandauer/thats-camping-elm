@@ -2,7 +2,7 @@ var path = require("path");
 var AppCachePlugin = require('appcache-webpack-plugin');
 var GitRevisionPlugin = require('git-revision-webpack-plugin');
 var webpack = require('webpack');
-
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var gitRevisionPlugin = new GitRevisionPlugin();
 
 // TODO: Extract css into separate file because currently it's in the big js
@@ -24,10 +24,10 @@ module.exports = {
     rules: [
       {
         test: /\.(css|scss)$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ]
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: "css-loader",
+        })
       },
       {
         test:    /\.(html|png)$/,
@@ -62,6 +62,7 @@ module.exports = {
     new GitRevisionPlugin(),
     new webpack.DefinePlugin({
       'VERSION': JSON.stringify(gitRevisionPlugin.version())
-    })
+    }),
+    new ExtractTextPlugin('app.css')
   ]
 };
