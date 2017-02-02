@@ -1,4 +1,4 @@
-port module Runner exposing (..)
+port module Main exposing (..)
 
 import Test exposing (..)
 import Test.Runner.Html

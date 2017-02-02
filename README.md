@@ -36,7 +36,7 @@ cd tests
 elm-reactor
 ```
 
-Then, point your browser at http://localhost:8000/Runner.elm
+Then, point your browser at http://localhost:8000/Main.elm
 
 ## Production
 
