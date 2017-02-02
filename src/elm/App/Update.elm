@@ -22,6 +22,9 @@ import Pages.Admin.Update
 import Pouchdb
 import App.NewDecoder
 import Json.Decode
+import Campsite exposing (Campsite)
+import Park exposing (Park)
+import Location exposing (Location)
 
 
 type Msg

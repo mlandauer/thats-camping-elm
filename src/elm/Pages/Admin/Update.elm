@@ -8,11 +8,10 @@ module Pages.Admin.Update
 
 import Pages.Admin.Model exposing (..)
 import Pouchdb
-import App.Model
+import Location exposing (Location)
+import Campsite
     exposing
-        ( Park
-        , Campsite
-        , Location
+        ( Campsite
         , Toilets(..)
         , PicnicTables(..)
         , Barbecues(..)
@@ -22,6 +21,7 @@ import App.Model
         , Trailers(..)
         , Cars(..)
         )
+import Park exposing (Park)
 import Http
 import App.Decoder
 import App.NewEncoder

@@ -1,22 +1,22 @@
 module App.NewEncoder exposing (campsite, park)
 
 import Json.Encode
-import App.Model
+import Location exposing (Location)
+import Campsite
     exposing
-        ( Location
-        , Campsite
-        , Park
-        , Cars(..)
-        , Trailers(..)
-        , Caravans(..)
+        ( Campsite
+        , Facilities
+        , Access
         , DrinkingWater(..)
         , Showers(..)
         , Barbecues(..)
         , PicnicTables(..)
         , Toilets(..)
-        , Facilities
-        , Access
+        , Cars(..)
+        , Trailers(..)
+        , Caravans(..)
         )
+import Park exposing (Park)
 
 
 locationEncoder : Maybe Location -> Json.Encode.Value

@@ -1,6 +1,8 @@
 module Pages.Park.Model exposing (Model)
 
-import App.Model exposing (Park, Campsite, Location)
+import Campsite exposing (Campsite)
+import Park exposing (Park)
+import Location exposing (Location)
 import Dict exposing (Dict)
 
 

@@ -1,10 +1,9 @@
 module App.NewDecoder exposing (park, campsite, parkOrCampsite, ParkOrCampsite(..))
 
 import Json.Decode exposing (..)
-import App.Model
+import Campsite
     exposing
         ( Facilities
-        , Location
         , Access
         , DrinkingWater(..)
         , Showers(..)
@@ -12,11 +11,13 @@ import App.Model
         , PicnicTables(..)
         , Toilets(..)
         )
+import Park
+import Location exposing (Location)
 
 
 type ParkOrCampsite
-    = Park App.Model.Park
-    | Campsite App.Model.Campsite
+    = Park Park.Park
+    | Campsite Campsite.Campsite
 
 
 parkOrCampsite : Decoder ParkOrCampsite
@@ -39,9 +40,9 @@ parkOrCampsiteHelp t =
             fail "Unsupported type"
 
 
-park : Decoder App.Model.Park
+park : Decoder Park.Park
 park =
-    map5 App.Model.Park
+    map5 Park.Park
         (field "_id" string)
         (field "shortName" string)
         (field "longName" string)
@@ -49,9 +50,9 @@ park =
         (field "campsiteIds" (list string))
 
 
-campsite : Decoder App.Model.Campsite
+campsite : Decoder Campsite.Campsite
 campsite =
-    map8 App.Model.Campsite
+    map8 Campsite.Campsite
         (field "_id" string)
         (field "shortName" string)
         (field "longName" string)

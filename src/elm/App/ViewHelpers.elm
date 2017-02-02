@@ -14,6 +14,9 @@ import App.Model exposing (..)
 import App.Update exposing (..)
 import Location
 import Dict exposing (Dict)
+import Location exposing (Location)
+import Park exposing (Park)
+import Campsite exposing (Campsite)
 
 
 navBar : String -> Bool -> Bool -> Html Msg

@@ -1,6 +1,7 @@
 module Pages.Campsite.Model exposing (Model)
 
-import App.Model exposing (Campsite, Park)
+import Campsite exposing (Campsite)
+import Park exposing (Park)
 
 
 type alias Model =

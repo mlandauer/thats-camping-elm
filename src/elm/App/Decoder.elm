@@ -11,11 +11,13 @@ module App.Decoder
         )
 
 import Json.Decode exposing (..)
-import App.Model
+import Park exposing (Park)
+import Location exposing (Location)
+import Campsite
     exposing
         ( Campsite
-        , Location
-        , Park
+        , Facilities
+        , Access
         , Toilets(..)
         , PicnicTables(..)
         , Barbecues(..)
@@ -24,8 +26,6 @@ import App.Model
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
-        , Facilities
-        , Access
         )
 
 

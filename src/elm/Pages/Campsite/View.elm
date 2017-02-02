@@ -13,7 +13,9 @@ import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg)
 import Libs.SimpleFormat.Format
-import App.Model
+import App.Model exposing (Page(..))
+import Location exposing (Location)
+import Campsite
     exposing
         ( Facilities
         , Toilets(..)
@@ -25,8 +27,6 @@ import App.Model
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
-        , Location
-        , Page(..)
         )
 
 
