@@ -1,7 +1,7 @@
 port module Main exposing (..)
 
 import Test exposing (..)
-import Test.Runner.Html
+import Test.Runner.Node
 import Json.Encode exposing (Value)
 import App.TestsDecoder
 import TestsLocation
@@ -10,9 +10,9 @@ import Libs.SimpleFormat.Tests
 import Pages.Campsite.Tests
 
 
-main : Test.Runner.Html.TestProgram
+main : Test.Runner.Node.TestProgram
 main =
-    Test.Runner.Html.run all
+    Test.Runner.Node.run emit all
 
 
 all : Test

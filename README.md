@@ -32,15 +32,7 @@ Point your web browser at [http://localhost:3000](http://localhost:3000)
 
 And for testing goodness:
 ```
-cd tests
-elm-reactor
-```
-
-Then, point your browser at http://localhost:8000/Main.elm
-
-Or, alternatively you can run the tests on the command line with
-```
-elm-test
+elm-test --watch
 ```
 
 ## Production
