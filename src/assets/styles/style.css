@@ -35,9 +35,10 @@ nav {
   padding-top: 79px;
 }
 
-.content {
+.campsite-list .content {
   height: 100vh;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 #app, nav, .container {
