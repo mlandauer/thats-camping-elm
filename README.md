@@ -33,10 +33,10 @@ Point your web browser at [http://localhost:3000](http://localhost:3000)
 And for testing goodness:
 ```
 cd tests
-elm-reactor -p 8001
+elm-reactor
 ```
 
-Then, point your browser at http://localhost:8001/Runner.elm
+Then, point your browser at http://localhost:8000/Runner.elm
 
 ## Production
 
