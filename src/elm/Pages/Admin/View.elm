@@ -18,7 +18,7 @@ view model =
             , div [ class "btn-group-vertical" ]
                 [ button [ class "btn btn-default", onClick Destroy ] [ text "Destroy local database" ]
                 , button [ class "btn btn-default", onClick LoadData ] [ text "Load local database campsite data from Github" ]
-                , button [ class "btn btn-default" ] [ text "Change name of Lane Cover River campsite" ]
+                , button [ class "btn btn-default", onClick ToggleLaneCoveName ] [ text "Change name of Lane Cover River campsite" ]
                 ]
             , p [] [ text (Maybe.withDefault "" model.text) ]
             ]

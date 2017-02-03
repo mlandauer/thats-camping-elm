@@ -18,6 +18,7 @@ import Park exposing (Park)
 import Http
 import App.Decoder
 import App.NewEncoder
+import Dict exposing (Dict)
 
 
 type Msg
@@ -27,6 +28,7 @@ type Msg
     | Destroy
     | DestroySuccess Pouchdb.DestroySuccess
     | DestroyError Pouchdb.DestroyError
+    | ToggleLaneCoveName
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -61,6 +63,26 @@ update msg model =
 
         Put (Err error) ->
             ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
+
+        ToggleLaneCoveName ->
+            case Dict.get "c126" model.campsites of
+                Just campsite ->
+                    let
+                        data =
+                            App.NewEncoder.campsite (toggleLaneCoveName campsite)
+                    in
+                        ( model, Pouchdb.put (Debug.log "data" data) )
+
+                Nothing ->
+                    ( model, Cmd.none )
+
+
+toggleLaneCoveName : Campsite -> Campsite
+toggleLaneCoveName campsite =
+    if campsite.shortName == "Lane Cove River" then
+        { campsite | shortName = "Lane Cove River - I've been updated!" }
+    else
+        { campsite | shortName = "Lane Cove River" }
 
 
 syncData : Cmd Msg
