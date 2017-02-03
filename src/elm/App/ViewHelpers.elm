@@ -5,6 +5,7 @@ module App.ViewHelpers
         , campsiteListView
         , compareCampsite
         , values
+        , star
         )
 
 import Html exposing (..)
@@ -152,3 +153,30 @@ values l =
 
                 Nothing ->
                     values rest
+
+
+star : Bool -> String -> Html Msg
+star starred id =
+    div
+        [ class
+            ("star star-"
+                ++ (if starred then
+                        "on"
+                    else
+                        "off"
+                   )
+            )
+        , onClick (ToggleStarCampsite id)
+        ]
+        [ span
+            [ class
+                ("glyphicon glyphicon-"
+                    ++ (if starred then
+                            "star"
+                        else
+                            "star-empty"
+                       )
+                )
+            ]
+            []
+        ]

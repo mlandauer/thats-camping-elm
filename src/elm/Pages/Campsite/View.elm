@@ -38,7 +38,7 @@ view model =
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]
-                    [ star model.starred model.campsite.id
+                    [ App.ViewHelpers.star model.starred model.campsite.id
                     , h2 []
                         [ text model.campsite.longName ]
                     , p []
@@ -71,33 +71,6 @@ view model =
                     ]
                 ]
             ]
-        ]
-
-
-star : Bool -> String -> Html Msg
-star starred id =
-    div
-        [ class
-            ("star star-"
-                ++ (if starred then
-                        "on"
-                    else
-                        "off"
-                   )
-            )
-        , onClick (ToggleStarCampsite id)
-        ]
-        [ span
-            [ class
-                ("glyphicon glyphicon-"
-                    ++ (if starred then
-                            "star"
-                        else
-                            "star-empty"
-                       )
-                )
-            ]
-            []
         ]
 
 
