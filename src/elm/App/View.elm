@@ -33,6 +33,7 @@ view model =
                     , parks = model.parks
                     , location = model.location
                     , errors = model.errors
+                    , starredCampsites = model.starredCampsites
                     }
 
             CampsitePage id ->
@@ -55,6 +56,7 @@ view model =
                             , campsites = (campsites park model.campsites)
                             , parks = model.parks
                             , location = model.location
+                            , starredCampsites = model.starredCampsites
                             }
 
                     Nothing ->

@@ -19,7 +19,7 @@ view model =
           else
             div [ class "content" ]
                 [ errorsView model.errors
-                , App.ViewHelpers.campsiteListView model.location model.campsites model.parks True
+                , App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
                 ]
         ]
 

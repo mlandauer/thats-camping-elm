@@ -32,7 +32,7 @@ view model =
                     [ h2 [] [ text model.park.longName ]
                     , Libs.SimpleFormat.Format.format model.park.description
                     , div [ class "park-campsite-list" ]
-                        [ App.ViewHelpers.campsiteListView model.location model.campsites model.parks False
+                        [ App.ViewHelpers.campsiteListView model.location model.campsites model.parks False model.starredCampsites
                         ]
                     ]
                 ]

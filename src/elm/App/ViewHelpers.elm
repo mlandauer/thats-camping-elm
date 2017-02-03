@@ -58,11 +58,16 @@ link page attributes html =
     a ((href (page2url page)) :: attributes) html
 
 
-campsiteListView : Maybe Location -> List Campsite -> Dict String Park -> Bool -> Html msg
-campsiteListView location campsites parks showPark =
+campsiteListView : Maybe Location -> List Campsite -> Dict String Park -> Bool -> List String -> Html Msg
+campsiteListView location campsites parks showPark starredCampsites =
     -- TODO: Make it not necessary to pass in all the parks here
     div [ class "list-group" ]
-        (List.map (campsiteListItem location parks showPark) (sortCampsites location campsites))
+        (List.map
+            (\campsite ->
+                campsiteListItem location parks showPark campsite (List.member campsite.id starredCampsites)
+            )
+            (sortCampsites location campsites)
+        )
 
 
 sortCampsites : Maybe Location -> List Campsite -> List Campsite
@@ -101,12 +106,19 @@ compareCampsite userLocation c1 c2 =
                         compare c1.shortName c2.shortName
 
 
-campsiteListItem : Maybe Location -> Dict String Park -> Bool -> Campsite -> Html msg
-campsiteListItem location parks showPark campsite =
+campsiteListItem :
+    Maybe Location
+    -> Dict String Park
+    -> Bool
+    -> Campsite
+    -> Bool
+    -> Html Msg
+campsiteListItem location parks showPark campsite starred =
     link (CampsitePage campsite.id)
         [ class "list-group-item" ]
         [ div [ class "campsite" ]
-            ([ div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
+            ([ star starred campsite.id
+             , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
              , div [ class "name" ] [ text campsite.shortName ]
              ]
                 ++ (if showPark then

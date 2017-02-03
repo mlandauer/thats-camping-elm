@@ -11,4 +11,5 @@ type alias Model =
     , parks : Dict String Park
     , location : Maybe Location
     , errors : List String
+    , starredCampsites : List String
     }
