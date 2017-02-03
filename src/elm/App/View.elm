@@ -41,6 +41,7 @@ view model =
                         Pages.Campsite.View.view
                             { campsite = campsite
                             , park = (Dict.get campsite.parkId model.parks)
+                            , starred = List.member id model.starredCampsites
                             }
 
                     Nothing ->

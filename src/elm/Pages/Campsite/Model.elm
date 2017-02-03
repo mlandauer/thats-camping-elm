@@ -7,4 +7,5 @@ import Park exposing (Park)
 type alias Model =
     { campsite : Campsite
     , park : Maybe Park
+    , starred : Bool
     }

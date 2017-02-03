@@ -9,9 +9,10 @@ module Pages.Campsite.View
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
-import App.Update exposing (Msg)
+import App.Update exposing (Msg(..))
 import Libs.SimpleFormat.Format
 import App.Model exposing (Page(..))
 import Location exposing (Location)
@@ -37,10 +38,9 @@ view model =
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]
-                    [ -- TODO: Add star
-                      h2 []
+                    [ star model.starred model.campsite.id
+                    , h2 []
                         [ text model.campsite.longName ]
-                      -- TODO: Add link to park
                     , p []
                         (case model.park of
                             Just park ->
@@ -71,6 +71,33 @@ view model =
                     ]
                 ]
             ]
+        ]
+
+
+star : Bool -> String -> Html Msg
+star starred id =
+    div
+        [ class
+            ("star star-"
+                ++ (if starred then
+                        "on"
+                    else
+                        "off"
+                   )
+            )
+        , onClick (ToggleStarCampsite id)
+        ]
+        [ span
+            [ class
+                ("glyphicon glyphicon-"
+                    ++ (if starred then
+                            "star"
+                        else
+                            "star-empty"
+                       )
+                )
+            ]
+            []
         ]
 
 

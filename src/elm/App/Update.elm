@@ -32,6 +32,7 @@ type Msg
     | PageBack
     | AdminMsg Pages.Admin.Update.Msg
     | Change Pouchdb.Change
+    | ToggleStarCampsite String
 
 
 type alias Flags =
@@ -48,6 +49,7 @@ init flags =
       , adminModel = Pages.Admin.Model.initModel
       , standalone = flags.standalone
       , version = flags.version
+      , starredCampsites = []
       }
       -- On startup immediately try to get the location
     , Task.attempt UpdateLocation Geolocation.now
@@ -106,6 +108,16 @@ update msg model =
 
                     Err _ ->
                         ( model, Cmd.none )
+
+        ToggleStarCampsite id ->
+            let
+                starred =
+                    if List.member id model.starredCampsites then
+                        List.filter (\i -> i /= id) model.starredCampsites
+                    else
+                        id :: model.starredCampsites
+            in
+                ( { model | starredCampsites = starred }, Cmd.none )
 
 
 formatGeolocationError : Geolocation.Error -> String
