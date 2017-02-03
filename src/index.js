@@ -64,8 +64,7 @@ db.changes({
 });
 
 app.ports.put.subscribe(function(data) {
-  // Using post at the moment so we don't have to deal with creating id's
-  db.post(data)
+  db.put(data)
     .then(function(response) {
       app.ports.putSuccess.send(response);
     })
