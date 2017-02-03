@@ -11,7 +11,7 @@ module App.Decoder
         )
 
 import Json.Decode exposing (..)
-import Json.Decode.Pipeline exposing (decode, required, custom)
+import Json.Decode.Pipeline exposing (decode, required, custom, hardcoded)
 import Park exposing (Park)
 import Location exposing (Location)
 import Campsite
@@ -180,6 +180,7 @@ campsite =
         |> custom facilities
         |> custom access
         |> required "park" (map (\id -> "p" ++ toString id) int)
+        |> hardcoded Nothing
 
 
 park : Decoder Park
@@ -190,6 +191,7 @@ park =
         |> required "longName" string
         |> required "description" string
         |> required "campsites" (list (map (\id -> "c" ++ toString id) int))
+        |> hardcoded Nothing
 
 
 type alias ParksAndCampsites =

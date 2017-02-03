@@ -49,6 +49,7 @@ park =
         |> required "longName" string
         |> required "description" string
         |> required "campsiteIds" (list string)
+        |> required "_rev" (nullable string)
 
 
 
@@ -66,6 +67,7 @@ campsite =
         |> required "facilities" facilities
         |> required "access" access
         |> required "parkId" string
+        |> required "_rev" (nullable string)
 
 
 location : Decoder Location

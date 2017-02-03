@@ -7,4 +7,5 @@ type alias Park =
     , longName : String
     , description : String
     , campsiteIds : List String
+    , revision : Maybe String
     }

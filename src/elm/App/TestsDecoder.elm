@@ -135,7 +135,8 @@ all =
                         expected =
                             Ok
                                 ({ campsites =
-                                    [ Campsite "c4"
+                                    [ Campsite
+                                        "c4"
                                         "Campsite"
                                         "Long Campsite"
                                         "description"
@@ -153,8 +154,17 @@ all =
                                             (Just Cars)
                                         )
                                         "p12"
+                                        Nothing
                                     ]
-                                 , parks = [ Park "p15" "A park" "A long park" "It's a nice park" [ "c4" ] ]
+                                 , parks =
+                                    [ Park
+                                        "p15"
+                                        "A park"
+                                        "A long park"
+                                        "It's a nice park"
+                                        [ "c4" ]
+                                        Nothing
+                                    ]
                                  }
                                 )
                     in
