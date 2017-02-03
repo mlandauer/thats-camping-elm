@@ -2,7 +2,7 @@ module Pages.Campsite.Tests exposing (..)
 
 import Test exposing (..)
 import Expect
-import App.Model
+import Campsite
     exposing
         ( Toilets(..)
         , PicnicTables(..)

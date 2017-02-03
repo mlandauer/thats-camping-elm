@@ -2,7 +2,8 @@ module TestsCampsite exposing (..)
 
 import Test exposing (..)
 import Expect
-import App.Model exposing (Location, Campsite)
+import Location exposing (Location)
+import Campsite exposing (Campsite)
 import App.ViewHelpers exposing (compareCampsite)
 
 

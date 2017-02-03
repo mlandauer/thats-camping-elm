@@ -4,22 +4,22 @@ import Test exposing (..)
 import Expect
 import Json.Decode
 import App.Decoder
-import App.Model
+import Campsite
     exposing
-        ( Location
-        , Campsite
-        , Park
+        ( Campsite
+        , Facilities
+        , Access
         , Toilets(..)
         , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
         , DrinkingWater(..)
-        , Facilities
-        , Access
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
         )
+import Park exposing (Park)
+import Location exposing (Location)
 
 
 all : Test
