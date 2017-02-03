@@ -7,13 +7,11 @@ import Park exposing (Park)
 import Location exposing (Location)
 
 
-type
-    Page
-    -- TODO: Rename Campsites to CampsitesPage and About to AboutPage
-    = Campsites
+type Page
+    = CampsitesPage
     | CampsitePage String
     | ParkPage String
-    | About
+    | AboutPage
     | AdminPage
       -- This is the 404 page
     | UnknownPage

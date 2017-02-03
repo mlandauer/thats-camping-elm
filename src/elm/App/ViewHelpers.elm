@@ -47,7 +47,7 @@ backButton =
 
 aboutButton : Html msg
 aboutButton =
-    link About
+    link AboutPage
         [ class "btn navbar-link navbar-text pull-right" ]
         [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
 

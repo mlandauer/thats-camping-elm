@@ -27,7 +27,7 @@ view model =
             )
         ]
         [ case model.page of
-            Campsites ->
+            CampsitesPage ->
                 Pages.Campsites.View.view
                     { campsites = (Dict.values model.campsites)
                     , parks = model.parks
@@ -59,7 +59,7 @@ view model =
                     Nothing ->
                         view404
 
-            About ->
+            AboutPage ->
                 Pages.About.View.view model.version
 
             AdminPage ->

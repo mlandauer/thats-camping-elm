@@ -44,7 +44,7 @@ init flags =
       , parks = Dict.empty
       , location = Nothing
       , errors = []
-      , page = Campsites
+      , page = CampsitesPage
       , adminModel = Pages.Admin.Model.initModel
       , standalone = flags.standalone
       , version = flags.version
@@ -135,7 +135,7 @@ location2messages : Navigation.Location -> List Msg
 location2messages location =
     case RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href) of
         [ "campsites" ] ->
-            [ ChangePage Campsites ]
+            [ ChangePage CampsitesPage ]
 
         [ "campsites", id ] ->
             [ ChangePage (CampsitePage id) ]
@@ -144,7 +144,7 @@ location2messages location =
             [ ChangePage (ParkPage id) ]
 
         [ "about" ] ->
-            [ ChangePage About ]
+            [ ChangePage AboutPage ]
 
         [ "admin" ] ->
             [ ChangePage AdminPage ]
@@ -154,7 +154,7 @@ location2messages location =
 
         -- Default route
         [] ->
-            [ ChangePage Campsites ]
+            [ ChangePage CampsitesPage ]
 
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
@@ -165,7 +165,7 @@ delta2hash previous current =
 page2url : Page -> String
 page2url page =
     case page of
-        Campsites ->
+        CampsitesPage ->
             "#/campsites"
 
         CampsitePage id ->
@@ -174,7 +174,7 @@ page2url page =
         ParkPage id ->
             "#/parks/" ++ id
 
-        About ->
+        AboutPage ->
             "#/about"
 
         AdminPage ->

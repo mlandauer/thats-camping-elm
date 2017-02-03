@@ -22,7 +22,7 @@ view model =
                 , button [ class "btn btn-default", onClick LoadData ] [ text "Load local database campsite data from Github" ]
                 , button [ class "btn btn-default", onClick ToggleLaneCoveName ] [ text "Change name of Lane Cover River campsite" ]
                 ]
-            , p [] [ text "Or you can go ", link Campsites [] [ text "back to the main campsites list" ] ]
+            , p [] [ text "Or you can go ", link CampsitesPage [] [ text "back to the main campsites list" ] ]
             , p [] [ text (Maybe.withDefault "" model.text) ]
             ]
         ]
