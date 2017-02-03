@@ -88,7 +88,21 @@ update msg model =
                         ( { model | parks = (Dict.insert park.id park model.parks) }, Cmd.none )
 
                     Ok (App.NewDecoder.Campsite campsite) ->
-                        ( { model | campsites = (Dict.insert campsite.id campsite model.campsites) }, Cmd.none )
+                        let
+                            newCampsites =
+                                Dict.insert campsite.id campsite model.campsites
+
+                            admin =
+                                model.adminModel
+                        in
+                            -- Setting model in a child model at the same time.
+                            -- Very hokey but this is temporary
+                            ( { model
+                                | campsites = newCampsites
+                                , adminModel = { admin | campsites = newCampsites }
+                              }
+                            , Cmd.none
+                            )
 
                     Err _ ->
                         ( model, Cmd.none )
