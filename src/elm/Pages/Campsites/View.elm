@@ -5,16 +5,22 @@ import Html.Attributes exposing (..)
 import App.Update exposing (Msg)
 import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar, link)
+import Dict
 
 
 view : Model -> Html Msg
 view model =
     div [ class "campsite-list" ]
         [ navBar "Camping near you" False True
-        , div [ class "content" ]
-            [ errorsView model.errors
-            , App.ViewHelpers.campsiteListView model.location model.campsites model.parks True
-            ]
+        , if List.isEmpty model.campsites then
+            div [ class "centering-box" ]
+                [ h2 [] [ text "Getting some wonderful campsites for you" ]
+                ]
+          else
+            div [ class "content" ]
+                [ errorsView model.errors
+                , App.ViewHelpers.campsiteListView model.location model.campsites model.parks True
+                ]
         ]
 
 
