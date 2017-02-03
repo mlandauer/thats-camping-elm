@@ -1,4 +1,11 @@
-module Pages.Admin.Update exposing (Msg(..), update, subscriptions)
+module Pages.Admin.Update
+    exposing
+        ( Msg(..)
+        , update
+        , subscriptions
+        , getLaneCove
+        , laneCoveNameChanged
+        )
 
 import Pages.Admin.Model exposing (..)
 import Pouchdb
@@ -65,7 +72,7 @@ update msg model =
             ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
 
         ToggleLaneCoveName ->
-            case Dict.get "c126" model.campsites of
+            case getLaneCove model.campsites of
                 Just campsite ->
                     let
                         data =
@@ -77,12 +84,22 @@ update msg model =
                     ( model, Cmd.none )
 
 
+getLaneCove : Dict String Campsite -> Maybe Campsite
+getLaneCove campsites =
+    Dict.get "c126" campsites
+
+
 toggleLaneCoveName : Campsite -> Campsite
 toggleLaneCoveName campsite =
-    if campsite.shortName == "Lane Cove River" then
-        { campsite | shortName = "Lane Cove River - I've been updated!" }
-    else
+    if laneCoveNameChanged campsite then
         { campsite | shortName = "Lane Cove River" }
+    else
+        { campsite | shortName = "Lane Cove River - I've been updated!" }
+
+
+laneCoveNameChanged : Campsite -> Bool
+laneCoveNameChanged campsite =
+    campsite.shortName /= "Lane Cove River"
 
 
 syncData : Cmd Msg
