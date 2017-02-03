@@ -117,7 +117,7 @@ campsiteListItem location parks showPark campsite starred =
     link (CampsitePage campsite.id)
         [ class "list-group-item" ]
         [ div [ class "campsite" ]
-            ([ star starred campsite.id
+            ([ star starred Nothing
              , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
              , div [ class "name" ] [ text campsite.shortName ]
              ]
@@ -167,10 +167,10 @@ values l =
                     values rest
 
 
-star : Bool -> String -> Html Msg
-star starred id =
+star : Bool -> Maybe Msg -> Html Msg
+star starred msg =
     div
-        [ class
+        ([ class
             ("star star-"
                 ++ (if starred then
                         "on"
@@ -178,8 +178,15 @@ star starred id =
                         "off"
                    )
             )
-        , onClick (ToggleStarCampsite id)
-        ]
+         ]
+            ++ (case msg of
+                    Just msg ->
+                        [ onClick msg ]
+
+                    Nothing ->
+                        []
+               )
+        )
         [ span
             [ class
                 ("glyphicon glyphicon-"

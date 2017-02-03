@@ -38,7 +38,7 @@ view model =
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]
-                    [ App.ViewHelpers.star model.starred model.campsite.id
+                    [ App.ViewHelpers.star model.starred (Just (ToggleStarCampsite model.campsite.id))
                     , h2 []
                         [ text model.campsite.longName ]
                     , p []
