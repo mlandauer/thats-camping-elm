@@ -11,6 +11,7 @@ module App.Decoder
         )
 
 import Json.Decode exposing (..)
+import Json.Decode.Pipeline exposing (decode, required, custom)
 import Park exposing (Park)
 import Location exposing (Location)
 import Campsite
@@ -170,25 +171,25 @@ access =
 
 campsite : Decoder Campsite
 campsite =
-    map8 Campsite
-        (field "id" (map (\id -> "c" ++ toString id) int))
-        (field "shortName" string)
-        (field "longName" string)
-        (field "description" string)
-        location
-        facilities
-        access
-        (field "park" (map (\id -> "p" ++ toString id) int))
+    decode Campsite
+        |> required "id" (map (\id -> "c" ++ toString id) int)
+        |> required "shortName" string
+        |> required "longName" string
+        |> required "description" string
+        |> custom location
+        |> custom facilities
+        |> custom access
+        |> required "park" (map (\id -> "p" ++ toString id) int)
 
 
 park : Decoder Park
 park =
-    map5 Park
-        (field "id" (map (\id -> "p" ++ toString id) int))
-        (field "shortName" string)
-        (field "longName" string)
-        (field "description" string)
-        (field "campsites" (list (map (\id -> "c" ++ toString id) int)))
+    decode Park
+        |> required "id" (map (\id -> "p" ++ toString id) int)
+        |> required "shortName" string
+        |> required "longName" string
+        |> required "description" string
+        |> required "campsites" (list (map (\id -> "c" ++ toString id) int))
 
 
 type alias ParksAndCampsites =

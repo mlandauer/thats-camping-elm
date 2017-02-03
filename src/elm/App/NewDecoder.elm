@@ -1,6 +1,7 @@
 module App.NewDecoder exposing (park, campsite, parkOrCampsite, ParkOrCampsite(..))
 
 import Json.Decode exposing (..)
+import Json.Decode.Pipeline exposing (decode, required)
 import Campsite
     exposing
         ( Facilities
@@ -42,25 +43,29 @@ parkOrCampsiteHelp t =
 
 park : Decoder Park.Park
 park =
-    map5 Park.Park
-        (field "_id" string)
-        (field "shortName" string)
-        (field "longName" string)
-        (field "description" string)
-        (field "campsiteIds" (list string))
+    decode Park.Park
+        |> required "_id" string
+        |> required "shortName" string
+        |> required "longName" string
+        |> required "description" string
+        |> required "campsiteIds" (list string)
+
+
+
+-- TODO: Use Json.Decode.Pipeline everywhere for consistency and simplicity
 
 
 campsite : Decoder Campsite.Campsite
 campsite =
-    map8 Campsite.Campsite
-        (field "_id" string)
-        (field "shortName" string)
-        (field "longName" string)
-        (field "description" string)
-        (field "location" (nullable location))
-        (field "facilities" facilities)
-        (field "access" access)
-        (field "parkId" string)
+    decode Campsite.Campsite
+        |> required "_id" string
+        |> required "shortName" string
+        |> required "longName" string
+        |> required "description" string
+        |> required "location" (nullable location)
+        |> required "facilities" facilities
+        |> required "access" access
+        |> required "parkId" string
 
 
 location : Decoder Location
