@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/mlandauer/thats-camping-elm.png?label=ready&title=Ready)](https://waffle.io/mlandauer/thats-camping-elm)
 [![Build Status](https://travis-ci.org/mlandauer/thats-camping-elm.svg?branch=master)](https://travis-ci.org/mlandauer/thats-camping-elm)
 
 # It's raining and my weetbix is wet. That's Camping!
