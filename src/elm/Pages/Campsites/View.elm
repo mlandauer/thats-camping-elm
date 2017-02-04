@@ -11,18 +11,6 @@ import Dict
 
 view : Model -> Html Msg
 view model =
-    case model.displayType of
-        List ->
-            listView model
-
-        Map ->
-            div [ class "content" ]
-                [ p [] [ text "This is where the map will go" ]
-                ]
-
-
-listView : Model -> Html Msg
-listView model =
     div [ class "campsite-list" ]
         [ navBar "Camping near you" False True
         , if List.isEmpty model.campsites then
@@ -34,7 +22,12 @@ listView model =
           else
             div [ class "content" ]
                 [ errorsView model.errors
-                , App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
+                , case model.displayType of
+                    List ->
+                        App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
+
+                    Map ->
+                        mapView model
                 ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
@@ -49,6 +42,11 @@ listView model =
                 ]
             ]
         ]
+
+
+mapView : Model -> Html Msg
+mapView model =
+    p [] [ text "This is where the map will go" ]
 
 
 errorsView : List String -> Html msg
