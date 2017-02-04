@@ -59,10 +59,28 @@ nav {
   margin-right: 0px;
 }
 
-nav .btn {
+nav.navbar-fixed-top .btn {
   padding: 0;
-  font-size: 22px;
   width: 40%;
+}
+
+nav .btn {
+  font-size: 22px;
+}
+
+nav.navbar-fixed-bottom .btn {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Hack for specific icon */
+span.glyphicon-globe {
+  padding-top: 1px;
+  font-size: 24px;
+}
+
+nav.navbar-fixed-bottom {
+  text-align: center;
 }
 
 nav .btn.pull-left {
