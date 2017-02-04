@@ -37,6 +37,9 @@ And for testing goodness:
 elm-test --watch
 ```
 
+There's currently a bug in elm-test that means that it doesn't watch all
+directories for changes. It's been [fixed but not yet released](https://github.com/rtfeldman/node-test-runner/pull/101/commits/39e96f67b5b5fb637cd377a095c31c29e9b10403). In the meantime just re-run the tests when you need to.
+
 ## Production
 
 It's currently hosted on [GitHub pages](https://pages.github.com/).
