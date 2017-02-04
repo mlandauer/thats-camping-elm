@@ -26,7 +26,7 @@ module.exports = {
         test: /\.(css|scss)$/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: "css-loader",
+          loader: "css-loader?sourceMap",
         })
       },
       {
@@ -51,6 +51,8 @@ module.exports = {
 
     noParse: /\.elm$/,
   },
+
+  devtool: 'source-map',
 
   devServer: {
     inline: true,
