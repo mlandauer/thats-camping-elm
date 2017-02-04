@@ -63,16 +63,42 @@ campsiteListView location campsites parks showPark starredCampsites =
     -- TODO: Make it not necessary to pass in all the parks here
     div [ class "list-group" ]
         (List.map
-            (\campsite ->
-                campsiteListItem location parks showPark campsite (List.member campsite.id starredCampsites)
+            (\c ->
+                campsiteListItem location parks showPark c.campsite c.starred
             )
-            (sortCampsites location campsites)
+            (sortCampsites2 location (transform campsites starredCampsites))
         )
+
+
+transform : List Campsite -> List String -> List CampsiteWithStarred
+transform campsites starredCampsites =
+    List.map
+        (\campsite -> CampsiteWithStarred campsite (List.member campsite.id starredCampsites))
+        campsites
+
+
+type alias CampsiteWithStarred =
+    { campsite : Campsite, starred : Bool }
+
+
+sortCampsites2 : Maybe Location -> List CampsiteWithStarred -> List CampsiteWithStarred
+sortCampsites2 location campsitesWithStarred =
+    List.sortWith (compareCampsite2 location) campsitesWithStarred
 
 
 sortCampsites : Maybe Location -> List Campsite -> List Campsite
 sortCampsites location campsites =
     List.sortWith (compareCampsite location) campsites
+
+
+compareCampsite2 :
+    Maybe Location
+    -> CampsiteWithStarred
+    -> CampsiteWithStarred
+    -> Order
+compareCampsite2 userLocation c1 c2 =
+    -- For the time being ignore the starred
+    compareCampsite userLocation c1.campsite c2.campsite
 
 
 
