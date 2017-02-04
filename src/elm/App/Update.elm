@@ -7,6 +7,7 @@ port module App.Update
         , page2url
         , init
         , Flags
+        , online
         )
 
 import App.Model exposing (..)
@@ -32,6 +33,9 @@ import Location exposing (Location)
 port storeStarredCampsites : List String -> Cmd msg
 
 
+port online : (Bool -> msg) -> Sub msg
+
+
 type Msg
     = UpdateLocation (Result Geolocation.Error Geolocation.Location)
     | ChangePage Page
@@ -39,12 +43,14 @@ type Msg
     | AdminMsg Pages.Admin.Update.Msg
     | Change Pouchdb.Change
     | ToggleStarCampsite String
+    | Online Bool
 
 
 type alias Flags =
     { version : String
     , standalone : Bool
     , starredCampsites : Maybe (List String)
+    , online : Bool
     }
 
 
@@ -59,6 +65,7 @@ init flags =
       , standalone = flags.standalone
       , version = flags.version
       , starredCampsites = Maybe.withDefault [] flags.starredCampsites
+      , online = flags.online
       }
       -- On startup immediately try to get the location
     , Task.attempt UpdateLocation Geolocation.now
@@ -127,6 +134,9 @@ update msg model =
                         id :: model.starredCampsites
             in
                 ( { model | starredCampsites = starred }, storeStarredCampsites starred )
+
+        Online online ->
+            ( { model | online = online }, Cmd.none )
 
 
 formatGeolocationError : Geolocation.Error -> String

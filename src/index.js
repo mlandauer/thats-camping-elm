@@ -23,7 +23,8 @@ var starredCampsites = localStorage.getItem('thats-camping-starred-campsites');
 var app = Elm.App.embed(node, {
   version: VERSION,
   standalone: standalone,
-  starredCampsites: starredCampsites ? JSON.parse(starredCampsites) : null
+  starredCampsites: starredCampsites ? JSON.parse(starredCampsites) : null,
+  online: navigator.onLine
 });
 
 app.ports.storeStarredCampsites.subscribe(function(state) {
@@ -104,3 +105,11 @@ app.ports.bulkDocs.subscribe(function(data) {
       console.log(err);
     });
 });
+
+window.addEventListener('online', function(e) {
+  app.ports.online.send(true);
+}, false);
+
+window.addEventListener('offline', function(e) {
+  app.ports.online.send(false);
+}, false);

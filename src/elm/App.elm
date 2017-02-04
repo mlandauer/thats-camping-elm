@@ -25,4 +25,5 @@ subscriptions model =
     Sub.batch
         [ Pouchdb.change Change
         , Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
+        , online Online
         ]

@@ -27,4 +27,5 @@ type alias Model =
     , adminModel : Pages.Admin.Model.Model
     , standalone : Bool
     , version : String
+    , online : Bool
     }
