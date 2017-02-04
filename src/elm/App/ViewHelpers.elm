@@ -121,18 +121,31 @@ compareStarred s1 s2 =
 -- We're being a bit flexible with the form of the campsite record so that we can make testing a little less cumbersome
 
 
-compareCampsite : Maybe Location -> { c | location : Maybe Location, shortName : String } -> { c | location : Maybe Location, shortName : String } -> Order
+compareCampsite :
+    Maybe Location
+    -> { c | location : Maybe Location, shortName : String }
+    -> { c | location : Maybe Location, shortName : String }
+    -> Order
 compareCampsite userLocation c1 c2 =
     let
         c =
-            compareDistance
-                (Maybe.map2 Location.distanceInMetres userLocation c1.location)
-                (Maybe.map2 Location.distanceInMetres userLocation c2.location)
+            compareCampsiteByDistance userLocation c1 c2
     in
         if c == EQ then
             compare c1.shortName c2.shortName
         else
             c
+
+
+compareCampsiteByDistance :
+    Maybe Location
+    -> { c | location : Maybe Location, shortName : String }
+    -> { c | location : Maybe Location, shortName : String }
+    -> Order
+compareCampsiteByDistance userLocation c1 c2 =
+    compareDistance
+        (Maybe.map2 Location.distanceInMetres userLocation c1.location)
+        (Maybe.map2 Location.distanceInMetres userLocation c2.location)
 
 
 compareDistance : Maybe Float -> Maybe Float -> Order
