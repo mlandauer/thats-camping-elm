@@ -8,7 +8,7 @@ import Pages.Admin.Model exposing (..)
 import Dict exposing (Dict)
 import Campsite exposing (Campsite)
 import App.ViewHelpers exposing (link)
-import App.Model exposing (Page(..))
+import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Admin.Update exposing (..)
 
 
@@ -32,7 +32,7 @@ view model =
                         )
                     ]
                 ]
-            , p [] [ text "Or you can go ", link CampsitesPage [] [ text "back to the main campsites list" ] ]
+            , p [] [ text "Or you can go ", link (CampsitesPage List) [] [ text "back to the main campsites list" ] ]
             , p [] [ text (Maybe.withDefault "" model.text) ]
             ]
         ]

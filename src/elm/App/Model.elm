@@ -1,4 +1,4 @@
-module App.Model exposing (Page(..), Model)
+module App.Model exposing (Page(..), Model, CampsitesPageOption(..))
 
 import Dict exposing (Dict)
 import Pages.Admin.Model
@@ -7,8 +7,13 @@ import Park exposing (Park)
 import Location exposing (Location)
 
 
+type CampsitesPageOption
+    = List
+    | Map
+
+
 type Page
-    = CampsitesPage
+    = CampsitesPage CampsitesPageOption
     | CampsitePage String
     | ParkPage String
     | AboutPage
