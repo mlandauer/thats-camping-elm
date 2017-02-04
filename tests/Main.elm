@@ -5,7 +5,6 @@ import Test.Runner.Node
 import Json.Encode exposing (Value)
 import App.TestsDecoder
 import TestsLocation
-import TestsCampsite
 import Libs.SimpleFormat.Tests
 import Pages.Campsite.Tests
 
@@ -20,7 +19,6 @@ all =
     describe "Test Suite"
         [ App.TestsDecoder.all
         , TestsLocation.all
-        , TestsCampsite.all
         , Libs.SimpleFormat.Tests.all
         , Pages.Campsite.Tests.all
         ]
