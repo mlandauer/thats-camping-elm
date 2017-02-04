@@ -1,4 +1,4 @@
-module App.Update
+port module App.Update
     exposing
         ( Msg(..)
         , update
@@ -26,6 +26,12 @@ import Park exposing (Park)
 import Location exposing (Location)
 
 
+-- TODO: We should probably move this port into another module
+
+
+port storeStarredCampsites : List String -> Cmd msg
+
+
 type Msg
     = UpdateLocation (Result Geolocation.Error Geolocation.Location)
     | ChangePage Page
@@ -36,7 +42,10 @@ type Msg
 
 
 type alias Flags =
-    { version : String, standalone : Bool }
+    { version : String
+    , standalone : Bool
+    , starredCampsites : Maybe (List String)
+    }
 
 
 init : Flags -> ( Model, Cmd Msg )
@@ -49,7 +58,7 @@ init flags =
       , adminModel = Pages.Admin.Model.initModel
       , standalone = flags.standalone
       , version = flags.version
-      , starredCampsites = []
+      , starredCampsites = Maybe.withDefault [] flags.starredCampsites
       }
       -- On startup immediately try to get the location
     , Task.attempt UpdateLocation Geolocation.now
@@ -117,7 +126,7 @@ update msg model =
                     else
                         id :: model.starredCampsites
             in
-                ( { model | starredCampsites = starred }, Cmd.none )
+                ( { model | starredCampsites = starred }, storeStarredCampsites starred )
 
 
 formatGeolocationError : Geolocation.Error -> String

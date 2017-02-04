@@ -16,8 +16,19 @@ var Elm = require('./elm/App.elm');
 
 var node = document.getElementById('root');
 var standalone = ("standalone" in window.navigator) && window.navigator.standalone;
+
+var starredCampsites = localStorage.getItem('thats-camping-starred-campsites');
+
 // Pass elm the current git version and whether it's running fullscreen
-var app = Elm.App.embed(node, {version: VERSION, standalone: standalone});
+var app = Elm.App.embed(node, {
+  version: VERSION,
+  standalone: standalone,
+  starredCampsites: starredCampsites ? JSON.parse(starredCampsites) : null
+});
+
+app.ports.storeStarredCampsites.subscribe(function(state) {
+    localStorage.setItem('thats-camping-starred-campsites', JSON.stringify(state));
+});
 
 var db = new PouchDB('thats-camping');
 
