@@ -3,7 +3,6 @@ module App.ViewHelpers
         ( navBar
         , link
         , campsiteListView
-        , compareCampsite
         , values
         , star
         )
@@ -86,25 +85,18 @@ sortCampsites2 location campsitesWithStarred =
     List.sortWith (compareCampsite2 location) campsitesWithStarred
 
 
-sortCampsites : Maybe Location -> List Campsite -> List Campsite
-sortCampsites location campsites =
-    List.sortWith (compareCampsite location) campsites
-
-
 compareCampsite2 :
     Maybe Location
     -> CampsiteWithStarred
     -> CampsiteWithStarred
     -> Order
-compareCampsite2 userLocation c1 c2 =
-    let
-        c =
-            compareStarred c1.starred c2.starred
-    in
-        if c == EQ then
-            compareCampsite userLocation c1.campsite c2.campsite
-        else
-            c
+compareCampsite2 userLocation r1 r2 =
+    if (compareStarred r1.starred r2.starred) /= EQ then
+        compareStarred r1.starred r2.starred
+    else if (compareCampsiteByDistance userLocation r1.campsite r2.campsite) /= EQ then
+        compareCampsiteByDistance userLocation r1.campsite r2.campsite
+    else
+        compare r1.campsite.shortName r2.campsite.shortName
 
 
 compareStarred : Bool -> Bool -> Order
@@ -117,30 +109,10 @@ compareStarred s1 s2 =
         EQ
 
 
-
--- We're being a bit flexible with the form of the campsite record so that we can make testing a little less cumbersome
-
-
-compareCampsite :
-    Maybe Location
-    -> { c | location : Maybe Location, shortName : String }
-    -> { c | location : Maybe Location, shortName : String }
-    -> Order
-compareCampsite userLocation c1 c2 =
-    let
-        c =
-            compareCampsiteByDistance userLocation c1 c2
-    in
-        if c == EQ then
-            compare c1.shortName c2.shortName
-        else
-            c
-
-
 compareCampsiteByDistance :
     Maybe Location
-    -> { c | location : Maybe Location, shortName : String }
-    -> { c | location : Maybe Location, shortName : String }
+    -> Campsite
+    -> Campsite
     -> Order
 compareCampsiteByDistance userLocation c1 c2 =
     compareDistance
