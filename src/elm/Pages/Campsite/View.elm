@@ -57,21 +57,39 @@ view model =
                     , p [] [ text (facilitiesText model.campsite.facilities) ]
                     , h2 [] [ text "Access" ]
                     , p [] [ text (accessText model.campsite.access) ]
-                    , a
-                        ([ href (Maybe.withDefault "#" (Maybe.map mapUrl model.campsite.location))
-                         , class "directions btn btn-default"
-                         ]
-                            ++ -- TODO: It's not actually valid HTML (I think) to disable a link with disabled
-                               if directionsDisabled model.campsite.location model.online then
-                                [ attribute "disabled" "disabled" ]
-                               else
-                                []
-                        )
-                        [ text "Directions to campsite" ]
+                    , case mapUrl model.campsite.location model.online of
+                        Just url ->
+                            a
+                                [ href url
+                                , class "directions btn btn-default"
+                                ]
+                                [ text "Directions to campsite" ]
+
+                        Nothing ->
+                            span
+                                [ class "directions btn btn-default disabled"
+                                ]
+                                [ text "Directions to campsite" ]
                     ]
                 ]
             ]
         ]
+
+
+mapUrl : Maybe Location -> Bool -> Maybe String
+mapUrl location online =
+    -- Returns Nothing if directions can't be used (location isn't available or offline)
+    if online then
+        Maybe.map
+            (\l ->
+                "https://maps.google.com/maps?daddr="
+                    ++ (toString l.latitude)
+                    ++ ","
+                    ++ (toString l.longitude)
+            )
+            location
+    else
+        Nothing
 
 
 facilitiesText : Facilities -> String
@@ -96,28 +114,6 @@ accessText access =
             "not for"
             (listAsText (accessList False access))
         )
-
-
-mapUrl : Location -> String
-mapUrl location =
-    "https://maps.google.com/maps?daddr="
-        ++ (toString location.latitude)
-        ++ ","
-        ++ (toString location.longitude)
-
-
-directionsDisabled : Maybe Location -> Bool -> Bool
-directionsDisabled location online =
-    if online then
-        -- TODO: Also disable button when we have don't an internet connection
-        case location of
-            Just _ ->
-                False
-
-            Nothing ->
-                True
-    else
-        True
 
 
 presentToilets : Toilets -> Bool
