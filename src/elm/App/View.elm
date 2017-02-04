@@ -43,6 +43,7 @@ view model =
                             { campsite = campsite
                             , park = (Dict.get campsite.parkId model.parks)
                             , starred = List.member id model.starredCampsites
+                            , online = model.online
                             }
 
                     Nothing ->

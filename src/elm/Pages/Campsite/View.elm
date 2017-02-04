@@ -62,7 +62,7 @@ view model =
                          , class "directions btn btn-default"
                          ]
                             ++ -- TODO: It's not actually valid HTML (I think) to disable a link with disabled
-                               if directionsDisabled model.campsite.location then
+                               if directionsDisabled model.campsite.location model.online then
                                 [ attribute "disabled" "disabled" ]
                                else
                                 []
@@ -106,15 +106,18 @@ mapUrl location =
         ++ (toString location.longitude)
 
 
-directionsDisabled : Maybe Location -> Bool
-directionsDisabled location =
-    -- TODO: Also disable button when we have don't an internet connection
-    case location of
-        Just _ ->
-            False
+directionsDisabled : Maybe Location -> Bool -> Bool
+directionsDisabled location online =
+    if online then
+        -- TODO: Also disable button when we have don't an internet connection
+        case location of
+            Just _ ->
+                False
 
-        Nothing ->
-            True
+            Nothing ->
+                True
+    else
+        True
 
 
 presentToilets : Toilets -> Bool
