@@ -3,6 +3,7 @@ module Pages.Campsites.View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import App.Update exposing (Msg)
+import App.Model exposing (Page(..))
 import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar, link)
 import Dict
@@ -23,6 +24,19 @@ view model =
                 [ errorsView model.errors
                 , App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
                 ]
+        , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
+            [ div [ class "container" ]
+                [ div [ class "btn-group" ]
+                    [ link CampsitesPage
+                        [ class "btn navbar-link navbar-text" ]
+                        [ span [ class "glyphicon glyphicon-list" ] [] ]
+                      -- TODO: Make this link to the map page
+                    , link CampsitesPage
+                        [ class "btn navbar-link navbar-text" ]
+                        [ span [ class "glyphicon glyphicon-map-marker" ] [] ]
+                    ]
+                ]
+            ]
         ]
 
 
