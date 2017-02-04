@@ -97,8 +97,12 @@ compareCampsite2 :
     -> CampsiteWithStarred
     -> Order
 compareCampsite2 userLocation c1 c2 =
-    -- For the time being ignore the starred
-    compareCampsite userLocation c1.campsite c2.campsite
+    if c1.starred && not c2.starred then
+        LT
+    else if not c1.starred && c2.starred then
+        GT
+    else
+        compareCampsite userLocation c1.campsite c2.campsite
 
 
 
