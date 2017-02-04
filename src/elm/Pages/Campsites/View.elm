@@ -13,8 +13,10 @@ view model =
     div [ class "campsite-list" ]
         [ navBar "Camping near you" False True
         , if List.isEmpty model.campsites then
-            div [ class "centering-box" ]
-                [ h2 [] [ text "Getting some wonderful campsites for you" ]
+            div [ class "container" ]
+                [ div [ class "centering-box" ]
+                    [ h2 [ class "text-center" ] [ text "Getting some lovely campsites for you" ]
+                    ]
                 ]
           else
             div [ class "content" ]
