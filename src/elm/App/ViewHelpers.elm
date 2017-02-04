@@ -65,7 +65,7 @@ campsiteListView location campsites parks showPark starredCampsites =
             (\c ->
                 campsiteListItem location parks showPark c.campsite c.starred
             )
-            (sortCampsites2 location (transform campsites starredCampsites))
+            (sortCampsitesWithStarred location (transform campsites starredCampsites))
         )
 
 
@@ -80,17 +80,17 @@ type alias CampsiteWithStarred =
     { campsite : Campsite, starred : Bool }
 
 
-sortCampsites2 : Maybe Location -> List CampsiteWithStarred -> List CampsiteWithStarred
-sortCampsites2 location campsitesWithStarred =
-    List.sortWith (compareCampsite2 location) campsitesWithStarred
+sortCampsitesWithStarred : Maybe Location -> List CampsiteWithStarred -> List CampsiteWithStarred
+sortCampsitesWithStarred location campsitesWithStarred =
+    List.sortWith (compareCampsite location) campsitesWithStarred
 
 
-compareCampsite2 :
+compareCampsite :
     Maybe Location
     -> CampsiteWithStarred
     -> CampsiteWithStarred
     -> Order
-compareCampsite2 userLocation r1 r2 =
+compareCampsite userLocation r1 r2 =
     if (compareStarred r1.starred r2.starred) /= EQ then
         compareStarred r1.starred r2.starred
     else if (compareCampsiteByDistance userLocation r1.campsite r2.campsite) /= EQ then
