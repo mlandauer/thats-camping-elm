@@ -27,13 +27,14 @@ view model =
             )
         ]
         [ case model.page of
-            CampsitesPage ->
+            CampsitesPage displayType ->
                 Pages.Campsites.View.view
                     { campsites = (Dict.values model.campsites)
                     , parks = model.parks
                     , location = model.location
                     , errors = model.errors
                     , starredCampsites = model.starredCampsites
+                    , displayType = displayType
                     }
 
             CampsitePage id ->

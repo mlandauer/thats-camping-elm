@@ -4,6 +4,7 @@ import Location exposing (Location)
 import Campsite exposing (Campsite)
 import Park exposing (Park)
 import Dict exposing (Dict)
+import App.Model exposing (CampsitesPageOption)
 
 
 type alias Model =
@@ -12,4 +13,5 @@ type alias Model =
     , location : Maybe Location
     , errors : List String
     , starredCampsites : List String
+    , displayType : CampsitesPageOption
     }

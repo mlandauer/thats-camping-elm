@@ -60,7 +60,7 @@ init flags =
       , parks = Dict.empty
       , location = Nothing
       , errors = []
-      , page = CampsitesPage
+      , page = CampsitesPage List
       , adminModel = Pages.Admin.Model.initModel
       , standalone = flags.standalone
       , version = flags.version
@@ -164,28 +164,40 @@ transformCampsites campsites =
 
 location2messages : Navigation.Location -> List Msg
 location2messages location =
-    case RouteUrl.Builder.path (RouteUrl.Builder.fromHash location.href) of
-        [ "campsites" ] ->
-            [ ChangePage CampsitesPage ]
+    let
+        builder =
+            (RouteUrl.Builder.fromHash location.href)
+    in
+        case RouteUrl.Builder.path builder of
+            [ "campsites" ] ->
+                case Dict.get "type" (RouteUrl.Builder.query builder) of
+                    Just "map" ->
+                        [ ChangePage (CampsitesPage Map) ]
 
-        [ "campsites", id ] ->
-            [ ChangePage (CampsitePage id) ]
+                    Just _ ->
+                        [ ChangePage (CampsitesPage List) ]
 
-        [ "parks", id ] ->
-            [ ChangePage (ParkPage id) ]
+                    Nothing ->
+                        [ ChangePage (CampsitesPage List) ]
 
-        [ "about" ] ->
-            [ ChangePage AboutPage ]
+            [ "campsites", id ] ->
+                [ ChangePage (CampsitePage id) ]
 
-        [ "admin" ] ->
-            [ ChangePage AdminPage ]
+            [ "parks", id ] ->
+                [ ChangePage (ParkPage id) ]
 
-        id :: _ ->
-            [ ChangePage UnknownPage ]
+            [ "about" ] ->
+                [ ChangePage AboutPage ]
 
-        -- Default route
-        [] ->
-            [ ChangePage CampsitesPage ]
+            [ "admin" ] ->
+                [ ChangePage AdminPage ]
+
+            id :: _ ->
+                [ ChangePage UnknownPage ]
+
+            -- Default route
+            [] ->
+                [ ChangePage (CampsitesPage List) ]
 
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
@@ -196,8 +208,11 @@ delta2hash previous current =
 page2url : Page -> String
 page2url page =
     case page of
-        CampsitesPage ->
-            "#/campsites"
+        CampsitesPage List ->
+            "#/campsites?type=list"
+
+        CampsitesPage Map ->
+            "#/campsites?type=map"
 
         CampsitePage id ->
             "#/campsites/" ++ id
