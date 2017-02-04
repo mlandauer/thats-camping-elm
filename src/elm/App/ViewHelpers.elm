@@ -97,12 +97,24 @@ compareCampsite2 :
     -> CampsiteWithStarred
     -> Order
 compareCampsite2 userLocation c1 c2 =
-    if c1.starred && not c2.starred then
+    let
+        c =
+            compareStarred c1.starred c2.starred
+    in
+        if c == EQ then
+            compareCampsite userLocation c1.campsite c2.campsite
+        else
+            c
+
+
+compareStarred : Bool -> Bool -> Order
+compareStarred s1 s2 =
+    if s1 && not s2 then
         LT
-    else if not c1.starred && c2.starred then
+    else if not s1 && s2 then
         GT
     else
-        compareCampsite userLocation c1.campsite c2.campsite
+        EQ
 
 
 
