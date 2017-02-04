@@ -112,28 +112,35 @@ compareCampsite2 userLocation c1 c2 =
 compareCampsite : Maybe Location -> { c | location : Maybe Location, shortName : String } -> { c | location : Maybe Location, shortName : String } -> Order
 compareCampsite userLocation c1 c2 =
     let
-        d1 =
-            Maybe.map2 Location.distanceInMetres userLocation c1.location
-
-        d2 =
-            Maybe.map2 Location.distanceInMetres userLocation c2.location
+        c =
+            compareDistance
+                (Maybe.map2 Location.distanceInMetres userLocation c1.location)
+                (Maybe.map2 Location.distanceInMetres userLocation c2.location)
     in
-        case d1 of
-            Just d1 ->
-                case d2 of
-                    Just d2 ->
-                        compare d1 d2
+        if c == EQ then
+            compare c1.shortName c2.shortName
+        else
+            c
 
-                    Nothing ->
-                        LT
 
-            Nothing ->
-                case d2 of
-                    Just d2 ->
-                        GT
+compareDistance : Maybe Float -> Maybe Float -> Order
+compareDistance d1 d2 =
+    case d1 of
+        Just d1 ->
+            case d2 of
+                Just d2 ->
+                    compare d1 d2
 
-                    Nothing ->
-                        compare c1.shortName c2.shortName
+                Nothing ->
+                    LT
+
+        Nothing ->
+            case d2 of
+                Just d2 ->
+                    GT
+
+                Nothing ->
+                    EQ
 
 
 campsiteListItem :
