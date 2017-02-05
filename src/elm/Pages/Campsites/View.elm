@@ -16,18 +16,21 @@ view model =
         , if List.isEmpty model.campsites then
             div [ class "container" ]
                 [ div [ class "centering-box" ]
+                    -- TODO: Centre the text properly (now that we have footer)
                     [ h2 [ class "text-center" ] [ text "Getting some lovely campsites for you" ]
                     ]
                 ]
           else
-            div [ class "content" ]
-                [ errorsView model.errors
-                , case model.displayType of
-                    List ->
-                        App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
+            div [ class "content " ]
+                [ div [ class "content-inner" ]
+                    [ errorsView model.errors
+                    , case model.displayType of
+                        List ->
+                            App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
 
-                    Map ->
-                        mapView model
+                        Map ->
+                            mapView model
+                    ]
                 ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
@@ -46,7 +49,7 @@ view model =
 
 mapView : Model -> Html Msg
 mapView model =
-    p [] [ text "This is where the map will go" ]
+    div [ id "map" ] []
 
 
 errorsView : List String -> Html msg

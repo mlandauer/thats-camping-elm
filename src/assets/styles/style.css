@@ -37,8 +37,14 @@ nav {
 
 .campsite-list .content {
   height: 100vh;
+  /* We have a footer on this page too */
+  padding-bottom: 59px;
+}
+
+.content-inner {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  height: 100%;
 }
 
 .centering-box {
@@ -181,4 +187,8 @@ a.list-group-item, .btn {
 
 .btn:active {
   box-shadow: none;
+}
+
+#map {
+  height: 100%;
 }

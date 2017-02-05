@@ -31,7 +31,6 @@ module.exports = {
       },
       {
         test:    /\.(html|png)$/,
-        exclude: /node_modules/,
         use:  'file-loader?name=[name].[ext]',
       },
       {

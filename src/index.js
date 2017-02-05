@@ -1,6 +1,7 @@
 'use strict';
 
 require('bootstrap/dist/css/bootstrap.css');
+require('leaflet/dist/leaflet.css');
 require('./assets/styles/style.css');
 // require('font-awesome/css/font-awesome.css');
 
@@ -8,6 +9,8 @@ require('./assets/styles/style.css');
 require('./index.html');
 
 require('./assets/images/apple-touch-icon.png');
+
+var L = require('leaflet');
 
 var PouchDB = require('pouchdb');
 
@@ -113,3 +116,15 @@ window.addEventListener('online', function(e) {
 window.addEventListener('offline', function(e) {
   app.ports.online.send(false);
 }, false);
+
+/* Very temporary hack - just wait a second before trying to attach the map to
+   give elm time to render the screen.
+   This will only work when loading the map page as the first page */
+
+setTimeout(function(){
+  var map = L.map('map').setView([51.505, -0.09], 13);
+
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+}, 1000);
