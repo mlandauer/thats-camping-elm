@@ -26,7 +26,21 @@ view model =
                 ""
             )
         ]
-        [ case model.page of
+        {- We're putting a map div permananently in the DOM so that we don't
+           have to handle the creation and deletion of the DOM element.
+           See https://github.com/elm-lang/html/issues/19 and
+           https://github.com/elm-lang/html/issues/53. Once Elm has a way
+           to follow the creation and deletion of DOM elements then we'll
+           be able to do this reliably in a less crufty way.
+        -}
+        [ div [ id "map-wrapper", class "campsite-list", style [ ( "display", "none" ) ] ]
+            [ div [ class "content" ]
+                [ div [ class "content-inner" ]
+                    [ div [ id "map" ] []
+                    ]
+                ]
+            ]
+        , case model.page of
             CampsitesPage displayType ->
                 Pages.Campsites.View.view
                     { campsites = (Dict.values model.campsites)
