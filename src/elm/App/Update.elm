@@ -36,6 +36,9 @@ port storeStarredCampsites : List String -> Cmd msg
 port online : (Bool -> msg) -> Sub msg
 
 
+port mapVisibility : Bool -> Cmd msg
+
+
 type Msg
     = UpdateLocation (Result Geolocation.Error Geolocation.Location)
     | ChangePage Page
@@ -82,7 +85,7 @@ update msg model =
             ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
 
         ChangePage page ->
-            ( { model | page = page }, Cmd.none )
+            ( { model | page = page }, mapVisibility (page == CampsitesPage Map) )
 
         PageBack ->
             ( model, Navigation.back 1 )

@@ -29,7 +29,10 @@ view model =
                             App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
 
                         Map ->
-                            mapView model
+                            {- Don't show anything because we actually have a
+                               permanent map div in App.View
+                            -}
+                            text ""
                     ]
                 ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
@@ -45,11 +48,6 @@ view model =
                 ]
             ]
         ]
-
-
-mapView : Model -> Html Msg
-mapView model =
-    div [ id "map" ] []
 
 
 errorsView : List String -> Html msg
