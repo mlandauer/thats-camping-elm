@@ -161,7 +161,7 @@ markerForCampsite campsite =
             Marker campsite.id
                 location
                 -- Wish this could come from a view
-                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\">" ++ campsite.shortName ++ "</a>")
+                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div></div></a>")
         )
         campsite.location
 
