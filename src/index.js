@@ -120,7 +120,7 @@ window.addEventListener('offline', function(e) {
 }, false);
 
 var map = undefined;
-var mapMarkers = {};
+var mapData = {};
 
 /* Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW */
 map = L.map('map').setView([-32.163333333333334, 147.01666666666668], 9);
@@ -150,14 +150,17 @@ app.ports.panMapTo.subscribe(function(location) {
 });
 
 app.ports.setMarker.subscribe(function(marker) {
-  if (marker.id in mapMarkers) {
+  if (marker.id in mapData) {
     /* If marker already exists just update the location */
-    var m = mapMarkers[marker.id];
+    var m = mapData[marker.id].marker;
     m.setLatLng([marker.location.latitude, marker.location.longitude]);
+    m.setPopupContent(marker.html)
   } else {
     /* If it's a new marker, create it and add it to the map */
     var m = L.marker([marker.location.latitude, marker.location.longitude]);
-    mapMarkers[marker.id] = m;
+    var p = L.popup(m);
+    mapData[marker.id] = {marker: m};
     m.addTo(map);
+    m.bindPopup(marker.html)
   }
 });

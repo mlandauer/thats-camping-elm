@@ -137,9 +137,9 @@ update msg model =
                                 , adminModel = { admin | campsites = newCampsites }
                               }
                             , -- Only set a marker when the campsite has location data
-                              case campsite.location of
-                                Just location ->
-                                    setMarker (Marker campsite.id location)
+                              case markerForCampsite campsite of
+                                Just marker ->
+                                    setMarker marker
 
                                 Nothing ->
                                     Cmd.none
@@ -160,6 +160,18 @@ update msg model =
 
         Online online ->
             ( { model | online = online }, Cmd.none )
+
+
+markerForCampsite : Campsite -> Maybe Marker
+markerForCampsite campsite =
+    Maybe.map
+        (\location ->
+            Marker campsite.id
+                location
+                -- Wish this could come from a view
+                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\">" ++ campsite.shortName ++ "</a>")
+        )
+        campsite.location
 
 
 formatGeolocationError : Geolocation.Error -> String

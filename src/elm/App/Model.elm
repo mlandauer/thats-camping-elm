@@ -39,4 +39,7 @@ type alias Model =
 type alias Marker =
     { id : String
     , location : Location
+    , html :
+        -- Wish we could render a view here instead
+        String
     }
