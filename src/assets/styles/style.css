@@ -194,3 +194,11 @@ a.list-group-item, .btn {
 #map {
   height: 100%;
 }
+
+.leaflet-popup a {
+  text-decoration: none;
+}
+
+.leaflet-popup .name {
+  color: #555;
+}
