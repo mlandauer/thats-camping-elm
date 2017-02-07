@@ -2,6 +2,7 @@
 
 require('bootstrap/dist/css/bootstrap.css');
 require('leaflet/dist/leaflet.css');
+require('leaflet/dist/images/marker-shadow.png');
 require('./assets/styles/style.css');
 // require('font-awesome/css/font-awesome.css');
 
