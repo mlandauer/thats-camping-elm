@@ -118,16 +118,15 @@ window.addEventListener('offline', function(e) {
 }, false);
 
 var map = undefined;
+var mapMarkers = {};
 
-/* Temporary hack - wait a second to give elm time to render map div
-   before we try to attach leaflet to it */
-setTimeout(function(){
-  map = L.map('map').setView([51.505, -0.09], 13);
+/* TODO: Set the centre to NSW somewhere by default */
+map = L.map('map').setView([51.505, -0.09], 9);
 
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-}, 1000);
+/* TODO: Probably want to use mapbox instead - they have a free tier */
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 app.ports.mapVisibility.subscribe(function(visibility) {
   if (visibility) {
@@ -139,5 +138,23 @@ app.ports.mapVisibility.subscribe(function(visibility) {
     }
   } else {
     document.getElementById('map-wrapper').style.display = "none";
+  }
+});
+
+app.ports.panMapTo.subscribe(function(location) {
+  console.log("panMapTo:", location);
+  map.panTo([location.latitude, location.longitude]);
+});
+
+app.ports.setMarker.subscribe(function(marker) {
+  if (marker.id in mapMarkers) {
+    /* If marker already exists just update the location */
+    var m = mapMarkers[marker.id];
+    m.setLatLng([marker.location.latitude, marker.location.longitude]);
+  } else {
+    /* If it's a new marker, create it and add it to the map */
+    var m = L.marker([marker.location.latitude, marker.location.longitude]);
+    mapMarkers[marker.id] = m;
+    m.addTo(map);
   }
 });
