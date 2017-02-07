@@ -45,7 +45,7 @@ export function initialise(app, centre) {
       var m = L.marker([marker.location.latitude, marker.location.longitude]);
       mapMarkers[marker.id] = m;
       m.addTo(map);
-      m.bindPopup(marker.html);
+      m.bindPopup(marker.html, {closeButton: false});
     }
   });
 
