@@ -5,7 +5,7 @@ require('leaflet/dist/images/marker-shadow.png');
 require('leaflet/dist/images/marker-icon-2x.png');
 
 var map = undefined;
-var mapData = {};
+var mapMarkers = {};
 
 export function initialise(app, centre) {
   map = L.map('map').setView(centre, 9);
@@ -35,18 +35,17 @@ export function initialise(app, centre) {
   });
 
   app.ports.setMapMarker.subscribe(function(marker) {
-    if (marker.id in mapData) {
+    if (marker.id in mapMarkers) {
       /* If marker already exists just update the location */
-      var m = mapData[marker.id].marker;
+      var m = mapMarkers[marker.id];
       m.setLatLng([marker.location.latitude, marker.location.longitude]);
       m.setPopupContent(marker.html)
     } else {
       /* If it's a new marker, create it and add it to the map */
       var m = L.marker([marker.location.latitude, marker.location.longitude]);
-      var p = L.popup(m);
-      mapData[marker.id] = {marker: m};
+      mapMarkers[marker.id] = m;
       m.addTo(map);
-      m.bindPopup(marker.html)
+      m.bindPopup(marker.html);
     }
   });
 
