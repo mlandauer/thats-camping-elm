@@ -25,6 +25,7 @@ import Json.Decode
 import Campsite exposing (Campsite)
 import Park exposing (Park)
 import Location exposing (Location)
+import Leaflet exposing (setMapMarker, mapVisibility, panMapTo, Marker)
 
 
 -- TODO: We should probably move this port into another module
@@ -34,15 +35,6 @@ port storeStarredCampsites : List String -> Cmd msg
 
 
 port online : (Bool -> msg) -> Sub msg
-
-
-port mapVisibility : Bool -> Cmd msg
-
-
-port setMapMarker : Marker -> Cmd msg
-
-
-port panMapTo : Location -> Cmd msg
 
 
 type Msg

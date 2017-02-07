@@ -1,4 +1,4 @@
-module App.Model exposing (Page(..), Model, CampsitesPageOption(..), Marker)
+module App.Model exposing (Page(..), Model, CampsitesPageOption(..))
 
 import Dict exposing (Dict)
 import Pages.Admin.Model
@@ -33,13 +33,4 @@ type alias Model =
     , standalone : Bool
     , version : String
     , online : Bool
-    }
-
-
-type alias Marker =
-    { id : String
-    , location : Location
-    , html :
-        -- Wish we could render a view here instead
-        String
     }
