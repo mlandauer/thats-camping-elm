@@ -122,8 +122,8 @@ window.addEventListener('offline', function(e) {
 var map = undefined;
 var mapMarkers = {};
 
-/* TODO: Set the centre to NSW somewhere by default */
-map = L.map('map').setView([51.505, -0.09], 9);
+/* Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW */
+map = L.map('map').setView([-32.163333333333334, 147.01666666666668], 9);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
