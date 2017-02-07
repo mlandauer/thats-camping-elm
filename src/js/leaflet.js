@@ -36,6 +36,7 @@ export function initialise(app, center) {
   });
 
   L.control.layers({"Satellite": satellite, "Streets": streets}).addTo(map);
+  L.control.scale({imperial: false}).addTo(map);
 
   app.ports.mapVisibility.subscribe(function(visibility) {
     if (visibility) {
