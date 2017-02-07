@@ -39,6 +39,16 @@ port online : (Bool -> msg) -> Sub msg
 port mapVisibility : Bool -> Cmd msg
 
 
+
+-- TODO: Rename to setMapMarker
+
+
+port setMarker : Marker -> Cmd msg
+
+
+port panMapTo : Location -> Cmd msg
+
+
 type Msg
     = UpdateLocation (Result Geolocation.Error Geolocation.Location)
     | ChangePage Page
@@ -82,7 +92,11 @@ update msg model =
             ( { model | errors = ((formatGeolocationError error) :: model.errors) }, Cmd.none )
 
         UpdateLocation (Ok location) ->
-            ( { model | location = Just (Location location.latitude location.longitude) }, Cmd.none )
+            let
+                l =
+                    Location location.latitude location.longitude
+            in
+                ( { model | location = Just l }, panMapTo l )
 
         ChangePage page ->
             ( { model | page = page }, mapVisibility (page == CampsitesPage Map) )
@@ -122,7 +136,13 @@ update msg model =
                                 | campsites = newCampsites
                                 , adminModel = { admin | campsites = newCampsites }
                               }
-                            , Cmd.none
+                            , -- Only set a marker when the campsite has location data
+                              case campsite.location of
+                                Just location ->
+                                    setMarker (Marker campsite.id location)
+
+                                Nothing ->
+                                    Cmd.none
                             )
 
                     Err _ ->
