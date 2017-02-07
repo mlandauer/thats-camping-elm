@@ -35,7 +35,7 @@ export function initialise(app) {
     map.panTo([location.latitude, location.longitude]);
   });
 
-  app.ports.setMarker.subscribe(function(marker) {
+  app.ports.setMapMarker.subscribe(function(marker) {
     if (marker.id in mapData) {
       /* If marker already exists just update the location */
       var m = mapData[marker.id].marker;

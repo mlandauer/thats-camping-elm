@@ -39,11 +39,7 @@ port online : (Bool -> msg) -> Sub msg
 port mapVisibility : Bool -> Cmd msg
 
 
-
--- TODO: Rename to setMapMarker
-
-
-port setMarker : Marker -> Cmd msg
+port setMapMarker : Marker -> Cmd msg
 
 
 port panMapTo : Location -> Cmd msg
@@ -139,7 +135,7 @@ update msg model =
                             , -- Only set a marker when the campsite has location data
                               case markerForCampsite campsite of
                                 Just marker ->
-                                    setMarker marker
+                                    setMapMarker marker
 
                                 Nothing ->
                                     Cmd.none
