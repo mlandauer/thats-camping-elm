@@ -112,7 +112,10 @@ update msg model =
             in
                 case o of
                     Ok (App.NewDecoder.Park park) ->
-                        ( { model | parks = (Dict.insert park.id park model.parks) }, Cmd.none )
+                        -- The map markers are also dependent on the park name
+                        ( { model | parks = (Dict.insert park.id park model.parks) }
+                        , Cmd.batch (List.map (\id -> markerCommandForCampsiteAndPark (Dict.get id model.campsites) (Just park)) park.campsiteIds)
+                        )
 
                     Ok (App.NewDecoder.Campsite campsite) ->
                         let
@@ -128,13 +131,7 @@ update msg model =
                                 | campsites = newCampsites
                                 , adminModel = { admin | campsites = newCampsites }
                               }
-                            , -- Only set a marker when the campsite has location data
-                              case markerForCampsite campsite of
-                                Just marker ->
-                                    setMapMarker marker
-
-                                Nothing ->
-                                    Cmd.none
+                            , markerCommandForCampsiteAndPark (Just campsite) (Dict.get campsite.parkId model.parks)
                             )
 
                     Err _ ->
@@ -154,16 +151,32 @@ update msg model =
             ( { model | online = online }, Cmd.none )
 
 
-markerForCampsite : Campsite -> Maybe Marker
-markerForCampsite campsite =
-    Maybe.map
-        (\location ->
-            Marker campsite.id
-                location
-                -- Wish this could come from a view
-                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div></div></a>")
-        )
-        campsite.location
+markerCommandForCampsiteAndPark : Maybe Campsite -> Maybe Park -> Cmd Msg
+markerCommandForCampsiteAndPark campsite park =
+    -- Only set a marker when the campsite has location data
+    case markerForCampsite campsite park of
+        Just marker ->
+            setMapMarker marker
+
+        Nothing ->
+            Cmd.none
+
+
+markerForCampsite : Maybe Campsite -> Maybe Park -> Maybe Marker
+markerForCampsite campsite park =
+    case campsite of
+        Just campsite ->
+            Maybe.map
+                (\location ->
+                    Marker campsite.id
+                        location
+                        -- Wish this could come from a view
+                        ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div><div class=\"park\">" ++ (Maybe.withDefault "" (Maybe.map .shortName park)) ++ "</div></div></a>")
+                )
+                campsite.location
+
+        Nothing ->
+            Nothing
 
 
 formatGeolocationError : Geolocation.Error -> String
