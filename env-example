@@ -1,0 +1,5 @@
+# Copy this to .env and edit
+# Used by s3_website to store AWS credentials.
+
+S3_ID=xxxxxxxxxxxxxxxxxxxx
+S3_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

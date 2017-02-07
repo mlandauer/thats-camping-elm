@@ -43,6 +43,8 @@ directories for changes. It's been [fixed but not yet released](https://github.c
 
 ## Production
 
+### GitHub pages deployment
+
 It's currently hosted on [GitHub pages](https://pages.github.com/).
 
 To deploy a new version to production:
@@ -55,6 +57,16 @@ git push
 This will build the new stuff into the docs directory. When this is committed
 and pushed back to Github, Github pages will automatically pick up the new
 version.
+
+### S3 + Cloudfront with custom domain deployment
+
+We're using a tool called [s3_website](https://github.com/laurilehmijoki/s3_website) to make things easier.
+
+To deploy a new version to production:
+```
+npm run build
+s3_website push
+```
 
 ## Copyright & License
 

@@ -1,3 +1,4 @@
 elm-stuff
 dist/app.js
 node_modules
+.env
