@@ -7,15 +7,35 @@ require('leaflet/dist/images/marker-icon-2x.png');
 var map = undefined;
 var mapMarkers = {};
 
-export function initialise(app, centre) {
-  map = L.map('map').setView(centre, 9);
+export function initialise(app, center) {
+  var mapboxUrl =
+    'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+  var mapboxAttribution =
+    'Map data <a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery <a href="http://mapbox.com">Mapbox</a>';
+  var mapboxAccessToken =
+    'pk.eyJ1IjoibWxhbmRhdWVyIiwiYSI6ImNpeXVzZ2c5djAxb28zM281amZ1emxmcHUifQ.dThcfHRKKNQckFMkCyObJw';
 
-  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: 'Map data <a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery <a href="http://mapbox.com">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox.streets',
-      accessToken: 'pk.eyJ1IjoibWxhbmRhdWVyIiwiYSI6ImNpeXVzZ2c5djAxb28zM281amZ1emxmcHUifQ.dThcfHRKKNQckFMkCyObJw'
-  }).addTo(map);
+  var streets = L.tileLayer(mapboxUrl, {
+    attribution: mapboxAttribution,
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: mapboxAccessToken
+  });
+
+  var satellite = L.tileLayer(mapboxUrl, {
+    attribution: mapboxAttribution,
+    maxZoom: 18,
+    id: 'mapbox.satellite',
+    accessToken: mapboxAccessToken
+  });
+
+  map = L.map('map', {
+    center: center,
+    zoom: 9,
+    layers: [satellite, streets]
+  });
+
+  L.control.layers({"Satellite": satellite, "Streets": streets}).addTo(map);
 
   app.ports.mapVisibility.subscribe(function(visibility) {
     if (visibility) {
