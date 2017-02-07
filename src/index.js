@@ -143,7 +143,6 @@ app.ports.mapVisibility.subscribe(function(visibility) {
 });
 
 app.ports.panMapTo.subscribe(function(location) {
-  console.log("panMapTo:", location);
   map.panTo([location.latitude, location.longitude]);
 });
 
