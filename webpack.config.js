@@ -5,9 +5,6 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var gitRevisionPlugin = new GitRevisionPlugin();
 
-// TODO: Extract css into separate file because currently it's in the big js
-// file and when that changes everything has to be reloaded
-
 module.exports = {
   entry: {
     app: [
