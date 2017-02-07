@@ -26,14 +26,16 @@ nav {
    of the screen because we're using the special apple meta tag that puts
    the status bar over the top of the content */
 
-#app.fullscreen nav {
+#app.fullscreen nav.navbar-fixed-top {
   padding-top: 20px;
   height: 80px;
 }
 
-#app.fullscreen .content {
+#app.fullscreen .content, #map-wrapper.fullscreen .content {
   padding-top: 79px;
 }
+
+
 
 .campsite-list .content {
   height: 100vh;

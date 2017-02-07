@@ -164,3 +164,18 @@ app.ports.setMarker.subscribe(function(marker) {
     m.bindPopup(marker.html)
   }
 });
+
+/*
+   A nasty hack to deal with the display of the map in "standalone". because
+   the "fullscreen" class on the top level div of the application is managed
+   by elm and the map sits outside of this (to work around current limitations
+   of elm interopability with javascript frameworks like leaflet) we need to
+   set a similar class in plain javascript so that the maps is in the right
+   place on a fullscreen mobile app. It's nasty and it offends me to do the
+   same thing twice in different ways but we'll have to live with it for the
+   time being.
+*/
+
+if (standalone) {
+  document.getElementById("map-wrapper").className += " fullscreen";
+}
