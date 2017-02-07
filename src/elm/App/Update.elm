@@ -34,6 +34,9 @@ import Leaflet exposing (setMapMarker, mapVisibility, panMapTo, Marker)
 port storeStarredCampsites : List String -> Cmd msg
 
 
+port storeLocation : Location -> Cmd msg
+
+
 port online : (Bool -> msg) -> Sub msg
 
 
@@ -52,6 +55,7 @@ type alias Flags =
     , standalone : Bool
     , starredCampsites : Maybe (List String)
     , online : Bool
+    , location : Maybe Location
     }
 
 
@@ -59,7 +63,7 @@ init : Flags -> ( Model, Cmd Msg )
 init flags =
     ( { campsites = Dict.empty
       , parks = Dict.empty
-      , location = Nothing
+      , location = flags.location
       , errors = []
       , page = CampsitesPage List
       , adminModel = Pages.Admin.Model.initModel
@@ -84,7 +88,7 @@ update msg model =
                 l =
                     Location location.latitude location.longitude
             in
-                ( { model | location = Just l }, panMapTo l )
+                ( { model | location = Just l }, Cmd.batch [ panMapTo l, storeLocation l ] )
 
         ChangePage page ->
             ( { model | page = page }, mapVisibility (page == CampsitesPage Map) )

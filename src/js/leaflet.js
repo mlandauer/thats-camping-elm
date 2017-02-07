@@ -7,9 +7,8 @@ require('leaflet/dist/images/marker-icon-2x.png');
 var map = undefined;
 var mapData = {};
 
-export function initialise(app) {
-  /* Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW */
-  map = L.map('map').setView([-32.163333333333334, 147.01666666666668], 9);
+export function initialise(app, centre) {
+  map = L.map('map').setView(centre, 9);
 
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
