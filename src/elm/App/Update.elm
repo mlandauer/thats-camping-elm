@@ -97,9 +97,7 @@ update msg model =
                 l =
                     Location location.latitude location.longitude
             in
-                ( { model | location = Just l }
-                , Cmd.batch [ Leaflet.panMapTo l, storeLocation l ]
-                )
+                ( { model | location = Just l }, storeLocation l )
 
         ChangePage page ->
             ( { model | page = page }, Cmd.none )
@@ -161,7 +159,13 @@ update msg model =
 
 map : Model -> Leaflet.Map
 map model =
-    { visible = (model.page == CampsitesPage Map)
+    { visible =
+        (model.page == CampsitesPage Map)
+    , center =
+        Maybe.withDefault
+            -- Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW
+            (Location -32.163333333333334 147.01666666666668)
+            model.location
     , markers = allMarkers model
     }
 

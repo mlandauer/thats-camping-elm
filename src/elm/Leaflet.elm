@@ -1,7 +1,6 @@
 port module Leaflet
     exposing
-        ( panMapTo
-        , Marker
+        ( Marker
         , Map
         , mapCommand
         )
@@ -29,8 +28,8 @@ type alias Marker =
 
 type alias Map =
     -- Holds the whole state for a map in one lump
-    -- We're not including the center of the map because that can be changed by the user too
     { visible : Bool
+    , center : Location
     , markers : List Marker
     }
 
@@ -44,6 +43,10 @@ mapCommand oldMap newMap =
             Cmd.none
         , if newMap.visible /= oldMap.visible then
             mapVisibility newMap.visible
+          else
+            Cmd.none
+        , if newMap.center /= oldMap.center then
+            panMapTo newMap.center
           else
             Cmd.none
         ]
