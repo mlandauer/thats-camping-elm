@@ -56,20 +56,24 @@ export function initialise(app, center) {
     map.panTo([location.latitude, location.longitude]);
   });
 
+  function createOrUpdateMarker(marker) {
+    if (marker.id in mapMarkers) {
+      var m = mapMarkers[marker.id];
+      // TODO: Only do something if the marker has changed
+      m.setLatLng([marker.location.latitude, marker.location.longitude]);
+      m.setPopupContent(marker.html)
+    } else {
+      var m = L.marker([marker.location.latitude, marker.location.longitude]);
+      mapMarkers[marker.id] = m;
+      m.addTo(map);
+      m.bindPopup(marker.html, {closeButton: false});
+    }
+  }
+
   app.ports.setMapMarkers.subscribe(function(markers) {
     // TODO: Also handle the deletion of markers
     markers.forEach(function(marker){
-      if (marker.id in mapMarkers) {
-        var m = mapMarkers[marker.id];
-        // TODO: Only do something if the marker has changed
-        m.setLatLng([marker.location.latitude, marker.location.longitude]);
-        m.setPopupContent(marker.html)
-      } else {
-        var m = L.marker([marker.location.latitude, marker.location.longitude]);
-        mapMarkers[marker.id] = m;
-        m.addTo(map);
-        m.bindPopup(marker.html, {closeButton: false});
-      }
+      createOrUpdateMarker(marker);
     });
   });
 
