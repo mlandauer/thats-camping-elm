@@ -83,7 +83,7 @@ updateWithMap msg model =
         ( newModel, cmd ) =
             update msg model
     in
-        ( newModel, Cmd.batch [ cmd, Leaflet.mapCommand (map newModel) ] )
+        ( newModel, Cmd.batch [ cmd, Leaflet.mapCommand (map model) (map newModel) ] )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
