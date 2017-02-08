@@ -1,7 +1,7 @@
 port module App.Update
     exposing
         ( Msg(..)
-        , update
+        , updateWithMarkers
         , location2messages
         , delta2hash
         , page2url
@@ -77,6 +77,17 @@ init flags =
     )
 
 
+updateWithMarkers : Msg -> Model -> ( Model, Cmd Msg )
+updateWithMarkers msg model =
+    let
+        ( newModel, cmd ) =
+            update msg model
+    in
+        -- We're always updating all the markers on any change
+        -- TODO: Do some optimisation if it's necessary
+        ( newModel, Cmd.batch [ cmd, setMapMarkers (allMarkers newModel) ] )
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -112,11 +123,7 @@ update msg model =
             in
                 case o of
                     Ok (App.NewDecoder.Park park) ->
-                        let
-                            newModel =
-                                { model | parks = (Dict.insert park.id park model.parks) }
-                        in
-                            ( newModel, setMapMarkers (allMarkers newModel) )
+                        ( { model | parks = (Dict.insert park.id park model.parks) }, Cmd.none )
 
                     Ok (App.NewDecoder.Campsite campsite) ->
                         let
@@ -125,16 +132,15 @@ update msg model =
 
                             admin =
                                 model.adminModel
-
-                            newModel =
-                                -- Setting model in a child model at the same time.
-                                -- Very hokey but this is temporary
-                                { model
-                                    | campsites = newCampsites
-                                    , adminModel = { admin | campsites = newCampsites }
-                                }
                         in
-                            ( newModel, setMapMarkers (allMarkers newModel) )
+                            -- Setting model in a child model at the same time.
+                            -- Very hokey but this is temporary
+                            ( { model
+                                | campsites = newCampsites
+                                , adminModel = { admin | campsites = newCampsites }
+                              }
+                            , Cmd.none
+                            )
 
                     Err _ ->
                         ( model, Cmd.none )
