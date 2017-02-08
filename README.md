@@ -43,22 +43,8 @@ directories for changes. It's been [fixed but not yet released](https://github.c
 
 ## Production
 
-### GitHub pages deployment
-
-It's currently hosted on [GitHub pages](https://pages.github.com/).
-
-To deploy a new version to production:
-```
-npm run build
-git commit -am "New release"
-git push
-```
-
-This will build the new stuff into the docs directory. When this is committed
-and pushed back to Github, Github pages will automatically pick up the new
-version.
-
-### S3 + Cloudfront with custom domain deployment
+The site is hosted on S3 with Cloudfront acting as the CDN. We're also using
+a free SSL certificate provided by the AWS Certificate Manager.
 
 We're using a tool called [s3_website](https://github.com/laurilehmijoki/s3_website) to make things easier.
 
@@ -67,6 +53,10 @@ To deploy a new version to production:
 npm run build
 s3_website push
 ```
+
+Currently only https://www.thatscamping.org works, not the root domain, because
+we need to use the AWS DNS service to point an A record at Cloudfront. See
+[GitHub issue #58](https://github.com/mlandauer/thats-camping-elm/issues/58).
 
 ## Copyright & License
 
