@@ -56,19 +56,21 @@ export function initialise(app, center) {
     map.panTo([location.latitude, location.longitude]);
   });
 
-  app.ports.setMapMarker.subscribe(function(marker) {
-    if (marker.id in mapMarkers) {
-      /* If marker already exists just update the location */
-      var m = mapMarkers[marker.id];
-      m.setLatLng([marker.location.latitude, marker.location.longitude]);
-      m.setPopupContent(marker.html)
-    } else {
-      /* If it's a new marker, create it and add it to the map */
-      var m = L.marker([marker.location.latitude, marker.location.longitude]);
-      mapMarkers[marker.id] = m;
-      m.addTo(map);
-      m.bindPopup(marker.html, {closeButton: false});
-    }
+  app.ports.setMapMarkers.subscribe(function(markers) {
+    // TODO: Also handle the deletion of markers
+    markers.forEach(function(marker){
+      if (marker.id in mapMarkers) {
+        var m = mapMarkers[marker.id];
+        // TODO: Only do something if the marker has changed
+        m.setLatLng([marker.location.latitude, marker.location.longitude]);
+        m.setPopupContent(marker.html)
+      } else {
+        var m = L.marker([marker.location.latitude, marker.location.longitude]);
+        mapMarkers[marker.id] = m;
+        m.addTo(map);
+        m.bindPopup(marker.html, {closeButton: false});
+      }
+    });
   });
 
   /*

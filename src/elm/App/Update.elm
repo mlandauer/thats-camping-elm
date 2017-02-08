@@ -25,7 +25,7 @@ import Json.Decode
 import Campsite exposing (Campsite)
 import Park exposing (Park)
 import Location exposing (Location)
-import Leaflet exposing (setMapMarker, mapVisibility, panMapTo, Marker)
+import Leaflet exposing (setMapMarkers, mapVisibility, panMapTo, Marker)
 
 
 -- TODO: We should probably move this port into another module
@@ -112,10 +112,11 @@ update msg model =
             in
                 case o of
                     Ok (App.NewDecoder.Park park) ->
-                        -- The map markers are also dependent on the park name
-                        ( { model | parks = (Dict.insert park.id park model.parks) }
-                        , Cmd.batch (List.map (\id -> markerCommandForCampsiteAndPark (Dict.get id model.campsites) (Just park)) park.campsiteIds)
-                        )
+                        let
+                            newModel =
+                                { model | parks = (Dict.insert park.id park model.parks) }
+                        in
+                            ( newModel, setMapMarkers (allMarkers newModel) )
 
                     Ok (App.NewDecoder.Campsite campsite) ->
                         let
@@ -124,15 +125,16 @@ update msg model =
 
                             admin =
                                 model.adminModel
+
+                            newModel =
+                                -- Setting model in a child model at the same time.
+                                -- Very hokey but this is temporary
+                                { model
+                                    | campsites = newCampsites
+                                    , adminModel = { admin | campsites = newCampsites }
+                                }
                         in
-                            -- Setting model in a child model at the same time.
-                            -- Very hokey but this is temporary
-                            ( { model
-                                | campsites = newCampsites
-                                , adminModel = { admin | campsites = newCampsites }
-                              }
-                            , markerCommandForCampsiteAndPark (Just campsite) (Dict.get campsite.parkId model.parks)
-                            )
+                            ( newModel, setMapMarkers (allMarkers newModel) )
 
                     Err _ ->
                         ( model, Cmd.none )
@@ -151,15 +153,18 @@ update msg model =
             ( { model | online = online }, Cmd.none )
 
 
-markerCommandForCampsiteAndPark : Maybe Campsite -> Maybe Park -> Cmd Msg
-markerCommandForCampsiteAndPark campsite park =
-    -- Only set a marker when the campsite has location data
-    case markerForCampsite campsite park of
-        Just marker ->
-            setMapMarker marker
-
-        Nothing ->
-            Cmd.none
+allMarkers : Model -> List Marker
+allMarkers model =
+    List.filterMap
+        identity
+        (List.map
+            (\campsite ->
+                markerForCampsite
+                    (Just campsite)
+                    (Dict.get campsite.parkId model.parks)
+            )
+            (Dict.values model.campsites)
+        )
 
 
 markerForCampsite : Maybe Campsite -> Maybe Park -> Maybe Marker

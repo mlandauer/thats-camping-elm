@@ -1,7 +1,7 @@
 port module Leaflet
     exposing
         ( mapVisibility
-        , setMapMarker
+        , setMapMarkers
         , panMapTo
         , Marker
         )
@@ -12,7 +12,7 @@ import Location exposing (Location)
 port mapVisibility : Bool -> Cmd msg
 
 
-port setMapMarker : Marker -> Cmd msg
+port setMapMarkers : List Marker -> Cmd msg
 
 
 port panMapTo : Location -> Cmd msg
