@@ -83,21 +83,7 @@ updateWithMap msg model =
         ( newModel, cmd ) =
             update msg model
     in
-        ( newModel, Cmd.batch [ cmd, mapCommand newModel ] )
-
-
-mapCommand : Model -> Cmd Msg
-mapCommand model =
-    let
-        m =
-            map model
-    in
-        -- We're updating mostly EVERYTHING to do with the map on ANY change
-        -- TODO: Do some optimisation
-        Cmd.batch
-            [ Leaflet.setMapMarkers m.markers
-            , Leaflet.mapVisibility m.visible
-            ]
+        ( newModel, Cmd.batch [ cmd, Leaflet.mapCommand (map newModel) ] )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

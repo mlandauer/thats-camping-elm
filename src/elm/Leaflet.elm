@@ -1,10 +1,9 @@
 port module Leaflet
     exposing
-        ( mapVisibility
-        , setMapMarkers
-        , panMapTo
+        ( panMapTo
         , Marker
         , Map
+        , mapCommand
         )
 
 import Location exposing (Location)
@@ -34,3 +33,13 @@ type alias Map =
     { visible : Bool
     , markers : List Marker
     }
+
+
+mapCommand : Map -> Cmd msg
+mapCommand map =
+    -- We're updating mostly EVERYTHING to do with the map on ANY change
+    -- TODO: Do some optimisation
+    Cmd.batch
+        [ setMapMarkers map.markers
+        , mapVisibility map.visible
+        ]
