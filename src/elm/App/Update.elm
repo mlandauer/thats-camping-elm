@@ -1,7 +1,7 @@
 port module App.Update
     exposing
         ( Msg(..)
-        , updateWithMarkers
+        , updateWithMap
         , location2messages
         , delta2hash
         , page2url
@@ -25,7 +25,7 @@ import Json.Decode
 import Campsite exposing (Campsite)
 import Park exposing (Park)
 import Location exposing (Location)
-import Leaflet exposing (setMapMarkers, mapVisibility, panMapTo, Marker)
+import Leaflet
 
 
 -- TODO: We should probably move this port into another module
@@ -77,15 +77,24 @@ init flags =
     )
 
 
-updateWithMarkers : Msg -> Model -> ( Model, Cmd Msg )
-updateWithMarkers msg model =
+updateWithMap : Msg -> Model -> ( Model, Cmd Msg )
+updateWithMap msg model =
     let
         ( newModel, cmd ) =
             update msg model
+
+        newMap =
+            map newModel
     in
-        -- We're always updating all the markers on any change
-        -- TODO: Do some optimisation if it's necessary
-        ( newModel, Cmd.batch [ cmd, setMapMarkers (allMarkers newModel) ] )
+        -- We're updating mostly EVERYTHING to do with the map on ANY change
+        -- TODO: Do some optimisation
+        ( newModel
+        , Cmd.batch
+            [ cmd
+            , Leaflet.setMapMarkers newMap.markers
+            , Leaflet.mapVisibility newMap.visible
+            ]
+        )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -99,10 +108,12 @@ update msg model =
                 l =
                     Location location.latitude location.longitude
             in
-                ( { model | location = Just l }, Cmd.batch [ panMapTo l, storeLocation l ] )
+                ( { model | location = Just l }
+                , Cmd.batch [ Leaflet.panMapTo l, storeLocation l ]
+                )
 
         ChangePage page ->
-            ( { model | page = page }, mapVisibility (page == CampsitesPage Map) )
+            ( { model | page = page }, Cmd.none )
 
         PageBack ->
             ( model, Navigation.back 1 )
@@ -159,7 +170,14 @@ update msg model =
             ( { model | online = online }, Cmd.none )
 
 
-allMarkers : Model -> List Marker
+map : Model -> Leaflet.Map
+map model =
+    { visible = (model.page == CampsitesPage Map)
+    , markers = allMarkers model
+    }
+
+
+allMarkers : Model -> List Leaflet.Marker
 allMarkers model =
     List.filterMap
         identity
@@ -173,11 +191,11 @@ allMarkers model =
         )
 
 
-markerForCampsite : Campsite -> Maybe Park -> Maybe Marker
+markerForCampsite : Campsite -> Maybe Park -> Maybe Leaflet.Marker
 markerForCampsite campsite park =
     Maybe.map
         (\location ->
-            Marker campsite.id
+            Leaflet.Marker campsite.id
                 location
                 -- Wish this could come from a view
                 ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div><div class=\"park\">" ++ (Maybe.withDefault "" (Maybe.map .shortName park)) ++ "</div></div></a>")

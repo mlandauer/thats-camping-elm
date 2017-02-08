@@ -15,7 +15,7 @@ main =
         , location2messages = location2messages
         , init = init
         , view = view
-        , update = updateWithMarkers
+        , update = updateWithMap
         , subscriptions = subscriptions
         }
 
