@@ -42,6 +42,13 @@ site: docs
 #     items:
 #       CNAME: your.website.com
 
+cloudfront_distribution_config:
+  aliases:
+    quantity: 2
+    items:
+      - thatscamping.org
+      - www.thatscamping.org
+
 # cloudfront_invalidate_root: true
 
 cloudfront_wildcard_invalidation: true
