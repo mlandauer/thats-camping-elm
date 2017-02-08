@@ -37,9 +37,13 @@ type alias Map =
 
 mapCommand : Map -> Map -> Cmd msg
 mapCommand oldMap newMap =
-    -- We're updating mostly EVERYTHING to do with the map on ANY change
-    -- TODO: Do some optimisation
     Cmd.batch
-        [ setMapMarkers newMap.markers
-        , mapVisibility newMap.visible
+        [ if newMap.markers /= oldMap.markers then
+            setMapMarkers newMap.markers
+          else
+            Cmd.none
+        , if newMap.visible /= oldMap.visible then
+            mapVisibility newMap.visible
+          else
+            Cmd.none
         ]
