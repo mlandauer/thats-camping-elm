@@ -160,28 +160,23 @@ allMarkers model =
         (List.map
             (\campsite ->
                 markerForCampsite
-                    (Just campsite)
+                    campsite
                     (Dict.get campsite.parkId model.parks)
             )
             (Dict.values model.campsites)
         )
 
 
-markerForCampsite : Maybe Campsite -> Maybe Park -> Maybe Marker
+markerForCampsite : Campsite -> Maybe Park -> Maybe Marker
 markerForCampsite campsite park =
-    case campsite of
-        Just campsite ->
-            Maybe.map
-                (\location ->
-                    Marker campsite.id
-                        location
-                        -- Wish this could come from a view
-                        ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div><div class=\"park\">" ++ (Maybe.withDefault "" (Maybe.map .shortName park)) ++ "</div></div></a>")
-                )
-                campsite.location
-
-        Nothing ->
-            Nothing
+    Maybe.map
+        (\location ->
+            Marker campsite.id
+                location
+                -- Wish this could come from a view
+                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div><div class=\"park\">" ++ (Maybe.withDefault "" (Maybe.map .shortName park)) ++ "</div></div></a>")
+        )
+        campsite.location
 
 
 formatGeolocationError : Geolocation.Error -> String
