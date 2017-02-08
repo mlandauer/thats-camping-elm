@@ -11,7 +11,7 @@ import Location exposing (Location)
 port mapVisibility : Bool -> Cmd msg
 
 
-port setMapMarkers : List Marker -> Cmd msg
+port createOrUpdateMarker : Marker -> Cmd msg
 
 
 port panMapTo : Location -> Cmd msg
@@ -37,16 +37,16 @@ type alias Map =
 mapCommand : Map -> Map -> Cmd msg
 mapCommand oldMap newMap =
     Cmd.batch
-        [ if newMap.markers /= oldMap.markers then
-            setMapMarkers newMap.markers
-          else
-            Cmd.none
-        , if newMap.visible /= oldMap.visible then
-            mapVisibility newMap.visible
-          else
-            Cmd.none
-        , if newMap.center /= oldMap.center then
-            panMapTo newMap.center
-          else
-            Cmd.none
-        ]
+        -- TODO: Also handle deleting markers
+        -- TODO: Only call createOrUpdateMarker if marker has actually changed
+        ((List.map createOrUpdateMarker newMap.markers)
+            ++ [ if newMap.visible /= oldMap.visible then
+                    mapVisibility newMap.visible
+                 else
+                    Cmd.none
+               , if newMap.center /= oldMap.center then
+                    panMapTo newMap.center
+                 else
+                    Cmd.none
+               ]
+        )

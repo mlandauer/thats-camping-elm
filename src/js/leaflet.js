@@ -70,11 +70,8 @@ export function initialise(app, center) {
     }
   }
 
-  app.ports.setMapMarkers.subscribe(function(markers) {
-    // TODO: Also handle the deletion of markers
-    markers.forEach(function(marker){
-      createOrUpdateMarker(marker);
-    });
+  app.ports.createOrUpdateMarker.subscribe(function(marker){
+    createOrUpdateMarker(marker);
   });
 
   /*
