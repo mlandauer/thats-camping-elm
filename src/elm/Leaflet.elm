@@ -6,6 +6,7 @@ port module Leaflet
         )
 
 import Location exposing (Location)
+import Dict exposing (Dict)
 
 
 port mapVisibility : Bool -> Cmd msg
@@ -30,7 +31,7 @@ type alias Map =
     -- Holds the whole state for a map in one lump
     { visible : Bool
     , center : Location
-    , markers : List Marker
+    , markers : Dict String Marker
     }
 
 
@@ -39,7 +40,7 @@ mapCommand oldMap newMap =
     Cmd.batch
         -- TODO: Also handle deleting markers
         -- TODO: Only call createOrUpdateMarker if marker has actually changed
-        ((List.map createOrUpdateMarker newMap.markers)
+        ((List.map createOrUpdateMarker (Dict.values newMap.markers))
             ++ [ if newMap.visible /= oldMap.visible then
                     mapVisibility newMap.visible
                  else

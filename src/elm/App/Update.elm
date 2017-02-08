@@ -166,7 +166,7 @@ map model =
             -- Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW
             (Location -32.163333333333334 147.01666666666668)
             model.location
-    , markers = allMarkers model
+    , markers = Dict.fromList (List.map (\marker -> ( marker.id, marker )) (allMarkers model))
     }
 
 
