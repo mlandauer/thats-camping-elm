@@ -39,9 +39,7 @@ type alias Map =
 mapCommand : Map -> Map -> Cmd msg
 mapCommand oldMap newMap =
     Cmd.batch
-        -- TODO: Also handle deleting markers
-        -- TODO: Only call createOrUpdateMarker if marker has actually changed
-        ((List.map createOrUpdateMarker (Dict.values newMap.markers))
+        ((markerCommands oldMap newMap)
             ++ [ if newMap.visible /= oldMap.visible then
                     mapVisibility newMap.visible
                  else
@@ -52,3 +50,10 @@ mapCommand oldMap newMap =
                     Cmd.none
                ]
         )
+
+
+markerCommands : Map -> Map -> List (Cmd msg)
+markerCommands oldMap newMap =
+    -- TODO: Also handle deleting markers
+    -- TODO: Only call createOrUpdateMarker if marker has actually changed
+    List.map createOrUpdateMarker (Dict.values newMap.markers)
