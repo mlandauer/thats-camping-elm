@@ -15,29 +15,19 @@ export function initialise(app, center) {
   var mapboxAccessToken =
     'pk.eyJ1IjoibWxhbmRhdWVyIiwiYSI6ImNpeXVzZ2c5djAxb28zM281amZ1emxmcHUifQ.dThcfHRKKNQckFMkCyObJw';
 
-  var streets = L.tileLayer(mapboxUrl, {
+  map = L.map('map', {
+    center: center,
+    zoom: 9,
+  });
+
+  L.tileLayer(mapboxUrl, {
     attribution: mapboxAttribution,
     maxZoom: 18,
     id: 'mapbox.streets',
     accessToken: mapboxAccessToken
-  });
+  }).addTo(map);
 
-  var satellite = L.tileLayer(mapboxUrl, {
-    attribution: mapboxAttribution,
-    maxZoom: 18,
-    id: 'mapbox.satellite',
-    accessToken: mapboxAccessToken
-  });
-
-  map = L.map('map', {
-    center: center,
-    zoom: 9,
-    layers: [satellite, streets]
-  });
-
-  L.control.layers({"Satellite": satellite, "Street": streets}, {},
-    {collapsed: false}).addTo(map);
-  L.control.scale({imperial: false}).addTo(map);
+  L.control.scale({imperial: false, position: 'topright'}).addTo(map);
 
   app.ports.mapVisibility.subscribe(function(visibility) {
     if (visibility) {
