@@ -38,8 +38,7 @@ export function initialise(app) {
   }).on('change', function(change) {
     app.ports.change.send(change);
   }).on('complete', function(info) {
-    // TODO: Send this to a port
-    console.log("complete", info);
+    app.ports.changeComplete.send(info);
   }).on('error', function (err) {
     // TODO: Send this to a port
     console.log("error", err);

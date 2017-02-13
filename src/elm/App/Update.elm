@@ -46,6 +46,7 @@ type Msg
     | PageBack
     | AdminMsg Pages.Admin.Update.Msg
     | Change Pouchdb.Change
+    | ChangeComplete Pouchdb.ChangeComplete
     | ToggleStarCampsite String
     | Online Bool
 
@@ -152,6 +153,10 @@ update msg model =
 
                     Err _ ->
                         ( model, Cmd.none )
+
+        ChangeComplete info ->
+            -- TODO: Actually do something
+            ( model, Cmd.none )
 
         ToggleStarCampsite id ->
             let
