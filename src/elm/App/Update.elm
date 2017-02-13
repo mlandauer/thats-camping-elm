@@ -71,6 +71,7 @@ init flags =
       , version = flags.version
       , starredCampsites = Maybe.withDefault [] flags.starredCampsites
       , online = flags.online
+      , sequence = 0
       }
       -- On startup immediately try to get the location
     , Task.attempt UpdateLocation Geolocation.now
@@ -116,12 +117,20 @@ update msg model =
             -- TODO: Need to think how to handle deleted documents. Is this
             -- something we actually need to handle?
             let
+                sequence =
+                    max model.sequence change.seq
+
                 o =
                     Json.Decode.decodeValue App.NewDecoder.parkOrCampsite change.doc
             in
                 case o of
                     Ok (App.NewDecoder.Park park) ->
-                        ( { model | parks = (Dict.insert park.id park model.parks) }, Cmd.none )
+                        ( { model
+                            | parks = (Dict.insert park.id park model.parks)
+                            , sequence = sequence
+                          }
+                        , Cmd.none
+                        )
 
                     Ok (App.NewDecoder.Campsite campsite) ->
                         let
@@ -136,6 +145,7 @@ update msg model =
                             ( { model
                                 | campsites = newCampsites
                                 , adminModel = { admin | campsites = newCampsites }
+                                , sequence = sequence
                               }
                             , Cmd.none
                             )

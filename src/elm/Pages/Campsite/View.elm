@@ -9,7 +9,6 @@ module Pages.Campsite.View
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg(..))
