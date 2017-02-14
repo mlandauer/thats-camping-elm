@@ -6,7 +6,6 @@ import App.Update exposing (Msg)
 import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar, link)
-import Dict
 
 
 view : Model -> Html Msg

@@ -77,7 +77,7 @@ init flags =
       -- On startup immediately try to get the location
     , Cmd.batch
         [ Task.attempt UpdateLocation Geolocation.now
-        , Pouchdb.changes { live = True, include_docs = True, return_docs = False }
+        , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = 0 }
         ]
     )
 
@@ -158,8 +158,15 @@ update msg model =
                         ( model, Cmd.none )
 
         ChangeComplete info ->
-            -- TODO: Actually do something
-            ( model, Cmd.none )
+            -- Now request the changes continuously
+            ( model
+            , Pouchdb.changes
+                { live = True
+                , include_docs = True
+                , return_docs = False
+                , since = model.sequence
+                }
+            )
 
         ToggleStarCampsite id ->
             let

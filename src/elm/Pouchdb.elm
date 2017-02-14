@@ -76,7 +76,7 @@ putResponse a =
 
 type alias ChangesOptions =
     -- TODO: Support all the options
-    { live : Bool, include_docs : Bool, return_docs : Bool }
+    { live : Bool, include_docs : Bool, return_docs : Bool, since : Int }
 
 
 port changes : ChangesOptions -> Cmd msg
