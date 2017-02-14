@@ -35,6 +35,7 @@ view model =
                     , errors = model.errors
                     , starredCampsites = model.starredCampsites
                     , displayType = displayType
+                    , initialChanges = model.initialChanges
                     }
 
             CampsitePage id ->

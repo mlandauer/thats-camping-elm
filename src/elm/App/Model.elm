@@ -34,4 +34,7 @@ type alias Model =
     , version : String
     , online : Bool
     , sequence : Int
+    , initialChanges :
+        Bool
+        -- Whether we're getting the first pass of changes from the database on startup
     }
