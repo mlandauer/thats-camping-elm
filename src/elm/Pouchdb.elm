@@ -9,8 +9,8 @@ port module Pouchdb
         , destroyError
         , DestroySuccess
         , DestroyError
-        , change
-        , Change
+        , changeSuccess
+        , ChangeSuccess
         , changeComplete
         , ChangeComplete
         , bulkDocs
@@ -31,12 +31,12 @@ type alias Revision =
     { rev : String }
 
 
-type alias Change =
+type alias ChangeSuccess =
     { id : String, changes : List Revision, doc : Json.Encode.Value, seq : Int }
 
 
 type alias ChangeComplete =
-    { results : List Change, last_seq : Int }
+    { results : List ChangeSuccess, last_seq : Int }
 
 
 type alias DestroySuccess =
@@ -73,7 +73,7 @@ putResponse a =
         ]
 
 
-port change : (Change -> msg) -> Sub msg
+port changeSuccess : (ChangeSuccess -> msg) -> Sub msg
 
 
 port changeComplete : (ChangeComplete -> msg) -> Sub msg

@@ -36,7 +36,7 @@ export function initialise(app) {
     live: true,
     include_docs: true
   }).on('change', function(change) {
-    app.ports.change.send(change);
+    app.ports.changeSuccess.send(change);
   }).on('complete', function(info) {
     app.ports.changeComplete.send(info);
   }).on('error', function (err) {

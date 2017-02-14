@@ -45,7 +45,7 @@ type Msg
     | ChangePage Page
     | PageBack
     | AdminMsg Pages.Admin.Update.Msg
-    | Change Pouchdb.Change
+    | ChangeSuccess Pouchdb.ChangeSuccess
     | ChangeComplete Pouchdb.ChangeComplete
     | ToggleStarCampsite String
     | Online Bool
@@ -114,7 +114,7 @@ update msg model =
             in
                 ( { model | adminModel = updatedAdminModel }, Cmd.map AdminMsg adminCmd )
 
-        Change change ->
+        ChangeSuccess change ->
             -- TODO: Need to think how to handle deleted documents. Is this
             -- something we actually need to handle?
             let
