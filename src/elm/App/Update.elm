@@ -77,7 +77,7 @@ init flags =
       -- On startup immediately try to get the location
     , Cmd.batch
         [ Task.attempt UpdateLocation Geolocation.now
-        , Pouchdb.changes { live = True, include_docs = True }
+        , Pouchdb.changes { live = True, include_docs = True, return_docs = False }
         ]
     )
 
