@@ -36,16 +36,16 @@ export function initialise(app) {
     console.log("sync error:", err);
   });
 
-  db.changes({
-    live: true,
-    include_docs: true
-  }).on('change', function(change) {
-    app.ports.changeSuccess.send(change);
-  }).on('complete', function(info) {
-    app.ports.changeComplete.send(info);
-  }).on('error', function (err) {
-    // TODO: Send this to a port
-    console.log("error", err);
+  app.ports.changes.subscribe(function(options){
+    db.changes(options).on('change', function(change) {
+      app.ports.changeSuccess.send(change);
+    }).on('complete', function(info) {
+      app.ports.changeComplete.send(info);
+    }).on('error', function (err) {
+      // TODO: Send this to a port
+      console.log("error", err);
+    });
+
   });
 
   app.ports.put.subscribe(function(data) {

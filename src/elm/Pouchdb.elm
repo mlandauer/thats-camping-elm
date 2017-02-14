@@ -9,6 +9,7 @@ port module Pouchdb
         , destroyError
         , DestroySuccess
         , DestroyError
+        , changes
         , changeSuccess
         , ChangeSuccess
         , changeComplete
@@ -71,6 +72,14 @@ putResponse a =
         [ putError (\e -> a (Err e))
         , putSuccess (\r -> a (Ok r))
         ]
+
+
+type alias ChangesOptions =
+    -- TODO: Support all the options
+    { live : Bool, include_docs : Bool }
+
+
+port changes : ChangesOptions -> Cmd msg
 
 
 port changeSuccess : (ChangeSuccess -> msg) -> Sub msg
