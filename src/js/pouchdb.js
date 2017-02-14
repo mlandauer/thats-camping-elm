@@ -1,5 +1,9 @@
 var PouchDB = require('pouchdb');
 
+// Setting window.PouchDB so that we can use the Chrome PouchDB inspector
+// https://chrome.google.com/webstore/detail/pouchdb-inspector/hbhhpaojmpfimakffndmpmpndcmonkfa
+window.PouchDB = PouchDB;
+
 var db = new PouchDB('thats-camping');
 
 var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
