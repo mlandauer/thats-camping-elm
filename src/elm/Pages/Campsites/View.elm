@@ -12,7 +12,8 @@ view : Model -> Html Msg
 view model =
     div [ class "campsite-list" ]
         [ navBar "Camping near you" False True
-        , if model.initialChanges || List.isEmpty model.campsites then
+          -- , if model.initialChanges || List.isEmpty model.campsites then
+        , if List.isEmpty model.campsites then
             div [ class "container" ]
                 [ div [ class "centering-box" ]
                     -- TODO: Centre the text properly (now that we have footer)

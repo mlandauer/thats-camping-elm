@@ -186,7 +186,8 @@ update msg model =
 map : Model -> Leaflet.Map
 map model =
     { visible =
-        ((not model.initialChanges) && (model.page == CampsitesPage Map))
+        -- ((not model.initialChanges) && (model.page == CampsitesPage Map))
+        (model.page == CampsitesPage Map)
     , center =
         Maybe.withDefault
             -- Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW
