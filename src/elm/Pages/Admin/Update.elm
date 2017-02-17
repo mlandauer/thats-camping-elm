@@ -74,14 +74,15 @@ update msg model =
         ToggleLaneCoveName ->
             case getLaneCove model.campsites of
                 Just campsite ->
-                    let
-                        data =
-                            App.NewEncoder.campsite (toggleLaneCoveName campsite)
-                    in
-                        ( model, Pouchdb.put (Debug.log "data" data) )
+                    ( model, putCampsite (toggleLaneCoveName campsite) )
 
                 Nothing ->
                     ( model, Cmd.none )
+
+
+putCampsite : Campsite -> Cmd msg
+putCampsite campsite =
+    Pouchdb.put (App.NewEncoder.campsite campsite)
 
 
 getLaneCove : Dict String Campsite -> Maybe Campsite
