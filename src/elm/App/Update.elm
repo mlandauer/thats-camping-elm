@@ -266,9 +266,6 @@ location2messages location =
             [ "campsites", id ] ->
                 [ ChangePage (CampsitePage id) ]
 
-            [ "parks", id ] ->
-                [ ChangePage (ParkPage id) ]
-
             [ "about" ] ->
                 [ ChangePage AboutPage ]
 
@@ -299,9 +296,6 @@ page2url page =
 
         CampsitePage id ->
             "#/campsites/" ++ id
-
-        ParkPage id ->
-            "#/parks/" ++ id
 
         AboutPage ->
             "#/about"

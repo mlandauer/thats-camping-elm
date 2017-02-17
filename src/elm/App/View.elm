@@ -7,7 +7,6 @@ import App.Model exposing (..)
 import Pages.About.View
 import Pages.Campsites.View
 import Pages.Campsite.View
-import Pages.Park.View
 import Pages.Admin.View
 import Dict exposing (Dict)
 import App.ViewHelpers
@@ -46,20 +45,6 @@ view model =
                             , park = (Dict.get campsite.parkId model.parks)
                             , starred = List.member id model.starredCampsites
                             , online = model.online
-                            }
-
-                    Nothing ->
-                        view404
-
-            ParkPage id ->
-                case Dict.get id model.parks of
-                    Just park ->
-                        Pages.Park.View.view
-                            { park = park
-                            , campsites = (campsites park model.campsites)
-                            , parks = model.parks
-                            , location = model.location
-                            , starredCampsites = model.starredCampsites
                             }
 
                     Nothing ->

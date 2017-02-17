@@ -43,10 +43,7 @@ view model =
                     , p []
                         (case model.park of
                             Just park ->
-                                [ text "in "
-                                , App.ViewHelpers.link (ParkPage park.id) [] [ text park.longName ]
-                                , text "."
-                                ]
+                                [ text ("in " ++ park.longName ++ ".") ]
 
                             Nothing ->
                                 []
