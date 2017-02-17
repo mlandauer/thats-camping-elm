@@ -130,12 +130,22 @@ update msg model =
             in
                 case o of
                     Ok (App.NewDecoder.Park park) ->
-                        ( { model
-                            | parks = (Dict.insert park.id park model.parks)
-                            , sequence = sequence
-                          }
-                        , Cmd.none
-                        )
+                        let
+                            newParks =
+                                (Dict.insert park.id park model.parks)
+
+                            admin =
+                                model.adminModel
+                        in
+                            -- Setting model in a child model at the same time.
+                            -- Very hokey but this is temporary
+                            ( { model
+                                | parks = newParks
+                                , adminModel = { admin | parks = newParks }
+                                , sequence = sequence
+                              }
+                            , Cmd.none
+                            )
 
                     Ok (App.NewDecoder.Campsite campsite) ->
                         let

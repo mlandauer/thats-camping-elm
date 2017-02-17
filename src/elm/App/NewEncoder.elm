@@ -181,8 +181,8 @@ revision revision =
             Json.Encode.null
 
 
-campsite : Campsite -> Json.Encode.Value
-campsite campsite =
+campsite : Campsite -> Maybe Park -> Json.Encode.Value
+campsite campsite park =
     Json.Encode.object
         [ ( "_id", Json.Encode.string campsite.id )
         , ( "_rev", revision campsite.revision )
@@ -194,6 +194,18 @@ campsite campsite =
         , ( "facilities", facilitiesEncoder campsite.facilities )
         , ( "access", accessEncoder campsite.access )
         , ( "parkId", Json.Encode.string campsite.parkId )
+        , ( "parkShortName"
+          , Json.Encode.string
+                (Maybe.withDefault ""
+                    (Maybe.map .shortName park)
+                )
+          )
+        , ( "parkLongName"
+          , Json.Encode.string
+                (Maybe.withDefault ""
+                    (Maybe.map .longName park)
+                )
+          )
         ]
 
 

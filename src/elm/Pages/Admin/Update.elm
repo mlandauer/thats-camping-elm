@@ -52,7 +52,13 @@ update msg model =
             ( model
             , Pouchdb.bulkDocs
                 ((List.map App.NewEncoder.park data.parks)
-                    ++ (List.map App.NewEncoder.campsite data.campsites)
+                    ++ (List.map
+                            (\campsite ->
+                                App.NewEncoder.campsite campsite
+                                    (List.head (List.filter (\park -> park.id == campsite.parkId) data.parks))
+                            )
+                            data.campsites
+                       )
                 )
             )
 
@@ -74,15 +80,18 @@ update msg model =
         ToggleLaneCoveName ->
             case getLaneCove model.campsites of
                 Just campsite ->
-                    ( model, putCampsite (toggleLaneCoveName campsite) )
+                    ( model
+                    , putCampsite (toggleLaneCoveName campsite)
+                        (Dict.get campsite.parkId model.parks)
+                    )
 
                 Nothing ->
                     ( model, Cmd.none )
 
 
-putCampsite : Campsite -> Cmd msg
-putCampsite campsite =
-    Pouchdb.put (App.NewEncoder.campsite campsite)
+putCampsite : Campsite -> Maybe Park -> Cmd msg
+putCampsite campsite park =
+    Pouchdb.put (App.NewEncoder.campsite campsite park)
 
 
 getLaneCove : Dict String Campsite -> Maybe Campsite
