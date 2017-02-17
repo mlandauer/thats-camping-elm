@@ -29,6 +29,7 @@ view model =
                             ++ " name of Lane Cover River campsite"
                         )
                     ]
+                , button [ class "btn btn-default", onClick Migrate ] [ text "Migrate database" ]
                 ]
             , p [] [ text "Or you can go ", link (CampsitesPage List) [] [ text "back to the main campsites list" ] ]
             , p [] [ text (Maybe.withDefault "" model.text) ]

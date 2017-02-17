@@ -13,7 +13,6 @@ import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg(..))
 import Libs.SimpleFormat.Format
-import App.Model exposing (Page(..))
 import Location exposing (Location)
 import Campsite
     exposing

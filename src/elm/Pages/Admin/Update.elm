@@ -36,6 +36,7 @@ type Msg
     | DestroySuccess Pouchdb.DestroySuccess
     | DestroyError Pouchdb.DestroyError
     | ToggleLaneCoveName
+    | Migrate
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -87,6 +88,19 @@ update msg model =
 
                 Nothing ->
                     ( model, Cmd.none )
+
+        Migrate ->
+            -- Crudely do a migration by just resaving all the currently loaded campsites
+            ( model
+            , Cmd.batch
+                (List.map
+                    (\campsite ->
+                        putCampsite (toggleLaneCoveName campsite)
+                            (Dict.get campsite.parkId model.parks)
+                    )
+                    (Dict.values model.campsites)
+                )
+            )
 
 
 putCampsite : Campsite -> Maybe Park -> Cmd msg
