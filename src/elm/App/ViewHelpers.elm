@@ -5,6 +5,7 @@ module App.ViewHelpers
         , campsiteListView
         , values
         , star
+        , show
         )
 
 import Html exposing (..)
@@ -22,19 +23,20 @@ navBar title showBack showAbout =
     -- TODO: Turn showBack and showAbout into a record for legibility
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
-            ((if showBack then
-                [ backButton ]
-              else
-                []
-             )
-                ++ (if showAbout then
-                        [ aboutButton ]
-                    else
-                        []
-                   )
-                ++ [ h1 [] [ text title ] ]
+            ([ show backButton showBack
+             , show aboutButton showAbout
+             , h1 [] [ text title ]
+             ]
             )
         ]
+
+
+show : Html Msg -> Bool -> Html Msg
+show html show =
+    if show then
+        html
+    else
+        text ""
 
 
 backButton : Html Msg
