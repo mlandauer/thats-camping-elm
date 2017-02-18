@@ -101,7 +101,7 @@ update msg model =
                     List.head (List.filter (\campsite -> (campsite.shortName /= shortenName (campsite.longName))) (Dict.values model.campsites))
 
                 text =
-                    Maybe.withDefault "All passed" (Maybe.map (\campsite -> campsite.shortName ++ " != shortenName(" ++ campsite.longName ++ ")") broken)
+                    Maybe.withDefault "All passed" (Maybe.map (\campsite -> "\"" ++ campsite.shortName ++ "\" != shortenName(\"" ++ campsite.longName ++ "\")") broken)
             in
                 ( { model | text = Just text }, Cmd.none )
 
