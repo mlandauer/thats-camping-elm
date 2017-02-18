@@ -125,7 +125,7 @@ update msg model =
                     max model.sequence change.seq
 
                 o =
-                    Debug.log "o" (Json.Decode.decodeValue App.NewDecoder.campsite change.doc)
+                    Json.Decode.decodeValue App.NewDecoder.campsite change.doc
             in
                 case o of
                     Ok campsite ->
