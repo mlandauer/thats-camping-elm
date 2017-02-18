@@ -71,7 +71,6 @@ init flags =
       , starredCampsites = Maybe.withDefault [] flags.starredCampsites
       , online = flags.online
       , sequence = 0
-      , initialChanges = True
       }
       -- On startup immediately try to get the location
     , Cmd.batch
@@ -151,7 +150,7 @@ update msg model =
 
         ChangeComplete info ->
             -- Now request the changes continuously
-            ( { model | initialChanges = False }
+            ( model
             , Pouchdb.changes
                 { live = True
                 , include_docs = True
@@ -176,8 +175,7 @@ update msg model =
 
 map : Model -> Leaflet.Map
 map model =
-    { visible =
-        ((not model.initialChanges) && (model.page == CampsitesPage Map))
+    { visible = (model.page == CampsitesPage Map)
     , center =
         Maybe.withDefault
             -- Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW
