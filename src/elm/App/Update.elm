@@ -125,7 +125,7 @@ update msg model =
                     max model.sequence change.seq
 
                 o =
-                    Json.Decode.decodeValue App.NewDecoder.campsite change.doc
+                    Debug.log "o" (Json.Decode.decodeValue App.NewDecoder.campsite change.doc)
             in
                 case o of
                     Ok campsite ->
@@ -147,6 +147,7 @@ update msg model =
                             )
 
                     Err _ ->
+                        -- TODO: Show these errors to the user rather than silently ignore
                         ( model, Cmd.none )
 
         ChangeComplete info ->
