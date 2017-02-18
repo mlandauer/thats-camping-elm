@@ -25,7 +25,7 @@ view model =
                     [ errorsView model.errors
                     , case model.displayType of
                         List ->
-                            App.ViewHelpers.campsiteListView model.location model.campsites model.parks True model.starredCampsites
+                            App.ViewHelpers.campsiteListView model.location model.campsites True model.starredCampsites
 
                         Map ->
                             {- Don't show anything because we actually have a

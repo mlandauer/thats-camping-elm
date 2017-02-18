@@ -9,7 +9,6 @@ import App.Model exposing (CampsitesPageOption)
 
 type alias Model =
     { campsites : List Campsite
-    , parks : Dict String Park
     , location : Maybe Location
     , errors : List String
     , starredCampsites : List String

@@ -57,13 +57,14 @@ link page attributes html =
     a ((href (page2url page)) :: attributes) html
 
 
-campsiteListView : Maybe Location -> List Campsite -> Dict String Park -> Bool -> List String -> Html Msg
-campsiteListView location campsites parks showPark starredCampsites =
+campsiteListView : Maybe Location -> List Campsite -> Bool -> List String -> Html Msg
+campsiteListView location campsites showPark starredCampsites =
     -- TODO: Make it not necessary to pass in all the parks here
+    -- TODO: showPark isn't necessary anymore
     div [ class "list-group" ]
         (List.map
             (\c ->
-                campsiteListItem location parks showPark c.campsite c.starred
+                campsiteListItem location showPark c.campsite c.starred
             )
             (sortCampsitesWithStarred location (transform campsites starredCampsites))
         )
@@ -142,12 +143,11 @@ compareDistance d1 d2 =
 
 campsiteListItem :
     Maybe Location
-    -> Dict String Park
     -> Bool
     -> Campsite
     -> Bool
     -> Html Msg
-campsiteListItem location parks showPark campsite starred =
+campsiteListItem location showPark campsite starred =
     link (CampsitePage campsite.id)
         [ class "list-group-item" ]
         [ div [ class "campsite" ]
@@ -156,11 +156,7 @@ campsiteListItem location parks showPark campsite starred =
              , div [ class "name" ] [ text campsite.shortName ]
              ]
                 ++ (if showPark then
-                        [ div [ class "park" ]
-                            [ text
-                                (Maybe.withDefault "" (Maybe.map .shortName (park campsite parks)))
-                            ]
-                        ]
+                        [ div [ class "park" ] [ text campsite.park.shortName ] ]
                     else
                         []
                    )
