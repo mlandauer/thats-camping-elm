@@ -12,10 +12,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import App.Model exposing (..)
 import App.Update exposing (..)
-import Location
-import Dict exposing (Dict)
 import Location exposing (Location)
-import Park exposing (Park)
 import Campsite exposing (Campsite)
 
 
@@ -162,11 +159,6 @@ campsiteListItem location showPark campsite starred =
                    )
             )
         ]
-
-
-park : Campsite -> Dict String Park -> Maybe Park
-park campsite parks =
-    Dict.get campsite.parkId parks
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String

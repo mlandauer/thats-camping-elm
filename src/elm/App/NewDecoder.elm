@@ -28,7 +28,6 @@ campsite =
         |> required "location" (nullable location)
         |> required "facilities" facilities
         |> required "access" access
-        |> required "parkId" string
         |> required "park" parkInCampsite
         |> required "_rev" (nullable string)
 

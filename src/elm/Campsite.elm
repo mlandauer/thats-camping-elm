@@ -25,7 +25,6 @@ type alias Campsite =
     , location : Maybe Location
     , facilities : Facilities
     , access : Access
-    , parkId : String
     , park : ParkInCampsite
     , revision : Maybe String
     }

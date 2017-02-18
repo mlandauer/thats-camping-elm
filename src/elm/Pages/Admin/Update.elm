@@ -99,7 +99,6 @@ transform campsites parks =
             , location = campsite.location
             , facilities = campsite.facilities
             , access = campsite.access
-            , parkId = campsite.parkId
             , park =
                 { shortName =
                     Maybe.withDefault ""

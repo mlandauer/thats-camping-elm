@@ -3,7 +3,6 @@ module App.Model exposing (Page(..), Model, CampsitesPageOption(..))
 import Dict exposing (Dict)
 import Pages.Admin.Model
 import Campsite exposing (Campsite)
-import Park exposing (Park)
 import Location exposing (Location)
 
 

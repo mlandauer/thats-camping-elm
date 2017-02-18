@@ -191,7 +191,6 @@ campsite campsite =
         , ( "location", locationEncoder campsite.location )
         , ( "facilities", facilitiesEncoder campsite.facilities )
         , ( "access", accessEncoder campsite.access )
-        , ( "parkId", Json.Encode.string campsite.parkId )
         , ( "park"
           , Json.Encode.object
                 [ ( "shortName", Json.Encode.string campsite.park.shortName )
