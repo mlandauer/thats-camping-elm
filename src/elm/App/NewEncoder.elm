@@ -194,17 +194,21 @@ campsite campsite park =
         , ( "facilities", facilitiesEncoder campsite.facilities )
         , ( "access", accessEncoder campsite.access )
         , ( "parkId", Json.Encode.string campsite.parkId )
-        , ( "parkShortName"
-          , Json.Encode.string
-                (Maybe.withDefault ""
-                    (Maybe.map .shortName park)
-                )
-          )
-        , ( "parkLongName"
-          , Json.Encode.string
-                (Maybe.withDefault ""
-                    (Maybe.map .longName park)
-                )
+        , ( "park"
+          , Json.Encode.object
+                [ ( "shortName"
+                  , Json.Encode.string
+                        (Maybe.withDefault ""
+                            (Maybe.map .shortName park)
+                        )
+                  )
+                , ( "longName"
+                  , Json.Encode.string
+                        (Maybe.withDefault ""
+                            (Maybe.map .longName park)
+                        )
+                  )
+                ]
           )
         ]
 
