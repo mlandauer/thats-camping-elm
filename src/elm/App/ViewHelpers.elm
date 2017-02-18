@@ -60,9 +60,7 @@ campsiteListView location campsites starredCampsites =
     Html.Keyed.node "div"
         [ class "list-group" ]
         (List.map
-            (\c ->
-                ( c.campsite.id, campsiteListItem location c.campsite c.starred )
-            )
+            (\c -> ( c.campsite.id, campsiteListItem location c ))
             (sortCampsitesWithStarred location (transform campsites starredCampsites))
         )
 
@@ -138,19 +136,15 @@ compareDistance d1 d2 =
                     EQ
 
 
-campsiteListItem :
-    Maybe Location
-    -> Campsite
-    -> Bool
-    -> Html Msg
-campsiteListItem location campsite starred =
-    link (CampsitePage campsite.id)
+campsiteListItem : Maybe Location -> CampsiteWithStarred -> Html Msg
+campsiteListItem location c =
+    link (CampsitePage c.campsite.id)
         [ class "list-group-item" ]
         [ div [ class "campsite" ]
-            ([ star starred Nothing
-             , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location campsite.location) ]
-             , div [ class "name" ] [ text campsite.shortName ]
-             , div [ class "park" ] [ text campsite.park.shortName ]
+            ([ star c.starred Nothing
+             , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location c.campsite.location) ]
+             , div [ class "name" ] [ text c.campsite.shortName ]
+             , div [ class "park" ] [ text c.campsite.park.shortName ]
              ]
             )
         ]
