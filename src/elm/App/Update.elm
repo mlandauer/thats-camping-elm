@@ -63,7 +63,6 @@ type alias Flags =
 init : Flags -> ( Model, Cmd Msg )
 init flags =
     ( { campsites = Dict.empty
-      , parks = Dict.empty
       , location = flags.location
       , errors = []
       , page = CampsitesPage List
@@ -130,10 +129,7 @@ update msg model =
             in
                 case o of
                     Ok (App.NewDecoder.Park park) ->
-                        ( { model
-                            | parks = (Dict.insert park.id park model.parks)
-                            , sequence = sequence
-                          }
+                        ( { model | sequence = sequence }
                         , Cmd.none
                         )
 
@@ -200,24 +196,17 @@ allMarkers : Model -> List Leaflet.Marker
 allMarkers model =
     List.filterMap
         identity
-        (List.map
-            (\campsite ->
-                markerForCampsite
-                    campsite
-                    (Dict.get campsite.parkId model.parks)
-            )
-            (Dict.values model.campsites)
-        )
+        (List.map markerForCampsite (Dict.values model.campsites))
 
 
-markerForCampsite : Campsite -> Maybe Park -> Maybe Leaflet.Marker
-markerForCampsite campsite park =
+markerForCampsite : Campsite -> Maybe Leaflet.Marker
+markerForCampsite campsite =
     Maybe.map
         (\location ->
             Leaflet.Marker campsite.id
                 location
                 -- Wish this could come from a view
-                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div><div class=\"park\">" ++ (Maybe.withDefault "" (Maybe.map .shortName park)) ++ "</div></div></a>")
+                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div><div class=\"park\">" ++ campsite.park.shortName ++ "</div></div></a>")
         )
         campsite.location
 

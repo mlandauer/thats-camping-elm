@@ -23,7 +23,6 @@ type Page
 
 type alias Model =
     { campsites : Dict String Campsite
-    , parks : Dict String Park
     , location : Maybe Location
     , errors : List String
     , starredCampsites : List String
