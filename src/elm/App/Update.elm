@@ -125,15 +125,10 @@ update msg model =
                     max model.sequence change.seq
 
                 o =
-                    Json.Decode.decodeValue App.NewDecoder.parkOrCampsite change.doc
+                    Json.Decode.decodeValue App.NewDecoder.campsite change.doc
             in
                 case o of
-                    Ok (App.NewDecoder.Park park) ->
-                        ( { model | sequence = sequence }
-                        , Cmd.none
-                        )
-
-                    Ok (App.NewDecoder.Campsite campsite) ->
+                    Ok campsite ->
                         let
                             newCampsites =
                                 Dict.insert campsite.id campsite model.campsites

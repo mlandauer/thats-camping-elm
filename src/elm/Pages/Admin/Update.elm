@@ -55,10 +55,7 @@ update msg model =
             in
                 -- Now we load the new data into the local database
                 ( model
-                , Pouchdb.bulkDocs
-                    ((List.map App.NewEncoder.park parks)
-                        ++ (List.map App.NewEncoder.campsite campsites)
-                    )
+                , Pouchdb.bulkDocs (List.map App.NewEncoder.campsite campsites)
                 )
 
         Destroy ->

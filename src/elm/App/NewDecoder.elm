@@ -1,4 +1,4 @@
-module App.NewDecoder exposing (park, campsite, parkOrCampsite, ParkOrCampsite(..))
+module App.NewDecoder exposing (campsite)
 
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (decode, required)
@@ -12,45 +12,7 @@ import Campsite
         , PicnicTables(..)
         , Toilets(..)
         )
-import Park
 import Location exposing (Location)
-
-
-type ParkOrCampsite
-    = Park Park.Park
-    | Campsite Campsite.Campsite
-
-
-parkOrCampsite : Decoder ParkOrCampsite
-parkOrCampsite =
-    -- Based on the value of "type" interpret as a campsite or park
-    field "type" string
-        |> andThen parkOrCampsiteHelp
-
-
-parkOrCampsiteHelp : String -> Decoder ParkOrCampsite
-parkOrCampsiteHelp t =
-    case t of
-        "campsite" ->
-            map Campsite campsite
-
-        "park" ->
-            map Park park
-
-        _ ->
-            fail "Unsupported type"
-
-
-park : Decoder Park.Park
-park =
-    decode Park.Park
-        |> required "_id" string
-        |> required "shortName" string
-        |> required "longName" string
-        |> required "description" string
-        |> required "campsiteIds" (list string)
-        |> required "_rev" (nullable string)
-
 
 
 -- TODO: Use Json.Decode.Pipeline everywhere for consistency and simplicity

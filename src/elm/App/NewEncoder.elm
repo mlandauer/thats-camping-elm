@@ -1,4 +1,4 @@
-module App.NewEncoder exposing (campsite, park)
+module App.NewEncoder exposing (campsite)
 
 import Json.Encode
 import Location exposing (Location)
@@ -16,7 +16,6 @@ import Campsite
         , Trailers(..)
         , Caravans(..)
         )
-import Park exposing (Park)
 
 
 locationEncoder : Maybe Location -> Json.Encode.Value
@@ -199,21 +198,5 @@ campsite campsite =
                 [ ( "shortName", Json.Encode.string campsite.park.shortName )
                 , ( "longName", Json.Encode.string campsite.park.longName )
                 ]
-          )
-        ]
-
-
-park : Park -> Json.Encode.Value
-park park =
-    Json.Encode.object
-        [ ( "_id", Json.Encode.string park.id )
-        , ( "_rev", revision park.revision )
-        , ( "type", Json.Encode.string "park" )
-        , ( "shortName", Json.Encode.string park.shortName )
-        , ( "longName", Json.Encode.string park.longName )
-        , ( "description", Json.Encode.string park.description )
-        , ( "campsiteIds"
-          , Json.Encode.list
-                (List.map Json.Encode.string park.campsiteIds)
           )
         ]
