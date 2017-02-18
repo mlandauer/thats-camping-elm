@@ -54,10 +54,6 @@ npm run build
 s3_website push
 ```
 
-Currently only https://www.thatscamping.org works, not the root domain, because
-we need to use the AWS DNS service to point an A record at Cloudfront. See
-[GitHub issue #58](https://github.com/mlandauer/thats-camping-elm/issues/58).
-
 ## Copyright & License
 
 Copyright Matthew Landauer. Licensed under the GPL v3. See LICENSE.md for more details.
