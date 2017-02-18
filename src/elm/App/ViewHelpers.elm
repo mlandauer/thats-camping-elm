@@ -154,12 +154,7 @@ campsiteListItem location c =
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
 bearingAndDistanceAsText from to =
-    case (Maybe.map2 Location.bearingAndDistanceText from to) of
-        Just text ->
-            text
-
-        Nothing ->
-            ""
+    Maybe.withDefault "" (Maybe.map2 Location.bearingAndDistanceText from to)
 
 
 values : List (Maybe a) -> List a
