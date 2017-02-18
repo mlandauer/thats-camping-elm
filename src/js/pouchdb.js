@@ -40,7 +40,13 @@ export function initialise(app) {
     db.changes(options).on('change', function(change) {
       app.ports.changeSuccess.send(change);
     }).on('complete', function(info) {
-      app.ports.changeComplete.send(info);
+      if ("status" in info) {
+        app.ports.changeComplete.send(
+          {results: null, last_seq: null, status: info.status});
+      } else {
+        app.ports.changeComplete.send(
+          {results: info.results, last_seq: info.last_seq, status: null});
+      }
     }).on('error', function (err) {
       // TODO: Send this to a port
       console.log("error", err);
