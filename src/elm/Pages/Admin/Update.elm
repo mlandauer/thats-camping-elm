@@ -30,7 +30,7 @@ import Dict exposing (Dict)
 
 type Msg
     = LoadData
-    | NewData (Result Http.Error { parks : List Park, campsites : List Campsite })
+    | NewData (Result Http.Error { parks : List App.Decoder.Park, campsites : List App.Decoder.Campsite })
     | Put (Result Pouchdb.PutError Pouchdb.PutSuccess)
     | Destroy
     | DestroySuccess Pouchdb.DestroySuccess
@@ -49,19 +49,23 @@ update msg model =
             ( { model | text = Just (formatHttpError error) }, Cmd.none )
 
         NewData (Ok data) ->
-            -- Now we load the new data into the local database
-            ( model
-            , Pouchdb.bulkDocs
-                ((List.map App.NewEncoder.park data.parks)
-                    ++ (List.map
-                            (\campsite ->
-                                App.NewEncoder.campsite campsite
-                                    (List.head (List.filter (\park -> park.id == campsite.parkId) data.parks))
-                            )
-                            data.campsites
-                       )
+            let
+                ( campsites, parks ) =
+                    transform data.campsites data.parks
+            in
+                -- Now we load the new data into the local database
+                ( model
+                , Pouchdb.bulkDocs
+                    ((List.map App.NewEncoder.park parks)
+                        ++ (List.map
+                                (\campsite ->
+                                    App.NewEncoder.campsite campsite
+                                        (List.head (List.filter (\park -> park.id == campsite.parkId) parks))
+                                )
+                                campsites
+                           )
+                    )
                 )
-            )
 
         Destroy ->
             ( model, Pouchdb.destroy () )
@@ -101,6 +105,36 @@ update msg model =
                     (Dict.values model.campsites)
                 )
             )
+
+
+transform : List App.Decoder.Campsite -> List App.Decoder.Park -> ( List Campsite, List Park )
+transform campsites parks =
+    ( List.map
+        (\campsite ->
+            { id = campsite.id
+            , shortName = campsite.shortName
+            , longName = campsite.longName
+            , description = campsite.description
+            , location = campsite.location
+            , facilities = campsite.facilities
+            , access = campsite.access
+            , parkId = campsite.parkId
+            , revision = Nothing
+            }
+        )
+        campsites
+    , List.map
+        (\park ->
+            { id = park.id
+            , shortName = park.shortName
+            , longName = park.longName
+            , description = park.description
+            , campsiteIds = park.campsiteIds
+            , revision = Nothing
+            }
+        )
+        parks
+    )
 
 
 putCampsite : Campsite -> Maybe Park -> Cmd msg

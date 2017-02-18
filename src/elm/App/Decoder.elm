@@ -8,16 +8,16 @@ module App.Decoder
         , drinkingWater
         , facilities
         , parksAndCampsites
+        , Campsite
+        , Park
         )
 
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (decode, required, custom, hardcoded)
-import Park exposing (Park)
 import Location exposing (Location)
 import Campsite
     exposing
-        ( Campsite
-        , Facilities
+        ( Facilities
         , Access
         , Toilets(..)
         , PicnicTables(..)
@@ -28,6 +28,31 @@ import Campsite
         , Trailers(..)
         , Cars(..)
         )
+
+
+type alias Campsite =
+    { id : String
+    , shortName : String
+    , longName : String
+    , description : String
+    , location : Maybe Location
+    , facilities : Facilities
+    , access : Access
+    , parkId :
+        String
+        -- , revision : Maybe String
+    }
+
+
+type alias Park =
+    { id : String
+    , shortName : String
+    , longName : String
+    , description : String
+    , campsiteIds :
+        List String
+        -- , revision : Maybe String
+    }
 
 
 location : Decoder (Maybe Location)
@@ -180,7 +205,6 @@ campsite =
         |> custom facilities
         |> custom access
         |> required "park" (map (\id -> "p" ++ toString id) int)
-        |> hardcoded Nothing
 
 
 park : Decoder Park
@@ -191,7 +215,6 @@ park =
         |> required "longName" string
         |> required "description" string
         |> required "campsites" (list (map (\id -> "c" ++ toString id) int))
-        |> hardcoded Nothing
 
 
 type alias ParksAndCampsites =

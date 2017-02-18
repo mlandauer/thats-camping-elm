@@ -135,7 +135,7 @@ all =
                         expected =
                             Ok
                                 ({ campsites =
-                                    [ Campsite
+                                    [ App.Decoder.Campsite
                                         "c4"
                                         "Campsite"
                                         "Long Campsite"
@@ -154,16 +154,14 @@ all =
                                             (Just Cars)
                                         )
                                         "p12"
-                                        Nothing
                                     ]
                                  , parks =
-                                    [ Park
+                                    [ App.Decoder.Park
                                         "p15"
                                         "A park"
                                         "A long park"
                                         "It's a nice park"
                                         [ "c4" ]
-                                        Nothing
                                     ]
                                  }
                                 )
