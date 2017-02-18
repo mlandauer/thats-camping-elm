@@ -10,6 +10,7 @@ module App.ViewHelpers
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
+import Html.Keyed
 import App.Model exposing (..)
 import App.Update exposing (..)
 import Location exposing (Location)
@@ -56,10 +57,11 @@ link page attributes html =
 
 campsiteListView : Maybe Location -> List Campsite -> List String -> Html Msg
 campsiteListView location campsites starredCampsites =
-    div [ class "list-group" ]
+    Html.Keyed.node "div"
+        [ class "list-group" ]
         (List.map
             (\c ->
-                campsiteListItem location c.campsite c.starred
+                ( c.campsite.id, campsiteListItem location c.campsite c.starred )
             )
             (sortCampsitesWithStarred location (transform campsites starredCampsites))
         )
