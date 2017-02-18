@@ -95,7 +95,7 @@ update msg model =
             , Cmd.batch
                 (List.map
                     (\campsite ->
-                        putCampsite (toggleLaneCoveName campsite)
+                        putCampsite campsite
                             (Dict.get campsite.parkId model.parks)
                     )
                     (Dict.values model.campsites)
