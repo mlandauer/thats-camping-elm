@@ -18,7 +18,6 @@ import Campsite
         , Trailers(..)
         , Cars(..)
         )
-import Park exposing (Park)
 import Location exposing (Location)
 
 

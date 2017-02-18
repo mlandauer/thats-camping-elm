@@ -21,7 +21,6 @@ import Campsite
         , Trailers(..)
         , Cars(..)
         )
-import Park exposing (Park)
 import Http
 import App.Decoder
 import App.NewEncoder
@@ -50,7 +49,7 @@ update msg model =
 
         NewData (Ok data) ->
             let
-                ( campsites, parks ) =
+                campsites =
                     transform data.campsites data.parks
             in
                 -- Now we load the new data into the local database
@@ -88,9 +87,9 @@ update msg model =
             )
 
 
-transform : List App.Decoder.Campsite -> List App.Decoder.Park -> ( List Campsite, List Park )
+transform : List App.Decoder.Campsite -> List App.Decoder.Park -> List Campsite
 transform campsites parks =
-    ( List.map
+    List.map
         (\campsite ->
             { id = campsite.id
             , shortName = campsite.shortName
@@ -111,18 +110,6 @@ transform campsites parks =
             }
         )
         campsites
-    , List.map
-        (\park ->
-            { id = park.id
-            , shortName = park.shortName
-            , longName = park.longName
-            , description = park.description
-            , campsiteIds = park.campsiteIds
-            , revision = Nothing
-            }
-        )
-        parks
-    )
 
 
 parkWithId : String -> List App.Decoder.Park -> Maybe App.Decoder.Park

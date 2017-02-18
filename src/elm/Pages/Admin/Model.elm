@@ -2,7 +2,6 @@ module Pages.Admin.Model exposing (Model, initModel)
 
 import Dict exposing (Dict)
 import Campsite exposing (Campsite)
-import Park exposing (Park)
 
 
 type alias Model =

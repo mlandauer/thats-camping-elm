@@ -9,9 +9,6 @@ import Pages.Campsites.View
 import Pages.Campsite.View
 import Pages.Admin.View
 import Dict exposing (Dict)
-import App.ViewHelpers
-import Campsite exposing (Campsite)
-import Park exposing (Park)
 
 
 view : Model -> Html Msg
@@ -57,11 +54,6 @@ view model =
             UnknownPage ->
                 view404
         ]
-
-
-campsites : Park -> Dict String Campsite -> List Campsite
-campsites park campsites =
-    App.ViewHelpers.values (List.map (\campsiteId -> Dict.get campsiteId campsites) park.campsiteIds)
 
 
 view404 : Html Msg

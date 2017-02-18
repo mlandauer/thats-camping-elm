@@ -23,7 +23,6 @@ import Pouchdb
 import App.NewDecoder
 import Json.Decode
 import Campsite exposing (Campsite)
-import Park exposing (Park)
 import Location exposing (Location)
 import Leaflet
 
@@ -220,13 +219,9 @@ formatGeolocationError error =
             "Timeout: " ++ text
 
 
-transformParks : List Park -> Dict String Park
-transformParks parks =
-    Dict.fromList (List.map (\park -> ( park.id, park )) parks)
-
-
 transformCampsites : List Campsite -> Dict String Campsite
 transformCampsites campsites =
+    -- TODO: Would be nicer if this logic was part of the decoder
     Dict.fromList (List.map (\campsite -> ( campsite.id, campsite )) campsites)
 
 
