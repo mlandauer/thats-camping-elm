@@ -56,7 +56,6 @@ link page attributes html =
 
 campsiteListView : Maybe Location -> List Campsite -> List String -> Html Msg
 campsiteListView location campsites starredCampsites =
-    -- TODO: Make it not necessary to pass in all the parks here
     div [ class "list-group" ]
         (List.map
             (\c ->
