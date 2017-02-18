@@ -40,13 +40,7 @@ view model =
                     , h2 []
                         [ text model.campsite.longName ]
                     , p []
-                        (case model.park of
-                            Just park ->
-                                [ text ("in " ++ park.longName ++ ".") ]
-
-                            Nothing ->
-                                []
-                        )
+                        [ text ("in " ++ model.campsite.park.longName ++ ".") ]
                     , Libs.SimpleFormat.Format.format model.campsite.description
                     , h2 [] [ text "Facilities" ]
                     , p [] [ text (facilitiesText model.campsite.facilities) ]

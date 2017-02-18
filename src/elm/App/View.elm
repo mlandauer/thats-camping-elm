@@ -41,7 +41,6 @@ view model =
                     Just campsite ->
                         Pages.Campsite.View.view
                             { campsite = campsite
-                            , park = (Dict.get campsite.parkId model.parks)
                             , starred = List.member id model.starredCampsites
                             , online = model.online
                             }
