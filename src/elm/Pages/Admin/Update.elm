@@ -119,6 +119,14 @@ transform campsites parks =
             , facilities = campsite.facilities
             , access = campsite.access
             , parkId = campsite.parkId
+            , park =
+                { shortName =
+                    Maybe.withDefault ""
+                        (Maybe.map .shortName (parkWithId campsite.parkId parks))
+                , longName =
+                    Maybe.withDefault ""
+                        (Maybe.map .longName (parkWithId campsite.parkId parks))
+                }
             , revision = Nothing
             }
         )
@@ -135,6 +143,11 @@ transform campsites parks =
         )
         parks
     )
+
+
+parkWithId : String -> List App.Decoder.Park -> Maybe App.Decoder.Park
+parkWithId id parks =
+    List.head (List.filter (\park -> park.id == id) parks)
 
 
 putCampsite : Campsite -> Maybe Park -> Cmd msg

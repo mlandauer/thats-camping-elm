@@ -67,7 +67,15 @@ campsite =
         |> required "facilities" facilities
         |> required "access" access
         |> required "parkId" string
+        |> required "park" parkInCampsite
         |> required "_rev" (nullable string)
+
+
+parkInCampsite : Decoder Campsite.ParkInCampsite
+parkInCampsite =
+    decode Campsite.ParkInCampsite
+        |> required "shortName" string
+        |> required "longName" string
 
 
 location : Decoder Location
