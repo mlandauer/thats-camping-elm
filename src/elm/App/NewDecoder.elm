@@ -28,13 +28,13 @@ campsite =
         |> required "location" (nullable location)
         |> required "facilities" facilities
         |> required "access" access
-        |> required "park" parkInCampsite
+        |> required "park" park
         |> required "_rev" (nullable string)
 
 
-parkInCampsite : Decoder Campsite.ParkInCampsite
-parkInCampsite =
-    decode Campsite.ParkInCampsite
+park : Decoder Campsite.Park
+park =
+    decode Campsite.Park
         |> required "shortName" string
         |> required "longName" string
 

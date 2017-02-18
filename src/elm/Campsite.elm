@@ -1,7 +1,7 @@
 module Campsite
     exposing
         ( Campsite
-        , ParkInCampsite
+        , Park
         , Facilities
         , Access
         , Toilets(..)
@@ -25,12 +25,12 @@ type alias Campsite =
     , location : Maybe Location
     , facilities : Facilities
     , access : Access
-    , park : ParkInCampsite
+    , park : Park
     , revision : Maybe String
     }
 
 
-type alias ParkInCampsite =
+type alias Park =
     { shortName : String, longName : String }
 
 
