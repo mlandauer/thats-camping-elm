@@ -57,13 +57,7 @@ update msg model =
                 ( model
                 , Pouchdb.bulkDocs
                     ((List.map App.NewEncoder.park parks)
-                        ++ (List.map
-                                (\campsite ->
-                                    App.NewEncoder.campsite campsite
-                                        (List.head (List.filter (\park -> park.id == campsite.parkId) parks))
-                                )
-                                campsites
-                           )
+                        ++ (List.map App.NewEncoder.campsite campsites)
                     )
                 )
 
@@ -85,10 +79,7 @@ update msg model =
         ToggleLaneCoveName ->
             case getLaneCove model.campsites of
                 Just campsite ->
-                    ( model
-                    , putCampsite (toggleLaneCoveName campsite)
-                        (Dict.get campsite.parkId model.parks)
-                    )
+                    ( model, putCampsite (toggleLaneCoveName campsite) )
 
                 Nothing ->
                     ( model, Cmd.none )
@@ -96,14 +87,7 @@ update msg model =
         Migrate ->
             -- Crudely do a migration by just resaving all the currently loaded campsites
             ( model
-            , Cmd.batch
-                (List.map
-                    (\campsite ->
-                        putCampsite campsite
-                            (Dict.get campsite.parkId model.parks)
-                    )
-                    (Dict.values model.campsites)
-                )
+            , Cmd.batch (List.map putCampsite (Dict.values model.campsites))
             )
 
 
@@ -150,9 +134,9 @@ parkWithId id parks =
     List.head (List.filter (\park -> park.id == id) parks)
 
 
-putCampsite : Campsite -> Maybe Park -> Cmd msg
-putCampsite campsite park =
-    Pouchdb.put (App.NewEncoder.campsite campsite park)
+putCampsite : Campsite -> Cmd msg
+putCampsite campsite =
+    Pouchdb.put (App.NewEncoder.campsite campsite)
 
 
 getLaneCove : Dict String Campsite -> Maybe Campsite

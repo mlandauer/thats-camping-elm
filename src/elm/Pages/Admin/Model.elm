@@ -8,10 +8,9 @@ import Park exposing (Park)
 type alias Model =
     { text : Maybe String
     , campsites : Dict String Campsite
-    , parks : Dict String Park
     }
 
 
 initModel : Model
 initModel =
-    { text = Nothing, campsites = Dict.empty, parks = Dict.empty }
+    { text = Nothing, campsites = Dict.empty }
