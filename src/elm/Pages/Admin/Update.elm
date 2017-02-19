@@ -130,14 +130,14 @@ getLaneCove campsites =
 toggleLaneCoveName : Campsite -> Campsite
 toggleLaneCoveName campsite =
     if laneCoveNameChanged campsite then
-        { campsite | shortName = "Lane Cove River" }
+        { campsite | longName = "Lane Cove River tourist park" }
     else
-        { campsite | shortName = "Lane Cove River - I've been updated!" }
+        { campsite | longName = "Lane Cove River - I've been updated!" }
 
 
 laneCoveNameChanged : Campsite -> Bool
 laneCoveNameChanged campsite =
-    campsite.shortName /= "Lane Cove River"
+    campsite.longName /= "Lane Cove River tourist park"
 
 
 syncData : Cmd Msg
