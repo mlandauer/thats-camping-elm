@@ -193,8 +193,8 @@ campsite campsite =
         , ( "access", accessEncoder campsite.access )
         , ( "park"
           , Json.Encode.object
-                [ ( "shortName", Json.Encode.string (Campsite.shortenName campsite.park.longName) )
-                , ( "longName", Json.Encode.string campsite.park.longName )
+                [ ( "shortName", Json.Encode.string (Campsite.shortenName campsite.parkName) )
+                , ( "longName", Json.Encode.string campsite.parkName )
                 ]
           )
         ]

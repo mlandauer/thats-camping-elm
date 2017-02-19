@@ -97,11 +97,9 @@ transform campsites parks =
             , location = campsite.location
             , facilities = campsite.facilities
             , access = campsite.access
-            , park =
-                { longName =
-                    Maybe.withDefault ""
-                        (Maybe.map .longName (parkWithId campsite.parkId parks))
-                }
+            , parkName =
+                Maybe.withDefault ""
+                    (Maybe.map .longName (parkWithId campsite.parkId parks))
             , revision = Nothing
             }
         )

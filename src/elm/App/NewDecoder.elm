@@ -1,7 +1,7 @@
 module App.NewDecoder exposing (campsite)
 
 import Json.Decode exposing (..)
-import Json.Decode.Pipeline exposing (decode, required)
+import Json.Decode.Pipeline exposing (decode, required, requiredAt)
 import Campsite
     exposing
         ( Facilities
@@ -27,14 +27,8 @@ campsite =
         |> required "location" (nullable location)
         |> required "facilities" facilities
         |> required "access" access
-        |> required "park" park
+        |> requiredAt [ "park", "longName" ] string
         |> required "_rev" (nullable string)
-
-
-park : Decoder Campsite.Park
-park =
-    decode Campsite.Park
-        |> required "longName" string
 
 
 location : Decoder Location

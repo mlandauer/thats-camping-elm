@@ -146,7 +146,7 @@ campsiteListItem location c =
             ([ star c.starred Nothing
              , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location c.campsite.location) ]
              , div [ class "name" ] [ text (Campsite.shortenName c.campsite.name) ]
-             , div [ class "park" ] [ text (Campsite.shortenName c.campsite.park.longName) ]
+             , div [ class "park" ] [ text (Campsite.shortenName c.campsite.parkName) ]
              ]
             )
         ]

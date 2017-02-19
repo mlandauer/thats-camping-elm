@@ -39,7 +39,7 @@ view model =
                     [ App.ViewHelpers.star model.starred (Just (ToggleStarCampsite model.campsite.id))
                     , h2 [] [ text model.campsite.name ]
                     , p []
-                        [ text ("in " ++ model.campsite.park.longName ++ ".") ]
+                        [ text ("in " ++ model.campsite.parkName ++ ".") ]
                     , Libs.SimpleFormat.Format.format model.campsite.description
                     , h2 [] [ text "Facilities" ]
                     , p [] [ text (facilitiesText model.campsite.facilities) ]
