@@ -21,7 +21,6 @@ import Regex
 
 type alias Campsite =
     { id : String
-    , shortName : String
     , longName : String
     , description : String
     , location : Maybe Location
@@ -33,7 +32,7 @@ type alias Campsite =
 
 
 type alias Park =
-    { shortName : String, longName : String }
+    { longName : String }
 
 
 type alias Facilities =

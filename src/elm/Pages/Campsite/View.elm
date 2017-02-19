@@ -32,7 +32,7 @@ import Campsite
 view : Model -> Html Msg
 view model =
     div [ class "campsite-detail-page" ]
-        [ App.ViewHelpers.navBar model.campsite.shortName True False
+        [ App.ViewHelpers.navBar (Campsite.shortenName model.campsite.longName) True False
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]

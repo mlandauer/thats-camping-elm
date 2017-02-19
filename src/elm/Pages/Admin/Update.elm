@@ -92,17 +92,13 @@ transform campsites parks =
     List.map
         (\campsite ->
             { id = campsite.id
-            , shortName = campsite.shortName
             , longName = campsite.longName
             , description = campsite.description
             , location = campsite.location
             , facilities = campsite.facilities
             , access = campsite.access
             , park =
-                { shortName =
-                    Maybe.withDefault ""
-                        (Maybe.map .shortName (parkWithId campsite.parkId parks))
-                , longName =
+                { longName =
                     Maybe.withDefault ""
                         (Maybe.map .longName (parkWithId campsite.parkId parks))
                 }

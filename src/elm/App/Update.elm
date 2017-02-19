@@ -199,7 +199,7 @@ markerForCampsite campsite =
             Leaflet.Marker campsite.id
                 location
                 -- Wish this could come from a view
-                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ campsite.shortName ++ "</div><div class=\"park\">" ++ campsite.park.shortName ++ "</div></div></a>")
+                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ (Campsite.shortenName campsite.longName) ++ "</div><div class=\"park\">" ++ (Campsite.shortenName campsite.park.longName) ++ "</div></div></a>")
         )
         campsite.location
 

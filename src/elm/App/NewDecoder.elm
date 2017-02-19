@@ -22,7 +22,6 @@ campsite : Decoder Campsite.Campsite
 campsite =
     decode Campsite.Campsite
         |> required "_id" string
-        |> required "shortName" string
         |> required "longName" string
         |> required "description" string
         |> required "location" (nullable location)
@@ -35,7 +34,6 @@ campsite =
 park : Decoder Campsite.Park
 park =
     decode Campsite.Park
-        |> required "shortName" string
         |> required "longName" string
 
 

@@ -185,7 +185,7 @@ campsite campsite =
     Json.Encode.object
         [ ( "_id", Json.Encode.string campsite.id )
         , ( "_rev", revision campsite.revision )
-        , ( "shortName", Json.Encode.string campsite.shortName )
+        , ( "shortName", Json.Encode.string (Campsite.shortenName campsite.longName) )
         , ( "longName", Json.Encode.string campsite.longName )
         , ( "description", Json.Encode.string campsite.description )
         , ( "location", locationEncoder campsite.location )
@@ -193,7 +193,7 @@ campsite campsite =
         , ( "access", accessEncoder campsite.access )
         , ( "park"
           , Json.Encode.object
-                [ ( "shortName", Json.Encode.string campsite.park.shortName )
+                [ ( "shortName", Json.Encode.string (Campsite.shortenName campsite.park.longName) )
                 , ( "longName", Json.Encode.string campsite.park.longName )
                 ]
           )
