@@ -22,12 +22,12 @@ campsite : Decoder Campsite.Campsite
 campsite =
     decode Campsite.Campsite
         |> required "_id" string
-        |> required "longName" string
+        |> required "name" string
         |> required "description" string
         |> required "location" (nullable location)
         |> required "facilities" facilities
         |> required "access" access
-        |> requiredAt [ "park", "longName" ] string
+        |> required "parkName" string
         |> required "_rev" (nullable string)
 
 
