@@ -12,8 +12,7 @@ module Campsite
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
-        , shortenCampsiteName
-        , shortenParkName
+        , shortenName
         )
 
 import Location exposing (Location)
@@ -115,8 +114,8 @@ type DrinkingWater
     | NoDrinkingWater
 
 
-shortenCampsiteName : String -> String
-shortenCampsiteName name =
+shortenName : String -> String
+shortenName name =
     name
         |> remove "picnic and camping area"
         |> remove "camping and picnic area"
@@ -130,11 +129,6 @@ shortenCampsiteName name =
         |> remove "tourist park"
         |> remove "rest area"
         |> specialCase1
-
-
-shortenParkName : String -> String
-shortenParkName name =
-    name
         |> replace "National Park" " NP"
         |> replace "State Conservation Area" " SCA"
         |> replace "Nature Reserve" " NR"
