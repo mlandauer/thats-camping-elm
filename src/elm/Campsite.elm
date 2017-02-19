@@ -13,6 +13,7 @@ module Campsite
         , Trailers(..)
         , Cars(..)
         , shortenCampsiteName
+        , shortenParkName
         )
 
 import Location exposing (Location)
@@ -131,19 +132,35 @@ shortenCampsiteName name =
         |> specialCase1
 
 
-remove : String -> String -> String
-remove match text =
+shortenParkName : String -> String
+shortenParkName name =
+    name
+        |> replace "National Park" " NP"
+        |> replace "State Conservation Area" " SCA"
+        |> replace "Nature Reserve" " NR"
+        |> replace "Karst Conservation Reserve" " KCR"
+        |> remove "Historic Site"
+
+
+replace : String -> String -> String -> String
+replace match replace text =
     let
         regex =
             Regex.caseInsensitive (Regex.regex (" " ++ match ++ "$"))
     in
-        Regex.replace Regex.All regex (\_ -> "") text
+        Regex.replace Regex.All regex (\_ -> replace) text
+
+
+remove : String -> String -> String
+remove match text =
+    replace match "" text
 
 
 
 -- TODO: Remove special case
 
 
+specialCase1 : String -> String
 specialCase1 text =
     if text == "Euroka campground - Appletree Flat campervan and camper trailer area" then
         "Euroka (trailer area)"
