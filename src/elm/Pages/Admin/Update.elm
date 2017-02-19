@@ -39,13 +39,6 @@ type Msg
     | TestShortenName
 
 
-shortenName : String -> String
-shortenName name =
-    -- TODO: Move this somewhere sensible
-    -- TODO: Add tests
-    name
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -98,10 +91,10 @@ update msg model =
             let
                 -- Only show the first error
                 broken =
-                    List.head (List.filter (\campsite -> (campsite.shortName /= shortenName (campsite.longName))) (Dict.values model.campsites))
+                    List.head (List.filter (\campsite -> (campsite.shortName /= Campsite.shortenCampsiteName (campsite.longName))) (Dict.values model.campsites))
 
                 text =
-                    Maybe.withDefault "All passed" (Maybe.map (\campsite -> "\"" ++ campsite.shortName ++ "\" != shortenName(\"" ++ campsite.longName ++ "\")") broken)
+                    Maybe.withDefault "All passed" (Maybe.map (\campsite -> "\"" ++ campsite.shortName ++ "\" != shortenCampsiteName(\"" ++ campsite.longName ++ "\")") broken)
             in
                 ( { model | text = Just text }, Cmd.none )
 

@@ -12,9 +12,11 @@ module Campsite
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
+        , shortenCampsiteName
         )
 
 import Location exposing (Location)
+import Regex
 
 
 type alias Campsite =
@@ -110,3 +112,14 @@ type Showers
 type DrinkingWater
     = DrinkingWater
     | NoDrinkingWater
+
+
+shortenCampsiteName : String -> String
+shortenCampsiteName name =
+    String.trim
+        (remove (remove name "campground") "camping area")
+
+
+remove : String -> String -> String
+remove text match =
+    Regex.replace Regex.All (Regex.regex match) (\_ -> "") text
