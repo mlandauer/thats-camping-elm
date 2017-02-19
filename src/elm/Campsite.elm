@@ -116,10 +116,12 @@ type DrinkingWater
 
 shortenCampsiteName : String -> String
 shortenCampsiteName name =
-    String.trim
-        (remove (remove name "campground") "camping area")
+    name
+        |> remove "campground"
+        |> remove "camping area"
+        |> String.trim
 
 
 remove : String -> String -> String
-remove text match =
+remove match text =
     Regex.replace Regex.All (Regex.regex match) (\_ -> "") text
