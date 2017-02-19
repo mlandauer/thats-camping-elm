@@ -123,12 +123,9 @@ shortenCampsiteName name =
         -- TODO: Not sure "large group campground" is right to remove
         |>
             remove "large group campground"
-        |> remove "campground"
-        |> remove "campgrounds"
+        |> remove "campgrounds?"
         |> remove "camping area"
-        |> remove "Camping Area"
-        |> remove "camping ground"
-        |> remove "camping grounds"
+        |> remove "camping grounds?"
         |> remove "tourist park"
         |> remove "rest area"
         |> specialCase1
@@ -136,11 +133,15 @@ shortenCampsiteName name =
 
 remove : String -> String -> String
 remove match text =
-    Regex.replace Regex.All (Regex.regex (" " ++ match ++ "$")) (\_ -> "") text
+    let
+        regex =
+            Regex.caseInsensitive (Regex.regex (" " ++ match ++ "$"))
+    in
+        Regex.replace Regex.All regex (\_ -> "") text
 
 
 
--- TODO: Remove special cases
+-- TODO: Remove special case
 
 
 specialCase1 text =
