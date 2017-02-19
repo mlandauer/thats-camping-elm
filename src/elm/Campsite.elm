@@ -117,11 +117,34 @@ type DrinkingWater
 shortenCampsiteName : String -> String
 shortenCampsiteName name =
     name
+        |> remove "picnic and camping area"
+        |> remove "camping and picnic area"
+        |> remove "campground and picnic area"
+        -- TODO: Not sure "large group campground" is right to remove
+        |>
+            remove "large group campground"
         |> remove "campground"
+        |> remove "campgrounds"
         |> remove "camping area"
-        |> String.trim
+        |> remove "Camping Area"
+        |> remove "camping ground"
+        |> remove "camping grounds"
+        |> remove "tourist park"
+        |> remove "rest area"
+        |> specialCase1
 
 
 remove : String -> String -> String
 remove match text =
-    Regex.replace Regex.All (Regex.regex match) (\_ -> "") text
+    Regex.replace Regex.All (Regex.regex (" " ++ match ++ "$")) (\_ -> "") text
+
+
+
+-- TODO: Remove special cases
+
+
+specialCase1 text =
+    if text == "Euroka campground - Appletree Flat campervan and camper trailer area" then
+        "Euroka (trailer area)"
+    else
+        text
