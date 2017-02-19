@@ -36,7 +36,6 @@ type Msg
     | DestroyError Pouchdb.DestroyError
     | ToggleLaneCoveName
     | Migrate
-    | TestShortenName
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -86,17 +85,6 @@ update msg model =
             ( model
             , Cmd.batch (List.map putCampsite (Dict.values model.campsites))
             )
-
-        TestShortenName ->
-            let
-                -- Only show the first error
-                broken =
-                    List.head (List.filter (\campsite -> (campsite.park.shortName /= Campsite.shortenParkName (campsite.park.longName))) (Dict.values model.campsites))
-
-                text =
-                    Maybe.withDefault "All passed" (Maybe.map (\campsite -> "\"" ++ campsite.park.shortName ++ "\" != shortenParkName(\"" ++ campsite.park.longName ++ "\")") broken)
-            in
-                ( { model | text = Just text }, Cmd.none )
 
 
 transform : List App.Decoder.Campsite -> List App.Decoder.Park -> List Campsite
