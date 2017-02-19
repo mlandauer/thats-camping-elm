@@ -21,7 +21,7 @@ import Regex
 
 type alias Campsite =
     { id : String
-    , longName : String
+    , name : String
     , description : String
     , location : Maybe Location
     , facilities : Facilities

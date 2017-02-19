@@ -92,7 +92,7 @@ transform campsites parks =
     List.map
         (\campsite ->
             { id = campsite.id
-            , longName = campsite.longName
+            , name = campsite.longName
             , description = campsite.description
             , location = campsite.location
             , facilities = campsite.facilities
@@ -126,14 +126,14 @@ getLaneCove campsites =
 toggleLaneCoveName : Campsite -> Campsite
 toggleLaneCoveName campsite =
     if laneCoveNameChanged campsite then
-        { campsite | longName = "Lane Cove River tourist park" }
+        { campsite | name = "Lane Cove River tourist park" }
     else
-        { campsite | longName = "Lane Cove River - I've been updated!" }
+        { campsite | name = "Lane Cove River - I've been updated!" }
 
 
 laneCoveNameChanged : Campsite -> Bool
 laneCoveNameChanged campsite =
-    campsite.longName /= "Lane Cove River tourist park"
+    campsite.name /= "Lane Cove River tourist park"
 
 
 syncData : Cmd Msg
