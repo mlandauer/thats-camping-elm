@@ -5,6 +5,7 @@ import Html.Attributes exposing (..)
 import App.Update exposing (..)
 import App.Model exposing (..)
 import Pages.About.View
+import Pages.Tour.View
 import Pages.Campsites.View
 import Pages.Campsite.View
 import Pages.Admin.View
@@ -48,7 +49,11 @@ view model =
                 Pages.About.View.view model.version
 
             TourPage id ->
-                p [] [ text ("This is tour page " ++ id) ]
+                Pages.Tour.View.view
+                    { campsites = (Dict.values model.campsites)
+                    , location = model.location
+                    , starredCampsites = model.starredCampsites
+                    }
 
             AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model.adminModel)
