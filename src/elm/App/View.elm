@@ -47,6 +47,9 @@ view model =
             AboutPage ->
                 Pages.About.View.view model.version
 
+            TourPage id ->
+                p [] [ text ("This is tour page " ++ id) ]
+
             AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model.adminModel)
 
