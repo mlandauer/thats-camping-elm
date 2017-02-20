@@ -49,11 +49,7 @@ view model =
                 Pages.About.View.view model.version
 
             TourPage id ->
-                Pages.Tour.View.view
-                    { campsites = (Dict.values model.campsites)
-                    , location = model.location
-                    , starredCampsites = model.starredCampsites
-                    }
+                Pages.Tour.View.view id
 
             AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model.adminModel)
