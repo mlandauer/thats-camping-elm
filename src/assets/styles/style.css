@@ -37,7 +37,7 @@ nav {
 
 
 
-.campsite-list .content {
+.campsite-list .content, .tour .content {
   height: 100vh;
   /* We have a footer on this page too */
   padding-bottom: 59px;
@@ -181,6 +181,7 @@ a.list-group-item, .btn {
 
 .navbar-default {
     background-color: #97b13d;
+    border: 0;
 }
 
 .navbar-default .navbar-link {
@@ -201,4 +202,14 @@ a.list-group-item, .btn {
 
 .leaflet-popup .name {
   color: #555;
+}
+
+div.tour {
+  background-color: #97b13d;
+  color: white;
+  text-align: center;
+}
+
+div.tour p, div.tour h2 {
+  margin-bottom: 20px;
 }
