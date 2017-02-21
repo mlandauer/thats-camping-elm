@@ -56,7 +56,7 @@ s3_website push
 
 ## Thank you
 
-<a href="https://www.browserstack.com>"<img src="https://bstacksupport.zendesk.com/attachments/token/iz2OKPJFTXNSgJX2Qz6yNvYBj/?name=Logo-01.svg" height="40px" alt="BrowserStack Logo"></a>
+[<img src="https://bstacksupport.zendesk.com/attachments/token/iz2OKPJFTXNSgJX2Qz6yNvYBj/?name=Logo-01.svg" height="40px" alt="BrowserStack Logo">](https://www.browserstack.com)
 
 [BrowserStack](https://www.browserstack.com) for supporting open-source projects, including That's Camping, with free access to their wonderful browser testing tools.
 
