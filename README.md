@@ -54,6 +54,12 @@ npm run build
 s3_website push
 ```
 
+## Thank you
+
+<img src="https://bstacksupport.zendesk.com/attachments/token/iz2OKPJFTXNSgJX2Qz6yNvYBj/?name=Logo-01.svg" height="40px" alt="BrowserStack Logo">
+
+For supporting open-source projects, including That's Camping, with free access to their wonderful browser testing tools.
+
 ## Copyright & License
 
 Copyright Matthew Landauer. Licensed under the GPL v3. See LICENSE.md for more details.
