@@ -15,7 +15,10 @@ view id =
         [ navBar "" (id /= Start) False
         , div [ class "container" ]
             [ div [ class "content" ]
-                [ div [ class "centering-box" ] [ content id ] ]
+                [ div [ class "centering-box" ]
+                    [ Markdown.toHtml [] (content id)
+                    ]
+                ]
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
@@ -27,11 +30,11 @@ view id =
         ]
 
 
-content : TourPageId -> Html Msg
+content : TourPageId -> String
 content id =
     case id of
         Start ->
-            Markdown.toHtml [] """
+            """
 ## That's Camping!
 
 It's your first time. So we just need to grab the campsites for you in the background. It shouldn't take long.
@@ -40,7 +43,7 @@ In the meantime we’ll give you a quick tour of how you can find the perfect ca
 """
 
         Find ->
-            Markdown.toHtml [] """
+            """
 ## Find campsites
 
 Find campsites near you that have the facilities that you want. Look at a simple list or look around a map.
@@ -48,7 +51,7 @@ Find campsites near you that have the facilities that you want. Look at a simple
 """
 
         Offline ->
-            Markdown.toHtml [] """
+            """
 ## Works offline
 
 Almost everything works offline too. So you can find your next campsite even when you are far away from civilisation with no cell phone reception.
