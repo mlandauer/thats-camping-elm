@@ -25,12 +25,13 @@ view id =
 view1 : Html Msg
 view1 =
     div [ class "tour" ]
-        [ div [ class "content" ]
-            [ let
-                content =
-                    """
-<img src="apple-touch-icon.png"/>
-
+        [ div [ class "container" ]
+            [ div [ class "content" ]
+                [ img [ src "apple-touch-icon.png" ] []
+                , div [ class "centering-box" ]
+                    [ let
+                        content =
+                            """
 ## That's Camping!
 
 It's your first time. So we just need to grab the campsites for you in the background. It shouldn't take long.
@@ -38,8 +39,10 @@ It's your first time. So we just need to grab the campsites for you in the backg
 In the meantime we’ll give you a quick tour of how you can find the perfect campsite.
 
 """
-              in
-                Markdown.toHtml [ class "container" ] content
+                      in
+                        Markdown.toHtml [] content
+                    ]
+                ]
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
