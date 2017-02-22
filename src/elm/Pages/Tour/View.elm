@@ -15,6 +15,9 @@ view id =
         "1" ->
             view1
 
+        "2" ->
+            view2
+
         _ ->
             App.ViewHelpers.view404
 
@@ -41,6 +44,29 @@ In the meantime we’ll give you a quick tour of how you can find the perfect ca
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
                 [ link (TourPage "2")
+                    [ class "btn btn-default navbar-btn pull-right" ]
+                    [ text "Next" ]
+                ]
+            ]
+        ]
+
+
+view2 : Html Msg
+view2 =
+    div [ class "tour" ]
+        [ div [ class "content" ]
+            [ let
+                content =
+                    """
+Find campsites near you that have the facilities that you want. Look at a simple list or look around a map.
+
+"""
+              in
+                Markdown.toHtml [ class "container" ] content
+            ]
+        , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
+            [ div [ class "container" ]
+                [ link (TourPage "3")
                     [ class "btn btn-default navbar-btn pull-right" ]
                     [ text "Next" ]
                 ]
