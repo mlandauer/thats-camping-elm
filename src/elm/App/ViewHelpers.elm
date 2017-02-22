@@ -6,6 +6,7 @@ module App.ViewHelpers
         , values
         , star
         , show
+        , view404
         )
 
 import Html exposing (..)
@@ -207,3 +208,9 @@ star starred msg =
             ]
             []
         ]
+
+
+view404 : Html Msg
+view404 =
+    -- TODO: Make this page less ugly
+    p [] [ text "This is a 404" ]

@@ -15,6 +15,7 @@ type Page
     = CampsitesPage CampsitesPageOption
     | CampsitePage String
     | AboutPage
+    | TourPage String
     | AdminPage
       -- This is the 404 page
     | UnknownPage

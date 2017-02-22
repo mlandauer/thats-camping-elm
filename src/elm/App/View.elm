@@ -5,10 +5,12 @@ import Html.Attributes exposing (..)
 import App.Update exposing (..)
 import App.Model exposing (..)
 import Pages.About.View
+import Pages.Tour.View
 import Pages.Campsites.View
 import Pages.Campsite.View
 import Pages.Admin.View
 import Dict exposing (Dict)
+import App.ViewHelpers
 
 
 view : Model -> Html Msg
@@ -42,20 +44,17 @@ view model =
                             }
 
                     Nothing ->
-                        view404
+                        App.ViewHelpers.view404
 
             AboutPage ->
                 Pages.About.View.view model.version
+
+            TourPage id ->
+                Pages.Tour.View.view id
 
             AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model.adminModel)
 
             UnknownPage ->
-                view404
+                App.ViewHelpers.view404
         ]
-
-
-view404 : Html Msg
-view404 =
-    -- TODO: Make this page less ugly
-    p [] [ text "This is a 404" ]

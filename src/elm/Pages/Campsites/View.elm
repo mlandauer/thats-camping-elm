@@ -14,9 +14,10 @@ view model =
         [ navBar "Camping near you" False True
         , if List.isEmpty model.campsites then
             div [ class "container" ]
-                [ div [ class "centering-box" ]
-                    -- TODO: Centre the text properly (now that we have footer)
-                    [ h2 [ class "text-center" ] [ text "Getting some lovely campsites for you" ]
+                [ div [ class "content" ]
+                    [ div [ class "centering-box" ]
+                        [ h2 [ class "text-center" ] [ text "Getting some lovely campsites for you" ]
+                        ]
                     ]
                 ]
           else
