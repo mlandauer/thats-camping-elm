@@ -6,7 +6,7 @@ import Markdown
 import App.ViewHelpers
 import App.Update exposing (Msg)
 import App.Model exposing (Page(..))
-import App.ViewHelpers exposing (link)
+import App.ViewHelpers exposing (link, navBar)
 
 
 view : String -> Html Msg
@@ -47,7 +47,7 @@ In the meantime we’ll give you a quick tour of how you can find the perfect ca
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
                 [ link (TourPage "2")
-                    [ class "btn btn-default navbar-btn pull-right" ]
+                    [ class "btn btn-default navbar-btn" ]
                     [ text "Next" ]
                 ]
             ]
@@ -57,7 +57,8 @@ In the meantime we’ll give you a quick tour of how you can find the perfect ca
 view2 : Html Msg
 view2 =
     div [ class "tour" ]
-        [ div [ class "container" ]
+        [ navBar "" True False
+        , div [ class "container" ]
             [ div [ class "content" ]
                 [ div [ class "centering-box" ]
                     [ let
@@ -76,7 +77,7 @@ Find campsites near you that have the facilities that you want. Look at a simple
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
                 [ link (TourPage "3")
-                    [ class "btn btn-default navbar-btn pull-right" ]
+                    [ class "btn btn-default navbar-btn" ]
                     [ text "Next" ]
                 ]
             ]
