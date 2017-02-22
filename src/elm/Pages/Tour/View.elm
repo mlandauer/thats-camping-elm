@@ -11,6 +11,16 @@ import App.ViewHelpers exposing (link)
 
 view : String -> Html Msg
 view id =
+    case id of
+        "1" ->
+            view1
+
+        _ ->
+            App.ViewHelpers.view404
+
+
+view1 : Html Msg
+view1 =
     div [ class "tour" ]
         [ div [ class "content" ]
             [ let
