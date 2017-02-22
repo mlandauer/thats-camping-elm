@@ -256,8 +256,8 @@ location2messages location =
             [ "tour", "find" ] ->
                 [ ChangePage (TourPage Find) ]
 
-            [ "tour", "other" ] ->
-                [ ChangePage (TourPage Other) ]
+            [ "tour", "offline" ] ->
+                [ ChangePage (TourPage Offline) ]
 
             [ "admin" ] ->
                 [ ChangePage AdminPage ]
@@ -299,8 +299,8 @@ page2url page =
                         Find ->
                             "find"
 
-                        Other ->
-                            "other"
+                        Offline ->
+                            "offline"
                    )
 
         AdminPage ->

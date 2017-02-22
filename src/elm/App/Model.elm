@@ -20,7 +20,7 @@ type CampsitesPageOption
 type TourPageId
     = Start
     | Find
-    | Other
+    | Offline
 
 
 type Page
