@@ -13,69 +13,75 @@ view : String -> Html Msg
 view id =
     case id of
         "1" ->
-            view1
+            pageView (content id) (id /= "1") (nextPageId id)
 
         "2" ->
-            view2
+            pageView (content id) (id /= "1") (nextPageId id)
 
         _ ->
             App.ViewHelpers.view404
 
 
-view1 : Html Msg
-view1 =
-    div [ class "tour" ]
-        [ div [ class "container" ]
-            [ div [ class "content" ]
-                [ div [ class "centering-box" ]
-                    [ let
-                        content =
-                            """
+content : String -> Html Msg
+content id =
+    case id of
+        "1" ->
+            content1
+
+        "2" ->
+            content2
+
+        -- TODO: Ugh. Fix this smelly thing.
+        _ ->
+            text ""
+
+
+nextPageId : String -> String
+nextPageId id =
+    -- TODO: Ugh. Fix this smelly thing.
+    case id of
+        "1" ->
+            "2"
+
+        "2" ->
+            "3"
+
+        _ ->
+            ""
+
+
+content1 : Html Msg
+content1 =
+    Markdown.toHtml [] """
 ## That's Camping!
 
 It's your first time. So we just need to grab the campsites for you in the background. It shouldn't take long.
 
 In the meantime we’ll give you a quick tour of how you can find the perfect campsite.
-
 """
-                      in
-                        Markdown.toHtml [] content
-                    ]
-                ]
-            ]
-        , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
-            [ div [ class "container" ]
-                [ link (TourPage "2")
-                    [ class "btn btn-default navbar-btn" ]
-                    [ text "Next" ]
-                ]
-            ]
-        ]
 
 
-view2 : Html Msg
-view2 =
-    div [ class "tour" ]
-        [ navBar "" True False
-        , div [ class "container" ]
-            [ div [ class "content" ]
-                [ div [ class "centering-box" ]
-                    [ let
-                        content =
-                            """
+content2 : Html Msg
+content2 =
+    Markdown.toHtml [] """
 ## Find campsites
 
 Find campsites near you that have the facilities that you want. Look at a simple list or look around a map.
 
 """
-                      in
-                        Markdown.toHtml [] content
-                    ]
-                ]
+
+
+pageView : Html Msg -> Bool -> String -> Html Msg
+pageView content showBack nextPageId =
+    div [ class "tour" ]
+        [ navBar "" showBack False
+        , div [ class "container" ]
+            [ div [ class "content" ]
+                [ div [ class "centering-box" ] [ content ] ]
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
-                [ link (TourPage "3")
+                [ link (TourPage nextPageId)
                     [ class "btn btn-default navbar-btn" ]
                     [ text "Next" ]
                 ]
