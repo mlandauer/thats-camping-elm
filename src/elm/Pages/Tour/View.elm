@@ -27,8 +27,7 @@ view1 =
     div [ class "tour" ]
         [ div [ class "container" ]
             [ div [ class "content" ]
-                [ img [ src "apple-touch-icon.png" ] []
-                , div [ class "centering-box" ]
+                [ div [ class "centering-box" ]
                     [ let
                         content =
                             """

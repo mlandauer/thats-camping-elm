@@ -221,10 +221,3 @@ div.tour {
 div.tour p, div.tour h2 {
   margin-bottom: 20px;
 }
-
-div.tour img {
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  margin-left: -48px;
-}
