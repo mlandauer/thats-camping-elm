@@ -59,14 +59,18 @@ view2 =
     div [ class "tour" ]
         [ div [ class "container" ]
             [ div [ class "content" ]
-                [ let
-                    content =
-                        """
+                [ div [ class "centering-box" ]
+                    [ let
+                        content =
+                            """
+## Find campsites
+
 Find campsites near you that have the facilities that you want. Look at a simple list or look around a map.
 
 """
-                  in
-                    Markdown.toHtml [ class "centering-box" ] content
+                      in
+                        Markdown.toHtml [] content
+                    ]
                 ]
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
