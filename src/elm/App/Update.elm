@@ -248,10 +248,16 @@ location2messages location =
                 [ ChangePage AboutPage ]
 
             [ "tour" ] ->
-                [ ChangePage (TourPage "1") ]
+                [ ChangePage (TourPage Start) ]
 
-            [ "tour", id ] ->
-                [ ChangePage (TourPage id) ]
+            [ "tour", "start" ] ->
+                [ ChangePage (TourPage Start) ]
+
+            [ "tour", "find" ] ->
+                [ ChangePage (TourPage Find) ]
+
+            [ "tour", "other" ] ->
+                [ ChangePage (TourPage Other) ]
 
             [ "admin" ] ->
                 [ ChangePage AdminPage ]
@@ -285,7 +291,17 @@ page2url page =
             "#/about"
 
         TourPage id ->
-            "#/tour/" ++ id
+            "#/tour/"
+                ++ (case id of
+                        Start ->
+                            "start"
+
+                        Find ->
+                            "find"
+
+                        Other ->
+                            "other"
+                   )
 
         AdminPage ->
             "#/admin"

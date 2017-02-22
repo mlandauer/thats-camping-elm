@@ -5,49 +5,48 @@ import Html.Attributes exposing (..)
 import Markdown
 import App.ViewHelpers
 import App.Update exposing (Msg)
-import App.Model exposing (Page(..))
+import App.Model exposing (Page(..), TourPageId(..))
 import App.ViewHelpers exposing (link, navBar)
 
 
-view : String -> Html Msg
+view : TourPageId -> Html Msg
 view id =
     case id of
-        "1" ->
-            pageView (content id) (id /= "1") (nextPageId id)
+        Start ->
+            pageView (content id) (id /= Start) (nextPageId id)
 
-        "2" ->
-            pageView (content id) (id /= "1") (nextPageId id)
+        Find ->
+            pageView (content id) (id /= Start) (nextPageId id)
 
-        _ ->
+        Other ->
             App.ViewHelpers.view404
 
 
-content : String -> Html Msg
+content : TourPageId -> Html Msg
 content id =
     case id of
-        "1" ->
+        Start ->
             content1
 
-        "2" ->
+        Find ->
             content2
 
-        -- TODO: Ugh. Fix this smelly thing.
-        _ ->
+        Other ->
             text ""
 
 
-nextPageId : String -> String
+nextPageId : TourPageId -> TourPageId
 nextPageId id =
-    -- TODO: Ugh. Fix this smelly thing.
     case id of
-        "1" ->
-            "2"
+        Start ->
+            Find
 
-        "2" ->
-            "3"
+        Find ->
+            Other
 
-        _ ->
-            ""
+        Other ->
+            -- TODO: This is obviously wrong!
+            Start
 
 
 content1 : Html Msg
@@ -71,7 +70,7 @@ Find campsites near you that have the facilities that you want. Look at a simple
 """
 
 
-pageView : Html Msg -> Bool -> String -> Html Msg
+pageView : Html Msg -> Bool -> TourPageId -> Html Msg
 pageView content showBack nextPageId =
     div [ class "tour" ]
         [ navBar "" showBack False

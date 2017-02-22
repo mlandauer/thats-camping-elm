@@ -1,4 +1,10 @@
-module App.Model exposing (Page(..), Model, CampsitesPageOption(..))
+module App.Model
+    exposing
+        ( Page(..)
+        , TourPageId(..)
+        , Model
+        , CampsitesPageOption(..)
+        )
 
 import Dict exposing (Dict)
 import Pages.Admin.Model
@@ -11,11 +17,17 @@ type CampsitesPageOption
     | Map
 
 
+type TourPageId
+    = Start
+    | Find
+    | Other
+
+
 type Page
     = CampsitesPage CampsitesPageOption
     | CampsitePage String
     | AboutPage
-    | TourPage String
+    | TourPage TourPageId
     | AdminPage
       -- This is the 404 page
     | UnknownPage
