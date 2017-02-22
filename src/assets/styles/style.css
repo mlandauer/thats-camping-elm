@@ -50,10 +50,18 @@ nav {
 }
 
 .centering-box {
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.centering-box :first-child {
+  margin-top: 0;
+}
+
+.centering-box :last-child {
+  margin-bottom: 0;
 }
 
 #app, nav, .container, #map-wrapper {
