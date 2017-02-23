@@ -5,7 +5,7 @@ import Html.Attributes exposing (..)
 import Markdown
 import App.ViewHelpers
 import App.Update exposing (Msg)
-import App.Model exposing (Page(..), TourPageId(..))
+import App.Model exposing (Page(..), CampsitesPageOption(..), TourPageId(..))
 import App.ViewHelpers exposing (link, navBar)
 
 
@@ -22,7 +22,7 @@ view id =
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
-                [ link (TourPage (nextPageId id))
+                [ link (nextPage id)
                     [ class "btn btn-default navbar-btn" ]
                     [ text "Next" ]
                 ]
@@ -74,21 +74,20 @@ We're just finishing loading campsites now. It shouldn't be long.
 """
 
 
-nextPageId : TourPageId -> TourPageId
-nextPageId id =
+nextPage : TourPageId -> Page
+nextPage id =
     case id of
         Start ->
-            Find
+            TourPage Find
 
         Find ->
-            Offline
+            TourPage Offline
 
         Offline ->
-            Edit
+            TourPage Edit
 
         Edit ->
-            Last
+            TourPage Last
 
         Last ->
-            -- TODO: This is obviously wrong!
-            Start
+            CampsitesPage List
