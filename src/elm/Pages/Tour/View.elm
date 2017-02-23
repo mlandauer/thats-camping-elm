@@ -24,7 +24,7 @@ view id =
             [ div [ class "container" ]
                 [ link (nextPage id)
                     [ class "btn btn-default navbar-btn" ]
-                    [ text "Next" ]
+                    [ text (nextText id) ]
                 ]
             ]
         ]
@@ -89,3 +89,22 @@ nextPage id =
 
         Last ->
             CampsitesPage List
+
+
+nextText : TourPageId -> String
+nextText id =
+    case id of
+        Start ->
+            "Get Started"
+
+        Find ->
+            "Next"
+
+        Offline ->
+            "Next"
+
+        Edit ->
+            "Next"
+
+        Last ->
+            "Take me to the campsites"
