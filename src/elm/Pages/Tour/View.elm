@@ -35,11 +35,9 @@ content id =
     case id of
         Start ->
             """
-## That's Camping!
+## That's Camping - A Quick Tour
 
-It's your first time. So we just need to grab the campsites for you in the background. It shouldn't take long.
-
-In the meantime we’ll give you a quick tour of how you can find the perfect campsite.
+As it's your first time here we’ll give you a quick tour of how you can find the perfect campsite.
 """
 
         Find ->
@@ -70,7 +68,7 @@ Get a warm and fuzzy feeling because other people will benefit from your knowled
             """
 ## Loading campsites
 
-We're just finishing loading campsites now. It shouldn't be long.
+We're just finishing loading the campsites for you in the background. It shouldn't take long.
 """
 
 
