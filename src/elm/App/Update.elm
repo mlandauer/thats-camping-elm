@@ -206,12 +206,15 @@ markerForCampsite : Campsite -> Maybe Leaflet.Marker
 markerForCampsite campsite =
     Maybe.map
         (\location ->
-            Leaflet.Marker campsite.id
-                location
-                -- Wish this could come from a view
-                ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ (Campsite.shortenName campsite.name) ++ "</div><div class=\"park\">" ++ (Campsite.shortenName campsite.parkName) ++ "</div></div></a>")
+            Leaflet.Marker campsite.id location (markerHtml campsite)
         )
         campsite.location
+
+
+markerHtml : Campsite -> String
+markerHtml campsite =
+    -- Wish this could come from a view
+    ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ (Campsite.shortenName campsite.name) ++ "</div><div class=\"park\">" ++ (Campsite.shortenName campsite.parkName) ++ "</div></div></a>")
 
 
 formatGeolocationError : Geolocation.Error -> String
