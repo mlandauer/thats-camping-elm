@@ -15,6 +15,7 @@ port module Pouchdb
         , changeComplete
         , ChangeComplete
         , bulkDocs
+        , sync
         )
 
 import Json.Encode
@@ -89,3 +90,10 @@ port changeComplete : (ChangeComplete -> msg) -> Sub msg
 
 
 port bulkDocs : List Json.Encode.Value -> Cmd msg
+
+
+type alias SyncOptions =
+    { live : Bool, retry : Bool }
+
+
+port sync : SyncOptions -> Cmd msg

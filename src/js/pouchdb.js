@@ -17,23 +17,25 @@ var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
 });
 
 export function initialise(app) {
-  db.sync(remoteDb, {live: true, retry: true}).on('change', function (info) {
-    console.log("sync change:", info);
-  }).on('paused', function (err) {
-    // replication paused (e.g. replication up to date, user went offline)
-    console.log("sync paused:", err);
-  }).on('active', function () {
-    // replicate resumed (e.g. new changes replicating, user went back online)
-    console.log("sync active");
-  }).on('denied', function (err) {
-    // a document failed to replicate (e.g. due to permissions)
-    console.log("sync denied:", err);
-  }).on('complete', function (info) {
-    // handle complete
-    console.log("sync complete:", info);
-  }).on('error', function (err) {
-    // handle error
-    console.log("sync error:", err);
+  app.ports.sync.subscribe(function(options){
+    db.sync(remoteDb, options).on('change', function (info) {
+      console.log("sync change:", info);
+    }).on('paused', function (err) {
+      // replication paused (e.g. replication up to date, user went offline)
+      console.log("sync paused:", err);
+    }).on('active', function () {
+      // replicate resumed (e.g. new changes replicating, user went back online)
+      console.log("sync active");
+    }).on('denied', function (err) {
+      // a document failed to replicate (e.g. due to permissions)
+      console.log("sync denied:", err);
+    }).on('complete', function (info) {
+      // handle complete
+      console.log("sync complete:", info);
+    }).on('error', function (err) {
+      // handle error
+      console.log("sync error:", err);
+    });
   });
 
   app.ports.changes.subscribe(function(options){
