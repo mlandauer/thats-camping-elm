@@ -21,6 +21,8 @@ type TourPageId
     = Start
     | Find
     | Offline
+    | Edit
+    | Last
 
 
 type Page

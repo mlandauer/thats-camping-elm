@@ -57,6 +57,22 @@ Find campsites near you that have the facilities that you want. Look at a simple
 Almost everything works offline too. So you can find your next campsite even when you are far away from civilisation with no cell phone reception.
 """
 
+        Edit ->
+            """
+## Coming soon
+
+You will be able to add and update campsites and it will work even when you're offline.
+
+Get a warm and fuzzy feeling because other people will benefit from your knowledge.
+"""
+
+        Last ->
+            """
+## Loading campsites
+
+We're just finishing loading campsites now. It shouldn't be long.
+"""
+
 
 nextPageId : TourPageId -> TourPageId
 nextPageId id =
@@ -68,6 +84,11 @@ nextPageId id =
             Offline
 
         Offline ->
+            Edit
+
+        Edit ->
+            Last
+
+        Last ->
             -- TODO: This is obviously wrong!
-            -- TODO: Next page should be about being able to edit things
             Start

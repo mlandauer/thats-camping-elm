@@ -259,6 +259,12 @@ location2messages location =
             [ "tour", "offline" ] ->
                 [ ChangePage (TourPage Offline) ]
 
+            [ "tour", "edit" ] ->
+                [ ChangePage (TourPage Edit) ]
+
+            [ "tour", "last" ] ->
+                [ ChangePage (TourPage Last) ]
+
             [ "admin" ] ->
                 [ ChangePage AdminPage ]
 
@@ -301,6 +307,12 @@ page2url page =
 
                         Offline ->
                             "offline"
+
+                        Edit ->
+                            "edit"
+
+                        Last ->
+                            "last"
                    )
 
         AdminPage ->
