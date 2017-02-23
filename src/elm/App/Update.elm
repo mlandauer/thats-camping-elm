@@ -45,6 +45,7 @@ type Msg
     | PageBack
     | AdminMsg Pages.Admin.Update.Msg
     | ChangeSuccess Pouchdb.ChangeSuccess
+    | ChangeComplete Pouchdb.ChangeComplete
     | ToggleStarCampsite String
     | Online Bool
 
@@ -69,12 +70,13 @@ init flags =
       , version = flags.version
       , starredCampsites = Maybe.withDefault [] flags.starredCampsites
       , online = flags.online
+      , sequence = 0
       }
       -- On startup immediately try to get the location
     , Cmd.batch
         [ Task.attempt UpdateLocation Geolocation.now
         , Pouchdb.sync { live = True, retry = True }
-        , Pouchdb.changes { live = True, include_docs = True, return_docs = False, since = 0 }
+        , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = 0 }
         ]
     )
 
@@ -118,6 +120,9 @@ update msg model =
             -- TODO: Need to think how to handle deleted documents. Is this
             -- something we actually need to handle?
             let
+                sequence =
+                    max model.sequence change.seq
+
                 o =
                     Json.Decode.decodeValue App.NewDecoder.campsite change.doc
             in
@@ -135,6 +140,7 @@ update msg model =
                             ( { model
                                 | campsites = newCampsites
                                 , adminModel = { admin | campsites = newCampsites }
+                                , sequence = sequence
                               }
                             , Cmd.none
                             )
@@ -142,6 +148,17 @@ update msg model =
                     Err _ ->
                         -- TODO: Show these errors to the user rather than silently ignore
                         ( model, Cmd.none )
+
+        ChangeComplete info ->
+            -- Now request the changes continuously
+            ( model
+            , Pouchdb.changes
+                { live = True
+                , include_docs = True
+                , return_docs = False
+                , since = model.sequence
+                }
+            )
 
         ToggleStarCampsite id ->
             let
