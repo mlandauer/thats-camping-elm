@@ -45,5 +45,4 @@ type alias Model =
     , standalone : Bool
     , version : String
     , online : Bool
-    , sequence : Int
     }
