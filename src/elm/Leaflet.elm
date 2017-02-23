@@ -24,10 +24,10 @@ port panMapTo : Location -> Cmd msg
 type alias Marker =
     -- Do we want to get rid of the id here as it's stored elsewhere too?
     { id : String
-    , location : Location
     , html :
         -- Wish we could render a view here instead
         String
+    , location : Location
     }
 
 

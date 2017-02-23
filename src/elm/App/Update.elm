@@ -204,10 +204,7 @@ allMarkers model =
 
 markerForCampsite : Campsite -> Maybe Leaflet.Marker
 markerForCampsite campsite =
-    Maybe.map
-        (\location ->
-            Leaflet.Marker campsite.id location (markerHtml campsite)
-        )
+    Maybe.map (Leaflet.Marker campsite.id (markerHtml campsite))
         campsite.location
 
 
