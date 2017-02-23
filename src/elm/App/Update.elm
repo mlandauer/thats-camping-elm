@@ -211,7 +211,23 @@ markerForCampsite campsite =
 markerHtml : Campsite -> String
 markerHtml campsite =
     -- Wish this could come from a view
-    ("<a href=\"" ++ (page2url (CampsitePage campsite.id)) ++ "\"><div class=\"campsite\"><div class=\"name\">" ++ (Campsite.shortenName campsite.name) ++ "</div><div class=\"park\">" ++ (Campsite.shortenName campsite.parkName) ++ "</div></div></a>")
+    a (page2url (CampsitePage campsite.id))
+        (div "campsite"
+            (String.append
+                (div "name" (Campsite.shortenName campsite.name))
+                (div "park" (Campsite.shortenName campsite.parkName))
+            )
+        )
+
+
+a : String -> String -> String
+a href html =
+    "<a href=\"" ++ href ++ "\">" ++ html ++ "</a>"
+
+
+div : String -> String -> String
+div class html =
+    "<div class=\"" ++ class ++ "\">" ++ html ++ "</div>"
 
 
 formatGeolocationError : Geolocation.Error -> String
