@@ -18,6 +18,7 @@ var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
 
 export function initialise(app) {
   app.ports.sync.subscribe(function(options){
+    console.log("sync started");
     db.sync(remoteDb, options).on('change', function (info) {
       console.log("sync change:", info);
     }).on('paused', function (err) {

@@ -75,7 +75,6 @@ init flags =
       -- On startup immediately try to get the location
     , Cmd.batch
         [ Task.attempt UpdateLocation Geolocation.now
-        , Pouchdb.sync { live = True, retry = True }
         , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = 0 }
         ]
     )
@@ -121,7 +120,7 @@ update msg model =
             -- something we actually need to handle?
             let
                 sequence =
-                    max model.sequence change.seq
+                    Debug.log "sequence" (max model.sequence change.seq)
 
                 o =
                     Json.Decode.decodeValue App.NewDecoder.campsite change.doc
@@ -150,15 +149,25 @@ update msg model =
                         ( model, Cmd.none )
 
         ChangeComplete info ->
-            -- Now request the changes continuously
-            ( model
-            , Pouchdb.changes
-                { live = True
-                , include_docs = True
-                , return_docs = False
-                , since = model.sequence
-                }
-            )
+            let
+                no_campsites_loaded =
+                    Debug.log "no_campsites_loaded" (Dict.size model.campsites)
+            in
+                -- Now request the changes continuously
+                ( model
+                , Cmd.batch
+                    [ Pouchdb.sync
+                        { live = True
+                        , retry = True
+                        }
+                    , Pouchdb.changes
+                        { live = True
+                        , include_docs = True
+                        , return_docs = False
+                        , since = model.sequence
+                        }
+                    ]
+                )
 
         ToggleStarCampsite id ->
             let
