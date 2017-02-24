@@ -54,4 +54,7 @@ view model =
 
 errorsView : List String -> Html msg
 errorsView errors =
-    div [] (List.map (\error -> (p [] [ text error ])) errors)
+    div [ class "panel panel-default" ]
+        [ div [ class "panel-body text-center bg-warning" ]
+            (List.map (\error -> (p [] [ text error ])) errors)
+        ]
