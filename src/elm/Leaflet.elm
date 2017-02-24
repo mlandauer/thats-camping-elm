@@ -35,7 +35,7 @@ type alias Map =
     -- Holds the whole state for a map in one lump
     { visible : Bool
     , center : Location
-    , markers : Dict String Marker
+    , markers : List Marker
     }
 
 
@@ -43,7 +43,7 @@ mapCommand : Map -> Map -> Cmd msg
 mapCommand oldMap newMap =
     Cmd.batch
         [ if newMap.markers /= oldMap.markers then
-            markerCommand oldMap.markers newMap.markers
+            markerCommand (dictify oldMap.markers) (dictify newMap.markers)
           else
             Cmd.none
         , if newMap.visible /= oldMap.visible then
@@ -55,6 +55,11 @@ mapCommand oldMap newMap =
           else
             Cmd.none
         ]
+
+
+dictify : List Marker -> Dict String Marker
+dictify markers =
+    markers |> List.map (\m -> ( m.id, m )) |> Dict.fromList
 
 
 markerCommand : Dict String Marker -> Dict String Marker -> Cmd msg
