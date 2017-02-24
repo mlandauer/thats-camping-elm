@@ -13,6 +13,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Html.Keyed
+import Html.Lazy
 import App.Model exposing (..)
 import App.Update exposing (..)
 import Location exposing (Location)
@@ -146,11 +147,16 @@ campsiteListItem location c =
         [ div [ class "campsite" ]
             ([ star c.starred Nothing
              , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location c.campsite.location) ]
-             , div [ class "name" ] [ text (Campsite.shortenName c.campsite.name) ]
-             , div [ class "park" ] [ text (Campsite.shortenName c.campsite.parkName) ]
+             , div [ class "name" ] [ Html.Lazy.lazy shortText c.campsite.name ]
+             , div [ class "park" ] [ Html.Lazy.lazy shortText c.campsite.parkName ]
              ]
             )
         ]
+
+
+shortText : String -> Html Msg
+shortText t =
+    text (Campsite.shortenName t)
 
 
 bearingAndDistanceAsText : Maybe Location -> Maybe Location -> String
