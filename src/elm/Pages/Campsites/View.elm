@@ -23,9 +23,9 @@ view model =
                 ]
           else
             div [ class "content " ]
-                [ div [ class "content-inner" ]
-                    [ errorsView model.errors
-                    , case model.displayType of
+                [ errorsView model.errors
+                , div [ class "content-inner" ]
+                    [ case model.displayType of
                         List ->
                             App.ViewHelpers.campsiteListView model.location
                                 model.campsites
