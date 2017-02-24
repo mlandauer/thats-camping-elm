@@ -43,7 +43,7 @@ mapCommand : Map -> Map -> Cmd msg
 mapCommand oldMap newMap =
     Cmd.batch
         [ if newMap.markers /= oldMap.markers then
-            markerCommand oldMap newMap
+            markerCommand oldMap.markers newMap.markers
           else
             Cmd.none
         , if newMap.visible /= oldMap.visible then
@@ -57,12 +57,12 @@ mapCommand oldMap newMap =
         ]
 
 
-markerCommand : Map -> Map -> Cmd msg
-markerCommand oldMap newMap =
+markerCommand : Dict String Marker -> Dict String Marker -> Cmd msg
+markerCommand oldMarkers newMarkers =
     -- TODO: Also handle deleting markers
     Cmd.batch
-        ((List.map createMarker (addedMarkers oldMap.markers newMap.markers))
-            ++ (List.map updateMarker (changedMarkers oldMap.markers newMap.markers))
+        ((List.map createMarker (addedMarkers oldMarkers newMarkers))
+            ++ (List.map updateMarker (changedMarkers oldMarkers newMarkers))
         )
 
 
