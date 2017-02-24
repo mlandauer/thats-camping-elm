@@ -191,15 +191,19 @@ map model =
             -- Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW
             (Location -32.163333333333334 147.01666666666668)
             model.location
-    , markers = Dict.fromList (List.map (\marker -> ( marker.id, marker )) (allMarkers model))
+    , markers =
+        Dict.fromList
+            (List.map (\marker -> ( marker.id, marker ))
+                (allMarkers (Dict.values model.campsites))
+            )
     }
 
 
-allMarkers : Model -> List Leaflet.Marker
-allMarkers model =
+allMarkers : List Campsite -> List Leaflet.Marker
+allMarkers campsites =
     List.filterMap
         identity
-        (List.map markerForCampsite (Dict.values model.campsites))
+        (List.map markerForCampsite campsites)
 
 
 markerForCampsite : Campsite -> Maybe Leaflet.Marker
