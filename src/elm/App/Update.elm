@@ -120,7 +120,7 @@ update msg model =
             -- something we actually need to handle?
             let
                 sequence =
-                    Debug.log "sequence" (max model.sequence change.seq)
+                    max model.sequence change.seq
 
                 o =
                     Json.Decode.decodeValue App.NewDecoder.campsite change.doc
