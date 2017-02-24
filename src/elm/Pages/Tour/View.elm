@@ -52,14 +52,14 @@ Find campsites near you that have the facilities that you want. Look at a simple
             """
 ## Works offline
 
-Almost everything works offline too. So you can find your next campsite even when you are far away from civilisation with no cell phone reception.
+Almost everything works offline too. So you can find your next campsite even when you are far away from civilisation with no phone reception.
 """
 
         Edit ->
             """
-## Coming soon
+## A Wikipedia for campsites
 
-You will be able to add and update campsites and it will work even when you're offline.
+Soon, you will be able to add and update campsites and it will work even when you're offline.
 
 Get a warm and fuzzy feeling because other people will benefit from your knowledge.
 """
@@ -95,7 +95,7 @@ nextText : TourPageId -> String
 nextText id =
     case id of
         Start ->
-            "Get Started"
+            "Start Tour"
 
         Find ->
             "Next"
@@ -107,4 +107,4 @@ nextText id =
             "Next"
 
         Last ->
-            "Take me to the campsites"
+            "Get Started"
