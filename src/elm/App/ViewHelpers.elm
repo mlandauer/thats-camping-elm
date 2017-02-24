@@ -95,7 +95,7 @@ compareCampsite userLocation r1 r2 =
     else if (compareCampsiteByDistance userLocation r1.campsite r2.campsite) /= EQ then
         compareCampsiteByDistance userLocation r1.campsite r2.campsite
     else
-        compare r1.campsite.name r2.campsite.name
+        compare r1.campsite.name.long r2.campsite.name.long
 
 
 compareStarred : Bool -> Bool -> Order
@@ -146,8 +146,8 @@ campsiteListItem location c =
         [ div [ class "campsite" ]
             ([ star c.starred Nothing
              , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location c.campsite.location) ]
-             , div [ class "name" ] [ text (Campsite.shortenName c.campsite.name) ]
-             , div [ class "park" ] [ text (Campsite.shortenName c.campsite.parkName) ]
+             , div [ class "name" ] [ text c.campsite.name.short ]
+             , div [ class "park" ] [ text c.campsite.parkName.short ]
              ]
             )
         ]

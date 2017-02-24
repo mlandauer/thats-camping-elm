@@ -214,8 +214,8 @@ markerHtml campsite =
     a (page2url (CampsitePage campsite.id))
         (div "campsite"
             (String.append
-                (div "name" (Campsite.shortenName campsite.name))
-                (div "park" (Campsite.shortenName campsite.parkName))
+                (div "name" campsite.name.short)
+                (div "park" campsite.parkName.short)
             )
         )
 

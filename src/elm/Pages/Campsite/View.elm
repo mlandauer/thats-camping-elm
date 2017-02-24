@@ -32,14 +32,14 @@ import Campsite
 view : Model -> Html Msg
 view model =
     div [ class "campsite-detail-page" ]
-        [ App.ViewHelpers.navBar (Campsite.shortenName model.campsite.name) True False
+        [ App.ViewHelpers.navBar model.campsite.name.short True False
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]
                     [ App.ViewHelpers.star model.starred (Just (ToggleStarCampsite model.campsite.id))
-                    , h2 [] [ text model.campsite.name ]
+                    , h2 [] [ text model.campsite.name.long ]
                     , p []
-                        [ text ("in " ++ model.campsite.parkName ++ ".") ]
+                        [ text ("in " ++ model.campsite.parkName.long ++ ".") ]
                     , Libs.SimpleFormat.Format.format model.campsite.description
                     , h2 [] [ text "Facilities" ]
                     , p [] [ text (facilitiesText model.campsite.facilities) ]

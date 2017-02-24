@@ -12,20 +12,39 @@ module Campsite
         , Trailers(..)
         , Cars(..)
         , shortenName
+        , name
         )
 
 import Location exposing (Location)
 import Regex
 
 
+type alias Name =
+    { {- We're storing the short version of the name as well even though it's
+         calculated dynamically because it's computationally expensive and
+         I didn't manage to get Lazy working with the map marker calculation.
+         Html.Lazy worked fine for caching the HTML side of things but we're
+         not using that now because we just precalculate it all.
+      -}
+      short : String
+    , long : String
+    }
+
+
+name : String -> Name
+name long =
+    -- A nice easy contructor
+    Name (shortenName long) long
+
+
 type alias Campsite =
     { id : String
-    , name : String
+    , name : Name
     , description : String
     , location : Maybe Location
     , facilities : Facilities
     , access : Access
-    , parkName : String
+    , parkName : Name
     , revision : Maybe String
     }
 

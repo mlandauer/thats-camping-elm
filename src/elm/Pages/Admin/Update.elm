@@ -92,14 +92,16 @@ transform campsites parks =
     List.map
         (\campsite ->
             { id = campsite.id
-            , name = campsite.longName
+            , name = campsite.longName |> Campsite.name
             , description = campsite.description
             , location = campsite.location
             , facilities = campsite.facilities
             , access = campsite.access
             , parkName =
-                Maybe.withDefault ""
-                    (Maybe.map .longName (parkWithId campsite.parkId parks))
+                parkWithId campsite.parkId parks
+                    |> Maybe.map .longName
+                    |> Maybe.withDefault ""
+                    |> Campsite.name
             , revision = Nothing
             }
         )
@@ -124,14 +126,14 @@ getLaneCove campsites =
 toggleLaneCoveName : Campsite -> Campsite
 toggleLaneCoveName campsite =
     if laneCoveNameChanged campsite then
-        { campsite | name = "Lane Cove River tourist park" }
+        { campsite | name = Campsite.name "Lane Cove River tourist park" }
     else
-        { campsite | name = "Lane Cove River - I've been updated!" }
+        { campsite | name = Campsite.name "Lane Cove River - I've been updated!" }
 
 
 laneCoveNameChanged : Campsite -> Bool
 laneCoveNameChanged campsite =
-    campsite.name /= "Lane Cove River tourist park"
+    campsite.name /= Campsite.name "Lane Cove River tourist park"
 
 
 syncData : Cmd Msg
