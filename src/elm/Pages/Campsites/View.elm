@@ -2,7 +2,8 @@ module Pages.Campsites.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import App.Update exposing (Msg)
+import Html.Events exposing (..)
+import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar, link)
@@ -52,12 +53,14 @@ view model =
         ]
 
 
-errorsView : List String -> Html msg
+errorsView : List String -> Html Msg
 errorsView errors =
     if List.isEmpty errors then
         text ""
     else
         div [ class "panel panel-default" ]
             [ div [ class "panel-body text-center bg-warning" ]
-                (List.map (\error -> (p [] [ text error ])) errors)
+                ([ button [ class "pull-right close", onClick ClearErrors ] [ text "×" ] ]
+                    ++ (List.map (\error -> (p [] [ text error ])) errors)
+                )
             ]

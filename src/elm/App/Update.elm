@@ -48,6 +48,7 @@ type Msg
     | ChangeComplete Pouchdb.ChangeComplete
     | ToggleStarCampsite String
     | Online Bool
+    | ClearErrors
 
 
 type alias Flags =
@@ -181,6 +182,9 @@ update msg model =
 
         Online online ->
             ( { model | online = online }, Cmd.none )
+
+        ClearErrors ->
+            ( { model | errors = [] }, Cmd.none )
 
 
 map : Model -> Leaflet.Map
