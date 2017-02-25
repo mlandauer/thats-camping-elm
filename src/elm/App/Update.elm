@@ -208,7 +208,7 @@ allMarkers campsites =
 
 markerForCampsite : Campsite -> Maybe Leaflet.Marker
 markerForCampsite campsite =
-    Maybe.map (Leaflet.Marker campsite.id (markerHtml campsite))
+    Maybe.map (Leaflet.Marker campsite.id Leaflet.Default (markerHtml campsite))
         campsite.location
 
 

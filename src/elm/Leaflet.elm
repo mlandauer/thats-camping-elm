@@ -3,6 +3,7 @@ port module Leaflet
         ( Marker
         , Map
         , mapCommand
+        , MarkerIcon(..)
         )
 
 import Location exposing (Location)
@@ -12,23 +13,53 @@ import Dict exposing (Dict)
 port mapVisibility : Bool -> Cmd msg
 
 
-port createMarker : Marker -> Cmd msg
+port createMarker : TranslatedMarker -> Cmd msg
 
 
-port updateMarker : Marker -> Cmd msg
+port updateMarker : TranslatedMarker -> Cmd msg
 
 
 port panMapTo : Location -> Cmd msg
 
 
-type alias Marker =
-    -- Do we want to get rid of the id here as it's stored elsewhere too?
+type MarkerIcon
+    = Default
+    | Star
+
+
+type alias TranslatedMarker =
     { id : String
+    , icon : Int
     , html :
         -- Wish we could render a view here instead
         String
     , location : Location
     }
+
+
+type alias Marker =
+    { id : String
+    , icon : MarkerIcon
+    , html :
+        -- Wish we could render a view here instead
+        String
+    , location : Location
+    }
+
+
+markerIconIndex : MarkerIcon -> Int
+markerIconIndex icon =
+    case icon of
+        Default ->
+            0
+
+        Star ->
+            1
+
+
+translateMarker : Marker -> TranslatedMarker
+translateMarker marker =
+    { id = marker.id, icon = markerIconIndex marker.icon, html = marker.html, location = marker.location }
 
 
 type alias Map =
@@ -66,8 +97,12 @@ markerCommand : Dict String Marker -> Dict String Marker -> Cmd msg
 markerCommand oldMarkers newMarkers =
     -- TODO: Also handle deleting markers
     Cmd.batch
-        ((List.map createMarker (addedMarkers oldMarkers newMarkers))
-            ++ (List.map updateMarker (changedMarkers oldMarkers newMarkers))
+        ((List.map (\m -> createMarker (translateMarker m))
+            (addedMarkers oldMarkers newMarkers)
+         )
+            ++ (List.map (\m -> updateMarker (translateMarker m))
+                    (changedMarkers oldMarkers newMarkers)
+               )
         )
 
 
