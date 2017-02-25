@@ -56,7 +56,7 @@ module.exports = {
   },
 
   plugins: [
-    new AppCachePlugin({}),
+    new AppCachePlugin({cache: ["/", "/campsites"], exclude: ['index.html']}),
     new GitRevisionPlugin(),
     new webpack.DefinePlugin({
       'VERSION': JSON.stringify(gitRevisionPlugin.version())
