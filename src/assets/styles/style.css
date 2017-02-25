@@ -221,3 +221,7 @@ div.tour {
 div.tour p, div.tour h2 {
   margin-bottom: 20px;
 }
+
+.alert {
+  margin-bottom: 0;
+}
