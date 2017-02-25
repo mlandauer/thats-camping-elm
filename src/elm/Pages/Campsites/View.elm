@@ -58,9 +58,17 @@ errorsView errors =
     if List.isEmpty errors then
         text ""
     else
-        div [ class "panel panel-default" ]
-            [ div [ class "panel-body text-center bg-warning" ]
-                ([ button [ class "pull-right close", onClick ClearErrors ] [ text "×" ] ]
-                    ++ (List.map (\error -> (p [] [ text error ])) errors)
-                )
-            ]
+        div [ class "alert alert-warning text-center" ]
+            ([ button [ class "pull-right close", onClick ClearErrors ] [ text "×" ] ]
+                ++ (List.map
+                        (\error ->
+                            (p []
+                                [ span [ class "glyphicon glyphicon-exclamation-sign" ] []
+                                , text " "
+                                , text error
+                                ]
+                            )
+                        )
+                        errors
+                   )
+            )
