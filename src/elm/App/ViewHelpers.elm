@@ -11,12 +11,13 @@ module App.ViewHelpers
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, on, onWithOptions)
 import Html.Keyed
 import App.Model exposing (..)
 import App.Update exposing (..)
 import Location exposing (Location)
 import Campsite exposing (Campsite)
+import Json.Decode
 
 
 navBar : String -> Bool -> Bool -> Html Msg
@@ -46,16 +47,24 @@ backButton =
         [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
 
 
-aboutButton : Html msg
+aboutButton : Html Msg
 aboutButton =
     link AboutPage
         [ class "btn navbar-link navbar-text pull-right" ]
         [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
 
 
-link : Page -> List (Attribute msg) -> List (Html msg) -> Html msg
+link : Page -> List (Attribute Msg) -> List (Html Msg) -> Html Msg
 link page attributes html =
-    a ((href (page2url page)) :: attributes) html
+    a
+        (attributes
+            ++ [ href (page2url page)
+               , onWithOptions "click"
+                    { stopPropagation = False, preventDefault = True }
+                    (Json.Decode.succeed (ChangePage page))
+               ]
+        )
+        html
 
 
 campsiteListView : Maybe Location -> List Campsite -> List String -> Html Msg

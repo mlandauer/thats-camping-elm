@@ -257,7 +257,7 @@ location2messages : Navigation.Location -> List Msg
 location2messages location =
     let
         builder =
-            (RouteUrl.Builder.fromHash location.href)
+            (RouteUrl.Builder.fromUrl location.href)
     in
         case RouteUrl.Builder.path builder of
             [ "campsites" ] ->
@@ -315,19 +315,19 @@ page2url : Page -> String
 page2url page =
     case page of
         CampsitesPage List ->
-            "#/campsites?type=list"
+            "/campsites?type=list"
 
         CampsitesPage Map ->
-            "#/campsites?type=map"
+            "/campsites?type=map"
 
         CampsitePage id ->
-            "#/campsites/" ++ id
+            "/campsites/" ++ id
 
         AboutPage ->
-            "#/about"
+            "/about"
 
         TourPage id ->
-            "#/tour/"
+            "/tour/"
                 ++ (case id of
                         Start ->
                             "start"
@@ -346,7 +346,7 @@ page2url page =
                    )
 
         AdminPage ->
-            "#/admin"
+            "/admin"
 
         UnknownPage ->
-            "#/404"
+            "/404"
