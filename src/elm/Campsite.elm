@@ -14,6 +14,8 @@ module Campsite
         , Cars(..)
         , shortenName
         , name
+          -- TODO: Rename transform to something more descriptive
+        , transform
         )
 
 import Location exposing (Location)
@@ -178,3 +180,10 @@ specialCase1 text =
 
 type alias CampsiteWithStarred =
     { campsite : Campsite, starred : Bool }
+
+
+transform : List Campsite -> List String -> List CampsiteWithStarred
+transform campsites starredCampsites =
+    List.map
+        (\campsite -> CampsiteWithStarred campsite (List.member campsite.id starredCampsites))
+        campsites

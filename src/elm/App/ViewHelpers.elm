@@ -73,15 +73,10 @@ campsiteListView location campsites starredCampsites =
         [ class "list-group" ]
         (List.map
             (\c -> ( c.campsite.id, campsiteListItem location c ))
-            (sortCampsitesWithStarred location (transform campsites starredCampsites))
+            (sortCampsitesWithStarred location
+                (Campsite.transform campsites starredCampsites)
+            )
         )
-
-
-transform : List Campsite -> List String -> List CampsiteWithStarred
-transform campsites starredCampsites =
-    List.map
-        (\campsite -> CampsiteWithStarred campsite (List.member campsite.id starredCampsites))
-        campsites
 
 
 sortCampsitesWithStarred : Maybe Location -> List CampsiteWithStarred -> List CampsiteWithStarred
