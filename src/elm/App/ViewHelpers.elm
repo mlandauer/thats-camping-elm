@@ -16,7 +16,7 @@ import Html.Keyed
 import App.Model exposing (..)
 import App.Update exposing (..)
 import Location exposing (Location)
-import Campsite exposing (Campsite)
+import Campsite exposing (Campsite, CampsiteWithStarred)
 import Json.Decode
 
 
@@ -82,10 +82,6 @@ transform campsites starredCampsites =
     List.map
         (\campsite -> CampsiteWithStarred campsite (List.member campsite.id starredCampsites))
         campsites
-
-
-type alias CampsiteWithStarred =
-    { campsite : Campsite, starred : Bool }
 
 
 sortCampsitesWithStarred : Maybe Location -> List CampsiteWithStarred -> List CampsiteWithStarred

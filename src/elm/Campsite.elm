@@ -1,6 +1,7 @@
 module Campsite
     exposing
         ( Campsite
+        , CampsiteWithStarred
         , Facilities
         , Access
         , Toilets(..)
@@ -173,3 +174,7 @@ specialCase1 text =
         "Euroka (trailer area)"
     else
         text
+
+
+type alias CampsiteWithStarred =
+    { campsite : Campsite, starred : Bool }
