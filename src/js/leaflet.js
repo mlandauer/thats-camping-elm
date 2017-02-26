@@ -7,6 +7,8 @@ require('leaflet/dist/images/marker-icon-2x.png');
 var map = undefined;
 var mapMarkers = {};
 
+var starIcon = L.divIcon({className: 'map-star-icon', html: "<span class=\"glyphicon glyphicon-star\"></span>"});
+
 export function initialise(app, center) {
   var mapboxUrl =
     'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -48,7 +50,12 @@ export function initialise(app, center) {
 
   app.ports.createMarker.subscribe(function(marker){
     // TODO: Guard against this not actually being a new marker
-    var m = L.marker([marker.location.latitude, marker.location.longitude]);
+    // if (marker.icon == 0) {
+      var m = L.marker([marker.location.latitude, marker.location.longitude]);
+    // } else {
+    //   var m = L.marker([marker.location.latitude, marker.location.longitude],
+    //     {icon: starIcon});
+    // }
     mapMarkers[marker.id] = m;
     m.addTo(map);
     m.bindPopup(marker.html, {closeButton: false});
