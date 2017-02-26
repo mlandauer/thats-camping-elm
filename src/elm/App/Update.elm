@@ -22,7 +22,7 @@ import Pages.Admin.Update
 import Pouchdb
 import App.NewDecoder
 import Json.Decode
-import Campsite exposing (Campsite)
+import Campsite exposing (Campsite, CampsiteWithStarred)
 import Location exposing (Location)
 import Leaflet
 
@@ -195,21 +195,30 @@ map model =
             -- Starting point is 32° 09' 48" South, 147° 01' 00" East which is "centre" of NSW
             (Location -32.163333333333334 147.01666666666668)
             model.location
-    , markers = allMarkers (Dict.values model.campsites)
+    , markers = allMarkers (Dict.values model.campsites) model.starredCampsites
     }
 
 
-allMarkers : List Campsite -> List Leaflet.Marker
-allMarkers campsites =
+allMarkers : List Campsite -> List String -> List Leaflet.Marker
+allMarkers campsites starredCampsites =
     List.filterMap
         identity
-        (List.map markerForCampsite campsites)
+        (List.map markerForCampsite
+            (Campsite.transform campsites starredCampsites)
+        )
 
 
-markerForCampsite : Campsite -> Maybe Leaflet.Marker
-markerForCampsite campsite =
-    Maybe.map (Leaflet.Marker campsite.id Leaflet.Default (markerHtml campsite))
-        campsite.location
+markerForCampsite : CampsiteWithStarred -> Maybe Leaflet.Marker
+markerForCampsite c =
+    let
+        icon =
+            if c.starred then
+                Leaflet.Star
+            else
+                Leaflet.Default
+    in
+        Maybe.map (Leaflet.Marker c.campsite.id icon (markerHtml c.campsite))
+            c.campsite.location
 
 
 markerHtml : Campsite -> String
