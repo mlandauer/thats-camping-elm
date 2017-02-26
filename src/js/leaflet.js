@@ -1,4 +1,5 @@
 var L = require('leaflet');
+var jQuery = require("jquery");
 
 require('leaflet/dist/leaflet.css');
 require('leaflet/dist/images/marker-shadow.png');
@@ -58,7 +59,13 @@ export function initialise(app, center) {
     // }
     mapMarkers[marker.id] = m;
     m.addTo(map);
-    m.bindPopup(marker.html, {closeButton: false});
+    // This is the only use of jquery. Ugh. Using it to attach an
+    // event handler
+    var html = jQuery(marker.html).click(function() {
+      app.ports.markerClicked.send(marker.id);
+      return false;
+    })[0];
+    m.bindPopup(html, {closeButton: false});
   });
 
   app.ports.updateMarker.subscribe(function(marker){

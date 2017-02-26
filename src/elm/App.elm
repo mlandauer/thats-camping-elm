@@ -6,6 +6,7 @@ import App.Update exposing (..)
 import App.View exposing (..)
 import Pages.Admin.Update
 import Pouchdb
+import Leaflet
 
 
 main : RouteUrl.RouteUrlProgram Flags Model Msg
@@ -25,6 +26,7 @@ subscriptions model =
     Sub.batch
         [ Pouchdb.changeSuccess ChangeSuccess
         , Pouchdb.changeComplete ChangeComplete
+        , Leaflet.markerClicked (\id -> ChangePage (CampsitePage id))
         , Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
         , online Online
         ]

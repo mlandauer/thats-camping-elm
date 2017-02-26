@@ -4,6 +4,7 @@ port module Leaflet
         , Map
         , mapCommand
         , MarkerIcon(..)
+        , markerClicked
         )
 
 import Location exposing (Location)
@@ -20,6 +21,9 @@ port updateMarker : TranslatedMarker -> Cmd msg
 
 
 port panMapTo : Location -> Cmd msg
+
+
+port markerClicked : (String -> msg) -> Sub msg
 
 
 type MarkerIcon
