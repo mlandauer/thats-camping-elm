@@ -6,6 +6,7 @@ import App.ViewHelpers exposing (navBar)
 import App.Update exposing (Msg)
 import Markdown
 import Regex
+import App.Model exposing (Page(..), TourPageId(..))
 
 
 view : String -> Html Msg
@@ -13,7 +14,8 @@ view version =
     div [ class "campsite-list" ]
         [ navBar "About" True False
         , div [ class "content" ]
-            [ """
+            [ div [ class "container" ]
+                [ """
 ## About That's Camping
 
 Find campsites near you in New South Wales, Australia. It covers camping on
@@ -27,15 +29,23 @@ app. It's free and [open source](https://github.com/mlandauer/thats-camping-elm)
 because that's the way it ought to be.
 
 You're currently using version [{{version}}](https://github.com/mlandauer/thats-camping-elm/commit/{{version}}).
-
+                """
+                    -- Doing poor man's string interpolation here
+                    |>
+                        replace "{{version}}" version
+                    |> Markdown.toHtml []
+                , p []
+                    [ App.ViewHelpers.link (TourPage Find)
+                        [ class "wide-button btn btn-default" ]
+                        [ text "Tour" ]
+                    ]
+                , """
 ## Things you might want to do
 
 [Suggest a **feature** or report an **issue**](https://github.com/mlandauer/thats-camping-elm/issues)
-                """
-                -- Doing poor man's string interpolation here
-                |>
-                    replace "{{version}}" version
-                |> Markdown.toHtml [ class "container" ]
+                  """
+                    |> Markdown.toHtml []
+                ]
             ]
         ]
 
