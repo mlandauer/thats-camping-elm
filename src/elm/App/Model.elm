@@ -18,11 +18,9 @@ type CampsitesPageOption
 
 
 type TourPageId
-    = Start
-    | Find
+    = Find
     | Offline
     | Edit
-    | Last
 
 
 type Page

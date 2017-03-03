@@ -12,7 +12,7 @@ import App.ViewHelpers exposing (link, navBar)
 view : TourPageId -> Html Msg
 view id =
     div [ class "tour" ]
-        [ navBar "" (id /= Start) False
+        [ navBar "" (id /= Find) False
         , div [ class "container" ]
             [ div [ class "content" ]
                 [ div [ class "centering-box" ]
@@ -33,16 +33,9 @@ view id =
 content : TourPageId -> String
 content id =
     case id of
-        Start ->
-            """
-## That's Camping - A Quick Tour
-
-As it's your first time here we’ll give you a quick tour of how you can find the perfect campsite.
-"""
-
         Find ->
             """
-## Find campsites
+## That's Camping
 
 Find campsites near you with the facilities you want. Look at a simple list or look around a map.
 
@@ -66,20 +59,10 @@ Soon, you will be able to add and update campsites and it will work even when yo
 Get a warm and fuzzy feeling because other people will benefit from your knowledge.
 """
 
-        Last ->
-            """
-## Loading campsites
-
-We're just finishing loading the campsites for you in the background. It shouldn't take long.
-"""
-
 
 nextPage : TourPageId -> Page
 nextPage id =
     case id of
-        Start ->
-            TourPage Find
-
         Find ->
             TourPage Offline
 
@@ -87,18 +70,12 @@ nextPage id =
             TourPage Edit
 
         Edit ->
-            TourPage Last
-
-        Last ->
             CampsitesPage List
 
 
 nextText : TourPageId -> String
 nextText id =
     case id of
-        Start ->
-            "Start Tour"
-
         Find ->
             "Next"
 
@@ -107,6 +84,3 @@ nextText id =
 
         Edit ->
             "Next"
-
-        Last ->
-            "Get Started"
