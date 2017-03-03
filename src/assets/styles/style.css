@@ -225,3 +225,8 @@ div.tour p, div.tour h2 {
 .alert {
   margin-bottom: 0;
 }
+
+#map .glyphicon-star {
+  font-size: 20px;
+  color: #2981ca;
+}

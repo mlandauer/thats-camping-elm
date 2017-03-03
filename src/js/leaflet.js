@@ -8,7 +8,8 @@ require('leaflet/dist/images/marker-icon-2x.png');
 var map = undefined;
 var mapMarkers = {};
 
-var starIcon = L.divIcon({className: 'map-star-icon', html: "<span class=\"glyphicon glyphicon-star\"></span>"});
+var defaultIcon = new L.Icon.Default;
+var starIcon = L.divIcon({className: 'map-star-icon', html: "<span class=\"glyphicon glyphicon-star\"></span>", iconSize: [20 , 24]});
 
 export function initialise(app, center) {
   var mapboxUrl =
@@ -49,14 +50,18 @@ export function initialise(app, center) {
     map.panTo([location.latitude, location.longitude]);
   });
 
+  function lookupIcon(i) {
+    if (i == 0) {
+      return defaultIcon;
+    } else {
+     return starIcon;
+    }
+  };
+
   app.ports.createMarker.subscribe(function(marker){
     // TODO: Guard against this not actually being a new marker
-    // if (marker.icon == 0) {
-      var m = L.marker([marker.location.latitude, marker.location.longitude]);
-    // } else {
-    //   var m = L.marker([marker.location.latitude, marker.location.longitude],
-    //     {icon: starIcon});
-    // }
+    var m = L.marker([marker.location.latitude, marker.location.longitude],
+      {icon: lookupIcon(marker.icon)});
     mapMarkers[marker.id] = m;
     m.addTo(map);
     // This is the only use of jquery. Ugh. Using it to attach an
@@ -87,6 +92,10 @@ export function initialise(app, center) {
     if (m.getPopup().getContent().outerHTML != html.outerHTML) {
       m.setPopupContent(html);
     }
+    // When changing the icon the position of the popup doesn't get adjusted
+    // Calling m.getPopup().update() or m.update() doesn't seem to affect it.
+    // TODO: Fix this ugly bug
+    m.setIcon(lookupIcon(marker.icon));
   });
 
   /*
