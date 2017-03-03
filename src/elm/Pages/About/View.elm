@@ -13,9 +13,7 @@ view version =
     div [ class "campsite-list" ]
         [ navBar "About" True False
         , div [ class "content" ]
-            [ let
-                content =
-                    """
+            [ """
 ## About That's Camping
 
 Find campsites near you in New South Wales, Australia. It covers camping on
@@ -33,9 +31,16 @@ You're currently using version [{{version}}](https://github.com/mlandauer/thats-
 ## Things you might want to do
 
 [Suggest a **feature** or report an **issue**](https://github.com/mlandauer/thats-camping-elm/issues)
-"""
-              in
+                """
                 -- Doing poor man's string interpolation here
-                Markdown.toHtml [ class "container" ] (Regex.replace Regex.All (Regex.regex "{{version}}") (\_ -> version) content)
+                |>
+                    replace "{{version}}" version
+                |> Markdown.toHtml [ class "container" ]
             ]
         ]
+
+
+replace : String -> String -> String -> String
+replace a b text =
+    -- Replace a with b
+    (Regex.replace Regex.All (Regex.regex a) (\_ -> b) text)
