@@ -77,7 +77,16 @@ export function initialise(app, center) {
       app.ports.markerClicked.send(marker.id);
       return false;
     })[0];
-    m.setPopupContent(html);
+    // Setting the contents of the popup shifts the popup to the right.
+    // Calling m.getPopup().update() or m.update() doesn't do anything to fix
+    // this. I'm guessing at this stage it's a bug in leaflet but don't really
+    // know for sure. Anyway, let's minimise the effect of it by only updating
+    // the content of the popup if it's actually necessary (i.e. the content has
+    // changed!)
+    // TODO: Fix bug with shift to the right after content update
+    if (m.getPopup().getContent().outerHTML != html.outerHTML) {
+      m.setPopupContent(html);
+    }
   });
 
   /*
