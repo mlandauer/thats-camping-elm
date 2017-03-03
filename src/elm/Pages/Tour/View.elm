@@ -44,7 +44,9 @@ As it's your first time here we’ll give you a quick tour of how you can find t
             """
 ## Find campsites
 
-Find campsites near you that have the facilities that you want. Look at a simple list or look around a map.
+Find campsites near you with the facilities you want. Look at a simple list or look around a map.
+
+It covers camping on public, common land, initially for New South Wales, Australia.
 
 """
 
