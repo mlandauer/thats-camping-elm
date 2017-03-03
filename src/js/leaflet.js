@@ -71,7 +71,13 @@ export function initialise(app, center) {
   app.ports.updateMarker.subscribe(function(marker){
     var m = mapMarkers[marker.id];
     m.setLatLng([marker.location.latitude, marker.location.longitude]);
-    m.setPopupContent(marker.html)
+    // This is the only use of jquery. Ugh. Using it to attach an
+    // event handler
+    var html = jQuery(marker.html).click(function() {
+      app.ports.markerClicked.send(marker.id);
+      return false;
+    })[0];
+    m.setPopupContent(html);
   });
 
   /*
