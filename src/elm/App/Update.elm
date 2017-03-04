@@ -155,7 +155,10 @@ update msg model =
                     Debug.log "no_campsites_loaded" (Dict.size model.campsites)
             in
                 -- Now request the changes continuously
-                ( model
+                ( if no_campsites_loaded == 0 then
+                    { model | page = TourPage Find }
+                  else
+                    model
                 , Cmd.batch
                     [ Pouchdb.sync
                         { live = True
