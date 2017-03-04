@@ -50,7 +50,7 @@ view model =
                 Pages.About.View.view model.version
 
             TourPage id ->
-                Pages.Tour.View.view id
+                Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
 
             AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model.adminModel)

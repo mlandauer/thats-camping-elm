@@ -9,8 +9,8 @@ import App.Model exposing (Page(..), CampsitesPageOption(..), TourPageId(..))
 import App.ViewHelpers exposing (link, navBar)
 
 
-view : TourPageId -> Html Msg
-view id =
+view : TourPageId -> Bool -> Html Msg
+view id loaded =
     div [ class "tour" ]
         [ navBar "" (id /= Find) False
         , div [ class "container" ]
@@ -22,9 +22,13 @@ view id =
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
-                [ link (nextPage id)
-                    [ class "btn btn-default navbar-btn" ]
-                    [ text (nextText id) ]
+                [ if id /= Edit || loaded then
+                    link (nextPage id)
+                        [ class "btn btn-default navbar-btn" ]
+                        [ text (nextText id) ]
+                  else
+                    span [ class "btn btn-default navbar-btn disabled" ]
+                        [ text (nextText id) ]
                 ]
             ]
         ]
