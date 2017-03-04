@@ -56,7 +56,7 @@ Almost everything works offline too. So you can find your next campsite even whe
 
         Edit ->
             """
-## A Wikipedia for campsites
+## Coming soon... A Wikipedia for campsites
 
 Soon, you will be able to add and update campsites and it will work even when you're offline.
 
