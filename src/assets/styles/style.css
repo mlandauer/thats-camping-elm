@@ -235,3 +235,10 @@ div.tour p, div.tour h2 {
   font-size: 20px;
   color: #2981ca;
 }
+
+.sync {
+  position: absolute;
+  right: 10px;
+  bottom: -6px;
+  opacity: 0.5;
+}

@@ -44,4 +44,5 @@ type alias Model =
     , version : String
     , online : Bool
     , sequence : Int
+    , synching : Bool
     }

@@ -72,6 +72,7 @@ init flags =
       , starredCampsites = Maybe.withDefault [] flags.starredCampsites
       , online = flags.online
       , sequence = 0
+      , synching = False
       }
       -- On startup immediately try to get the location
     , Cmd.batch

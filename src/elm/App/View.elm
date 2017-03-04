@@ -32,6 +32,7 @@ view model =
                     , errors = model.errors
                     , starredCampsites = model.starredCampsites
                     , displayType = displayType
+                    , synching = model.synching
                     }
 
             CampsitePage id ->

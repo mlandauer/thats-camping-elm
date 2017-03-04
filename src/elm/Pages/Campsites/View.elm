@@ -42,7 +42,13 @@ view model =
                 ]
             , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
                 [ div [ class "container" ]
-                    [ div [ class "btn-group" ]
+                    [ if model.synching then
+                        div [ class "btn navbar-link navbar-text sync" ]
+                            [ span [ class "glyphicon glyphicon-transfer" ] []
+                            ]
+                      else
+                        text ""
+                    , div [ class "btn-group" ]
                         [ link (CampsitesPage List)
                             [ class "btn navbar-link navbar-text" ]
                             [ span [ class "glyphicon glyphicon-list" ] [] ]
