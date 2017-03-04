@@ -46,6 +46,8 @@ type Msg
     | AdminMsg Pages.Admin.Update.Msg
     | ChangeSuccess Pouchdb.ChangeSuccess
     | ChangeComplete Pouchdb.ChangeComplete
+    | SyncPaused Pouchdb.SyncPaused
+    | SyncActive {}
     | ToggleStarCampsite String
     | Online Bool
     | ClearErrors
@@ -157,9 +159,9 @@ update msg model =
             in
                 -- Now request the changes continuously
                 ( if no_campsites_loaded == 0 then
-                    { model | page = TourPage Start }
+                    { model | page = TourPage Start, synching = True }
                   else
-                    model
+                    { model | synching = True }
                 , Cmd.batch
                     [ Pouchdb.sync
                         { live = True
@@ -189,6 +191,12 @@ update msg model =
 
         ClearErrors ->
             ( { model | errors = [] }, Cmd.none )
+
+        SyncPaused p ->
+            ( { model | synching = False }, Cmd.none )
+
+        SyncActive _ ->
+            ( { model | synching = True }, Cmd.none )
 
 
 map : Model -> Leaflet.Map

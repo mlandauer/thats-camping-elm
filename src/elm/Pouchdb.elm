@@ -16,6 +16,9 @@ port module Pouchdb
         , ChangeComplete
         , bulkDocs
         , sync
+        , syncPaused
+        , SyncPaused
+        , syncActive
         )
 
 import Json.Encode
@@ -97,3 +100,13 @@ type alias SyncOptions =
 
 
 port sync : SyncOptions -> Cmd msg
+
+
+type alias SyncPaused =
+    {}
+
+
+port syncPaused : (SyncPaused -> msg) -> Sub msg
+
+
+port syncActive : ({} -> msg) -> Sub msg

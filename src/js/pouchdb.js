@@ -23,10 +23,11 @@ export function initialise(app) {
       console.log("sync change:", info);
     }).on('paused', function (err) {
       // replication paused (e.g. replication up to date, user went offline)
-      console.log("sync paused:", err);
+      app.ports.syncPaused.send(err);
     }).on('active', function () {
       // replicate resumed (e.g. new changes replicating, user went back online)
       console.log("sync active");
+      app.ports.syncActive.send();
     }).on('denied', function (err) {
       // a document failed to replicate (e.g. due to permissions)
       console.log("sync denied:", err);

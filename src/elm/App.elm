@@ -26,6 +26,8 @@ subscriptions model =
     Sub.batch
         [ Pouchdb.changeSuccess ChangeSuccess
         , Pouchdb.changeComplete ChangeComplete
+        , Pouchdb.syncPaused SyncPaused
+        , Pouchdb.syncActive SyncActive
         , Leaflet.markerClicked (\id -> ChangePage (CampsitePage id))
         , Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
         , online Online
