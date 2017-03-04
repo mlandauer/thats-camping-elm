@@ -35,7 +35,7 @@ You're currently using version [{{version}}](https://github.com/mlandauer/thats-
                         replace "{{version}}" version
                     |> Markdown.toHtml []
                 , p []
-                    [ App.ViewHelpers.link (TourPage Find)
+                    [ App.ViewHelpers.link (TourPage Start)
                         [ class "wide-button btn btn-default" ]
                         [ text "Tour" ]
                     ]

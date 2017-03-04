@@ -12,7 +12,7 @@ import App.ViewHelpers exposing (link, navBar)
 view : TourPageId -> Bool -> Html Msg
 view id loaded =
     div [ class "tour" ]
-        [ navBar "" (id /= Find) False
+        [ navBar "" (id /= Start) False
         , div [ class "container" ]
             [ div [ class "content" ]
                 [ div [ class "centering-box" ]
@@ -37,7 +37,7 @@ view id loaded =
 content : TourPageId -> String
 content id =
     case id of
-        Find ->
+        Start ->
             """
 ## That's Camping
 
@@ -67,7 +67,7 @@ Get a warm and fuzzy feeling because other people will benefit from your knowled
 nextPage : TourPageId -> Page
 nextPage id =
     case id of
-        Find ->
+        Start ->
             TourPage Offline
 
         Offline ->
@@ -80,7 +80,7 @@ nextPage id =
 nextText : TourPageId -> String
 nextText id =
     case id of
-        Find ->
+        Start ->
             "Next"
 
         Offline ->

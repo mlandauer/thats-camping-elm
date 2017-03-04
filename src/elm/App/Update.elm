@@ -156,7 +156,7 @@ update msg model =
             in
                 -- Now request the changes continuously
                 ( if no_campsites_loaded == 0 then
-                    { model | page = TourPage Find }
+                    { model | page = TourPage Start }
                   else
                     model
                 , Cmd.batch
@@ -290,10 +290,10 @@ location2messages location =
                 [ ChangePage AboutPage ]
 
             [ "tour" ] ->
-                [ ChangePage (TourPage Find) ]
+                [ ChangePage (TourPage Start) ]
 
             [ "tour", "find" ] ->
-                [ ChangePage (TourPage Find) ]
+                [ ChangePage (TourPage Start) ]
 
             [ "tour", "offline" ] ->
                 [ ChangePage (TourPage Offline) ]
@@ -335,7 +335,7 @@ page2url page =
         TourPage id ->
             "/tour/"
                 ++ (case id of
-                        Find ->
+                        Start ->
                             "find"
 
                         Offline ->
