@@ -16,7 +16,15 @@ view model =
             [ div [ class "container" ]
                 [ div [ class "content" ]
                     [ div [ class "centering-box" ]
-                        [ h2 [] [ text "That's Camping" ]
+                        [ div []
+                            [ img
+                                [ src "/apple-touch-icon.png"
+                                , width 96
+                                , height 96
+                                ]
+                                []
+                            , h2 [] [ text "That's Camping" ]
+                            ]
                         ]
                     ]
                 ]
