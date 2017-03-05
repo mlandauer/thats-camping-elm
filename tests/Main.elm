@@ -8,6 +8,7 @@ import TestsLocation
 import TestsCampsite
 import Libs.SimpleFormat.Tests
 import Pages.Campsite.Tests
+import App.TestsUpdate
 
 
 main : Test.Runner.Node.TestProgram
@@ -23,6 +24,7 @@ all =
         , TestsCampsite.all
         , Libs.SimpleFormat.Tests.all
         , Pages.Campsite.Tests.all
+        , App.TestsUpdate.all
         ]
 
 

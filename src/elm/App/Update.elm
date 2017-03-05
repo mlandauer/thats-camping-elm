@@ -5,6 +5,7 @@ port module App.Update
         , location2messages
         , delta2hash
         , init
+        , initModel
         , Flags
         , online
         , subscriptions
@@ -62,19 +63,24 @@ type alias Flags =
     }
 
 
+initModel : Flags -> Model
+initModel flags =
+    { campsites = Dict.empty
+    , location = flags.location
+    , errors = Errors.initModel
+    , page = CampsitesPage List
+    , standalone = flags.standalone
+    , version = flags.version
+    , starredCampsites = Maybe.withDefault [] flags.starredCampsites
+    , online = flags.online
+    , sequence = 0
+    , synching = False
+    }
+
+
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( { campsites = Dict.empty
-      , location = flags.location
-      , errors = Errors.initModel
-      , page = CampsitesPage List
-      , standalone = flags.standalone
-      , version = flags.version
-      , starredCampsites = Maybe.withDefault [] flags.starredCampsites
-      , online = flags.online
-      , sequence = 0
-      , synching = False
-      }
+    ( initModel flags
       -- On startup immediately try to get the location
     , Cmd.batch
         [ Task.attempt UpdateLocation Geolocation.now
