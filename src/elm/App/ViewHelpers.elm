@@ -15,6 +15,7 @@ import Html.Events exposing (onClick, on, onWithOptions)
 import Html.Keyed
 import App.Model exposing (..)
 import App.Update exposing (..)
+import App.Routing
 import Location exposing (Location)
 import Campsite exposing (Campsite, CampsiteWithStarred)
 import Json.Decode
@@ -58,7 +59,7 @@ link : Page -> List (Attribute Msg) -> List (Html Msg) -> Html Msg
 link page attributes html =
     a
         (attributes
-            ++ [ href (page2url page)
+            ++ [ href (App.Routing.page2url page)
                , onWithOptions "click"
                     { stopPropagation = False, preventDefault = True }
                     (Json.Decode.succeed (ChangePage page))

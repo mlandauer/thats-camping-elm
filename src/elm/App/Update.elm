@@ -4,7 +4,6 @@ port module App.Update
         , updateWithMap
         , location2messages
         , delta2hash
-        , page2url
         , init
         , Flags
         , online
@@ -12,6 +11,7 @@ port module App.Update
         )
 
 import App.Model exposing (..)
+import App.Routing
 import Geolocation
 import Navigation
 import Dict exposing (Dict)
@@ -250,7 +250,7 @@ markerForCampsite c =
 markerHtml : Campsite -> String
 markerHtml campsite =
     -- Wish this could come from a view
-    a (page2url (CampsitePage campsite.id))
+    a (App.Routing.page2url (CampsitePage campsite.id))
         (div "campsite"
             (String.append
                 (div "name" campsite.name.short)
@@ -288,93 +288,11 @@ transformCampsites campsites =
     Dict.fromList (List.map (\campsite -> ( campsite.id, campsite )) campsites)
 
 
-location2page : Navigation.Location -> Page
-location2page location =
-    let
-        builder =
-            (RouteUrl.Builder.fromUrl location.href)
-    in
-        case RouteUrl.Builder.path builder of
-            [ "campsites" ] ->
-                case Dict.get "type" (RouteUrl.Builder.query builder) of
-                    Just "map" ->
-                        CampsitesPage Map
-
-                    Just _ ->
-                        CampsitesPage List
-
-                    Nothing ->
-                        CampsitesPage List
-
-            [ "campsites", id ] ->
-                CampsitePage id
-
-            [ "about" ] ->
-                AboutPage
-
-            [ "tour" ] ->
-                TourPage Start
-
-            [ "tour", "find" ] ->
-                TourPage Start
-
-            [ "tour", "offline" ] ->
-                TourPage Offline
-
-            [ "tour", "edit" ] ->
-                TourPage Edit
-
-            [ "admin" ] ->
-                AdminPage
-
-            id :: _ ->
-                UnknownPage
-
-            -- Default route
-            [] ->
-                CampsitesPage List
-
-
 location2messages : Navigation.Location -> List Msg
 location2messages location =
-    [ ChangePage (location2page location) ]
+    [ ChangePage (App.Routing.location2page location) ]
 
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
 delta2hash previous current =
-    Just (RouteUrl.UrlChange RouteUrl.NewEntry (page2url current.page))
-
-
-page2url : Page -> String
-page2url page =
-    case page of
-        CampsitesPage List ->
-            "/campsites?type=list"
-
-        CampsitesPage Map ->
-            "/campsites?type=map"
-
-        CampsitePage id ->
-            "/campsites/" ++ id
-
-        AboutPage ->
-            "/about"
-
-        TourPage id ->
-            "/tour/"
-                ++ (case id of
-                        Start ->
-                            "find"
-
-                        Offline ->
-                            "offline"
-
-                        Edit ->
-                            "edit"
-                   )
-
-        AdminPage ->
-            "/admin"
-
-        UnknownPage ->
-            "/404"
+    Just (RouteUrl.UrlChange RouteUrl.NewEntry (App.Routing.page2url current.page))
