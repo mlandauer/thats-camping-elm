@@ -26,6 +26,7 @@ import Json.Decode
 import Campsite exposing (Campsite, CampsiteWithStarred)
 import Location exposing (Location)
 import Leaflet
+import Errors
 
 
 -- TODO: We should probably move this port into another module
@@ -51,7 +52,7 @@ type Msg
     | SyncActive {}
     | ToggleStarCampsite String
     | Online Bool
-    | ClearErrors
+    | ErrorsMsg Errors.Msg
 
 
 type alias Flags =
@@ -67,7 +68,7 @@ init : Flags -> ( Model, Cmd Msg )
 init flags =
     ( { campsites = Dict.empty
       , location = flags.location
-      , errors = []
+      , errors = Errors.initModel
       , page = CampsitesPage List
       , adminModel = Pages.Admin.Model.initModel
       , standalone = flags.standalone
@@ -98,7 +99,12 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateLocation (Err error) ->
-            ( { model | errors = ((formatGeolocationError error) :: model.errors) }, Cmd.none )
+            ( { model
+                | errors =
+                    Errors.add (formatGeolocationError error) model.errors
+              }
+            , Cmd.none
+            )
 
         UpdateLocation (Ok location) ->
             let
@@ -190,8 +196,8 @@ update msg model =
         Online online ->
             ( { model | online = online }, Cmd.none )
 
-        ClearErrors ->
-            ( { model | errors = [] }, Cmd.none )
+        ErrorsMsg msg ->
+            ( { model | errors = Errors.update msg model.errors }, Cmd.none )
 
         SyncPaused p ->
             ( { model | synching = False }, Cmd.none )

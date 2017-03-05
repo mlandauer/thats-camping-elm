@@ -7,6 +7,7 @@ import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar, link)
+import Errors
 
 
 view : Model -> Html Msg
@@ -25,7 +26,7 @@ view model =
         div [ class "campsite-list" ]
             [ navBar "Camping near you" False True
             , div [ class "content " ]
-                [ errorsView model.errors
+                [ Html.map ErrorsMsg (Errors.view model.errors)
                 , div [ class "content-inner" ]
                     [ case model.displayType of
                         List ->
@@ -59,24 +60,3 @@ view model =
                     ]
                 ]
             ]
-
-
-errorsView : List String -> Html Msg
-errorsView errors =
-    if List.isEmpty errors then
-        text ""
-    else
-        div [ class "alert alert-warning text-center" ]
-            ([ button [ class "pull-right close", onClick ClearErrors ] [ text "×" ] ]
-                ++ (List.map
-                        (\error ->
-                            (p []
-                                [ span [ class "glyphicon glyphicon-exclamation-sign" ] []
-                                , text " "
-                                , text error
-                                ]
-                            )
-                        )
-                        errors
-                   )
-            )
