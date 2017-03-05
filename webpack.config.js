@@ -27,7 +27,7 @@ module.exports = {
         })
       },
       {
-        test:    /\.(html|png)$/,
+        test:    /\.(html|png|json)$/,
         use:  'file-loader?name=[name].[ext]',
       },
       {

@@ -9,6 +9,8 @@ require('./index.html');
 
 require('./assets/images/apple-touch-icon.png');
 
+require('./manifest.json');
+
 var Elm = require('./elm/App.elm');
 var Online = require('./js/online');
 var Pouchdb = require('./js/pouchdb');
