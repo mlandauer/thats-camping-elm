@@ -4,12 +4,11 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Pages.Admin.Update exposing (..)
-import Pages.Admin.Model exposing (..)
-import Pages.Admin.Update exposing (..)
 import Errors
+import App.Model
 
 
-view : Model -> Html Msg
+view : App.Model.Model -> Html Msg
 view model =
     div [ class "content" ]
         [ div [ class "container" ]

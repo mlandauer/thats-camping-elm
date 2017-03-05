@@ -17,7 +17,6 @@ import Navigation
 import Dict exposing (Dict)
 import RouteUrl
 import Task
-import Pages.Admin.Model
 import Pages.Admin.Update
 import Pouchdb
 import App.NewDecoder
@@ -69,7 +68,6 @@ init flags =
       , location = flags.location
       , errors = Errors.initModel
       , page = CampsitesPage List
-      , adminModel = Pages.Admin.Model.initModel
       , standalone = flags.standalone
       , version = flags.version
       , starredCampsites = Maybe.withDefault [] flags.starredCampsites
@@ -121,9 +119,9 @@ update msg model =
         AdminMsg msg ->
             let
                 ( updatedAdminModel, adminCmd ) =
-                    Pages.Admin.Update.update msg model.adminModel
+                    Pages.Admin.Update.update msg model
             in
-                ( { model | adminModel = updatedAdminModel }, Cmd.map AdminMsg adminCmd )
+                ( updatedAdminModel, Cmd.map AdminMsg adminCmd )
 
         ChangeSuccess change ->
             -- TODO: Need to think how to handle deleted documents. Is this
@@ -140,15 +138,9 @@ update msg model =
                         let
                             newCampsites =
                                 Dict.insert campsite.id campsite model.campsites
-
-                            admin =
-                                model.adminModel
                         in
-                            -- Setting model in a child model at the same time.
-                            -- Very hokey but this is temporary
                             ( { model
                                 | campsites = newCampsites
-                                , adminModel = { admin | campsites = newCampsites }
                                 , sequence = sequence
                               }
                             , Cmd.none
@@ -213,7 +205,7 @@ subscriptions model =
         , Pouchdb.syncPaused SyncPaused
         , Pouchdb.syncActive SyncActive
         , Leaflet.markerClicked (\id -> ChangePage (CampsitePage id))
-        , Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
+        , Sub.map AdminMsg (Pages.Admin.Update.subscriptions model)
         , online Online
         ]
 

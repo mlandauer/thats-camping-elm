@@ -54,7 +54,7 @@ view model =
                 Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
 
             AdminPage ->
-                Html.map AdminMsg (Pages.Admin.View.view model.adminModel)
+                Html.map AdminMsg (Pages.Admin.View.view model)
 
             UnknownPage ->
                 App.ViewHelpers.view404

@@ -7,7 +7,6 @@ module App.Model
         )
 
 import Dict exposing (Dict)
-import Pages.Admin.Model
 import Campsite exposing (Campsite)
 import Location exposing (Location)
 
@@ -39,7 +38,6 @@ type alias Model =
     , errors : List String
     , starredCampsites : List String
     , page : Page
-    , adminModel : Pages.Admin.Model.Model
     , standalone : Bool
     , version : String
     , online : Bool

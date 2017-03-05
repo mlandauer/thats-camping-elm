@@ -7,7 +7,6 @@ module Pages.Admin.Update
         , laneCoveNameChanged
         )
 
-import Pages.Admin.Model exposing (..)
 import Pouchdb
 import Campsite
     exposing
@@ -26,6 +25,7 @@ import App.Decoder
 import App.NewEncoder
 import Dict exposing (Dict)
 import Errors
+import App.Model
 
 
 type Msg
@@ -40,7 +40,7 @@ type Msg
     | ErrorsMsg Errors.Msg
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> App.Model.Model -> ( App.Model.Model, Cmd Msg )
 update msg model =
     case msg of
         LoadData ->
@@ -204,7 +204,7 @@ formatHttpError error =
             "Bad payload: " ++ text
 
 
-subscriptions : Model -> Sub Msg
+subscriptions : App.Model.Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Pouchdb.putResponse Put
