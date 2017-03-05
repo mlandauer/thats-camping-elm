@@ -1,34 +1,18 @@
 module App exposing (..)
 
 import RouteUrl
-import App.Model exposing (..)
-import App.Update exposing (..)
-import App.View exposing (..)
-import Pages.Admin.Update
-import Pouchdb
-import Leaflet
+import App.Model
+import App.Update
+import App.View
 
 
-main : RouteUrl.RouteUrlProgram Flags Model Msg
+main : RouteUrl.RouteUrlProgram App.Update.Flags App.Model.Model App.Update.Msg
 main =
     RouteUrl.programWithFlags
-        { delta2url = delta2hash
-        , location2messages = location2messages
-        , init = init
-        , view = view
-        , update = updateWithMap
-        , subscriptions = subscriptions
+        { delta2url = App.Update.delta2hash
+        , location2messages = App.Update.location2messages
+        , init = App.Update.init
+        , view = App.View.view
+        , update = App.Update.updateWithMap
+        , subscriptions = App.Update.subscriptions
         }
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.batch
-        [ Pouchdb.changeSuccess ChangeSuccess
-        , Pouchdb.changeComplete ChangeComplete
-        , Pouchdb.syncPaused SyncPaused
-        , Pouchdb.syncActive SyncActive
-        , Leaflet.markerClicked (\id -> ChangePage (CampsitePage id))
-        , Sub.map AdminMsg (Pages.Admin.Update.subscriptions model.adminModel)
-        , online Online
-        ]
