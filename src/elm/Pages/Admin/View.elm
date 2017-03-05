@@ -6,13 +6,15 @@ import Html.Events exposing (..)
 import Pages.Admin.Update exposing (..)
 import Pages.Admin.Model exposing (..)
 import Pages.Admin.Update exposing (..)
+import Errors
 
 
 view : Model -> Html Msg
 view model =
     div [ class "content" ]
         [ div [ class "container" ]
-            [ h2 [] [ text "Database admin page" ]
+            [ Html.map ErrorsMsg (Errors.view model.errors)
+            , h2 [] [ text "Database admin page" ]
             , p [] [ text "Here you can do actions on the local PouchDB database" ]
             , div [ class "btn-group-vertical" ]
                 [ button [ class "btn btn-default", onClick Destroy ] [ text "Destroy local database" ]
@@ -29,6 +31,5 @@ view model =
                     ]
                 , button [ class "btn btn-default", onClick Migrate ] [ text "Migrate database" ]
                 ]
-            , p [] [ text (Maybe.withDefault "" model.text) ]
             ]
         ]

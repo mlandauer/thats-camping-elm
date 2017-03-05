@@ -25,6 +25,7 @@ import Http
 import App.Decoder
 import App.NewEncoder
 import Dict exposing (Dict)
+import Errors
 
 
 type Msg
@@ -36,16 +37,27 @@ type Msg
     | DestroyError Pouchdb.DestroyError
     | ToggleLaneCoveName
     | Migrate
+    | ErrorsMsg Errors.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         LoadData ->
-            ( { model | text = Just "We should be loading data now" }, syncData )
+            ( { model
+                | errors =
+                    Errors.add "We should be loading data now" model.errors
+              }
+            , syncData
+            )
 
         NewData (Err error) ->
-            ( { model | text = Just (formatHttpError error) }, Cmd.none )
+            ( { model
+                | errors =
+                    Errors.add (formatHttpError error) model.errors
+              }
+            , Cmd.none
+            )
 
         NewData (Ok data) ->
             let
@@ -61,16 +73,36 @@ update msg model =
             ( model, Pouchdb.destroy () )
 
         DestroySuccess _ ->
-            ( { model | text = Just "Destroyed local database" }, Cmd.none )
+            ( { model
+                | errors =
+                    Errors.add "Destroyed local database" model.errors
+              }
+            , Cmd.none
+            )
 
         DestroyError _ ->
-            ( { model | text = Just "Error destroying local database" }, Cmd.none )
+            ( { model
+                | errors =
+                    Errors.add "Error destroying local database" model.errors
+              }
+            , Cmd.none
+            )
 
         Put (Ok _) ->
-            ( { model | text = Just "Added data" }, Cmd.none )
+            ( { model
+                | errors =
+                    Errors.add "Added data" model.errors
+              }
+            , Cmd.none
+            )
 
         Put (Err error) ->
-            ( { model | text = Just ("Error: " ++ error.message) }, Cmd.none )
+            ( { model
+                | errors =
+                    Errors.add ("Error: " ++ error.message) model.errors
+              }
+            , Cmd.none
+            )
 
         ToggleLaneCoveName ->
             case getLaneCove model.campsites of
@@ -85,6 +117,9 @@ update msg model =
             ( model
             , Cmd.batch (List.map putCampsite (Dict.values model.campsites))
             )
+
+        ErrorsMsg msg ->
+            ( { model | errors = Errors.update msg model.errors }, Cmd.none )
 
 
 transform : List App.Decoder.Campsite -> List App.Decoder.Park -> List Campsite

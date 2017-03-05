@@ -1,4 +1,4 @@
-module Errors exposing (view, Msg(..), update, initModel, add)
+module Errors exposing (view, Msg(..), update, initModel, add, Model)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)

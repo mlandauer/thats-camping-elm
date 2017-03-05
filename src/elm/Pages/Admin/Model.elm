@@ -2,14 +2,15 @@ module Pages.Admin.Model exposing (Model, initModel)
 
 import Dict exposing (Dict)
 import Campsite exposing (Campsite)
+import Errors
 
 
 type alias Model =
-    { text : Maybe String
-    , campsites : Dict String Campsite
+    { campsites : Dict String Campsite
+    , errors : Errors.Model
     }
 
 
 initModel : Model
 initModel =
-    { text = Nothing, campsites = Dict.empty }
+    { campsites = Dict.empty, errors = Errors.initModel }
