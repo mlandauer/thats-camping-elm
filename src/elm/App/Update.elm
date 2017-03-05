@@ -288,8 +288,8 @@ transformCampsites campsites =
     Dict.fromList (List.map (\campsite -> ( campsite.id, campsite )) campsites)
 
 
-location2messages : Navigation.Location -> List Msg
-location2messages location =
+location2page : Navigation.Location -> Page
+location2page location =
     let
         builder =
             (RouteUrl.Builder.fromUrl location.href)
@@ -298,41 +298,46 @@ location2messages location =
             [ "campsites" ] ->
                 case Dict.get "type" (RouteUrl.Builder.query builder) of
                     Just "map" ->
-                        [ ChangePage (CampsitesPage Map) ]
+                        CampsitesPage Map
 
                     Just _ ->
-                        [ ChangePage (CampsitesPage List) ]
+                        CampsitesPage List
 
                     Nothing ->
-                        [ ChangePage (CampsitesPage List) ]
+                        CampsitesPage List
 
             [ "campsites", id ] ->
-                [ ChangePage (CampsitePage id) ]
+                CampsitePage id
 
             [ "about" ] ->
-                [ ChangePage AboutPage ]
+                AboutPage
 
             [ "tour" ] ->
-                [ ChangePage (TourPage Start) ]
+                TourPage Start
 
             [ "tour", "find" ] ->
-                [ ChangePage (TourPage Start) ]
+                TourPage Start
 
             [ "tour", "offline" ] ->
-                [ ChangePage (TourPage Offline) ]
+                TourPage Offline
 
             [ "tour", "edit" ] ->
-                [ ChangePage (TourPage Edit) ]
+                TourPage Edit
 
             [ "admin" ] ->
-                [ ChangePage AdminPage ]
+                AdminPage
 
             id :: _ ->
-                [ ChangePage UnknownPage ]
+                UnknownPage
 
             -- Default route
             [] ->
-                [ ChangePage (CampsitesPage List) ]
+                CampsitesPage List
+
+
+location2messages : Navigation.Location -> List Msg
+location2messages location =
+    [ ChangePage (location2page location) ]
 
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
