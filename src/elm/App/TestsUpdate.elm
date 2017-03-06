@@ -16,6 +16,9 @@ all =
             , online = True
             , location = Nothing
             }
+
+        standaloneFlags =
+            { defaultFlags | standalone = True }
     in
         describe "App.Update.updateWithMap"
             [ describe "ChangePage"
@@ -26,5 +29,21 @@ all =
                             |> Tuple.first
                             |> .page
                             |> Expect.equal (CampsitesPage Map)
+                , test "when standalone always go to the home page" <|
+                    \() ->
+                        App.Update.initModel standaloneFlags
+                            |> App.Update.updateWithMap (ChangePage AboutPage)
+                            |> Tuple.first
+                            |> .page
+                            |> Expect.equal (CampsitesPage List)
+                , test "when standalone go to the requested page subsequently" <|
+                    \() ->
+                        App.Update.initModel standaloneFlags
+                            |> App.Update.updateWithMap (ChangePage AboutPage)
+                            |> Tuple.first
+                            |> App.Update.updateWithMap (ChangePage AboutPage)
+                            |> Tuple.first
+                            |> .page
+                            |> Expect.equal AboutPage
                 ]
             ]

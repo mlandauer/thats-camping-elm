@@ -43,4 +43,5 @@ type alias Model =
     , online : Bool
     , sequence : Int
     , synching : Bool
+    , firstPageLoaded : Bool
     }

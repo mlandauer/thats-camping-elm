@@ -75,6 +75,7 @@ initModel flags =
     , online = flags.online
     , sequence = 0
     , synching = False
+    , firstPageLoaded = False
     }
 
 
@@ -117,7 +118,14 @@ update msg model =
                 ( { model | location = Just l }, storeLocation l )
 
         ChangePage page ->
-            ( { model | page = page }, Cmd.none )
+            let
+                newPage =
+                    if model.standalone && (not model.firstPageLoaded) then
+                        CampsitesPage List
+                    else
+                        page
+            in
+                ( { model | page = newPage, firstPageLoaded = True }, Cmd.none )
 
         PageBack ->
             ( model, Navigation.back 1 )
