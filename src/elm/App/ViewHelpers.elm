@@ -27,7 +27,7 @@ navBar title showBack showAbout =
     -- TODO: Turn showBack and showAbout into a record for legibility
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
-            ([ show backButton showBack
+            ([ show (backButton PageBack) showBack
              , show aboutButton showAbout
              , h1 [] [ text title ]
              ]
@@ -35,7 +35,7 @@ navBar title showBack showAbout =
         ]
 
 
-show : Html Msg -> Bool -> Html Msg
+show : Html msg -> Bool -> Html msg
 show html show =
     if show then
         html
@@ -48,9 +48,9 @@ glyphicon name =
     span [ class ("glyphicon glyphicon-" ++ name) ] []
 
 
-backButton : Html Msg
-backButton =
-    button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ]
+backButton : msg -> Html msg
+backButton msg =
+    button [ onClick msg, class "btn btn-link navbar-link navbar-text pull-left" ]
         [ glyphicon "menu-left" ]
 
 
