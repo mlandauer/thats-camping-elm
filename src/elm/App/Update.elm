@@ -22,7 +22,6 @@ import Pages.Admin.Update
 import Pouchdb
 import App.NewDecoder
 import Json.Decode
-import Campsite exposing (Campsite, CampsiteWithStarred)
 import Location exposing (Location)
 import Leaflet
 import Errors
@@ -242,12 +241,6 @@ formatGeolocationError error =
 
         Geolocation.Timeout text ->
             "Timeout: " ++ text
-
-
-transformCampsites : List Campsite -> Dict String Campsite
-transformCampsites campsites =
-    -- TODO: Would be nicer if this logic was part of the decoder
-    Dict.fromList (List.map (\campsite -> ( campsite.id, campsite )) campsites)
 
 
 location2messages : Navigation.Location -> List Msg
