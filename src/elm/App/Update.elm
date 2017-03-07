@@ -171,28 +171,24 @@ update msg model =
                         ( model, Cmd.none )
 
         ChangeComplete info ->
-            let
-                no_campsites_loaded =
-                    Debug.log "no_campsites_loaded" (Dict.size model.campsites)
-            in
-                -- Now request the changes continuously
-                ( if no_campsites_loaded == 0 then
-                    { model | page = TourPage Start, synching = True }
-                  else
-                    { model | synching = True }
-                , Cmd.batch
-                    [ Pouchdb.sync
-                        { live = True
-                        , retry = True
-                        }
-                    , Pouchdb.changes
-                        { live = True
-                        , include_docs = True
-                        , return_docs = False
-                        , since = model.sequence
-                        }
-                    ]
-                )
+            -- Now request the changes continuously
+            ( if Dict.size model.campsites == 0 then
+                { model | page = TourPage Start, synching = True }
+              else
+                { model | synching = True }
+            , Cmd.batch
+                [ Pouchdb.sync
+                    { live = True
+                    , retry = True
+                    }
+                , Pouchdb.changes
+                    { live = True
+                    , include_docs = True
+                    , return_docs = False
+                    , since = model.sequence
+                    }
+                ]
+            )
 
         ToggleStarCampsite id ->
             let
