@@ -285,7 +285,7 @@ formatGeolocationError : Geolocation.Error -> String
 formatGeolocationError error =
     case error of
         Geolocation.PermissionDenied text ->
-            "Permission denied: " ++ text
+            "Please allow access to your location. We only use it to show campsites near you. It's never shared."
 
         Geolocation.LocationUnavailable text ->
             "Location unavailable: " ++ text
