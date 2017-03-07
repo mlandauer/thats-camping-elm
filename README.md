@@ -1,6 +1,8 @@
 [![Stories in Ready](https://badge.waffle.io/mlandauer/thats-camping-elm.png?label=ready&title=Ready)](https://waffle.io/mlandauer/thats-camping-elm)
 [![Build Status](https://travis-ci.org/mlandauer/thats-camping-elm.svg?branch=master)](https://travis-ci.org/mlandauer/thats-camping-elm)
 
+![That's Camping](https://raw.githubusercontent.com/mlandauer/thats-camping-elm/master/src/assets/images/apple-touch-icon.png)
+
 # It's raining and my weetbix is wet. That's Camping!
 
 Find campsites near you in New South Wales, Australia. It covers camping on
