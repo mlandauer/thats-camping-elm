@@ -52,3 +52,6 @@ if (location) {
   var centre = [-32.163333333333334, 147.01666666666668]
 }
 Leaflet.initialise(app, centre);
+
+var Analytics = require('./js/analytics');
+Analytics.initialise(app);

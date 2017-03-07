@@ -26,6 +26,7 @@ import Campsite exposing (Campsite, CampsiteWithStarred)
 import Location exposing (Location)
 import Leaflet
 import Errors
+import Analytics
 
 
 -- TODO: We should probably move this port into another module
@@ -125,7 +126,7 @@ update msg model =
                     else
                         page
             in
-                ( { model | page = newPage, firstPageLoaded = True }, Cmd.none )
+                ( { model | page = newPage, firstPageLoaded = True }, Analytics.screenView (Analytics.name newPage) )
 
         PageBack ->
             ( model, Navigation.back 1 )
