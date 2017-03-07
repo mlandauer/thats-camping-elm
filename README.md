@@ -60,6 +60,8 @@ s3_website push
 
 [BrowserStack](https://www.browserstack.com) for supporting open-source projects, including That's Camping, with free access to their wonderful browser testing tools.
 
+The "That's Camping!" icon design by Gabriel Clark.
+
 ## Copyright & License
 
 Copyright Matthew Landauer. Licensed under the GPL v3. See LICENSE.md for more details.
