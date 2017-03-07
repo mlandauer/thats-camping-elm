@@ -6,7 +6,8 @@ require('./assets/styles/style.css');
 
 // Require index.html so it gets copied to dist
 require('./index.html');
-
+// Required for google webmaster tools site verification (and it needs to stay)
+require('./assets/html/google6d01d0a1bce5c547.html');
 require('./assets/images/apple-touch-icon.png');
 
 require('./manifest.json');
