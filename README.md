@@ -60,7 +60,7 @@ s3_website push
 
 [BrowserStack](https://www.browserstack.com) for supporting open-source projects, including That's Camping, with free access to their wonderful browser testing tools.
 
-The "That's Camping!" icon design by Gabriel Clark.
+The "That's Camping!" icon design by [Gabriel Clark](http://www.gabrielclark.com.au/).
 
 ## Copyright & License
 
