@@ -2,11 +2,12 @@ module Pages.Tour.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Markdown
 import App.ViewHelpers
-import App.Update exposing (Msg)
+import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..), TourPageId(..))
-import App.ViewHelpers exposing (link, navBar)
+import App.ViewHelpers exposing (navBar)
 
 
 view : TourPageId -> Bool -> Html Msg
@@ -22,13 +23,12 @@ view id loaded =
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
-                [ if id /= Edit || loaded then
-                    link (nextPage id)
-                        [ class "btn btn-default navbar-btn" ]
-                        [ text (nextText id) ]
-                  else
-                    span [ class "btn btn-default navbar-btn disabled" ]
-                        [ text (nextText id) ]
+                [ button
+                    [ class "btn btn-default navbar-btn"
+                    , onClick (ChangePage (nextPage id))
+                    , disabled (id == Edit && not loaded)
+                    ]
+                    [ text (nextText id) ]
                 ]
             ]
         ]

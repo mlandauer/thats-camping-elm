@@ -108,7 +108,7 @@ nav .btn.pull-right {
 }
 
 /* Don't want to show border on desktop on clicking on desktop */
-nav .btn:focus, nav .btn:active:focus {
+nav .btn:focus, nav .btn:active:focus, button:focus {
   outline-style: none;
 }
 

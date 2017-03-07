@@ -1,7 +1,6 @@
 module App.ViewHelpers
     exposing
         ( navBar
-        , link
         , campsiteListView
         , values
         , star
@@ -56,22 +55,11 @@ backButton msg =
 
 aboutButton : Html Msg
 aboutButton =
-    link AboutPage
-        [ class "btn navbar-link navbar-text pull-right" ]
+    button
+        [ onClick (ChangePage AboutPage)
+        , class "btn btn-link navbar-link navbar-text pull-right"
+        ]
         [ glyphicon "info-sign" ]
-
-
-link : Page -> List (Attribute Msg) -> List (Html Msg) -> Html Msg
-link page attributes html =
-    a
-        (attributes
-            ++ [ href (App.Routing.page2url page)
-               , onWithOptions "click"
-                    { stopPropagation = False, preventDefault = True }
-                    (Json.Decode.succeed (ChangePage page))
-               ]
-        )
-        html
 
 
 campsiteListView : Maybe Location -> List Campsite -> List String -> Html Msg
@@ -148,8 +136,8 @@ compareDistance d1 d2 =
 
 campsiteListItem : Maybe Location -> CampsiteWithStarred -> Html Msg
 campsiteListItem location c =
-    link (CampsitePage c.campsite.id)
-        [ class "list-group-item" ]
+    button
+        [ class "list-group-item", onClick (ChangePage (CampsitePage c.campsite.id)) ]
         [ div [ class "campsite" ]
             ([ star c.starred Nothing
              , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location c.campsite.location) ]

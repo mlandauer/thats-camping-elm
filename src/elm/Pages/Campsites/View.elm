@@ -2,10 +2,11 @@ module Pages.Campsites.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Campsites.Model exposing (..)
-import App.ViewHelpers exposing (navBar, link)
+import App.ViewHelpers exposing (navBar)
 import Errors
 
 
@@ -56,11 +57,15 @@ view model =
                       else
                         text ""
                     , div [ class "btn-group" ]
-                        [ link (CampsitesPage List)
-                            [ class "btn navbar-link navbar-text" ]
+                        [ button
+                            [ class "btn btn-link navbar-link navbar-text"
+                            , onClick (ChangePage (CampsitesPage List))
+                            ]
                             [ App.ViewHelpers.glyphicon "list" ]
-                        , link (CampsitesPage Map)
-                            [ class "btn navbar-link navbar-text" ]
+                        , button
+                            [ class "btn btn-link navbar-link navbar-text"
+                            , onClick (ChangePage (CampsitesPage Map))
+                            ]
                             [ App.ViewHelpers.glyphicon "map-marker" ]
                         ]
                     ]

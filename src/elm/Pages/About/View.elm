@@ -2,8 +2,9 @@ module Pages.About.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import App.ViewHelpers exposing (navBar)
-import App.Update exposing (Msg)
+import App.Update exposing (Msg(..))
 import Markdown
 import Regex
 import App.Model exposing (Page(..), TourPageId(..))
@@ -33,11 +34,11 @@ You're currently using version [{{version}}](https://github.com/mlandauer/thats-
                     |>
                         replace "{{version}}" version
                     |> Markdown.toHtml []
-                , p []
-                    [ App.ViewHelpers.link (TourPage Start)
-                        [ class "wide-button btn btn-default" ]
-                        [ text "Tour" ]
+                , button
+                    [ class "wide-button btn btn-default"
+                    , onClick (ChangePage (TourPage Start))
                     ]
+                    [ text "Tour" ]
                 , """
 ## Things you might want to do
 
