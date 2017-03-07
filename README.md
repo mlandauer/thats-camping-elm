@@ -3,25 +3,23 @@
 
 # It's raining and my weetbix is wet. That's Camping!
 
-Find campsites near you in New South Wales, Australia. It covers camping on public, common land such as National Parks, State Forests and Local Councils.
+Find campsites near you in New South Wales, Australia. It covers camping on
+public, common land such as National Parks, State Forests and Local Councils.
 
-Originally, quite some years ago now, I made this as an [iPhone app](https://github.com/mlandauer/ThatsCamping). I've had
-[several](https://github.com/mlandauer/thats-camping-2-aborted-attempt) [brief](https://github.com/mlandauer/thats-camping-2) [attempts](https://github.com/mlandauer/thats-camping-3)
-[over the years](https://github.com/mlandauer/thats-camping-react)
-at redeveloping it as a javascript
-application with the idea to make it  easy for people to add their own
-campsite information. I was never quite happy with the result or the direction things were taking. Either the performance was dreadful, the framework was too painful to work with, or as is the way with these things, I just put is aside while other things took priority.
+It is a client-side Javascript app written using [Elm](http://elm-lang.org/).
+If you haven't come across Elm before, it's a pure functional language that
+compiles to Javascript and is easy to learn and use and has been generally a
+pleasure to work with.
 
-This is my latest attempt, this time built with [Elm](http://elm-lang.org/) and
-[PouchDB](https://pouchdb.com/)/[CouchDB](http://couchdb.apache.org/)
+The app also uses [PouchDB](https://pouchdb.com/)/[CouchDB](http://couchdb.apache.org/)
+to work offline.
 
-It should work even when you're out in the middle of nowhere (when does that
-ever happen camping?) and you have no phone signal.
+When a network is available any updates from the main database are automatically
+synched back to the local database and are reflected in the user interface in
+real time.
 
-So far the main basic functionality to browse campsites is complete, including
-everything working offline. When a network is available any updates from the
-main database are automatically synched back to the local database and are reflected in the
-user interface in real time.
+The next step is to add the ability for the user to edit and add new campsites!
+This will again even work when offline.
 
 ## Development
 
