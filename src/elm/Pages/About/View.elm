@@ -24,8 +24,7 @@ land.
 
 It works **completely offline**, even when you're far far away from a mobile phone tower. When does that ever happen while camping?
 
-Made by [Matthew Landauer](https://twitter.com/matthewlandauer) based on an iOS
-app. It's free and [open source](https://github.com/mlandauer/thats-camping-elm)
+Made by [Matthew Landauer](https://twitter.com/matthewlandauer). It's free and [open source](https://github.com/mlandauer/thats-camping-elm)
 because that's the way it ought to be.
 
 You're currently using version [{{version}}](https://github.com/mlandauer/thats-camping-elm/commit/{{version}}).
