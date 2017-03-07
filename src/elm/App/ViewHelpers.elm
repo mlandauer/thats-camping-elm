@@ -7,6 +7,7 @@ module App.ViewHelpers
         , star
         , show
         , view404
+        , glyphicon
         )
 
 import Html exposing (..)
@@ -42,17 +43,22 @@ show html show =
         text ""
 
 
+glyphicon : String -> Html msg
+glyphicon name =
+    span [ class ("glyphicon glyphicon-" ++ name) ] []
+
+
 backButton : Html Msg
 backButton =
     button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ]
-        [ span [ class "glyphicon glyphicon-menu-left" ] [] ]
+        [ glyphicon "menu-left" ]
 
 
 aboutButton : Html Msg
 aboutButton =
     link AboutPage
         [ class "btn navbar-link navbar-text pull-right" ]
-        [ span [ class "glyphicon glyphicon-info-sign" ] [] ]
+        [ glyphicon "info-sign" ]
 
 
 link : Page -> List (Attribute Msg) -> List (Html Msg) -> Html Msg
@@ -197,17 +203,12 @@ star starred msg =
                         []
                )
         )
-        [ span
-            [ class
-                ("glyphicon glyphicon-"
-                    ++ (if starred then
-                            "star"
-                        else
-                            "star-empty"
-                       )
-                )
-            ]
-            []
+        [ glyphicon
+            (if starred then
+                "star"
+             else
+                "star-empty"
+            )
         ]
 
 

@@ -52,17 +52,16 @@ view model =
                 [ div [ class "container" ]
                     [ if model.synching then
                         div [ class "btn navbar-link navbar-text sync" ]
-                            [ span [ class "glyphicon glyphicon-transfer" ] []
-                            ]
+                            [ App.ViewHelpers.glyphicon "transfer" ]
                       else
                         text ""
                     , div [ class "btn-group" ]
                         [ link (CampsitesPage List)
                             [ class "btn navbar-link navbar-text" ]
-                            [ span [ class "glyphicon glyphicon-list" ] [] ]
+                            [ App.ViewHelpers.glyphicon "list" ]
                         , link (CampsitesPage Map)
                             [ class "btn navbar-link navbar-text" ]
-                            [ span [ class "glyphicon glyphicon-map-marker" ] [] ]
+                            [ App.ViewHelpers.glyphicon "map-marker" ]
                         ]
                     ]
                 ]
