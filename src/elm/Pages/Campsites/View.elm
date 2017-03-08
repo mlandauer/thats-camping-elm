@@ -62,11 +62,13 @@ view model =
                         [ button
                             [ class "btn btn-link navbar-link navbar-text"
                             , onClick (ChangePage (CampsitesPage List))
+                            , disabled (model.displayType == List)
                             ]
                             [ App.ViewHelpers.glyphicon "list" ]
                         , button
                             [ class "btn btn-link navbar-link navbar-text"
                             , onClick (ChangePage (CampsitesPage Map))
+                            , disabled (model.displayType == Map)
                             ]
                             [ App.ViewHelpers.glyphicon "map-marker" ]
                         ]
