@@ -27,7 +27,7 @@ navBar title showBack showAbout =
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
             ([ show (backButton PageBack) showBack
-             , show aboutButton showAbout
+             , show (aboutButton (ChangePage AboutPage)) showAbout
              , h1 [] [ text title ]
              ]
             )
@@ -53,10 +53,10 @@ backButton msg =
         [ glyphicon "menu-left" ]
 
 
-aboutButton : Html Msg
-aboutButton =
+aboutButton : msg -> Html msg
+aboutButton msg =
     button
-        [ onClick (ChangePage AboutPage)
+        [ onClick msg
         , class "btn btn-link navbar-link navbar-text pull-right"
         ]
         [ glyphicon "info-sign" ]
