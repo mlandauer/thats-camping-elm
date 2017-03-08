@@ -8,6 +8,7 @@ import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Campsites.Model exposing (..)
 import App.ViewHelpers exposing (navBar)
 import Errors
+import App.CampsiteList
 
 
 view : Model -> Html Msg
@@ -39,7 +40,7 @@ view model =
                 , div [ class "content-inner" ]
                     [ case model.displayType of
                         List ->
-                            App.ViewHelpers.campsiteListView model.location
+                            App.CampsiteList.view model.location
                                 model.campsites
                                 model.starredCampsites
 
