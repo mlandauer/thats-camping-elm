@@ -58,7 +58,7 @@ aboutButton msg =
         [ glyphicon "info-sign" ]
 
 
-star : Bool -> Maybe Msg -> Html Msg
+star : Bool -> Maybe msg -> Html msg
 star starred msg =
     div
         ([ class
@@ -87,7 +87,7 @@ star starred msg =
         ]
 
 
-view404 : Html Msg
+view404 : Html msg
 view404 =
     -- TODO: Make this page less ugly
     p [] [ text "This is a 404" ]
