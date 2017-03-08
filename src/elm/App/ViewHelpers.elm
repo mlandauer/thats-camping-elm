@@ -4,7 +4,6 @@ module App.ViewHelpers
         , campsiteListView
         , values
         , star
-        , show
         , view404
         , glyphicon
         )
@@ -15,10 +14,8 @@ import Html.Events exposing (onClick, on, onWithOptions)
 import Html.Keyed
 import App.Model exposing (..)
 import App.Update exposing (..)
-import App.Routing
 import Location exposing (Location)
 import Campsite exposing (Campsite, CampsiteWithStarred)
-import Json.Decode
 
 
 type alias NavBarConfig msg =
@@ -30,30 +27,17 @@ navBar : String -> NavBarConfig msg -> Html msg
 navBar title { back, about } =
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
-            ([ case back of
-                Just msg ->
-                    backButton msg
-
-                Nothing ->
-                    text ""
-             , case about of
-                Just msg ->
-                    aboutButton msg
-
-                Nothing ->
-                    text ""
+            ([ show backButton back
+             , show aboutButton about
              , h1 [] [ text title ]
              ]
             )
         ]
 
 
-show : Html msg -> Bool -> Html msg
-show html show =
-    if show then
-        html
-    else
-        text ""
+show : (msg -> Html msg) -> Maybe msg -> Html msg
+show html msg =
+    Maybe.withDefault (text "") (Maybe.map html msg)
 
 
 glyphicon : String -> Html msg
