@@ -8,12 +8,7 @@ module App.ViewHelpers
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, on, onWithOptions)
-import Html.Keyed
-import App.Model exposing (..)
-import App.Update exposing (..)
-import Location exposing (Location)
-import Campsite exposing (Campsite, CampsiteWithStarred)
+import Html.Events exposing (..)
 
 
 type alias NavBarConfig msg =
