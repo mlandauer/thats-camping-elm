@@ -33,7 +33,7 @@ view : Model -> Html Msg
 view model =
     div [ class "campsite-detail-page" ]
         [ App.ViewHelpers.navBar model.campsite.name.short
-            { showBack = True, showAbout = False }
+            { back = Just PageBack, about = Nothing }
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ div [ class "campsite-detail" ]

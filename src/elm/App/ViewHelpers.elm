@@ -21,16 +21,27 @@ import Campsite exposing (Campsite, CampsiteWithStarred)
 import Json.Decode
 
 
-type alias NavBarConfig =
-    { showBack : Bool, showAbout : Bool }
+type alias NavBarConfig msg =
+    -- If back is Nothing then don't display the back button. Same for about
+    { back : Maybe msg, about : Maybe msg }
 
 
-navBar : String -> NavBarConfig -> Html Msg
-navBar title { showBack, showAbout } =
+navBar : String -> NavBarConfig msg -> Html msg
+navBar title { back, about } =
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
-            ([ show (backButton PageBack) showBack
-             , show (aboutButton (ChangePage AboutPage)) showAbout
+            ([ case back of
+                Just msg ->
+                    backButton msg
+
+                Nothing ->
+                    text ""
+             , case about of
+                Just msg ->
+                    aboutButton msg
+
+                Nothing ->
+                    text ""
              , h1 [] [ text title ]
              ]
             )
