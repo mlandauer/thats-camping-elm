@@ -21,9 +21,12 @@ import Campsite exposing (Campsite, CampsiteWithStarred)
 import Json.Decode
 
 
-navBar : String -> Bool -> Bool -> Html Msg
-navBar title showBack showAbout =
-    -- TODO: Turn showBack and showAbout into a record for legibility
+type alias NavBarConfig =
+    { showBack : Bool, showAbout : Bool }
+
+
+navBar : String -> NavBarConfig -> Html Msg
+navBar title { showBack, showAbout } =
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
             ([ show (backButton PageBack) showBack

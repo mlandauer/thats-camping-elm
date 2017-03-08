@@ -13,7 +13,7 @@ import App.Model exposing (Page(..), TourPageId(..))
 view : String -> Html Msg
 view version =
     div [ class "campsite-list" ]
-        [ navBar "About" True False
+        [ navBar "About" { showBack = True, showAbout = False }
         , div [ class "content" ]
             [ div [ class "container" ]
                 [ """

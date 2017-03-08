@@ -32,7 +32,7 @@ view model =
             ]
     else
         div [ class "campsite-list" ]
-            [ navBar "Camping near you" False True
+            [ navBar "Camping near you" { showBack = False, showAbout = True }
             , div [ class "content " ]
                 [ Html.map ErrorsMsg (Errors.view model.errors)
                 , div [ class "content-inner" ]
