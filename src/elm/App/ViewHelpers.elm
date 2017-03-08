@@ -1,7 +1,6 @@
 module App.ViewHelpers
     exposing
         ( navBar
-        , values
         , star
         , view404
         , glyphicon
@@ -57,24 +56,6 @@ aboutButton msg =
         , class "btn btn-link navbar-link navbar-text pull-right"
         ]
         [ glyphicon "info-sign" ]
-
-
-values : List (Maybe a) -> List a
-values l =
-    -- TODO: This function doesn't really belong in view helpers
-    -- Implementing something like Maybe.Extra.values
-    -- Recursive so probably not efficient
-    case l of
-        [] ->
-            []
-
-        first :: rest ->
-            case first of
-                Just value ->
-                    value :: (values rest)
-
-                Nothing ->
-                    values rest
 
 
 star : Bool -> Maybe Msg -> Html Msg

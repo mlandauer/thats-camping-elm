@@ -285,7 +285,7 @@ listItem p present description facility =
 
 facilitiesList : Bool -> Facilities -> List String
 facilitiesList p facilities =
-    App.ViewHelpers.values
+    values
         [ (listItem p presentToilets descriptionToilets facilities.toilets)
         , (listItem p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
         , (listItem p presentBarbecues descriptionBarbecues facilities.barbecues)
@@ -296,11 +296,29 @@ facilitiesList p facilities =
 
 accessList : Bool -> Access -> List String
 accessList p access =
-    App.ViewHelpers.values
+    values
         [ (listItem p presentCaravans descriptionCaravans access.caravans)
         , (listItem p presentTrailers descriptionTrailers access.trailers)
         , (listItem p presentCars descriptionCars access.cars)
         ]
+
+
+values : List (Maybe a) -> List a
+values l =
+    -- Implementing something like Maybe.Extra.values
+    -- Recursive so probably not efficient
+    -- TODO: Is there a more "standard" way to achieve the same end?
+    case l of
+        [] ->
+            []
+
+        first :: rest ->
+            case first of
+                Just value ->
+                    value :: (values rest)
+
+                Nothing ->
+                    values rest
 
 
 capitalise : String -> String
