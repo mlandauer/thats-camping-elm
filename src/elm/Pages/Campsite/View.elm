@@ -12,7 +12,7 @@ import Html.Attributes exposing (..)
 import Pages.Campsite.Model exposing (..)
 import App.ViewHelpers
 import App.Update exposing (Msg(..))
-import Libs.SimpleFormat.Format
+import SimpleFormat
 import Location exposing (Location)
 import Campsite
     exposing
@@ -41,7 +41,7 @@ view model =
                     , h2 [] [ text model.campsite.name.long ]
                     , p []
                         [ text ("in " ++ model.campsite.parkName.long ++ ".") ]
-                    , Libs.SimpleFormat.Format.format model.campsite.description
+                    , SimpleFormat.format model.campsite.description
                     , h2 [] [ text "Facilities" ]
                     , p [] [ text (facilitiesText model.campsite.facilities) ]
                     , h2 [] [ text "Access" ]

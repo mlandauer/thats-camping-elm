@@ -6,7 +6,7 @@ import Json.Encode exposing (Value)
 import App.TestsDecoder
 import TestsLocation
 import TestsCampsite
-import Libs.SimpleFormat.Tests
+import TestsSimpleFormat
 import Pages.Campsite.Tests
 import App.TestsUpdate
 
@@ -22,7 +22,7 @@ all =
         [ App.TestsDecoder.all
         , TestsLocation.all
         , TestsCampsite.all
-        , Libs.SimpleFormat.Tests.all
+        , TestsSimpleFormat.all
         , Pages.Campsite.Tests.all
         , App.TestsUpdate.all
         ]

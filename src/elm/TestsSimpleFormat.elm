@@ -1,9 +1,9 @@
-module Libs.SimpleFormat.Tests exposing (..)
+module TestsSimpleFormat exposing (all)
 
 import Test exposing (..)
 import Expect
 import Html
-import Libs.SimpleFormat.Format exposing (format)
+import SimpleFormat exposing (format)
 
 
 all : Test

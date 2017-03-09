@@ -1,4 +1,4 @@
-module Libs.SimpleFormat.Format exposing (format)
+module SimpleFormat exposing (format)
 
 import Html
 import Regex
