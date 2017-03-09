@@ -1,4 +1,4 @@
-module TestsSimpleFormat exposing (all)
+module Tests.SimpleFormat exposing (all)
 
 import Test exposing (..)
 import Expect

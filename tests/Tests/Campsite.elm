@@ -1,4 +1,4 @@
-module TestsCampsite exposing (..)
+module Tests.Campsite exposing (all)
 
 import Test exposing (..)
 import Expect

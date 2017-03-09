@@ -1,4 +1,4 @@
-module TestsLocation exposing (..)
+module Tests.Location exposing (all)
 
 import Test exposing (..)
 import Expect

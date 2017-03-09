@@ -1,4 +1,4 @@
-module App.TestsUpdate exposing (all)
+module Tests.App.Update exposing (all)
 
 import Test exposing (..)
 import Expect

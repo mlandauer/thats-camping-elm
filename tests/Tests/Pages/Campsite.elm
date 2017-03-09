@@ -1,4 +1,4 @@
-module Pages.Campsite.Tests exposing (..)
+module Tests.Pages.Campsite exposing (all)
 
 import Test exposing (..)
 import Expect
