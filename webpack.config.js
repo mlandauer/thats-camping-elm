@@ -11,7 +11,7 @@ module.exports = {
       './src/server.js'
     ]
   },
-
+  target: 'node',
   output: {
     path: path.resolve(__dirname + '/docs'),
     filename: '[name].js',
@@ -27,7 +27,7 @@ module.exports = {
         })
       },
       {
-        test:    /\.(html|png|json)$/,
+        test:    /\.(html|png)$/,
         use:  'file-loader?name=[name].[ext]',
       },
       {
