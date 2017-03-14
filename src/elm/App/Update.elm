@@ -74,7 +74,7 @@ initModel flags =
     , version = flags.version
     , starredCampsites = Maybe.withDefault [] flags.starredCampsites
     , online = flags.online
-    , sequence = 0
+    , sequence = Nothing
     , synching = False
     , firstPageLoaded = False
     }
@@ -86,7 +86,7 @@ init flags =
       -- On startup immediately try to get the location
     , Cmd.batch
         [ Task.attempt UpdateLocation Geolocation.now
-        , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = 0 }
+        , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = Nothing }
         ]
     )
 
@@ -147,9 +147,6 @@ update msg model =
             -- TODO: Need to think how to handle deleted documents. Is this
             -- something we actually need to handle?
             let
-                sequence =
-                    max model.sequence change.seq
-
                 o =
                     Json.Decode.decodeValue App.NewDecoder.campsite change.doc
             in
@@ -161,7 +158,7 @@ update msg model =
                         in
                             ( { model
                                 | campsites = newCampsites
-                                , sequence = sequence
+                                , sequence = Just change.seq
                               }
                             , Cmd.none
                             )

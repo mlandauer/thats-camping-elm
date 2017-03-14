@@ -41,7 +41,7 @@ type alias Model =
     , standalone : Bool
     , version : String
     , online : Bool
-    , sequence : Int
+    , sequence : Maybe String
     , synching : Bool
     , firstPageLoaded : Bool
     }
