@@ -37,7 +37,7 @@ type alias Revision =
 
 
 type alias ChangeSuccess =
-    { id : String, changes : List Revision, doc : Json.Encode.Value, seq : String }
+    { id : String, changes : List Revision, doc : Json.Encode.Value, seq : Int }
 
 
 type alias ChangeComplete =
@@ -80,7 +80,7 @@ putResponse a =
 
 type alias ChangesOptions =
     -- TODO: Support all the options
-    { live : Bool, include_docs : Bool, return_docs : Bool, since : Maybe String }
+    { live : Bool, include_docs : Bool, return_docs : Bool, since : Int }
 
 
 port changes : ChangesOptions -> Cmd msg

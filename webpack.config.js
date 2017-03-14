@@ -47,6 +47,9 @@ module.exports = {
 
     noParse: /\.elm$/,
   },
+  externals: {
+    'pouchdb':"require('pouchdb')",
+  },
 
   devtool: 'source-map',
 

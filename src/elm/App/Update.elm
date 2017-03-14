@@ -74,7 +74,7 @@ initModel flags =
     , version = flags.version
     , starredCampsites = Maybe.withDefault [] flags.starredCampsites
     , online = flags.online
-    , sequence = Nothing
+    , sequence = 0
     , synching = False
     , firstPageLoaded = False
     }
@@ -86,7 +86,7 @@ init flags =
       -- On startup immediately try to get the location
     , Cmd.batch
         [ Task.attempt UpdateLocation Geolocation.now
-        , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = Nothing }
+        , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = 0 }
         ]
     )
 
@@ -158,7 +158,7 @@ update msg model =
                         in
                             ( { model
                                 | campsites = newCampsites
-                                , sequence = Just change.seq
+                                , sequence = change.seq
                               }
                             , Cmd.none
                             )

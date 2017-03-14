@@ -9,9 +9,9 @@ app.ports.response.subscribe(function(response) {
 
 var PouchDB = require('pouchdb');
 
-// Deal directly with the remote database since we don't need to support
-// ofline behaviour here
-var db = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
+var db = new PouchDB('thats-camping.db');
+
+var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
   auth: {
     // We're just using these tokens to get access to the remote database
     // temporarily.
@@ -21,13 +21,32 @@ var db = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
   }
 });
 
-console.log("Loading campsite data...");
-db.changes({include_docs: true}).on('change', function(change) {
-  app.ports.changeSuccess.send(change);
-}).on('complete', function(info) {
-  console.log("Finished loading campsite data");
-  // Now Send a request to elm (via ports)
-  app.ports.request.send(null);
+console.log("Synching campsite data...");
+db.sync(remoteDb, {}).on('change', function (info) {
+  console.log("sync change:", info);
+}).on('paused', function (err) {
+  // replication paused (e.g. replication up to date, user went offline)
+  //console.log("sync paused:", err);
+}).on('active', function () {
+  // replicate resumed (e.g. new changes replicating, user went back online)
+  console.log("sync active");
+}).on('denied', function (err) {
+  // a document failed to replicate (e.g. due to permissions)
+  console.log("sync denied:", err);
+}).on('complete', function (info) {
+  // handle complete
+  console.log("Finished synching campsite data...");
+  console.log("Loading campsite data...");
+  db.changes({include_docs: true}).on('change', function(change) {
+    app.ports.changeSuccess.send(change);
+  }).on('complete', function(info) {
+    console.log("Finished loading campsite data");
+    // Now Send a request to elm (via ports)
+    app.ports.request.send(null);
+  }).on('error', function (err) {
+    console.log(err);
+  });
 }).on('error', function (err) {
-  console.log(err);
+  // handle error
+  console.log("sync error:", err);
 });
