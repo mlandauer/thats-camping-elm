@@ -41,7 +41,7 @@ type alias ChangeSuccess =
 
 
 type alias ChangeComplete =
-    { results : Maybe (List ChangeSuccess), last_seq : Maybe Int, status : Maybe String }
+    { results : Maybe (List ChangeSuccess), last_seq : Maybe String, status : Maybe String }
 
 
 type alias DestroySuccess =

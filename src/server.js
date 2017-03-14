@@ -2,8 +2,6 @@ var Elm = require('./elm/Server.elm');
 
 var app = Elm.Server.worker();
 
-// Send a request to elm (via ports)
-app.ports.request.send(null);
 
 app.ports.response.subscribe(function(response) {
   console.log("response:", response);
@@ -23,10 +21,13 @@ var db = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
   }
 });
 
-db.changes({live: true}).on('change', function(change) {
-  console.log("change:", change);
+console.log("Loading campsite data...");
+db.changes({include_docs: true}).on('change', function(change) {
+  app.ports.changeSuccess.send(change);
 }).on('complete', function(info) {
-  console.log("complete:", info);
+  console.log("Finished loading campsite data");
+  // Now Send a request to elm (via ports)
+  app.ports.request.send(null);
 }).on('error', function (err) {
   console.log(err);
 });
