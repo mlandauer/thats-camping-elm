@@ -75,6 +75,9 @@ function startServer() {
 }
 
 function respond(response) {
-  responses[response.id].end(response.html);
+  fs = require('fs');
+  var template = fs.readFileSync("src/index.html", {encoding: 'utf8'});
+  var template = template.replace("{{app}}", response.html);
+  responses[response.id].end(template);
   delete responses[response.id];
 }
