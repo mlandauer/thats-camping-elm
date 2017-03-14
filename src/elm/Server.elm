@@ -11,10 +11,14 @@ import App.NewDecoder
 import Dict
 
 
-port request : (() -> msg) -> Sub msg
+type alias Response =
+    { id : Int, html : String }
 
 
-port response : String -> Cmd msg
+port request : (Int -> msg) -> Sub msg
+
+
+port response : Response -> Cmd msg
 
 
 type alias Model =
@@ -22,7 +26,7 @@ type alias Model =
 
 
 type Msg
-    = Request ()
+    = Request Int
     | ChangeSuccess Pouchdb.ChangeSuccess
 
 
@@ -52,7 +56,7 @@ subscriptions model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Request _ ->
+        Request connectionId ->
             let
                 m =
                     App.Update.initModel
@@ -72,7 +76,7 @@ update msg model =
                 s =
                     HtmlToString.htmlToString v
             in
-                ( model, response s )
+                ( model, response { id = connectionId, html = s } )
 
         ChangeSuccess change ->
             -- TODO: Need to think how to handle deleted documents. Is this
