@@ -8,7 +8,7 @@ var gitRevisionPlugin = new GitRevisionPlugin();
 module.exports = {
   entry: {
     app: [
-      './src/index.js'
+      './src/server.js'
     ]
   },
 
