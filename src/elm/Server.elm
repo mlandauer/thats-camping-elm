@@ -1,6 +1,9 @@
 port module Server exposing (main, request, response)
 
 import Json.Decode
+import App.Update
+import App.View
+import HtmlToString
 
 
 port request : (() -> msg) -> Sub msg
@@ -41,4 +44,20 @@ update : Msg -> model -> ( model, Cmd Msg )
 update msg model =
     case msg of
         Request _ ->
-            ( model, response "Hello world!" )
+            let
+                m =
+                    App.Update.initModel
+                        { version = ""
+                        , standalone = False
+                        , starredCampsites = Nothing
+                        , online = True
+                        , location = Nothing
+                        }
+
+                v =
+                    App.View.view m
+
+                s =
+                    HtmlToString.htmlToString v
+            in
+                ( model, response s )
