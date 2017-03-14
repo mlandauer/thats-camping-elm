@@ -3,7 +3,7 @@ port module Server exposing (main, request, response)
 import Json.Decode
 
 
-port request : (String -> msg) -> Sub msg
+port request : (() -> msg) -> Sub msg
 
 
 port response : String -> Cmd msg
@@ -14,7 +14,7 @@ type alias Model =
 
 
 type Msg
-    = Request String
+    = Request ()
 
 
 main : Program Never Model Msg
@@ -40,5 +40,5 @@ subscriptions model =
 update : Msg -> model -> ( model, Cmd Msg )
 update msg model =
     case msg of
-        Request r ->
+        Request _ ->
             ( model, response "Hello world!" )
