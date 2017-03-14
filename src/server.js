@@ -6,3 +6,7 @@ console.log("Hello world!");
 
 // Send a request to elm (via ports)
 app.ports.request.send("A request");
+
+app.ports.response.subscribe(function(response) {
+  console.log("response", response);
+});
