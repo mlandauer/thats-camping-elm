@@ -4,6 +4,8 @@ import Json.Decode
 import App.Update
 import App.View
 import HtmlToString
+import Dict
+import Campsite
 
 
 port request : (() -> msg) -> Sub msg
@@ -54,8 +56,36 @@ update msg model =
                         , location = Nothing
                         }
 
+                m2 =
+                    { m
+                        | campsites =
+                            Dict.fromList
+                                [ ( "1"
+                                  , { access =
+                                        { caravans = Nothing
+                                        , trailers = Nothing
+                                        , cars = Nothing
+                                        }
+                                    , description = "A nice campsite to test things with"
+                                    , facilities =
+                                        { toilets = Nothing
+                                        , picnicTables = Nothing
+                                        , barbecues = Nothing
+                                        , showers = Nothing
+                                        , drinkingWater = Nothing
+                                        }
+                                    , id = "1"
+                                    , location = Nothing
+                                    , name = Campsite.name "Test campsite"
+                                    , parkName = Campsite.name "Test park"
+                                    , revision = Nothing
+                                    }
+                                  )
+                                ]
+                    }
+
                 v =
-                    App.View.view m
+                    App.View.view m2
 
                 s =
                     HtmlToString.htmlToString v
