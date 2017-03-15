@@ -9,16 +9,21 @@ import Campsite
 import Pouchdb
 import App.NewDecoder
 import Dict
+import App.Routing
 
 
-type alias Response =
+type alias ResponseInfo =
     { id : Int, html : String }
 
 
-port request : (Int -> msg) -> Sub msg
+type alias RequestInfo =
+    { id : Int, url : String }
 
 
-port response : Response -> Cmd msg
+port request : (RequestInfo -> msg) -> Sub msg
+
+
+port response : ResponseInfo -> Cmd msg
 
 
 type alias Model =
@@ -26,7 +31,7 @@ type alias Model =
 
 
 type Msg
-    = Request Int
+    = Request RequestInfo
     | ChangeSuccess Pouchdb.ChangeSuccess
 
 
@@ -56,7 +61,7 @@ subscriptions model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Request connectionId ->
+        Request request ->
             let
                 m =
                     App.Update.initModel
@@ -67,8 +72,24 @@ update msg model =
                         , location = Nothing
                         }
 
+                page =
+                    App.Routing.location2page
+                        -- Only using href later on so not bothering to fill out the others
+                        { href = request.url
+                        , hash = ""
+                        , host = ""
+                        , hostname = ""
+                        , origin = ""
+                        , password = ""
+                        , pathname = ""
+                        , port_ = ""
+                        , protocol = ""
+                        , search = ""
+                        , username = ""
+                        }
+
                 m2 =
-                    { m | campsites = model.campsites }
+                    { m | campsites = model.campsites, page = page }
 
                 v =
                     App.View.view m2
@@ -76,7 +97,7 @@ update msg model =
                 s =
                     HtmlToString.htmlToString v
             in
-                ( model, response { id = connectionId, html = s } )
+                ( model, response { id = request.id, html = s } )
 
         ChangeSuccess change ->
             -- TODO: Need to think how to handle deleted documents. Is this

@@ -75,7 +75,7 @@ function startServer() {
       // correct request from the web
       responses[connectionId] = response;
       // Now Send a request to elm (via ports)
-      app.ports.request.send(connectionId);
+      app.ports.request.send({id: connectionId, url: request.url});
       connectionId++;
     }
   }
