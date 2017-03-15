@@ -65,6 +65,7 @@ function startServer() {
   function handleRequest(request, response){
     var staticPath = "docs" + request.url;
     // TODO: I guess we don't want it serving up the server code
+    // TODO: Send with the right mimetype
     if (request.url != "/" && fs.existsSync(staticPath)) {
       var file = fs.readFileSync(staticPath);
       response.end(file);
