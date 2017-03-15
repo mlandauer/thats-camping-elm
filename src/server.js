@@ -1,3 +1,8 @@
+require('bootstrap/dist/css/bootstrap.css');
+require('./assets/styles/style.css');
+
+require('./assets/images/apple-touch-icon.png');
+
 var Elm = require('./elm/Server.elm');
 
 var app = Elm.Server.worker();
@@ -5,6 +10,7 @@ var app = Elm.Server.worker();
 app.ports.response.subscribe(respond);
 
 var PouchDB = require('pouchdb');
+var fs = require('fs');
 
 var db = new PouchDB('thats-camping.db');
 
@@ -57,13 +63,20 @@ function startServer() {
   const PORT=8080;
 
   function handleRequest(request, response){
-    // Super simple way to give each request/response a unique id
-    // that can be used to route the response from elm to the
-    // correct request from the web
-    responses[connectionId] = response;
-    // Now Send a request to elm (via ports)
-    app.ports.request.send(connectionId);
-    connectionId++;
+    var staticPath = "docs" + request.url;
+    // TODO: I guess we don't want it serving up the server code
+    if (request.url != "/" && fs.existsSync(staticPath)) {
+      var file = fs.readFileSync(staticPath);
+      response.end(file);
+    } else {
+      // Super simple way to give each request/response a unique id
+      // that can be used to route the response from elm to the
+      // correct request from the web
+      responses[connectionId] = response;
+      // Now Send a request to elm (via ports)
+      app.ports.request.send(connectionId);
+      connectionId++;
+    }
   }
 
   var server = http.createServer(handleRequest);
@@ -75,7 +88,6 @@ function startServer() {
 }
 
 function respond(response) {
-  fs = require('fs');
   var template = fs.readFileSync("src/index.html", {encoding: 'utf8'});
   var template = template.replace("{{app}}", response.html);
   responses[response.id].end(template);
