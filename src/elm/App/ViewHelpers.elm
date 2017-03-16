@@ -85,4 +85,8 @@ star starred msg =
 view404 : Html msg
 view404 =
     -- TODO: Make this page less ugly
-    p [] [ text "This is a 404" ]
+    div [ class "container" ]
+        [ div [ class "content" ]
+            [ h2 [] [ text "This is a 404" ]
+            ]
+        ]

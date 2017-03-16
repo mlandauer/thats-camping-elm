@@ -87,5 +87,8 @@ view model =
                     ]
 
             UnknownPage ->
-                App.ViewHelpers.view404
+                div []
+                    [ App.ViewHelpers.navBar "404" { back = Nothing, about = Nothing }
+                    , App.ViewHelpers.view404
+                    ]
         ]
