@@ -3,7 +3,6 @@ module Pages.About.View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import App.ViewHelpers exposing (navBar)
 import App.Update exposing (Msg(..))
 import Markdown
 import Regex

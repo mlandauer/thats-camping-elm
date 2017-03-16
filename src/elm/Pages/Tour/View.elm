@@ -7,7 +7,6 @@ import Markdown
 import App.ViewHelpers
 import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..), TourPageId(..))
-import App.ViewHelpers exposing (navBar)
 
 
 view : TourPageId -> Bool -> Html Msg
