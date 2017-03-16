@@ -69,92 +69,61 @@ navView model =
     case model.page of
         CampsitesPage displayType ->
             if Dict.isEmpty model.campsites then
-                navBar ""
-                    { back = Nothing
-                    , about = False
-                    }
+                navBar "" { back = False, about = False }
             else
-                navBar "Camping near you"
-                    { back = Nothing
-                    , about = True
-                    }
+                navBar "Camping near you" { back = False, about = True }
 
         CampsitePage id ->
             case Dict.get id model.campsites of
                 Just campsite ->
-                    navBar campsite.name.short
-                        { back = Just PageBack
-                        , about = True
-                        }
+                    navBar campsite.name.short { back = True, about = True }
 
                 Nothing ->
-                    navBar "404"
-                        { back = Just PageBack
-                        , about = False
-                        }
+                    navBar "404" { back = True, about = False }
 
         AboutPage ->
-            navBar "About"
-                { back = Just PageBack
-                , about = False
-                }
+            navBar "About" { back = True, about = False }
 
         TourPage id ->
-            navBar ""
-                { back =
-                    if (id /= Start) then
-                        Just PageBack
-                    else
-                        Nothing
-                , about = False
-                }
+            navBar "" { back = (id /= Start), about = False }
 
         AdminPage ->
-            navBar "Database admin"
-                { back = Just (ChangePage (CampsitesPage List))
-                , about = False
-                }
+            navBar "Database admin" { back = True, about = False }
 
         UnknownPage ->
-            navBar "404"
-                { back = Nothing, about = False }
+            navBar "404" { back = False, about = False }
 
 
-type alias NavBarConfig msg =
-    -- If back is Nothing then don't display the back button
-    { back : Maybe msg, about : Bool }
-
-
-navBar : String -> NavBarConfig Msg -> Html Msg
+navBar : String -> { back : Bool, about : Bool } -> Html Msg
 navBar title { back, about } =
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
-            ([ show backButton back
-             , if about then
-                aboutButton ChangePage AboutPage
-               else
-                text ""
+            ([ show back backButton
+             , show about aboutButton
              , h1 [] [ text title ]
              ]
             )
         ]
 
 
-show : (msg -> Html msg) -> Maybe msg -> Html msg
-show html msg =
-    Maybe.withDefault (text "") (Maybe.map html msg)
+show : Bool -> Html Msg -> Html Msg
+show s html =
+    if s then
+        html
+    else
+        text ""
 
 
-backButton : msg -> Html msg
-backButton msg =
-    button [ onClick msg, class "btn btn-link navbar-link navbar-text pull-left" ]
+backButton : Html Msg
+backButton =
+    button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ]
         [ App.ViewHelpers.glyphicon "menu-left" ]
 
 
-aboutButton : (Page -> msg) -> Page -> Html msg
-aboutButton changePageMsg page =
-    App.ViewHelpers.link changePageMsg
-        page
+aboutButton : Html Msg
+aboutButton =
+    App.ViewHelpers.link ChangePage
+        AboutPage
         [ class "btn btn-link navbar-link navbar-text pull-right"
         ]
         [ App.ViewHelpers.glyphicon "info-sign" ]
