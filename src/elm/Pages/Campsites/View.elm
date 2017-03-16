@@ -57,17 +57,17 @@ view model =
                       else
                         text ""
                     , div [ class "btn-group" ]
-                        [ button
-                            [ class "btn btn-link navbar-link navbar-text"
-                            , onClick (ChangePage (CampsitesPage List))
-                            , disabled (model.displayType == List)
-                            ]
+                        [ App.ViewHelpers.linkWithDisabled
+                            ChangePage
+                            (CampsitesPage List)
+                            (model.displayType == List)
+                            [ class "btn btn-link navbar-link navbar-text" ]
                             [ App.ViewHelpers.glyphicon "list" ]
-                        , button
-                            [ class "btn btn-link navbar-link navbar-text"
-                            , onClick (ChangePage (CampsitesPage Map))
-                            , disabled (model.displayType == Map)
-                            ]
+                        , App.ViewHelpers.linkWithDisabled
+                            ChangePage
+                            (CampsitesPage Map)
+                            (model.displayType == Map)
+                            [ class "btn btn-link navbar-link navbar-text" ]
                             [ App.ViewHelpers.glyphicon "map-marker" ]
                         ]
                     ]
