@@ -5,6 +5,7 @@ module App.ViewHelpers
         , view404
         , glyphicon
         , link
+        , linkWithDisabled
         )
 
 import Html exposing (..)
@@ -96,7 +97,12 @@ view404 =
         ]
 
 
-link : (Page -> msg) -> Page -> List (Attribute msg) -> List (Html msg) -> Html msg
+link :
+    (Page -> msg)
+    -> Page
+    -> List (Attribute msg)
+    -> List (Html msg)
+    -> Html msg
 link changePageMsg page attributes html =
     a
         ([ href (App.Routing.page2url page)
@@ -105,6 +111,25 @@ link changePageMsg page attributes html =
             ++ attributes
         )
         html
+
+
+linkWithDisabled :
+    (Page -> msg)
+    -> Page
+    -> Bool
+    -> List (Attribute msg)
+    -> List (Html msg)
+    -> Html msg
+linkWithDisabled changePageMsg page disabled attributes html =
+    if disabled then
+        span
+            ([ class "disabled" ] ++ attributes)
+            html
+    else
+        link changePageMsg
+            page
+            attributes
+            html
 
 
 onClickPreventDefault : msg -> Attribute msg

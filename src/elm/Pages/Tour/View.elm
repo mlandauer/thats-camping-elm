@@ -21,11 +21,10 @@ view id loaded =
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
-                [ button
-                    [ class "btn btn-default navbar-btn"
-                    , onClick (ChangePage (nextPage id))
-                    , disabled (id == Edit && not loaded)
-                    ]
+                [ App.ViewHelpers.linkWithDisabled ChangePage
+                    (nextPage id)
+                    (id == Edit && not loaded)
+                    [ class "btn btn-default navbar-btn" ]
                     [ text (nextText id) ]
                 ]
             ]
