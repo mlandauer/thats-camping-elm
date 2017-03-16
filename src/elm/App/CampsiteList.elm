@@ -84,7 +84,8 @@ compareStarred s1 s2 =
 
 campsiteListItem : Maybe Location -> CampsiteWithStarred -> Html Msg
 campsiteListItem location c =
-    App.ViewHelpers.link ChangePage
+    App.ViewHelpers.link
+        (ChangePage (CampsitePage c.campsite.id))
         (CampsitePage c.campsite.id)
         [ class "list-group-item" ]
         [ div [ class "campsite" ]

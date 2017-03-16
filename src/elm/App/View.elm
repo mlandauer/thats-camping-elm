@@ -135,7 +135,8 @@ show s html =
 
 backButton : Page -> Html Msg
 backButton page =
-    App.ViewHelpers.link ChangePage
+    App.ViewHelpers.link
+        (ChangePage page)
         page
         [ class "btn btn-link navbar-link navbar-text pull-left" ]
         [ App.ViewHelpers.glyphicon "menu-left" ]
@@ -143,7 +144,8 @@ backButton page =
 
 aboutButton : Html Msg
 aboutButton =
-    App.ViewHelpers.link ChangePage
+    App.ViewHelpers.link
+        (ChangePage AboutPage)
         AboutPage
         [ class "btn btn-link navbar-link navbar-text pull-right"
         ]
