@@ -12,21 +12,24 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Decode
-import App.Model exposing (Page)
+import App.Model exposing (Page(..))
 import App.Routing
 
 
 type alias NavBarConfig msg =
     -- If back is Nothing then don't display the back button. Same for about
-    { back : Maybe msg, about : Maybe msg }
+    { back : Maybe msg, about : Bool, changePageMsg : Page -> msg }
 
 
 navBar : String -> NavBarConfig msg -> Html msg
-navBar title { back, about } =
+navBar title { back, about, changePageMsg } =
     nav [ class "navbar navbar-default navbar-fixed-top" ]
         [ div [ class "container" ]
             ([ show backButton back
-             , show aboutButton about
+             , if about then
+                aboutButton changePageMsg AboutPage
+               else
+                text ""
              , h1 [] [ text title ]
              ]
             )
@@ -49,11 +52,11 @@ backButton msg =
         [ glyphicon "menu-left" ]
 
 
-aboutButton : msg -> Html msg
-aboutButton msg =
-    button
-        [ onClick msg
-        , class "btn btn-link navbar-link navbar-text pull-right"
+aboutButton : (Page -> msg) -> Page -> Html msg
+aboutButton changePageMsg page =
+    link changePageMsg
+        page
+        [ class "btn btn-link navbar-link navbar-text pull-right"
         ]
         [ glyphicon "info-sign" ]
 

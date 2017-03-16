@@ -68,23 +68,40 @@ nav model =
     case model.page of
         CampsitesPage displayType ->
             if Dict.isEmpty model.campsites then
-                App.ViewHelpers.navBar "" { back = Nothing, about = Nothing }
+                App.ViewHelpers.navBar ""
+                    { back = Nothing
+                    , about = False
+                    , changePageMsg = ChangePage
+                    }
             else
                 App.ViewHelpers.navBar "Camping near you"
-                    { back = Nothing, about = Just (ChangePage AboutPage) }
+                    { back = Nothing
+                    , about = True
+                    , changePageMsg = ChangePage
+                    }
 
         CampsitePage id ->
             case Dict.get id model.campsites of
                 Just campsite ->
                     App.ViewHelpers.navBar campsite.name.short
-                        { back = Just PageBack, about = Nothing }
+                        { back = Just PageBack
+                        , about = True
+                        , changePageMsg = ChangePage
+                        }
 
                 Nothing ->
                     App.ViewHelpers.navBar "404"
-                        { back = Just PageBack, about = Nothing }
+                        { back = Just PageBack
+                        , about = False
+                        , changePageMsg = ChangePage
+                        }
 
         AboutPage ->
-            App.ViewHelpers.navBar "About" { back = Just PageBack, about = Nothing }
+            App.ViewHelpers.navBar "About"
+                { back = Just PageBack
+                , about = False
+                , changePageMsg = ChangePage
+                }
 
         TourPage id ->
             App.ViewHelpers.navBar ""
@@ -93,14 +110,17 @@ nav model =
                         Just PageBack
                     else
                         Nothing
-                , about = Nothing
+                , about = False
+                , changePageMsg = ChangePage
                 }
 
         AdminPage ->
             App.ViewHelpers.navBar "Database admin"
                 { back = Just (ChangePage (CampsitesPage List))
-                , about = Nothing
+                , about = False
+                , changePageMsg = ChangePage
                 }
 
         UnknownPage ->
-            App.ViewHelpers.navBar "404" { back = Nothing, about = Nothing }
+            App.ViewHelpers.navBar "404"
+                { back = Nothing, about = False, changePageMsg = ChangePage }
