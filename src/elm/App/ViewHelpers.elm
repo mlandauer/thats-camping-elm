@@ -60,15 +60,15 @@ view404 =
 
 
 link :
-    (Page -> msg)
+    msg
     -> Page
     -> List (Attribute msg)
     -> List (Html msg)
     -> Html msg
-link changePageMsg page attributes html =
+link msg page attributes html =
     a
         ([ href (App.Routing.page2url page)
-         , onClickPreventDefault (changePageMsg page)
+         , onClickPreventDefault msg
          ]
             ++ attributes
         )
@@ -76,19 +76,19 @@ link changePageMsg page attributes html =
 
 
 linkWithDisabled :
-    (Page -> msg)
+    msg
     -> Page
     -> Bool
     -> List (Attribute msg)
     -> List (Html msg)
     -> Html msg
-linkWithDisabled changePageMsg page disabled attributes html =
+linkWithDisabled msg page disabled attributes html =
     if disabled then
         span
             ([ class "disabled" ] ++ attributes)
             html
     else
-        link changePageMsg
+        link msg
             page
             attributes
             html

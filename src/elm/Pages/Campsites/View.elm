@@ -57,13 +57,13 @@ view model =
                         text ""
                     , div [ class "btn-group" ]
                         [ App.ViewHelpers.linkWithDisabled
-                            ChangePage
+                            (ChangePage (CampsitesPage List))
                             (CampsitesPage List)
                             (model.displayType == List)
                             [ class "btn btn-link navbar-link navbar-text" ]
                             [ App.ViewHelpers.glyphicon "list" ]
                         , App.ViewHelpers.linkWithDisabled
-                            ChangePage
+                            (ChangePage (CampsitesPage Map))
                             (CampsitesPage Map)
                             (model.displayType == Map)
                             [ class "btn btn-link navbar-link navbar-text" ]

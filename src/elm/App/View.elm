@@ -78,21 +78,21 @@ navView model =
             case Dict.get id model.campsites of
                 Just campsite ->
                     navBar campsite.name.short
-                        { back = model.previousPage, about = True }
+                        { back = List.head model.previousPages, about = True }
 
                 Nothing ->
                     navBar "404"
-                        { back = model.previousPage, about = False }
+                        { back = List.head model.previousPages, about = False }
 
         AboutPage ->
             navBar "About"
-                { back = model.previousPage, about = False }
+                { back = List.head model.previousPages, about = False }
 
         TourPage id ->
             navBar ""
                 { back =
                     (if id /= Start then
-                        model.previousPage
+                        List.head model.previousPages
                      else
                         Nothing
                     )
@@ -101,11 +101,11 @@ navView model =
 
         AdminPage ->
             navBar "Database admin"
-                { back = model.previousPage, about = False }
+                { back = List.head model.previousPages, about = False }
 
         UnknownPage ->
             navBar "404"
-                { back = model.previousPage, about = False }
+                { back = List.head model.previousPages, about = False }
 
 
 navBar : String -> { back : Maybe Page, about : Bool } -> Html Msg
@@ -135,7 +135,8 @@ show s html =
 
 backButton : Page -> Html Msg
 backButton page =
-    App.ViewHelpers.link ChangePage
+    App.ViewHelpers.link
+        PageBack
         page
         [ class "btn btn-link navbar-link navbar-text pull-left" ]
         [ App.ViewHelpers.glyphicon "menu-left" ]
@@ -143,7 +144,8 @@ backButton page =
 
 aboutButton : Html Msg
 aboutButton =
-    App.ViewHelpers.link ChangePage
+    App.ViewHelpers.link
+        (ChangePage AboutPage)
         AboutPage
         [ class "btn btn-link navbar-link navbar-text pull-right"
         ]
