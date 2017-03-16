@@ -24,71 +24,83 @@ view model =
                 ""
             )
         ]
-        [ case model.page of
+        [ nav model
+        , (case model.page of
             CampsitesPage displayType ->
-                div []
-                    [ if Dict.isEmpty model.campsites then
-                        App.ViewHelpers.navBar "" { back = Nothing, about = Nothing }
-                      else
-                        App.ViewHelpers.navBar "Camping near you"
-                            { back = Nothing, about = Just (ChangePage AboutPage) }
-                    , Pages.Campsites.View.view
-                        { campsites = (Dict.values model.campsites)
-                        , location = model.location
-                        , errors = model.errors
-                        , starredCampsites = model.starredCampsites
-                        , displayType = displayType
-                        , synching = model.synching
-                        }
-                    ]
+                Pages.Campsites.View.view
+                    { campsites = (Dict.values model.campsites)
+                    , location = model.location
+                    , errors = model.errors
+                    , starredCampsites = model.starredCampsites
+                    , displayType = displayType
+                    , synching = model.synching
+                    }
 
             CampsitePage id ->
                 case Dict.get id model.campsites of
                     Just campsite ->
-                        div []
-                            [ App.ViewHelpers.navBar campsite.name.short
-                                { back = Just PageBack, about = Nothing }
-                            , Pages.Campsite.View.view
-                                { campsite = campsite
-                                , starred = List.member id model.starredCampsites
-                                , online = model.online
-                                }
-                            ]
+                        Pages.Campsite.View.view
+                            { campsite = campsite
+                            , starred = List.member id model.starredCampsites
+                            , online = model.online
+                            }
 
                     Nothing ->
                         App.ViewHelpers.view404
 
             AboutPage ->
-                div []
-                    [ App.ViewHelpers.navBar "About" { back = Just PageBack, about = Nothing }
-                    , Pages.About.View.view model.version
-                    ]
+                Pages.About.View.view model.version
 
             TourPage id ->
-                div []
-                    [ App.ViewHelpers.navBar ""
-                        { back =
-                            if (id /= Start) then
-                                Just PageBack
-                            else
-                                Nothing
-                        , about = Nothing
-                        }
-                    , Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
-                    ]
+                Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
 
             AdminPage ->
-                div []
-                    [ App.ViewHelpers.navBar "Database admin"
-                        { back = Just (ChangePage (CampsitesPage List))
-                        , about = Nothing
-                        }
-                    , Html.map AdminMsg (Pages.Admin.View.view model)
-                    ]
+                Html.map AdminMsg (Pages.Admin.View.view model)
 
             UnknownPage ->
-                div []
-                    [ App.ViewHelpers.navBar "404" { back = Nothing, about = Nothing }
-                    , App.ViewHelpers.view404
-                    ]
+                App.ViewHelpers.view404
+          )
         ]
+
+
+nav : Model -> Html Msg
+nav model =
+    case model.page of
+        CampsitesPage displayType ->
+            if Dict.isEmpty model.campsites then
+                App.ViewHelpers.navBar "" { back = Nothing, about = Nothing }
+            else
+                App.ViewHelpers.navBar "Camping near you"
+                    { back = Nothing, about = Just (ChangePage AboutPage) }
+
+        CampsitePage id ->
+            case Dict.get id model.campsites of
+                Just campsite ->
+                    App.ViewHelpers.navBar campsite.name.short
+                        { back = Just PageBack, about = Nothing }
+
+                Nothing ->
+                    App.ViewHelpers.navBar "404"
+                        { back = Just PageBack, about = Nothing }
+
+        AboutPage ->
+            App.ViewHelpers.navBar "About" { back = Just PageBack, about = Nothing }
+
+        TourPage id ->
+            App.ViewHelpers.navBar ""
+                { back =
+                    if (id /= Start) then
+                        Just PageBack
+                    else
+                        Nothing
+                , about = Nothing
+                }
+
+        AdminPage ->
+            App.ViewHelpers.navBar "Database admin"
+                { back = Just (ChangePage (CampsitesPage List))
+                , about = Nothing
+                }
+
+        UnknownPage ->
+            App.ViewHelpers.navBar "404" { back = Nothing, about = Nothing }
