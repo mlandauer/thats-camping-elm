@@ -48,7 +48,10 @@ view model =
                         App.ViewHelpers.view404
 
             AboutPage ->
-                Pages.About.View.view model.version
+                div []
+                    [ App.ViewHelpers.navBar "About" { back = Just PageBack, about = Nothing }
+                    , Pages.About.View.view model.version
+                    ]
 
             TourPage id ->
                 Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))

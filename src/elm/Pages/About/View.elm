@@ -13,9 +13,7 @@ import App.Model exposing (Page(..), TourPageId(..))
 view : String -> Html Msg
 view version =
     div [ class "campsite-list" ]
-        [ navBar "About"
-            { back = Just PageBack, about = Nothing }
-        , div [ class "content" ]
+        [ div [ class "content" ]
             [ div [ class "container" ]
                 [ """
 ## About That's Camping
@@ -30,7 +28,7 @@ Made by [Matthew Landauer](https://twitter.com/matthewlandauer). It's free and [
 because that's the way it ought to be.
 
 You're currently using version [{{version}}](https://github.com/mlandauer/thats-camping-elm/commit/{{version}}).
-                """
+            """
                     -- Doing poor man's string interpolation here
                     |>
                         replace "{{version}}" version
@@ -44,7 +42,7 @@ You're currently using version [{{version}}](https://github.com/mlandauer/thats-
 ## Things you might want to do
 
 [Suggest a **feature** or report an **issue**](https://github.com/mlandauer/thats-camping-elm/issues)
-                  """
+              """
                     |> Markdown.toHtml []
                 ]
             ]
