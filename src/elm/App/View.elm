@@ -2,6 +2,7 @@ module App.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import App.Update exposing (..)
 import App.Model exposing (..)
 import Pages.About.View
@@ -24,7 +25,7 @@ view model =
                 ""
             )
         ]
-        [ nav model
+        [ navView model
         , (case model.page of
             CampsitesPage displayType ->
                 Pages.Campsites.View.view
@@ -63,64 +64,97 @@ view model =
         ]
 
 
-nav : Model -> Html Msg
-nav model =
+navView : Model -> Html Msg
+navView model =
     case model.page of
         CampsitesPage displayType ->
             if Dict.isEmpty model.campsites then
-                App.ViewHelpers.navBar ""
+                navBar ""
                     { back = Nothing
                     , about = False
-                    , changePageMsg = ChangePage
                     }
             else
-                App.ViewHelpers.navBar "Camping near you"
+                navBar "Camping near you"
                     { back = Nothing
                     , about = True
-                    , changePageMsg = ChangePage
                     }
 
         CampsitePage id ->
             case Dict.get id model.campsites of
                 Just campsite ->
-                    App.ViewHelpers.navBar campsite.name.short
+                    navBar campsite.name.short
                         { back = Just PageBack
                         , about = True
-                        , changePageMsg = ChangePage
                         }
 
                 Nothing ->
-                    App.ViewHelpers.navBar "404"
+                    navBar "404"
                         { back = Just PageBack
                         , about = False
-                        , changePageMsg = ChangePage
                         }
 
         AboutPage ->
-            App.ViewHelpers.navBar "About"
+            navBar "About"
                 { back = Just PageBack
                 , about = False
-                , changePageMsg = ChangePage
                 }
 
         TourPage id ->
-            App.ViewHelpers.navBar ""
+            navBar ""
                 { back =
                     if (id /= Start) then
                         Just PageBack
                     else
                         Nothing
                 , about = False
-                , changePageMsg = ChangePage
                 }
 
         AdminPage ->
-            App.ViewHelpers.navBar "Database admin"
+            navBar "Database admin"
                 { back = Just (ChangePage (CampsitesPage List))
                 , about = False
-                , changePageMsg = ChangePage
                 }
 
         UnknownPage ->
-            App.ViewHelpers.navBar "404"
-                { back = Nothing, about = False, changePageMsg = ChangePage }
+            navBar "404"
+                { back = Nothing, about = False }
+
+
+type alias NavBarConfig msg =
+    -- If back is Nothing then don't display the back button
+    { back : Maybe msg, about : Bool }
+
+
+navBar : String -> NavBarConfig Msg -> Html Msg
+navBar title { back, about } =
+    nav [ class "navbar navbar-default navbar-fixed-top" ]
+        [ div [ class "container" ]
+            ([ show backButton back
+             , if about then
+                aboutButton ChangePage AboutPage
+               else
+                text ""
+             , h1 [] [ text title ]
+             ]
+            )
+        ]
+
+
+show : (msg -> Html msg) -> Maybe msg -> Html msg
+show html msg =
+    Maybe.withDefault (text "") (Maybe.map html msg)
+
+
+backButton : msg -> Html msg
+backButton msg =
+    button [ onClick msg, class "btn btn-link navbar-link navbar-text pull-left" ]
+        [ App.ViewHelpers.glyphicon "menu-left" ]
+
+
+aboutButton : (Page -> msg) -> Page -> Html msg
+aboutButton changePageMsg page =
+    App.ViewHelpers.link changePageMsg
+        page
+        [ class "btn btn-link navbar-link navbar-text pull-right"
+        ]
+        [ App.ViewHelpers.glyphicon "info-sign" ]

@@ -1,7 +1,6 @@
 module App.ViewHelpers
     exposing
-        ( navBar
-        , star
+        ( star
         , view404
         , glyphicon
         , link
@@ -16,49 +15,9 @@ import App.Model exposing (Page(..))
 import App.Routing
 
 
-type alias NavBarConfig msg =
-    -- If back is Nothing then don't display the back button. Same for about
-    { back : Maybe msg, about : Bool, changePageMsg : Page -> msg }
-
-
-navBar : String -> NavBarConfig msg -> Html msg
-navBar title { back, about, changePageMsg } =
-    nav [ class "navbar navbar-default navbar-fixed-top" ]
-        [ div [ class "container" ]
-            ([ show backButton back
-             , if about then
-                aboutButton changePageMsg AboutPage
-               else
-                text ""
-             , h1 [] [ text title ]
-             ]
-            )
-        ]
-
-
-show : (msg -> Html msg) -> Maybe msg -> Html msg
-show html msg =
-    Maybe.withDefault (text "") (Maybe.map html msg)
-
-
 glyphicon : String -> Html msg
 glyphicon name =
     span [ class ("glyphicon glyphicon-" ++ name) ] []
-
-
-backButton : msg -> Html msg
-backButton msg =
-    button [ onClick msg, class "btn btn-link navbar-link navbar-text pull-left" ]
-        [ glyphicon "menu-left" ]
-
-
-aboutButton : (Page -> msg) -> Page -> Html msg
-aboutButton changePageMsg page =
-    link changePageMsg
-        page
-        [ class "btn btn-link navbar-link navbar-text pull-right"
-        ]
-        [ glyphicon "info-sign" ]
 
 
 star : Bool -> Maybe msg -> Html msg
