@@ -38,6 +38,7 @@ type alias Model =
     , errors : List String
     , starredCampsites : List String
     , page : Page
+    , previousPage : Maybe Page
     , standalone : Bool
     , version : String
     , online : Bool

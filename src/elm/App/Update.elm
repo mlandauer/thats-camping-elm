@@ -69,7 +69,13 @@ initModel flags =
     { campsites = Dict.empty
     , location = flags.location
     , errors = Errors.initModel
-    , page = CampsitesPage List
+    , page =
+        CampsitesPage List
+        {- By setting the initial page to the home page on a first load the
+           previous page will be set to the home page. This gives us a nice
+           sensible default for the back button
+        -}
+    , previousPage = Nothing
     , standalone = flags.standalone
     , version = flags.version
     , starredCampsites = Maybe.withDefault [] flags.starredCampsites
@@ -131,7 +137,13 @@ update msg model =
                     else
                         page
             in
-                ( { model | page = newPage, firstPageLoaded = True }, Analytics.screenView (Analytics.name newPage) )
+                ( { model
+                    | page = newPage
+                    , previousPage = Just model.page
+                    , firstPageLoaded = True
+                  }
+                , Analytics.screenView (Analytics.name newPage)
+                )
 
         PageBack ->
             ( model, Navigation.back 1 )
