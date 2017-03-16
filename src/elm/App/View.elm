@@ -58,7 +58,17 @@ view model =
                     ]
 
             TourPage id ->
-                Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
+                div []
+                    [ App.ViewHelpers.navBar ""
+                        { back =
+                            if (id /= Start) then
+                                Just PageBack
+                            else
+                                Nothing
+                        , about = Nothing
+                        }
+                    , Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
+                    ]
 
             AdminPage ->
                 div []

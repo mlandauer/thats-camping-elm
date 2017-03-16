@@ -13,15 +13,7 @@ import App.ViewHelpers exposing (navBar)
 view : TourPageId -> Bool -> Html Msg
 view id loaded =
     div [ class "tour" ]
-        [ navBar ""
-            { back =
-                if (id /= Start) then
-                    Just PageBack
-                else
-                    Nothing
-            , about = Nothing
-            }
-        , div [ class "container" ]
+        [ div [ class "container" ]
             [ div [ class "content" ]
                 [ div [ class "centering-box" ]
                     [ Markdown.toHtml [] (content id)
