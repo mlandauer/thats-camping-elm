@@ -27,7 +27,10 @@ view model =
         ]
         [ navView model
         , (case model.page of
-            CampsitesPage displayType ->
+            Nothing ->
+                text ""
+
+            Just (CampsitesPage displayType) ->
                 Pages.Campsites.View.view
                     { campsites = (Dict.values model.campsites)
                     , location = model.location
@@ -37,7 +40,7 @@ view model =
                     , synching = model.synching
                     }
 
-            CampsitePage id ->
+            Just (CampsitePage id) ->
                 case Dict.get id model.campsites of
                     Just campsite ->
                         Pages.Campsite.View.view
@@ -49,16 +52,16 @@ view model =
                     Nothing ->
                         App.ViewHelpers.view404
 
-            AboutPage ->
+            Just AboutPage ->
                 Pages.About.View.view model.version
 
-            TourPage id ->
+            Just (TourPage id) ->
                 Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
 
-            AdminPage ->
+            Just AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model)
 
-            UnknownPage ->
+            Just UnknownPage ->
                 App.ViewHelpers.view404
           )
         ]
@@ -67,13 +70,16 @@ view model =
 navView : Model -> Html Msg
 navView model =
     case model.page of
-        CampsitesPage displayType ->
+        Nothing ->
+            text ""
+
+        Just (CampsitesPage displayType) ->
             if Dict.isEmpty model.campsites then
                 navBar "" { back = False, about = False }
             else
                 navBar "Camping near you" { back = False, about = True }
 
-        CampsitePage id ->
+        Just (CampsitePage id) ->
             case Dict.get id model.campsites of
                 Just campsite ->
                     navBar campsite.name.short { back = True, about = True }
@@ -81,16 +87,16 @@ navView model =
                 Nothing ->
                     navBar "404" { back = True, about = False }
 
-        AboutPage ->
+        Just AboutPage ->
             navBar "About" { back = True, about = False }
 
-        TourPage id ->
+        Just (TourPage id) ->
             navBar "" { back = (id /= Start), about = False }
 
-        AdminPage ->
+        Just AdminPage ->
             navBar "Database admin" { back = True, about = False }
 
-        UnknownPage ->
+        Just UnknownPage ->
             navBar "404" { back = False, about = False }
 
 

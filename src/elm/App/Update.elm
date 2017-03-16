@@ -69,7 +69,8 @@ initModel flags =
     { campsites = Dict.empty
     , location = flags.location
     , errors = Errors.initModel
-    , page = CampsitesPage List
+    , page = Nothing
+    , previousPage = Nothing
     , standalone = flags.standalone
     , version = flags.version
     , starredCampsites = Maybe.withDefault [] flags.starredCampsites
@@ -131,7 +132,13 @@ update msg model =
                     else
                         page
             in
-                ( { model | page = newPage, firstPageLoaded = True }, Analytics.screenView (Analytics.name newPage) )
+                ( { model
+                    | page = Just newPage
+                    , previousPage = model.page
+                    , firstPageLoaded = True
+                  }
+                , Analytics.screenView (Analytics.name newPage)
+                )
 
         PageBack ->
             ( model, Navigation.back 1 )
@@ -173,7 +180,7 @@ update msg model =
         ChangeComplete info ->
             -- Now request the changes continuously
             ( if Dict.size model.campsites == 0 then
-                { model | page = TourPage Start, synching = True }
+                { model | page = Just (TourPage Start), synching = True }
               else
                 { model | synching = True }
             , Cmd.batch
@@ -246,4 +253,9 @@ location2messages location =
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
 delta2hash previous current =
-    Just (RouteUrl.UrlChange RouteUrl.NewEntry (App.Routing.page2url current.page))
+    case current.page of
+        Just page ->
+            Just (RouteUrl.UrlChange RouteUrl.NewEntry (App.Routing.page2url page))
+
+        Nothing ->
+            Nothing
