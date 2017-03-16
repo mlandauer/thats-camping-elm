@@ -57,7 +57,13 @@ view model =
                 Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
 
             AdminPage ->
-                Html.map AdminMsg (Pages.Admin.View.view model)
+                div []
+                    [ App.ViewHelpers.navBar "Database admin"
+                        { back = Just (ChangePage (CampsitesPage List))
+                        , about = Nothing
+                        }
+                    , Html.map AdminMsg (Pages.Admin.View.view model)
+                    ]
 
             UnknownPage ->
                 App.ViewHelpers.view404
