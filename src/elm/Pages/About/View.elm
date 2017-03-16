@@ -7,6 +7,7 @@ import App.Update exposing (Msg(..))
 import Markdown
 import Regex
 import App.Model exposing (Page(..), TourPageId(..))
+import App.ViewHelpers
 
 
 view : String -> Html Msg
@@ -32,10 +33,10 @@ You're currently using version [{{version}}](https://github.com/mlandauer/thats-
                     |>
                         replace "{{version}}" version
                     |> Markdown.toHtml []
-                , button
-                    [ class "wide-button btn btn-default"
-                    , onClick (ChangePage (TourPage Start))
-                    ]
+                , App.ViewHelpers.link
+                    (ChangePage (TourPage Start))
+                    (TourPage Start)
+                    [ class "wide-button btn btn-default" ]
                     [ text "Tour" ]
                 , """
 ## Things you might want to do
