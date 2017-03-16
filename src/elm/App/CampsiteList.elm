@@ -2,15 +2,12 @@ module App.CampsiteList exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Html.Keyed
 import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..))
 import Campsite exposing (Campsite, CampsiteWithStarred)
 import Location exposing (Location)
 import App.ViewHelpers
-import App.Routing
-import Json.Decode
 
 
 view : Maybe Location -> List Campsite -> List String -> Html Msg
