@@ -38,11 +38,15 @@ view model =
             CampsitePage id ->
                 case Dict.get id model.campsites of
                     Just campsite ->
-                        Pages.Campsite.View.view
-                            { campsite = campsite
-                            , starred = List.member id model.starredCampsites
-                            , online = model.online
-                            }
+                        div []
+                            [ App.ViewHelpers.navBar campsite.name.short
+                                { back = Just PageBack, about = Nothing }
+                            , Pages.Campsite.View.view
+                                { campsite = campsite
+                                , starred = List.member id model.starredCampsites
+                                , online = model.online
+                                }
+                            ]
 
                     Nothing ->
                         App.ViewHelpers.view404
