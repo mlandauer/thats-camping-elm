@@ -89,7 +89,11 @@ update msg model =
                         }
 
                 m2 =
-                    { m | campsites = model.campsites, page = page }
+                    { m
+                        | campsites = model.campsites
+                        , page = page
+                        , previousPage = Just m.page
+                    }
 
                 v =
                     App.View.view m2
