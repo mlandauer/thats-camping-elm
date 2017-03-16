@@ -92,7 +92,7 @@ update msg model =
                     { m
                         | campsites = model.campsites
                         , page = page
-                        , previousPage = Just m.page
+                        , previousPages = m.page :: m.previousPages
                     }
 
                 v =
