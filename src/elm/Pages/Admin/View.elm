@@ -13,7 +13,7 @@ view model =
     div [ class "content" ]
         [ div [ class "container" ]
             [ Html.map ErrorsMsg (Errors.view model.errors)
-            , h2 [] [ text "Database admin page" ]
+            , h2 [] [ text "Database admin" ]
             , p [] [ text "Here you can do actions on the local PouchDB database" ]
             , div [ class "btn-group-vertical" ]
                 [ button [ class "btn btn-default", onClick Destroy ] [ text "Destroy local database" ]

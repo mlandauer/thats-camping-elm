@@ -7,21 +7,12 @@ import Markdown
 import App.ViewHelpers
 import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..), TourPageId(..))
-import App.ViewHelpers exposing (navBar)
 
 
 view : TourPageId -> Bool -> Html Msg
 view id loaded =
     div [ class "tour" ]
-        [ navBar ""
-            { back =
-                if (id /= Start) then
-                    Just PageBack
-                else
-                    Nothing
-            , about = Nothing
-            }
-        , div [ class "container" ]
+        [ div [ class "container" ]
             [ div [ class "content" ]
                 [ div [ class "centering-box" ]
                     [ Markdown.toHtml [] (content id)
@@ -30,11 +21,10 @@ view id loaded =
             ]
         , nav [ class "navbar navbar-default navbar-fixed-bottom" ]
             [ div [ class "container" ]
-                [ button
-                    [ class "btn btn-default navbar-btn"
-                    , onClick (ChangePage (nextPage id))
-                    , disabled (id == Edit && not loaded)
-                    ]
+                [ App.ViewHelpers.linkWithDisabled ChangePage
+                    (nextPage id)
+                    (id == Edit && not loaded)
+                    [ class "btn btn-default navbar-btn" ]
                     [ text (nextText id) ]
                 ]
             ]

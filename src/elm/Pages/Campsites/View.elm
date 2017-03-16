@@ -6,7 +6,7 @@ import Html.Events exposing (..)
 import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Campsites.Model exposing (..)
-import App.ViewHelpers exposing (navBar)
+import App.ViewHelpers
 import Errors
 import App.CampsiteList
 
@@ -33,9 +33,7 @@ view model =
             ]
     else
         div [ class "campsite-list" ]
-            [ navBar "Camping near you"
-                { back = Nothing, about = Just (ChangePage AboutPage) }
-            , div [ class "content " ]
+            [ div [ class "content " ]
                 [ Html.map ErrorsMsg (Errors.view model.errors)
                 , div [ class "content-inner" ]
                     [ case model.displayType of
@@ -59,17 +57,17 @@ view model =
                       else
                         text ""
                     , div [ class "btn-group" ]
-                        [ button
-                            [ class "btn btn-link navbar-link navbar-text"
-                            , onClick (ChangePage (CampsitesPage List))
-                            , disabled (model.displayType == List)
-                            ]
+                        [ App.ViewHelpers.linkWithDisabled
+                            ChangePage
+                            (CampsitesPage List)
+                            (model.displayType == List)
+                            [ class "btn btn-link navbar-link navbar-text" ]
                             [ App.ViewHelpers.glyphicon "list" ]
-                        , button
-                            [ class "btn btn-link navbar-link navbar-text"
-                            , onClick (ChangePage (CampsitesPage Map))
-                            , disabled (model.displayType == Map)
-                            ]
+                        , App.ViewHelpers.linkWithDisabled
+                            ChangePage
+                            (CampsitesPage Map)
+                            (model.displayType == Map)
+                            [ class "btn btn-link navbar-link navbar-text" ]
                             [ App.ViewHelpers.glyphicon "map-marker" ]
                         ]
                     ]

@@ -2,6 +2,7 @@ module App.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import App.Update exposing (..)
 import App.Model exposing (..)
 import Pages.About.View
@@ -24,7 +25,8 @@ view model =
                 ""
             )
         ]
-        [ case model.page of
+        [ navView model
+        , (case model.page of
             CampsitesPage displayType ->
                 Pages.Campsites.View.view
                     { campsites = (Dict.values model.campsites)
@@ -58,4 +60,70 @@ view model =
 
             UnknownPage ->
                 App.ViewHelpers.view404
+          )
         ]
+
+
+navView : Model -> Html Msg
+navView model =
+    case model.page of
+        CampsitesPage displayType ->
+            if Dict.isEmpty model.campsites then
+                navBar "" { back = False, about = False }
+            else
+                navBar "Camping near you" { back = False, about = True }
+
+        CampsitePage id ->
+            case Dict.get id model.campsites of
+                Just campsite ->
+                    navBar campsite.name.short { back = True, about = True }
+
+                Nothing ->
+                    navBar "404" { back = True, about = False }
+
+        AboutPage ->
+            navBar "About" { back = True, about = False }
+
+        TourPage id ->
+            navBar "" { back = (id /= Start), about = False }
+
+        AdminPage ->
+            navBar "Database admin" { back = True, about = False }
+
+        UnknownPage ->
+            navBar "404" { back = False, about = False }
+
+
+navBar : String -> { back : Bool, about : Bool } -> Html Msg
+navBar title { back, about } =
+    nav [ class "navbar navbar-default navbar-fixed-top" ]
+        [ div [ class "container" ]
+            ([ show back backButton
+             , show about aboutButton
+             , h1 [] [ text title ]
+             ]
+            )
+        ]
+
+
+show : Bool -> Html Msg -> Html Msg
+show s html =
+    if s then
+        html
+    else
+        text ""
+
+
+backButton : Html Msg
+backButton =
+    button [ onClick PageBack, class "btn btn-link navbar-link navbar-text pull-left" ]
+        [ App.ViewHelpers.glyphicon "menu-left" ]
+
+
+aboutButton : Html Msg
+aboutButton =
+    App.ViewHelpers.link ChangePage
+        AboutPage
+        [ class "btn btn-link navbar-link navbar-text pull-right"
+        ]
+        [ App.ViewHelpers.glyphicon "info-sign" ]
