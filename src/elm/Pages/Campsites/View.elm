@@ -6,7 +6,7 @@ import Html.Events exposing (..)
 import App.Update exposing (Msg(..))
 import App.Model exposing (Page(..), CampsitesPageOption(..))
 import Pages.Campsites.Model exposing (..)
-import App.ViewHelpers exposing (navBar)
+import App.ViewHelpers
 import Errors
 import App.CampsiteList
 
