@@ -26,14 +26,21 @@ view model =
         ]
         [ case model.page of
             CampsitesPage displayType ->
-                Pages.Campsites.View.view
-                    { campsites = (Dict.values model.campsites)
-                    , location = model.location
-                    , errors = model.errors
-                    , starredCampsites = model.starredCampsites
-                    , displayType = displayType
-                    , synching = model.synching
-                    }
+                div []
+                    [ if Dict.isEmpty model.campsites then
+                        App.ViewHelpers.navBar "" { back = Nothing, about = Nothing }
+                      else
+                        App.ViewHelpers.navBar "Camping near you"
+                            { back = Nothing, about = Just (ChangePage AboutPage) }
+                    , Pages.Campsites.View.view
+                        { campsites = (Dict.values model.campsites)
+                        , location = model.location
+                        , errors = model.errors
+                        , starredCampsites = model.starredCampsites
+                        , displayType = displayType
+                        , synching = model.synching
+                        }
+                    ]
 
             CampsitePage id ->
                 case Dict.get id model.campsites of
