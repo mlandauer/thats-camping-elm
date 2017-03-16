@@ -75,7 +75,7 @@ initModel flags =
            previous page will be set to the home page. This gives us a nice
            sensible default for the back button
         -}
-    , previousPage = Nothing
+    , previousPages = []
     , standalone = flags.standalone
     , version = flags.version
     , starredCampsites = Maybe.withDefault [] flags.starredCampsites
@@ -139,7 +139,7 @@ update msg model =
             in
                 ( { model
                     | page = newPage
-                    , previousPage = Just model.page
+                    , previousPages = model.page :: model.previousPages
                     , firstPageLoaded = True
                   }
                 , Analytics.screenView (Analytics.name newPage)

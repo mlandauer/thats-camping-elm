@@ -78,21 +78,21 @@ navView model =
             case Dict.get id model.campsites of
                 Just campsite ->
                     navBar campsite.name.short
-                        { back = model.previousPage, about = True }
+                        { back = List.head model.previousPages, about = True }
 
                 Nothing ->
                     navBar "404"
-                        { back = model.previousPage, about = False }
+                        { back = List.head model.previousPages, about = False }
 
         AboutPage ->
             navBar "About"
-                { back = model.previousPage, about = False }
+                { back = List.head model.previousPages, about = False }
 
         TourPage id ->
             navBar ""
                 { back =
                     (if id /= Start then
-                        model.previousPage
+                        List.head model.previousPages
                      else
                         Nothing
                     )
@@ -101,11 +101,11 @@ navView model =
 
         AdminPage ->
             navBar "Database admin"
-                { back = model.previousPage, about = False }
+                { back = List.head model.previousPages, about = False }
 
         UnknownPage ->
             navBar "404"
-                { back = model.previousPage, about = False }
+                { back = List.head model.previousPages, about = False }
 
 
 navBar : String -> { back : Maybe Page, about : Bool } -> Html Msg
