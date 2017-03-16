@@ -2,7 +2,6 @@ module App.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import App.Update exposing (..)
 import App.Model exposing (..)
 import Pages.About.View
@@ -27,10 +26,7 @@ view model =
         ]
         [ navView model
         , (case model.page of
-            Nothing ->
-                text ""
-
-            Just (CampsitesPage displayType) ->
+            CampsitesPage displayType ->
                 Pages.Campsites.View.view
                     { campsites = (Dict.values model.campsites)
                     , location = model.location
@@ -40,7 +36,7 @@ view model =
                     , synching = model.synching
                     }
 
-            Just (CampsitePage id) ->
+            CampsitePage id ->
                 case Dict.get id model.campsites of
                     Just campsite ->
                         Pages.Campsite.View.view
@@ -52,16 +48,16 @@ view model =
                     Nothing ->
                         App.ViewHelpers.view404
 
-            Just AboutPage ->
+            AboutPage ->
                 Pages.About.View.view model.version
 
-            Just (TourPage id) ->
+            TourPage id ->
                 Pages.Tour.View.view id (not (Dict.isEmpty model.campsites))
 
-            Just AdminPage ->
+            AdminPage ->
                 Html.map AdminMsg (Pages.Admin.View.view model)
 
-            Just UnknownPage ->
+            UnknownPage ->
                 App.ViewHelpers.view404
           )
         ]
@@ -69,48 +65,47 @@ view model =
 
 navView : Model -> Html Msg
 navView model =
-    let
-        -- If there is no previous page just go to the home page
-        backPage =
-            Maybe.withDefault (CampsitesPage List) model.previousPage
-    in
-        case model.page of
-            Nothing ->
-                text ""
-
-            Just (CampsitesPage displayType) ->
-                if Dict.isEmpty model.campsites then
-                    navBar "" { back = Nothing, about = False }
-                else
-                    navBar "Camping near you" { back = Nothing, about = True }
-
-            Just (CampsitePage id) ->
-                case Dict.get id model.campsites of
-                    Just campsite ->
-                        navBar campsite.name.short { back = Just backPage, about = True }
-
-                    Nothing ->
-                        navBar "404" { back = Just backPage, about = False }
-
-            Just AboutPage ->
-                navBar "About" { back = Just backPage, about = False }
-
-            Just (TourPage id) ->
+    case model.page of
+        CampsitesPage displayType ->
+            if Dict.isEmpty model.campsites then
                 navBar ""
-                    { back =
-                        (if id /= Start then
-                            Just backPage
-                         else
-                            Nothing
-                        )
-                    , about = False
-                    }
+                    { back = Nothing, about = False }
+            else
+                navBar "Camping near you"
+                    { back = Nothing, about = True }
 
-            Just AdminPage ->
-                navBar "Database admin" { back = Just backPage, about = False }
+        CampsitePage id ->
+            case Dict.get id model.campsites of
+                Just campsite ->
+                    navBar campsite.name.short
+                        { back = model.previousPage, about = True }
 
-            Just UnknownPage ->
-                navBar "404" { back = Just backPage, about = False }
+                Nothing ->
+                    navBar "404"
+                        { back = model.previousPage, about = False }
+
+        AboutPage ->
+            navBar "About"
+                { back = model.previousPage, about = False }
+
+        TourPage id ->
+            navBar ""
+                { back =
+                    (if id /= Start then
+                        model.previousPage
+                     else
+                        Nothing
+                    )
+                , about = False
+                }
+
+        AdminPage ->
+            navBar "Database admin"
+                { back = model.previousPage, about = False }
+
+        UnknownPage ->
+            navBar "404"
+                { back = model.previousPage, about = False }
 
 
 navBar : String -> { back : Maybe Page, about : Bool } -> Html Msg

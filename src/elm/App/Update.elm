@@ -69,7 +69,12 @@ initModel flags =
     { campsites = Dict.empty
     , location = flags.location
     , errors = Errors.initModel
-    , page = Nothing
+    , page =
+        CampsitesPage List
+        {- By setting the initial page to the home page on a first load the
+           previous page will be set to the home page. This gives us a nice
+           sensible default for the back button
+        -}
     , previousPage = Nothing
     , standalone = flags.standalone
     , version = flags.version
@@ -133,8 +138,8 @@ update msg model =
                         page
             in
                 ( { model
-                    | page = Just newPage
-                    , previousPage = model.page
+                    | page = newPage
+                    , previousPage = Just model.page
                     , firstPageLoaded = True
                   }
                 , Analytics.screenView (Analytics.name newPage)
@@ -180,7 +185,7 @@ update msg model =
         ChangeComplete info ->
             -- Now request the changes continuously
             ( if Dict.size model.campsites == 0 then
-                { model | page = Just (TourPage Start), synching = True }
+                { model | page = TourPage Start, synching = True }
               else
                 { model | synching = True }
             , Cmd.batch
@@ -253,9 +258,4 @@ location2messages location =
 
 delta2hash : Model -> Model -> Maybe RouteUrl.UrlChange
 delta2hash previous current =
-    case current.page of
-        Just page ->
-            Just (RouteUrl.UrlChange RouteUrl.NewEntry (App.Routing.page2url page))
-
-        Nothing ->
-            Nothing
+    Just (RouteUrl.UrlChange RouteUrl.NewEntry (App.Routing.page2url current.page))

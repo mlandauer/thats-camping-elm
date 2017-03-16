@@ -37,7 +37,7 @@ type alias Model =
     , location : Maybe Location
     , errors : List String
     , starredCampsites : List String
-    , page : Maybe Page
+    , page : Page
     , previousPage : Maybe Page
     , standalone : Bool
     , version : String
