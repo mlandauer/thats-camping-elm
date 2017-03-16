@@ -9,6 +9,8 @@ import App.Model exposing (Page(..))
 import Campsite exposing (Campsite, CampsiteWithStarred)
 import Location exposing (Location)
 import App.ViewHelpers
+import App.Routing
+import Json.Decode
 
 
 view : Maybe Location -> List Campsite -> List String -> Html Msg
@@ -85,8 +87,9 @@ compareStarred s1 s2 =
 
 campsiteListItem : Maybe Location -> CampsiteWithStarred -> Html Msg
 campsiteListItem location c =
-    button
-        [ class "list-group-item", onClick (ChangePage (CampsitePage c.campsite.id)) ]
+    App.ViewHelpers.link ChangePage
+        (CampsitePage c.campsite.id)
+        [ class "list-group-item" ]
         [ div [ class "campsite" ]
             ([ App.ViewHelpers.star c.starred Nothing
              , div [ class "pull-right distance" ] [ text (bearingAndDistanceAsText location c.campsite.location) ]

@@ -4,11 +4,15 @@ module App.ViewHelpers
         , star
         , view404
         , glyphicon
+        , link
         )
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Json.Decode
+import App.Model exposing (Page)
+import App.Routing
 
 
 type alias NavBarConfig msg =
@@ -90,3 +94,21 @@ view404 =
             [ h2 [] [ text "This is a 404" ]
             ]
         ]
+
+
+link : (Page -> msg) -> Page -> List (Attribute msg) -> List (Html msg) -> Html msg
+link changePageMsg page attributes html =
+    a
+        ([ href (App.Routing.page2url page)
+         , onClickPreventDefault (changePageMsg page)
+         ]
+            ++ attributes
+        )
+        html
+
+
+onClickPreventDefault : msg -> Attribute msg
+onClickPreventDefault message =
+    onWithOptions "click"
+        { stopPropagation = True, preventDefault = True }
+        (Json.Decode.succeed message)
