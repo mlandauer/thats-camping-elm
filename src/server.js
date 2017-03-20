@@ -47,14 +47,62 @@ var responses = {};
 
 function startServer() {
   var http = require('http');
+  var path = require('path');
   const PORT=8080;
 
   function handleRequest(request, response){
     var staticPath = "docs" + request.url;
     // TODO: I guess we don't want it serving up the server code
-    // TODO: Send with the right mimetype
+    // TODO: Do gzipping (or make webpack gzip thing)
+    // TODO: Add support for ssl cert
     if (request.url != "/" && fs.existsSync(staticPath)) {
       var file = fs.readFileSync(staticPath);
+      var extname = path.extname(staticPath);
+      var contentType = 'text/html';
+      switch (extname) {
+          case '.html':
+              contentType = 'text/html';
+              break;
+          case '.js':
+              contentType = 'text/javascript';
+              break;
+          case '.css':
+              contentType = 'text/css';
+              break;
+          case '.json':
+              contentType = 'application/json';
+              break;
+          case '.png':
+              contentType = 'image/png';
+              break;
+          case '.jpg':
+              contentType = 'image/jpg';
+              break;
+          case '.appcache':
+              contentType = 'text/cache-manifest';
+              break;
+          case '.map':
+              // See http://stackoverflow.com/questions/19911929/what-mime-type-should-i-use-for-javascript-source-map-files
+              contentType = 'application/json';
+              break;
+          case '.woff':
+              contentType = 'application/font-woff';
+              break;
+          case '.ttf':
+              contentType = 'application/octet-stream';
+              break;
+          case '.svg':
+              contentType = 'image/svg+xml';
+              break;
+          case '.woff2':
+              contentType = 'font/woff2';
+              break;
+          case '.eot':
+              contentType = 'application/vnd.ms-fontobject';
+              break;
+      }
+
+      response.writeHead(200, { 'Content-Type': contentType });
       response.end(file);
     } else {
       // Super simple way to give each request/response a unique id
@@ -78,6 +126,7 @@ function startServer() {
 function respond(response) {
   var template = fs.readFileSync("src/index.html", {encoding: 'utf8'});
   var template = template.replace("{{app}}", response.html);
+  responses[response.id].writeHead(200, { 'Content-Type': 'text/html' });
   responses[response.id].end(template);
   delete responses[response.id];
 }
