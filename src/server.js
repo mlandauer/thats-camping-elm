@@ -1,8 +1,3 @@
-require('bootstrap/dist/css/bootstrap.css');
-require('./assets/styles/style.css');
-
-require('./assets/images/apple-touch-icon.png');
-
 var Elm = require('./elm/Server.elm');
 
 var app = Elm.Server.worker();

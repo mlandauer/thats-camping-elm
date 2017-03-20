@@ -81,28 +81,9 @@ serverConfig = {
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: "css-loader?sourceMap",
-        })
-      },
-      {
-        test:    /\.(html|png)$/,
-        use:  'file-loader?name=[name].[ext]',
-      },
-      {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
         use:  'elm-webpack-loader?verbose=true&warn=true',
-      },
-      {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: 'url-loader?limit=10000&mimetype=application/font-woff',
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: 'file-loader',
       },
     ],
 
@@ -114,18 +95,11 @@ serverConfig = {
 
   devtool: 'source-map',
 
-  devServer: {
-    inline: true,
-    stats: { colors: true },
-  },
-
   plugins: [
-    new AppCachePlugin({cache: ["/", "/campsites"], exclude: ['index.html']}),
     new GitRevisionPlugin(),
     new webpack.DefinePlugin({
       'VERSION': JSON.stringify(gitRevisionPlugin.version())
-    }),
-    new ExtractTextPlugin('app.css')
+    })
   ]
 };
 
