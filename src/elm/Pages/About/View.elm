@@ -4,7 +4,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import App.Update exposing (Msg(..))
-import Markdown
 import Regex
 import App.Model exposing (Page(..), TourPageId(..))
 import App.ViewHelpers
@@ -15,35 +14,44 @@ view version =
     div [ class "campsite-list" ]
         [ div [ class "content" ]
             [ div [ class "container" ]
-                [ """
-## About That's Camping
-
-Find campsites near you in New South Wales, Australia. It covers camping on
-public, common land such as National Parks, State Forests and Local Council
-land.
-
-It works **completely offline**, even when you're far far away from a mobile phone tower. When does that ever happen while camping?
-
-Made by [Matthew Landauer](https://twitter.com/matthewlandauer). It's free and [open source](https://github.com/mlandauer/thats-camping-elm)
-because that's the way it ought to be.
-
-You're currently using version [{{version}}](https://github.com/mlandauer/thats-camping-elm/commit/{{version}}).
-            """
-                    -- Doing poor man's string interpolation here
-                    |>
-                        replace "{{version}}" version
-                    |> Markdown.toHtml []
+                [ h2 []
+                    [ text "About That's Camping" ]
+                , p []
+                    [ text "Find campsites near you in New South Wales, Australia. It covers camping on public, common land such as National Parks, State Forests and Local Council land." ]
+                , p []
+                    [ text "It works "
+                    , strong [] [ text "completely offline" ]
+                    , text ", even when you're far far away from a mobile phone tower. When does that ever happen while camping?"
+                    ]
+                , p []
+                    [ text "Made by "
+                    , a [ href "https://twitter.com/matthewlandauer" ]
+                        [ text "Matthew Landauer" ]
+                    , text ". It's free and "
+                    , a [ href "https://github.com/mlandauer/thats-camping-elm" ]
+                        [ text "open source" ]
+                    , text " because that's the way it ought to be."
+                    ]
+                , p []
+                    [ text "You're currently using version "
+                    , a [ href ("https://github.com/mlandauer/thats-camping-elm/commit/" ++ version) ]
+                        [ text version ]
+                    , text "."
+                    ]
                 , App.ViewHelpers.link
                     (ChangePage (TourPage Start))
                     (TourPage Start)
                     [ class "wide-button btn btn-default" ]
                     [ text "Tour" ]
-                , """
-## Things you might want to do
-
-[Suggest a **feature** or report an **issue**](https://github.com/mlandauer/thats-camping-elm/issues)
-              """
-                    |> Markdown.toHtml []
+                , h2 [] [ text "Things you might want to do" ]
+                , p []
+                    [ a [ href "https://github.com/mlandauer/thats-camping-elm/issues" ]
+                        [ text "Suggest a "
+                        , strong [] [ text "feature" ]
+                        , text " or report an "
+                        , strong [] [ text "issue" ]
+                        ]
+                    ]
                 ]
             ]
         ]
