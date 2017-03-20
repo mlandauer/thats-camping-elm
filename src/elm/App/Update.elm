@@ -27,6 +27,7 @@ import Leaflet
 import Errors
 import Analytics
 import App.Map
+import Campsite exposing (Campsite)
 
 
 -- TODO: We should probably move this port into another module
@@ -61,12 +62,24 @@ type alias Flags =
     , starredCampsites : Maybe (List String)
     , online : Bool
     , location : Maybe Location
+    , docs : List Json.Decode.Value
+    , sequence : Int
     }
+
+
+decodeInitialCampsites : List Json.Decode.Value -> List Campsite
+decodeInitialCampsites docs =
+    -- We're just going to ignore any errors that we encounter while we decode
+    List.map (Json.Decode.decodeValue App.NewDecoder.campsite) docs
+        |> List.filterMap Result.toMaybe
 
 
 initModel : Flags -> Model
 initModel flags =
-    { campsites = Dict.empty
+    { campsites =
+        decodeInitialCampsites flags.docs
+            |> List.map (\c -> ( c.id, c ))
+            |> Dict.fromList
     , location = flags.location
     , errors = Errors.initModel
     , page =
@@ -80,21 +93,34 @@ initModel flags =
     , version = flags.version
     , starredCampsites = Maybe.withDefault [] flags.starredCampsites
     , online = flags.online
-    , sequence = 0
-    , synching = False
+    , sequence = flags.sequence
+    , synching = True
     , firstPageLoaded = False
     }
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( initModel flags
-      -- On startup immediately try to get the location
-    , Cmd.batch
-        [ Task.attempt UpdateLocation Geolocation.now
-        , Pouchdb.changes { live = False, include_docs = True, return_docs = False, since = 0 }
-        ]
-    )
+    let
+        model =
+            initModel flags
+    in
+        ( model
+          -- On startup immediately try to get the location
+        , Cmd.batch
+            [ Task.attempt UpdateLocation Geolocation.now
+            , Pouchdb.changes
+                { live = True
+                , include_docs = True
+                , return_docs = False
+                , since = model.sequence
+                }
+            , Pouchdb.sync
+                { live = True
+                , retry = True
+                }
+            ]
+        )
 
 
 updateWithMap : Msg -> Model -> ( Model, Cmd Msg )
@@ -132,7 +158,9 @@ update msg model =
         ChangePage page ->
             let
                 newPage =
-                    if model.standalone && (not model.firstPageLoaded) then
+                    if page == CampsitesPage List && (Dict.isEmpty model.campsites) then
+                        TourPage Start
+                    else if model.standalone && (not model.firstPageLoaded) then
                         CampsitesPage List
                     else
                         page
@@ -192,24 +220,7 @@ update msg model =
                         ( model, Cmd.none )
 
         ChangeComplete info ->
-            -- Now request the changes continuously
-            ( if Dict.size model.campsites == 0 then
-                { model | page = TourPage Start, synching = True }
-              else
-                { model | synching = True }
-            , Cmd.batch
-                [ Pouchdb.sync
-                    { live = True
-                    , retry = True
-                    }
-                , Pouchdb.changes
-                    { live = True
-                    , include_docs = True
-                    , return_docs = False
-                    , since = model.sequence
-                    }
-                ]
-            )
+            ( model, Cmd.none )
 
         ToggleStarCampsite id ->
             let
