@@ -2,7 +2,6 @@ module Pages.About.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import App.Update exposing (Msg(..))
 import Regex
 import App.Model exposing (Page(..), TourPageId(..))
