@@ -1,6 +1,6 @@
 var Elm = require('./elm/Server.elm');
 
-var app = Elm.Server.worker();
+var app = Elm.Server.worker({version: VERSION});
 
 app.ports.response.subscribe(respond);
 

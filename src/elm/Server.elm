@@ -27,7 +27,7 @@ port response : ResponseInfo -> Cmd msg
 
 
 type alias Model =
-    { campsites : Dict.Dict String Campsite.Campsite }
+    { campsites : Dict.Dict String Campsite.Campsite, version : String }
 
 
 type Msg
@@ -35,19 +35,23 @@ type Msg
     | ChangeSuccess Pouchdb.ChangeSuccess
 
 
-main : Program Never Model Msg
+type alias Flags =
+    { version : String }
+
+
+main : Program Flags Model Msg
 main =
-    Platform.program
+    Platform.programWithFlags
         { init = init
         , subscriptions = subscriptions
         , update = update
         }
 
 
-init : ( Model, Cmd msg )
-init =
+init : Flags -> ( Model, Cmd msg )
+init flags =
     -- TODO: Initialise with something
-    ( { campsites = Dict.empty }, Cmd.none )
+    ( { campsites = Dict.empty, version = flags.version }, Cmd.none )
 
 
 subscriptions : model -> Sub Msg
@@ -65,7 +69,7 @@ update msg model =
             let
                 m =
                     App.Update.initModel
-                        { version = ""
+                        { version = model.version
                         , standalone = False
                         , starredCampsites = Nothing
                         , online = True
