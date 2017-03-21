@@ -15,6 +15,8 @@ all =
             , starredCampsites = Nothing
             , online = True
             , location = Nothing
+            , docs = []
+            , sequence = 0
             }
 
         standaloneFlags =
