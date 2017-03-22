@@ -4,6 +4,8 @@ require('bootstrap/dist/css/bootstrap.css');
 require('./assets/styles/style.css');
 // require('font-awesome/css/font-awesome.css');
 
+// Require index.html so it gets copied to dist
+require('./index.html');
 // Required for google webmaster tools site verification (and it needs to stay)
 require('./assets/html/google6d01d0a1bce5c547.html');
 require('./assets/images/apple-touch-icon.png');
