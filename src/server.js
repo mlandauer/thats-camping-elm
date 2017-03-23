@@ -62,9 +62,7 @@ function startServer() {
 
   var server = express();
 
-  server.use(compression());
-  server.use(express.static('docs'));
-  if (process.env.NODE_ENV == 'production') {
+  if (process.env.NODE_ENV === 'production') {
     server.use(function(req, res, next) {
       if (req.headers['x-forwarded-proto'] !== 'https')
         res.redirect("https://" + req.header('host') + req.url);
@@ -72,6 +70,8 @@ function startServer() {
         next();
     });
   }
+  server.use(compression());
+  server.use(express.static('docs'));
 
   server.get('*', handleRequest);
 
