@@ -47,6 +47,7 @@ var responses = {};
 
 function startServer() {
   var express = require('express');
+  var compression = require('compression')
   const PORT=8080;
 
   function handleRequest(request, response, next){
@@ -61,6 +62,7 @@ function startServer() {
 
   var server = express();
 
+  server.use(compression());
   server.use(express.static('docs'));
   server.get('*', handleRequest);
 
