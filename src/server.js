@@ -46,11 +46,11 @@ var connectionId = 0;
 var responses = {};
 
 function startServer() {
-  var http = require('http');
+  var express = require('express');
   var path = require('path');
   const PORT=8080;
 
-  function handleRequest(request, response){
+  function handleRequest(request, response, next){
     var staticPath = "docs" + request.url;
     // TODO: I guess we don't want it serving up the server code
     // TODO: Do gzipping (or make webpack gzip thing)
@@ -115,12 +115,13 @@ function startServer() {
     }
   }
 
-  var server = http.createServer(handleRequest);
+  var server = express();
 
-  server.listen(PORT, function(){
-    //Callback triggered when server is successfully listening. Hurray!
+  server.get('*', handleRequest);
+
+  server.listen(PORT, function () {
     console.log("Server listening on: http://localhost:%s", PORT);
-});
+  });
 }
 
 function respond(response) {
