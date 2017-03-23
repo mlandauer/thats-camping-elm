@@ -1,9 +1,10 @@
 var path = require("path");
 var AppCachePlugin = require('appcache-webpack-plugin');
-var GitRevisionPlugin = require('git-revision-webpack-plugin');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var gitRevisionPlugin = new GitRevisionPlugin();
+var git = require('git-rev-sync');
+
+var version = git.long().substr(0, 7);
 
 // TODO: Remove duplication between clientConfig and serverConfig
 
@@ -58,9 +59,8 @@ clientConfig = {
 
   plugins: [
     new AppCachePlugin({cache: ["/", "/campsites"], exclude: ['index.html']}),
-    new GitRevisionPlugin(),
     new webpack.DefinePlugin({
-      'VERSION': JSON.stringify(gitRevisionPlugin.version())
+      'VERSION': JSON.stringify(version)
     }),
     new ExtractTextPlugin('app.css')
   ]
@@ -96,9 +96,8 @@ serverConfig = {
   devtool: 'source-map',
 
   plugins: [
-    new GitRevisionPlugin(),
     new webpack.DefinePlugin({
-      'VERSION': JSON.stringify(gitRevisionPlugin.version())
+      'VERSION': JSON.stringify(version)
     })
   ]
 };
