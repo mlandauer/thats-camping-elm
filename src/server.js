@@ -47,76 +47,21 @@ var responses = {};
 
 function startServer() {
   var express = require('express');
-  var path = require('path');
   const PORT=8080;
 
   function handleRequest(request, response, next){
-    var staticPath = "docs" + request.url;
-    // TODO: I guess we don't want it serving up the server code
-    // TODO: Do gzipping (or make webpack gzip thing)
-    // TODO: Add support for ssl cert
-    if (request.url != "/" && fs.existsSync(staticPath)) {
-      var file = fs.readFileSync(staticPath);
-      var extname = path.extname(staticPath);
-      var contentType = 'text/html';
-      switch (extname) {
-          case '.html':
-              contentType = 'text/html';
-              break;
-          case '.js':
-              contentType = 'text/javascript';
-              break;
-          case '.css':
-              contentType = 'text/css';
-              break;
-          case '.json':
-              contentType = 'application/json';
-              break;
-          case '.png':
-              contentType = 'image/png';
-              break;
-          case '.jpg':
-              contentType = 'image/jpg';
-              break;
-          case '.appcache':
-              contentType = 'text/cache-manifest';
-              break;
-          case '.map':
-              // See http://stackoverflow.com/questions/19911929/what-mime-type-should-i-use-for-javascript-source-map-files
-              contentType = 'application/json';
-              break;
-          case '.woff':
-              contentType = 'application/font-woff';
-              break;
-          case '.ttf':
-              contentType = 'application/octet-stream';
-              break;
-          case '.svg':
-              contentType = 'image/svg+xml';
-              break;
-          case '.woff2':
-              contentType = 'font/woff2';
-              break;
-          case '.eot':
-              contentType = 'application/vnd.ms-fontobject';
-              break;
-      }
-
-      response.writeHead(200, { 'Content-Type': contentType });
-      response.end(file);
-    } else {
-      // Super simple way to give each request/response a unique id
-      // that can be used to route the response from elm to the
-      // correct request from the web
-      responses[connectionId] = response;
-      // Now Send a request to elm (via ports)
-      app.ports.request.send({id: connectionId, url: request.url});
-      connectionId++;
-    }
+    // Super simple way to give each request/response a unique id
+    // that can be used to route the response from elm to the
+    // correct request from the web
+    responses[connectionId] = response;
+    // Now Send a request to elm (via ports)
+    app.ports.request.send({id: connectionId, url: request.url});
+    connectionId++;
   }
 
   var server = express();
 
+  server.use(express.static('docs'));
   server.get('*', handleRequest);
 
   server.listen(PORT, function () {
