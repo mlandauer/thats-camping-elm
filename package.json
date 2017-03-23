@@ -11,7 +11,7 @@
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --port 3000 --history-api-fallback",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "elm-github-install; webpack -p",
+    "postinstall": "elm-github-install install; webpack -p",
     "start": "node docs/server.js"
   },
   "repository": {
