@@ -4,7 +4,16 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var git = require('git-rev-sync');
 
-var version = git.long().substr(0, 7);
+var production = process.env.NODE_ENV === 'production'
+
+// The full git revision - make this work both in development and in production (on Heroku)
+if (production) {
+  // This environment variable is set by Heroku
+  var version = process.env.SOURCE_VERSION
+} else {
+  var version = git.long()
+}
+version = version.substring(0, 7)
 
 // TODO: Remove duplication between clientConfig and serverConfig
 
