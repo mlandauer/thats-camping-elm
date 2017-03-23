@@ -47,8 +47,8 @@ var responses = {};
 
 function startServer() {
   var express = require('express');
-  var compression = require('compression')
-  const PORT=8080;
+  var compression = require('compression');
+  var port = process.env.PORT || 8080;
 
   function handleRequest(request, response, next){
     // Super simple way to give each request/response a unique id
@@ -66,8 +66,8 @@ function startServer() {
   server.use(express.static('docs'));
   server.get('*', handleRequest);
 
-  server.listen(PORT, function () {
-    console.log("Server listening on: http://localhost:%s", PORT);
+  server.listen(port, function () {
+    console.log("Server listening on: http://localhost:%s", port);
   });
 }
 
