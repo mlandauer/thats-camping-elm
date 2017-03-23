@@ -64,6 +64,15 @@ function startServer() {
 
   server.use(compression());
   server.use(express.static('docs'));
+  if (process.env.NODE_ENV == 'production') {
+    server.use(function(req, res, next) {
+      if (req.header('x-forwarded-proto') != 'https')
+        res.redirect("https://" + req.header('host') + req.url);
+      else
+        next();
+    });
+  }
+
   server.get('*', handleRequest);
 
   server.listen(port, function () {
