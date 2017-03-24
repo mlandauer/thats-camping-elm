@@ -74,7 +74,6 @@ function startServer() {
     });
   }
   server.use(function(req, res, next){
-    console.log("req.subdomains", req.subdomains);
     if (req.subdomains.length == 1 && req.subdomains[0] === "www") {
       // TODO: Figure out root domain from request rather than hardcoding it here
       res.redirect("https://thatscamping.org" + req.url);
