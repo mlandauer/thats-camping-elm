@@ -4,27 +4,15 @@ var app = Elm.Server.worker({version: VERSION});
 
 app.ports.response.subscribe(respond);
 
-var PouchDB = require('pouchdb');
+var pouchdb = require('./js/pouchdb');
 var fs = require('fs');
 
-var db = new PouchDB('thats-camping.db');
-
-var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
-  auth: {
-    // We're just using these tokens to get access to the remote database
-    // temporarily.
-    // TODO: Generate new tokens and remove from source code
-    username: 'cirtionewessinstroonheen',
-    password: '5e5308b9016a700156164970fbb346f9ede08e8e'
-  }
-});
-
 console.log("Synching campsite data...");
-db.sync(remoteDb, {}).on('complete', function (info) {
+pouchdb.db.sync(pouchdb.remoteDb, {}).on('complete', function (info) {
   console.log("Finished synching campsite data...");
   // TODO: Start live sync
   console.log("Loading campsite data...");
-  db.changes({include_docs: true}).on('change', function(change) {
+  pouchdb.db.changes({include_docs: true}).on('change', function(change) {
     app.ports.changeSuccess.send(change);
   }).on('complete', function(info) {
     console.log("Finished loading campsite data");

@@ -27,14 +27,9 @@ if (location) {
 }
 
 // Before we start the app let's load all the campsites
-// We're current duplicating code from pouchdb.js
-// TODO: Fix this
-var PouchDB = require('pouchdb');
-var db = new PouchDB('thats-camping');
-
-db.info().then(function(result) {
+Pouchdb.db.info().then(function(result) {
   var sequence = result.update_seq;
-  db.allDocs({include_docs: true}).then(function(result){
+  Pouchdb.db.allDocs({include_docs: true}).then(function(result){
     var docs = result.rows.map(function(row){return row.doc});
     // Pass elm the current git version and whether it's running fullscreen
     var app = Elm.App.embed(node, {

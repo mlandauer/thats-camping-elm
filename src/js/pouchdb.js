@@ -1,8 +1,8 @@
 var PouchDB = require('pouchdb');
 
-var db = new PouchDB('thats-camping');
+export var db = new PouchDB('thats-camping');
 
-var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
+export var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
   auth: {
     // We're just using these tokens to get access to the remote database
     // temporarily.
