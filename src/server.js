@@ -20,11 +20,7 @@ var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
 });
 
 console.log("Synching campsite data...");
-db.sync(remoteDb, {}).on('denied', function (err) {
-  // a document failed to replicate (e.g. due to permissions)
-  console.log("sync denied:", err);
-}).on('complete', function (info) {
-  // handle complete
+db.sync(remoteDb, {}).on('complete', function (info) {
   console.log("Finished synching campsite data...");
   // TODO: Start live sync
   console.log("Loading campsite data...");
@@ -34,12 +30,7 @@ db.sync(remoteDb, {}).on('denied', function (err) {
     console.log("Finished loading campsite data");
     // TODO: Now start collecting live changes
     startServer();
-  }).on('error', function (err) {
-    console.log(err);
   });
-}).on('error', function (err) {
-  // handle error
-  console.log("sync error:", err);
 });
 
 var connectionId = 0;
