@@ -64,12 +64,23 @@ function startServer() {
 
   if (process.env.NODE_ENV === 'production') {
     server.use(function(req, res, next) {
+      // TODO We should also be able to use req.protocol.
+      // See http://expressjs.com/en/4x/api.html
       if (req.headers['x-forwarded-proto'] !== 'https')
-        res.redirect("https://" + req.header('host') + req.url);
+      // TODO: Figure out root domain from request rather than hardcoding it here
+        res.redirect("https://thatscamping.org" + req.url);
       else
         next();
     });
   }
+  server.use(function(req, res, next){
+    if (req.subdomains == ["www"]) {
+      // TODO: Figure out root domain from request rather than hardcoding it here
+      res.redirect("https://thatscamping.org" + req.url);
+    } else {
+      next();
+    }
+  });
   server.use(compression());
   server.use(express.static('docs'));
 
