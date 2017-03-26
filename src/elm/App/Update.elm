@@ -119,6 +119,10 @@ init flags =
                 { live = True
                 , retry = True
                 }
+              -- We need to tell the map to add the campsites
+            , Leaflet.mapCommand
+                (App.Map.map { model | campsites = Dict.empty })
+                (App.Map.map model)
             ]
         )
 
