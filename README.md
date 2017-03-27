@@ -43,16 +43,16 @@ directories for changes. It's been [fixed but not yet released](https://github.c
 
 ## Production
 
-The site is hosted on S3 with Cloudfront acting as the CDN. We're also using
-a free SSL certificate provided by the AWS Certificate Manager.
+The site is served from a [Node.js](https://nodejs.org/en/) server running on
+[Heroku](https://www.heroku.com/). This allow us to do isomorphic rendering so
+that most of functionality of the site is still available if javascript is
+disabled (or not working) on the client side.
 
-We're using a tool called [s3_website](https://github.com/laurilehmijoki/s3_website) to make things easier.
+We're using Heroku's "Automated Certificate Management" to generate free
+[Let's Encrypt](https://letsencrypt.org/) SSL certificates. Heroku does require
+you to be on a paid plan for this to work.
 
-To deploy a new version to production:
-```
-npm run build
-s3_website push
-```
+To deploy a new version simple push code to the master branch on GitHub.
 
 ## Thank you
 
