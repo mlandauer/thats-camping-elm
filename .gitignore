@@ -3,4 +3,4 @@ dist/app.js
 node_modules
 .env
 docs
-thats-camping.db
+thats-camping
