@@ -71,7 +71,7 @@ function startServer() {
 }
 
 function respond(response) {
-  var template = fs.readFileSync("src/index_server_side.html", {encoding: 'utf8'});
+  var template = fs.readFileSync("src/index.html", {encoding: 'utf8'});
   var template = template.replace("{{app}}", response.html);
   responses[response.id].writeHead(200, { 'Content-Type': 'text/html' });
   responses[response.id].end(template);
