@@ -1,6 +1,7 @@
 module App.NewEncoder exposing (campsite, revision)
 
 import Json.Encode
+import Json.Encode.Extra
 import Location exposing (Location)
 import Campsite
     exposing
@@ -172,12 +173,7 @@ accessEncoder access =
 
 revision : Maybe String -> Json.Encode.Value
 revision revision =
-    case revision of
-        Just revision ->
-            Json.Encode.string revision
-
-        Nothing ->
-            Json.Encode.null
+    Json.Encode.Extra.maybe Json.Encode.string revision
 
 
 campsite : Campsite -> Json.Encode.Value
