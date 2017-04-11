@@ -1,7 +1,7 @@
 module App.NewEncoder exposing (campsite, revision)
 
-import Json.Encode
-import Json.Encode.Extra
+import Json.Encode exposing (object, string, Value, null, bool, float)
+import Json.Encode.Extra exposing (maybe)
 import Location exposing (Location)
 import Campsite
     exposing
@@ -19,102 +19,102 @@ import Campsite
         )
 
 
-locationEncoder : Maybe Location -> Json.Encode.Value
+locationEncoder : Maybe Location -> Value
 locationEncoder location =
     case location of
         Just location ->
-            Json.Encode.object
-                [ ( "latitude", Json.Encode.float location.latitude )
-                , ( "longitude", Json.Encode.float location.longitude )
+            object
+                [ ( "latitude", float location.latitude )
+                , ( "longitude", float location.longitude )
                 ]
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-toiletsEncoder : Maybe Toilets -> Json.Encode.Value
+toiletsEncoder : Maybe Toilets -> Value
 toiletsEncoder toilets =
     case toilets of
         Just NonFlushToilets ->
-            Json.Encode.string "non_flush"
+            string "non_flush"
 
         Just FlushToilets ->
-            Json.Encode.string "flush"
+            string "flush"
 
         Just NoToilets ->
-            Json.Encode.string "no"
+            string "no"
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-picnicTablesEncoder : Maybe PicnicTables -> Json.Encode.Value
+picnicTablesEncoder : Maybe PicnicTables -> Value
 picnicTablesEncoder picnicTables =
     case picnicTables of
         Just PicnicTables ->
-            Json.Encode.bool True
+            bool True
 
         Just NoPicnicTables ->
-            Json.Encode.bool False
+            bool False
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-barbecuesEncoder : Maybe Barbecues -> Json.Encode.Value
+barbecuesEncoder : Maybe Barbecues -> Value
 barbecuesEncoder barbecues =
     case barbecues of
         Just WoodBarbecues ->
-            Json.Encode.string "wood"
+            string "wood"
 
         Just WoodSuppliedBarbecues ->
-            Json.Encode.string "wood_supplied"
+            string "wood_supplied"
 
         Just WoodBringYourOwnBarbecues ->
-            Json.Encode.string "wood_bring_your_own"
+            string "wood_bring_your_own"
 
         Just GasElectricBarbecues ->
-            Json.Encode.string "gas_electric"
+            string "gas_electric"
 
         Just NoBarbecues ->
-            Json.Encode.string "no"
+            string "no"
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-showersEncoder : Maybe Showers -> Json.Encode.Value
+showersEncoder : Maybe Showers -> Value
 showersEncoder showers =
     case showers of
         Just HotShowers ->
-            Json.Encode.string "hot"
+            string "hot"
 
         Just ColdShowers ->
-            Json.Encode.string "cold"
+            string "cold"
 
         Just NoShowers ->
-            Json.Encode.string "no"
+            string "no"
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-drinkingWaterEncoder : Maybe DrinkingWater -> Json.Encode.Value
+drinkingWaterEncoder : Maybe DrinkingWater -> Value
 drinkingWaterEncoder drinkingWater =
     case drinkingWater of
         Just DrinkingWater ->
-            Json.Encode.bool True
+            bool True
 
         Just NoDrinkingWater ->
-            Json.Encode.bool False
+            bool False
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-facilitiesEncoder : Facilities -> Json.Encode.Value
+facilitiesEncoder : Facilities -> Value
 facilitiesEncoder facilities =
-    Json.Encode.object
+    object
         [ ( "toilets", toiletsEncoder facilities.toilets )
         , ( "picnicTables", picnicTablesEncoder facilities.picnicTables )
         , ( "barbecues", barbecuesEncoder facilities.barbecues )
@@ -123,68 +123,68 @@ facilitiesEncoder facilities =
         ]
 
 
-caravansEncoder : Maybe Caravans -> Json.Encode.Value
+caravansEncoder : Maybe Caravans -> Value
 caravansEncoder caravans =
     case caravans of
         Just Caravans ->
-            Json.Encode.bool True
+            bool True
 
         Just NoCaravans ->
-            Json.Encode.bool False
+            bool False
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-trailersEncoder : Maybe Trailers -> Json.Encode.Value
+trailersEncoder : Maybe Trailers -> Value
 trailersEncoder trailers =
     case trailers of
         Just Trailers ->
-            Json.Encode.bool True
+            bool True
 
         Just NoTrailers ->
-            Json.Encode.bool False
+            bool False
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-carsEncoder : Maybe Cars -> Json.Encode.Value
+carsEncoder : Maybe Cars -> Value
 carsEncoder cars =
     case cars of
         Just Cars ->
-            Json.Encode.bool True
+            bool True
 
         Just NoCars ->
-            Json.Encode.bool False
+            bool False
 
         Nothing ->
-            Json.Encode.null
+            null
 
 
-accessEncoder : Access -> Json.Encode.Value
+accessEncoder : Access -> Value
 accessEncoder access =
-    Json.Encode.object
+    object
         [ ( "caravans", caravansEncoder access.caravans )
         , ( "trailers", trailersEncoder access.trailers )
         , ( "cars", carsEncoder access.cars )
         ]
 
 
-revision : Maybe String -> Json.Encode.Value
+revision : Maybe String -> Value
 revision revision =
-    Json.Encode.Extra.maybe Json.Encode.string revision
+    maybe string revision
 
 
-campsite : Campsite -> Json.Encode.Value
+campsite : Campsite -> Value
 campsite campsite =
-    Json.Encode.object
-        [ ( "_id", Json.Encode.string campsite.id )
+    object
+        [ ( "_id", string campsite.id )
         , ( "_rev", revision campsite.revision )
-        , ( "name", Json.Encode.string campsite.name.long )
-        , ( "description", Json.Encode.string campsite.description )
+        , ( "name", string campsite.name.long )
+        , ( "description", string campsite.description )
         , ( "location", locationEncoder campsite.location )
         , ( "facilities", facilitiesEncoder campsite.facilities )
         , ( "access", accessEncoder campsite.access )
-        , ( "parkName", Json.Encode.string campsite.parkName.long )
+        , ( "parkName", string campsite.parkName.long )
         ]
