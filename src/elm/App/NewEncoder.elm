@@ -1,4 +1,4 @@
-module App.NewEncoder exposing (campsite)
+module App.NewEncoder exposing (campsite, revision)
 
 import Json.Encode
 import Location exposing (Location)
