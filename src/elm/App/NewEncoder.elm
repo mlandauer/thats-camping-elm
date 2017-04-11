@@ -19,8 +19,8 @@ import Campsite
         )
 
 
-locationEncoder : Maybe Location -> Value
-locationEncoder location =
+location : Maybe Location -> Value
+location location =
     case location of
         Just location ->
             object
@@ -32,8 +32,8 @@ locationEncoder location =
             null
 
 
-toiletsEncoder : Maybe Toilets -> Value
-toiletsEncoder toilets =
+toilets : Maybe Toilets -> Value
+toilets toilets =
     case toilets of
         Just NonFlushToilets ->
             string "non_flush"
@@ -48,8 +48,8 @@ toiletsEncoder toilets =
             null
 
 
-picnicTablesEncoder : Maybe PicnicTables -> Value
-picnicTablesEncoder picnicTables =
+picnicTables : Maybe PicnicTables -> Value
+picnicTables picnicTables =
     case picnicTables of
         Just PicnicTables ->
             bool True
@@ -61,8 +61,8 @@ picnicTablesEncoder picnicTables =
             null
 
 
-barbecuesEncoder : Maybe Barbecues -> Value
-barbecuesEncoder barbecues =
+barbecues : Maybe Barbecues -> Value
+barbecues barbecues =
     case barbecues of
         Just WoodBarbecues ->
             string "wood"
@@ -83,8 +83,8 @@ barbecuesEncoder barbecues =
             null
 
 
-showersEncoder : Maybe Showers -> Value
-showersEncoder showers =
+showers : Maybe Showers -> Value
+showers showers =
     case showers of
         Just HotShowers ->
             string "hot"
@@ -99,8 +99,8 @@ showersEncoder showers =
             null
 
 
-drinkingWaterEncoder : Maybe DrinkingWater -> Value
-drinkingWaterEncoder drinkingWater =
+drinkingWater : Maybe DrinkingWater -> Value
+drinkingWater drinkingWater =
     case drinkingWater of
         Just DrinkingWater ->
             bool True
@@ -112,19 +112,19 @@ drinkingWaterEncoder drinkingWater =
             null
 
 
-facilitiesEncoder : Facilities -> Value
-facilitiesEncoder facilities =
+facilities : Facilities -> Value
+facilities facilities =
     object
-        [ ( "toilets", toiletsEncoder facilities.toilets )
-        , ( "picnicTables", picnicTablesEncoder facilities.picnicTables )
-        , ( "barbecues", barbecuesEncoder facilities.barbecues )
-        , ( "showers", showersEncoder facilities.showers )
-        , ( "drinkingWater", drinkingWaterEncoder facilities.drinkingWater )
+        [ ( "toilets", toilets facilities.toilets )
+        , ( "picnicTables", picnicTables facilities.picnicTables )
+        , ( "barbecues", barbecues facilities.barbecues )
+        , ( "showers", showers facilities.showers )
+        , ( "drinkingWater", drinkingWater facilities.drinkingWater )
         ]
 
 
-caravansEncoder : Maybe Caravans -> Value
-caravansEncoder caravans =
+caravans : Maybe Caravans -> Value
+caravans caravans =
     case caravans of
         Just Caravans ->
             bool True
@@ -136,8 +136,8 @@ caravansEncoder caravans =
             null
 
 
-trailersEncoder : Maybe Trailers -> Value
-trailersEncoder trailers =
+trailers : Maybe Trailers -> Value
+trailers trailers =
     case trailers of
         Just Trailers ->
             bool True
@@ -149,8 +149,8 @@ trailersEncoder trailers =
             null
 
 
-carsEncoder : Maybe Cars -> Value
-carsEncoder cars =
+cars : Maybe Cars -> Value
+cars cars =
     case cars of
         Just Cars ->
             bool True
@@ -162,12 +162,12 @@ carsEncoder cars =
             null
 
 
-accessEncoder : Access -> Value
-accessEncoder access =
+access : Access -> Value
+access access =
     object
-        [ ( "caravans", caravansEncoder access.caravans )
-        , ( "trailers", trailersEncoder access.trailers )
-        , ( "cars", carsEncoder access.cars )
+        [ ( "caravans", caravans access.caravans )
+        , ( "trailers", trailers access.trailers )
+        , ( "cars", cars access.cars )
         ]
 
 
@@ -183,8 +183,8 @@ campsite campsite =
         , ( "_rev", revision campsite.revision )
         , ( "name", string campsite.name.long )
         , ( "description", string campsite.description )
-        , ( "location", locationEncoder campsite.location )
-        , ( "facilities", facilitiesEncoder campsite.facilities )
-        , ( "access", accessEncoder campsite.access )
+        , ( "location", location campsite.location )
+        , ( "facilities", facilities campsite.facilities )
+        , ( "access", access campsite.access )
         , ( "parkName", string campsite.parkName.long )
         ]
