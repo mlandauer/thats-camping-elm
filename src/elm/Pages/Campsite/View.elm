@@ -103,6 +103,10 @@ accessText access =
         )
 
 
+
+------------
+
+
 presentToilets : Toilets -> Bool
 presentToilets toilets =
     case toilets of
@@ -116,6 +120,19 @@ presentToilets toilets =
             False
 
 
+descriptionToilets : Toilets -> String
+descriptionToilets toilets =
+    case toilets of
+        FlushToilets ->
+            "flush toilets"
+
+        NonFlushToilets ->
+            "non-flush toilets"
+
+        NoToilets ->
+            "toilets"
+
+
 presentPicnicTables : PicnicTables -> Bool
 presentPicnicTables picnicTables =
     case picnicTables of
@@ -124,6 +141,11 @@ presentPicnicTables picnicTables =
 
         NoPicnicTables ->
             False
+
+
+descriptionPicnicTables : PicnicTables -> String
+descriptionPicnicTables picnicTables =
+    "picnic tables"
 
 
 presentBarbecues : Barbecues -> Bool
@@ -145,77 +167,6 @@ presentBarbecues barbecues =
             False
 
 
-presentShowers : Showers -> Bool
-presentShowers showers =
-    case showers of
-        HotShowers ->
-            True
-
-        ColdShowers ->
-            True
-
-        NoShowers ->
-            False
-
-
-presentDrinkingWater : DrinkingWater -> Bool
-presentDrinkingWater drinkingWater =
-    case drinkingWater of
-        DrinkingWater ->
-            True
-
-        NoDrinkingWater ->
-            False
-
-
-presentCaravans : Caravans -> Bool
-presentCaravans caravans =
-    case caravans of
-        Caravans ->
-            True
-
-        NoCaravans ->
-            False
-
-
-presentTrailers : Trailers -> Bool
-presentTrailers trailers =
-    case trailers of
-        Trailers ->
-            True
-
-        NoTrailers ->
-            False
-
-
-presentCars : Cars -> Bool
-presentCars cars =
-    case cars of
-        Cars ->
-            True
-
-        NoCars ->
-            False
-
-
-descriptionToilets : Toilets -> String
-descriptionToilets toilets =
-    case toilets of
-        FlushToilets ->
-            "flush toilets"
-
-        NonFlushToilets ->
-            "non-flush toilets"
-
-        NoToilets ->
-            "toilets"
-
-
-descriptionPicnicTables : PicnicTables -> String
-descriptionPicnicTables picnicTables =
-    "picnic tables"
-
-
 descriptionBarbecues : Barbecues -> String
 descriptionBarbecues barbecues =
     case barbecues of
@@ -235,6 +186,19 @@ descriptionBarbecues barbecues =
             "BBQs"
 
 
+presentShowers : Showers -> Bool
+presentShowers showers =
+    case showers of
+        HotShowers ->
+            True
+
+        ColdShowers ->
+            True
+
+        NoShowers ->
+            False
+
+
 descriptionShowers : Showers -> String
 descriptionShowers showers =
     case showers of
@@ -248,9 +212,29 @@ descriptionShowers showers =
             "showers"
 
 
+presentDrinkingWater : DrinkingWater -> Bool
+presentDrinkingWater drinkingWater =
+    case drinkingWater of
+        DrinkingWater ->
+            True
+
+        NoDrinkingWater ->
+            False
+
+
 descriptionDrinkingWater : DrinkingWater -> String
 descriptionDrinkingWater drinkingWater =
     "drinking water"
+
+
+presentCaravans : Caravans -> Bool
+presentCaravans caravans =
+    case caravans of
+        Caravans ->
+            True
+
+        NoCaravans ->
+            False
 
 
 descriptionCaravans : Caravans -> String
@@ -258,14 +242,38 @@ descriptionCaravans _ =
     "caravans"
 
 
+presentTrailers : Trailers -> Bool
+presentTrailers trailers =
+    case trailers of
+        Trailers ->
+            True
+
+        NoTrailers ->
+            False
+
+
 descriptionTrailers : Trailers -> String
 descriptionTrailers _ =
     "trailers"
 
 
+presentCars : Cars -> Bool
+presentCars cars =
+    case cars of
+        Cars ->
+            True
+
+        NoCars ->
+            False
+
+
 descriptionCars : Cars -> String
 descriptionCars _ =
     "car camping"
+
+
+
+---------
 
 
 listItem : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> Maybe String
