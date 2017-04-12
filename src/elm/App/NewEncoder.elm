@@ -21,15 +21,14 @@ import Campsite
 
 location : Maybe Location -> Value
 location location =
-    case location of
-        Just location ->
+    maybe
+        (\location ->
             object
                 [ ( "latitude", float location.latitude )
                 , ( "longitude", float location.longitude )
                 ]
-
-        Nothing ->
-            null
+        )
+        location
 
 
 toilets : Maybe Toilets -> Value
