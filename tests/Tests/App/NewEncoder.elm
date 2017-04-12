@@ -73,10 +73,10 @@ all =
                 \() ->
                     Expect.equal (string "1") (App.NewEncoder.revision (Just "1"))
             ]
-        , describe "location"
+        , describe "maybeLocation"
             [ test "Nothing" <|
                 \() ->
-                    Expect.equal null (App.NewEncoder.location Nothing)
+                    Expect.equal null (App.NewEncoder.maybeLocation Nothing)
             , test "a location" <|
                 \() ->
                     let
@@ -89,6 +89,6 @@ all =
                                 , ( "longitude", float 2 )
                                 ]
                     in
-                        Expect.equal expected (App.NewEncoder.location location)
+                        Expect.equal expected (App.NewEncoder.maybeLocation location)
             ]
         ]
