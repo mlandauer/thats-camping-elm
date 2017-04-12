@@ -2,7 +2,11 @@ module Tests.App.NewEncoder exposing (all)
 
 import Test exposing (..)
 import Expect
-import Campsite exposing (name)
+import Campsite
+    exposing
+        ( name
+        , Toilets(..)
+        )
 import App.NewEncoder
 import Json.Encode exposing (object, string, null, float)
 import Location exposing (Location)
@@ -79,5 +83,19 @@ all =
                                 ]
                     in
                         Expect.equal expected (App.NewEncoder.location location)
+            ]
+        , describe "toilets"
+            [ test "Nothing" <|
+                \() ->
+                    Expect.equal null (App.NewEncoder.toilets Nothing)
+            , test "no toilets" <|
+                \() ->
+                    Expect.equal (string "no") (App.NewEncoder.toilets (Just NoToilets))
+            , test "flush toilets" <|
+                \() ->
+                    Expect.equal (string "flush") (App.NewEncoder.toilets (Just FlushToilets))
+            , test "non flush toilets" <|
+                \() ->
+                    Expect.equal (string "non_flush") (App.NewEncoder.toilets (Just NonFlushToilets))
             ]
         ]

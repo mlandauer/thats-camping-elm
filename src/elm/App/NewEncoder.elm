@@ -1,4 +1,4 @@
-module App.NewEncoder exposing (campsite, location)
+module App.NewEncoder exposing (campsite, location, toilets)
 
 import Json.Encode exposing (object, string, Value, null, bool, float)
 import Json.Encode.Extra exposing (maybe)
