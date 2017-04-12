@@ -1,4 +1,4 @@
-module App.NewEncoder exposing (campsite, revision, location)
+module App.NewEncoder exposing (campsite, location)
 
 import Json.Encode exposing (object, string, Value, null, bool, float)
 import Json.Encode.Extra exposing (maybe)
@@ -166,16 +166,11 @@ access access =
         ]
 
 
-revision : Maybe String -> Value
-revision revision =
-    maybe string revision
-
-
 campsite : Campsite -> Value
 campsite campsite =
     object
         [ ( "_id", string campsite.id )
-        , ( "_rev", revision campsite.revision )
+        , ( "_rev", maybe string campsite.revision )
         , ( "name", string campsite.name.long )
         , ( "description", string campsite.description )
         , ( "location", maybe location campsite.location )

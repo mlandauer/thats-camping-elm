@@ -34,13 +34,13 @@ all =
                                 , cars = Nothing
                                 }
                             , parkName = name "Park"
-                            , revision = Nothing
+                            , revision = Just "rev"
                             }
 
                         expected =
                             object
                                 [ ( "_id", string "1" )
-                                , ( "_rev", null )
+                                , ( "_rev", string "rev" )
                                 , ( "name", string "Campsite" )
                                 , ( "description", string "A lovely campsite" )
                                 , ( "location", null )
@@ -64,14 +64,6 @@ all =
                                 ]
                     in
                         Expect.equal expected (App.NewEncoder.campsite campsite)
-            ]
-        , describe "revision"
-            [ test "Nothing" <|
-                \() ->
-                    Expect.equal null (App.NewEncoder.revision Nothing)
-            , test "1" <|
-                \() ->
-                    Expect.equal (string "1") (App.NewEncoder.revision (Just "1"))
             ]
         , describe "location"
             [ test "a location" <|
