@@ -4,7 +4,8 @@ import Test exposing (..)
 import Expect
 import Campsite exposing (name)
 import App.NewEncoder
-import Json.Encode exposing (object, string, null)
+import Json.Encode exposing (object, string, null, float)
+import Location exposing (Location)
 
 
 all : Test
@@ -71,5 +72,23 @@ all =
             , test "1" <|
                 \() ->
                     Expect.equal (string "1") (App.NewEncoder.revision (Just "1"))
+            ]
+        , describe "location"
+            [ test "Nothing" <|
+                \() ->
+                    Expect.equal null (App.NewEncoder.location Nothing)
+            , test "a location" <|
+                \() ->
+                    let
+                        location =
+                            Just (Location 1.0 2.0)
+
+                        expected =
+                            object
+                                [ ( "latitude", float 1 )
+                                , ( "longitude", float 2 )
+                                ]
+                    in
+                        Expect.equal expected (App.NewEncoder.location location)
             ]
         ]
