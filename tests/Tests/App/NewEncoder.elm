@@ -7,7 +7,7 @@ import Campsite
         ( name
         , Toilets(..)
         )
-import App.NewEncoder
+import App.NewEncoder exposing (..)
 import Json.Encode exposing (object, string, null, float)
 import Location exposing (Location)
 
@@ -19,7 +19,7 @@ all =
             [ test "test example 1" <|
                 \() ->
                     let
-                        campsite =
+                        c =
                             { id = "1"
                             , name = name "Campsite"
                             , description = "A lovely campsite"
@@ -67,13 +67,13 @@ all =
                                 , ( "parkName", string "Park" )
                                 ]
                     in
-                        Expect.equal expected (App.NewEncoder.campsite campsite)
+                        Expect.equal expected (campsite c)
             ]
         , describe "location"
             [ test "a location" <|
                 \() ->
                     let
-                        location =
+                        l =
                             Location 1.0 2.0
 
                         expected =
@@ -82,20 +82,20 @@ all =
                                 , ( "longitude", float 2 )
                                 ]
                     in
-                        Expect.equal expected (App.NewEncoder.location location)
+                        Expect.equal expected (location l)
             ]
         , describe "toilets"
             [ test "Nothing" <|
                 \() ->
-                    Expect.equal null (App.NewEncoder.toilets Nothing)
+                    Expect.equal null (toilets Nothing)
             , test "no toilets" <|
                 \() ->
-                    Expect.equal (string "no") (App.NewEncoder.toilets (Just NoToilets))
+                    Expect.equal (string "no") (toilets (Just NoToilets))
             , test "flush toilets" <|
                 \() ->
-                    Expect.equal (string "flush") (App.NewEncoder.toilets (Just FlushToilets))
+                    Expect.equal (string "flush") (toilets (Just FlushToilets))
             , test "non flush toilets" <|
                 \() ->
-                    Expect.equal (string "non_flush") (App.NewEncoder.toilets (Just NonFlushToilets))
+                    Expect.equal (string "non_flush") (toilets (Just NonFlushToilets))
             ]
         ]
