@@ -11,6 +11,7 @@ import Campsite
         , PicnicTables(..)
         , Barbecues(..)
         , Showers(..)
+        , DrinkingWater(..)
         )
 import Result.Extra
 
@@ -156,5 +157,19 @@ all =
                 \() ->
                     Expect.equal (Ok Nothing)
                         (Json.Decode.decodeString showers "null")
+            ]
+        , describe "drinkingWater"
+            [ test "true" <|
+                \() ->
+                    Expect.equal (Ok (Just DrinkingWater))
+                        (Json.Decode.decodeString drinkingWater "true")
+            , test "false" <|
+                \() ->
+                    Expect.equal (Ok (Just NoDrinkingWater))
+                        (Json.Decode.decodeString drinkingWater "false")
+            , test "null" <|
+                \() ->
+                    Expect.equal (Ok Nothing)
+                        (Json.Decode.decodeString drinkingWater "null")
             ]
         ]

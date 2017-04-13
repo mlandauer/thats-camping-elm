@@ -5,6 +5,7 @@ module App.NewDecoder
         , picnicTables
         , barbecues
         , showers
+        , drinkingWater
         )
 
 import Json.Decode exposing (..)
@@ -141,14 +142,15 @@ showersHelp text =
 
 drinkingWater : Decoder (Maybe DrinkingWater)
 drinkingWater =
-    map
-        (\present ->
-            if present then
-                Just DrinkingWater
-            else
-                Just NoDrinkingWater
-        )
-        bool
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    DrinkingWater
+                else
+                    NoDrinkingWater
+            )
+            bool
 
 
 access : Decoder Access
