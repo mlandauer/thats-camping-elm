@@ -1,4 +1,11 @@
-module App.NewDecoder exposing (campsite, toilets, picnicTables, barbecues)
+module App.NewDecoder
+    exposing
+        ( campsite
+        , toilets
+        , picnicTables
+        , barbecues
+        , showers
+        )
 
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (decode, required, requiredAt)
@@ -113,18 +120,23 @@ barbecuesHelp text =
 
 showers : Decoder (Maybe Showers)
 showers =
-    map
-        (\text ->
-            if text == "hot" then
-                Just HotShowers
-            else if text == "cold" then
-                Just ColdShowers
-            else if text == "no" then
-                Just NoShowers
-            else
-                Nothing
-        )
-        string
+    nullable (string |> andThen showersHelp)
+
+
+showersHelp : String -> Decoder Showers
+showersHelp text =
+    case text of
+        "hot" ->
+            succeed HotShowers
+
+        "cold" ->
+            succeed ColdShowers
+
+        "no" ->
+            succeed NoShowers
+
+        _ ->
+            fail "Unexpected value"
 
 
 drinkingWater : Decoder (Maybe DrinkingWater)
