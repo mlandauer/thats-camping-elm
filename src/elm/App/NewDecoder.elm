@@ -1,4 +1,4 @@
-module App.NewDecoder exposing (campsite)
+module App.NewDecoder exposing (campsite, toilets)
 
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (decode, required, requiredAt)
@@ -51,18 +51,23 @@ facilities =
 
 toilets : Decoder (Maybe Toilets)
 toilets =
-    map
-        (\text ->
-            if text == "non_flush" then
-                Just NonFlushToilets
-            else if text == "flush" then
-                Just FlushToilets
-            else if text == "no" then
-                Just NoToilets
-            else
-                Nothing
-        )
-        string
+    nullable (string |> andThen toiletsHelp)
+
+
+toiletsHelp : String -> Decoder Toilets
+toiletsHelp text =
+    case text of
+        "non_flush" ->
+            succeed NonFlushToilets
+
+        "flush" ->
+            succeed FlushToilets
+
+        "no" ->
+            succeed NoToilets
+
+        _ ->
+            fail "Unexpected value"
 
 
 picnicTables : Decoder (Maybe PicnicTables)
