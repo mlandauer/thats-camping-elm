@@ -8,6 +8,7 @@ import Campsite
     exposing
         ( name
         , Toilets(..)
+        , PicnicTables(..)
         )
 import Result.Extra
 
@@ -21,25 +22,25 @@ all =
              --         let
              --             json =
              --                 """{
-             --                       "_id": "1",
-             --                       "_rev": "rev",
-             --                       "name": "Campsite",
-             --                       "description": "A lovely campsite",
-             --                       "location": null,
-             --                       "facilities": {
-             --                         "toilets": null,
-             --                         "picnicTables": null,
-             --                         "barbecues": null,
-             --                         "showers": null,
-             --                         "drinkingWater": null
-             --                       },
-             --                       "access": {
-             --                         "caravans": null,
-             --                         "trailers": null,
-             --                         "cars": null
-             --                       },
-             --                       "parkName": "Park"
-             --                     }"""
+             --                        "_id": "1",
+             --                        "_rev": "rev",
+             --                        "name": "Campsite",
+             --                        "description": "A lovely campsite",
+             --                        "location": null,
+             --                        "facilities": {
+             --                          "toilets": null,
+             --                          "picnicTables": null,
+             --                          "barbecues": null,
+             --                          "showers": null,
+             --                          "drinkingWater": null
+             --                        },
+             --                        "access": {
+             --                          "caravans": null,
+             --                          "trailers": null,
+             --                          "cars": null
+             --                        },
+             --                        "parkName": "Park"
+             --                      }"""
              --
              --             expected =
              --                 Ok
@@ -87,5 +88,19 @@ all =
                 \() ->
                     Expect.equal True
                         (Result.Extra.isErr (Json.Decode.decodeString toilets "\"blah\""))
+            ]
+        , describe "picnicTables"
+            [ test "true" <|
+                \() ->
+                    Expect.equal (Ok (Just PicnicTables))
+                        (Json.Decode.decodeString picnicTables "true")
+            , test "false" <|
+                \() ->
+                    Expect.equal (Ok (Just NoPicnicTables))
+                        (Json.Decode.decodeString picnicTables "false")
+            , test "null" <|
+                \() ->
+                    Expect.equal (Ok Nothing)
+                        (Json.Decode.decodeString picnicTables "null")
             ]
         ]

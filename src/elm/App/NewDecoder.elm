@@ -1,4 +1,4 @@
-module App.NewDecoder exposing (campsite, toilets)
+module App.NewDecoder exposing (campsite, toilets, picnicTables)
 
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (decode, required, requiredAt)
@@ -72,14 +72,16 @@ toiletsHelp text =
 
 picnicTables : Decoder (Maybe PicnicTables)
 picnicTables =
-    map
-        (\present ->
-            if present then
-                Just PicnicTables
-            else
-                Just NoPicnicTables
+    nullable
+        (map
+            (\present ->
+                if present then
+                    PicnicTables
+                else
+                    NoPicnicTables
+            )
+            bool
         )
-        bool
 
 
 barbecues : Decoder (Maybe Barbecues)
