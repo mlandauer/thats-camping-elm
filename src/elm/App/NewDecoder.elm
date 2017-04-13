@@ -1,4 +1,4 @@
-module App.NewDecoder exposing (campsite, toilets, picnicTables)
+module App.NewDecoder exposing (campsite, toilets, picnicTables, barbecues)
 
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (decode, required, requiredAt)
@@ -86,22 +86,29 @@ picnicTables =
 
 barbecues : Decoder (Maybe Barbecues)
 barbecues =
-    map
-        (\text ->
-            if text == "wood" then
-                Just WoodBarbecues
-            else if text == "wood_supplied" then
-                Just WoodSuppliedBarbecues
-            else if text == "wood_bring_your_own" then
-                Just WoodBringYourOwnBarbecues
-            else if text == "gas_electric" then
-                Just GasElectricBarbecues
-            else if text == "no" then
-                Just NoBarbecues
-            else
-                Nothing
-        )
-        string
+    nullable (string |> andThen barbecuesHelp)
+
+
+barbecuesHelp : String -> Decoder Barbecues
+barbecuesHelp text =
+    case text of
+        "wood" ->
+            succeed WoodBarbecues
+
+        "wood_supplied" ->
+            succeed WoodSuppliedBarbecues
+
+        "wood_bring_your_own" ->
+            succeed WoodBringYourOwnBarbecues
+
+        "gas_electric" ->
+            succeed GasElectricBarbecues
+
+        "no" ->
+            succeed NoBarbecues
+
+        _ ->
+            fail "Unexpected value"
 
 
 showers : Decoder (Maybe Showers)

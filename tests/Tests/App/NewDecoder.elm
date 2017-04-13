@@ -9,6 +9,7 @@ import Campsite
         ( name
         , Toilets(..)
         , PicnicTables(..)
+        , Barbecues(..)
         )
 import Result.Extra
 
@@ -102,5 +103,35 @@ all =
                 \() ->
                     Expect.equal (Ok Nothing)
                         (Json.Decode.decodeString picnicTables "null")
+            ]
+        , describe "barbecues"
+            [ test "wood" <|
+                \() ->
+                    Expect.equal (Ok (Just WoodBarbecues))
+                        (Json.Decode.decodeString barbecues "\"wood\"")
+            , test "wood_supplied" <|
+                \() ->
+                    Expect.equal (Ok (Just WoodSuppliedBarbecues))
+                        (Json.Decode.decodeString barbecues "\"wood_supplied\"")
+            , test "wood_bring_your_own" <|
+                \() ->
+                    Expect.equal (Ok (Just WoodBringYourOwnBarbecues))
+                        (Json.Decode.decodeString barbecues "\"wood_bring_your_own\"")
+            , test "gas_electric" <|
+                \() ->
+                    Expect.equal (Ok (Just GasElectricBarbecues))
+                        (Json.Decode.decodeString barbecues "\"gas_electric\"")
+            , test "no" <|
+                \() ->
+                    Expect.equal (Ok (Just NoBarbecues))
+                        (Json.Decode.decodeString barbecues "\"no\"")
+            , test "blah" <|
+                \() ->
+                    Expect.equal True
+                        (Result.Extra.isErr (Json.Decode.decodeString barbecues "\"blah\""))
+            , test "null" <|
+                \() ->
+                    Expect.equal (Ok Nothing)
+                        (Json.Decode.decodeString barbecues "null")
             ]
         ]
