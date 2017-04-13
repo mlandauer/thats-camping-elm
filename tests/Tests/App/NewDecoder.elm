@@ -12,6 +12,9 @@ import Campsite
         , Barbecues(..)
         , Showers(..)
         , DrinkingWater(..)
+        , Caravans(..)
+        , Trailers(..)
+        , Cars(..)
         )
 import Result.Extra
 
@@ -171,5 +174,47 @@ all =
                 \() ->
                     Expect.equal (Ok Nothing)
                         (Json.Decode.decodeString drinkingWater "null")
+            ]
+        , describe "caravans"
+            [ test "true" <|
+                \() ->
+                    Expect.equal (Ok (Just Caravans))
+                        (Json.Decode.decodeString caravans "true")
+            , test "false" <|
+                \() ->
+                    Expect.equal (Ok (Just NoCaravans))
+                        (Json.Decode.decodeString caravans "false")
+            , test "null" <|
+                \() ->
+                    Expect.equal (Ok Nothing)
+                        (Json.Decode.decodeString caravans "null")
+            ]
+        , describe "trailers"
+            [ test "true" <|
+                \() ->
+                    Expect.equal (Ok (Just Trailers))
+                        (Json.Decode.decodeString trailers "true")
+            , test "false" <|
+                \() ->
+                    Expect.equal (Ok (Just NoTrailers))
+                        (Json.Decode.decodeString trailers "false")
+            , test "null" <|
+                \() ->
+                    Expect.equal (Ok Nothing)
+                        (Json.Decode.decodeString trailers "null")
+            ]
+        , describe "cars"
+            [ test "true" <|
+                \() ->
+                    Expect.equal (Ok (Just Cars))
+                        (Json.Decode.decodeString cars "true")
+            , test "false" <|
+                \() ->
+                    Expect.equal (Ok (Just NoCars))
+                        (Json.Decode.decodeString cars "false")
+            , test "null" <|
+                \() ->
+                    Expect.equal (Ok Nothing)
+                        (Json.Decode.decodeString cars "null")
             ]
         ]

@@ -6,6 +6,9 @@ module App.NewDecoder
         , barbecues
         , showers
         , drinkingWater
+        , caravans
+        , trailers
+        , cars
         )
 
 import Json.Decode exposing (..)
@@ -19,6 +22,9 @@ import Campsite
         , Barbecues(..)
         , PicnicTables(..)
         , Toilets(..)
+        , Caravans(..)
+        , Trailers(..)
+        , Cars(..)
         )
 import Location exposing (Location)
 
@@ -153,6 +159,48 @@ drinkingWater =
             bool
 
 
+caravans : Decoder (Maybe Caravans)
+caravans =
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    Caravans
+                else
+                    NoCaravans
+            )
+            bool
+
+
+trailers : Decoder (Maybe Trailers)
+trailers =
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    Trailers
+                else
+                    NoTrailers
+            )
+            bool
+
+
+cars : Decoder (Maybe Cars)
+cars =
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    Cars
+                else
+                    NoCars
+            )
+            bool
+
+
 access : Decoder Access
 access =
-    succeed (Access Nothing Nothing Nothing)
+    map3 Access
+        (field "caravans" caravans)
+        (field "trailers" trailers)
+        (field "cars" cars)
