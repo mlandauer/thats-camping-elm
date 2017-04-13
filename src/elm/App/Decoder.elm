@@ -66,18 +66,23 @@ location =
 
 toilets : Decoder (Maybe Toilets)
 toilets =
-    map
-        (\text ->
-            if text == "non_flush" then
-                Just NonFlushToilets
-            else if text == "flush" then
-                Just FlushToilets
-            else if text == "none" then
-                Just NoToilets
-            else
-                Nothing
-        )
-        string
+    string |> andThen toiletsHelp |> map Just
+
+
+toiletsHelp : String -> Decoder Toilets
+toiletsHelp text =
+    case text of
+        "non_flush" ->
+            succeed NonFlushToilets
+
+        "flush" ->
+            succeed FlushToilets
+
+        "none" ->
+            succeed NoToilets
+
+        _ ->
+            fail "Unexpected value"
 
 
 picnicTables : Decoder (Maybe PicnicTables)
@@ -94,38 +99,50 @@ picnicTables =
 
 barbecues : Decoder (Maybe Barbecues)
 barbecues =
-    map
-        (\text ->
-            if text == "wood" then
-                Just WoodBarbecues
-            else if text == "wood_supplied" then
-                Just WoodSuppliedBarbecues
-            else if text == "wood_bring_your_own" then
-                Just WoodBringYourOwnBarbecues
-            else if text == "gas_electric" then
-                Just GasElectricBarbecues
-            else if text == "none" then
-                Just NoBarbecues
-            else
-                Nothing
-        )
-        string
+    string |> andThen barbecuesHelp |> map Just
+
+
+barbecuesHelp : String -> Decoder Barbecues
+barbecuesHelp text =
+    case text of
+        "wood" ->
+            succeed WoodBarbecues
+
+        "wood_supplied" ->
+            succeed WoodSuppliedBarbecues
+
+        "wood_bring_your_own" ->
+            succeed WoodBringYourOwnBarbecues
+
+        "gas_electric" ->
+            succeed GasElectricBarbecues
+
+        "none" ->
+            succeed NoBarbecues
+
+        _ ->
+            fail "Unexpected value"
 
 
 showers : Decoder (Maybe Showers)
 showers =
-    map
-        (\text ->
-            if text == "hot" then
-                Just HotShowers
-            else if text == "cold" then
-                Just ColdShowers
-            else if text == "none" then
-                Just NoShowers
-            else
-                Nothing
-        )
-        string
+    string |> andThen showersHelp |> map Just
+
+
+showersHelp : String -> Decoder Showers
+showersHelp text =
+    case text of
+        "hot" ->
+            succeed HotShowers
+
+        "cold" ->
+            succeed ColdShowers
+
+        "none" ->
+            succeed NoShowers
+
+        _ ->
+            fail "Unexpected value"
 
 
 drinkingWater : Decoder (Maybe DrinkingWater)
