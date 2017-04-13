@@ -63,11 +63,16 @@ update msg model =
             let
                 campsites =
                     transform data.campsites data.parks
+                        |> List.map (\c -> ( c.id, c ))
+                        |> Dict.fromList
+
+                -- Merge new campsite data in (but don't save it to the local database)
+                -- TODO: This merging would be more elegant, I think, if the
+                -- revision was separated from the actual campsite data
+                newCampsites =
+                    Dict.map (merge campsites) model.campsites
             in
-                -- Now we load the new data into the local database
-                ( model
-                , Pouchdb.bulkDocs (List.map App.NewEncoder.campsite campsites)
-                )
+                ( { model | campsites = newCampsites }, Cmd.none )
 
         Destroy ->
             ( model, Pouchdb.destroy () )
@@ -120,6 +125,17 @@ update msg model =
 
         ErrorsMsg msg ->
             ( { model | errors = Errors.update msg model.errors }, Cmd.none )
+
+
+merge : Dict String Campsite -> String -> Campsite -> Campsite
+merge campsites id c =
+    case (Dict.get c.id campsites) of
+        Just c2 ->
+            -- Maintain the old revision so we can save this
+            { c2 | revision = c.revision }
+
+        Nothing ->
+            c
 
 
 transform : List App.Decoder.Campsite -> List App.Decoder.Park -> List Campsite
