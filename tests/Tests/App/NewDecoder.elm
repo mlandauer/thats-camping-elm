@@ -54,55 +54,55 @@ all : Test
 all =
     describe "NewEncoder"
         [ describe "campsite"
-            [ test "A test" <|
-                \() ->
-                    let
-                        json =
-                            """{
-                                    "_id": "1",
-                                    "_rev": "rev",
-                                    "name": "Campsite",
-                                    "description": "A lovely campsite",
-                                    "location": null,
-                                    "facilities": {
-                                      "toilets": null,
-                                      "picnicTables": null,
-                                      "barbecues": null,
-                                      "showers": null,
-                                      "drinkingWater": null
-                                    },
-                                    "access": {
-                                      "caravans": null,
-                                      "trailers": null,
-                                      "cars": null
-                                    },
-                                    "parkName": "Park"
-                                  }"""
-
-                        expected =
-                            Ok
-                                { id = "1"
-                                , name = name "Campsite"
-                                , description = "A lovely campsite"
-                                , location =
-                                    Nothing
-                                , facilities =
-                                    { toilets = Nothing
-                                    , picnicTables = Nothing
-                                    , barbecues = Nothing
-                                    , showers = Nothing
-                                    , drinkingWater = Nothing
-                                    }
-                                , access =
-                                    { caravans = Nothing
-                                    , trailers = Nothing
-                                    , cars = Nothing
-                                    }
-                                , parkName = name "Park"
-                                , revision = Just "rev"
-                                }
-                    in
-                        Expect.equal expected (Json.Decode.decodeString App.NewDecoder.campsite json)
+            [ testED
+                { encoder = App.NewEncoder.campsite
+                , decoder = App.NewDecoder.campsite
+                }
+                { id = "1"
+                , name = name "Campsite"
+                , description = "A lovely campsite"
+                , location =
+                    Nothing
+                , facilities =
+                    { toilets = Nothing
+                    , picnicTables = Nothing
+                    , barbecues = Nothing
+                    , showers = Nothing
+                    , drinkingWater = Nothing
+                    }
+                , access =
+                    { caravans = Nothing
+                    , trailers = Nothing
+                    , cars = Nothing
+                    }
+                , parkName = name "Park"
+                , revision = Just "rev"
+                }
+                (object
+                    [ ( "_id", string "1" )
+                    , ( "_rev", string "rev" )
+                    , ( "name", string "Campsite" )
+                    , ( "description", string "A lovely campsite" )
+                    , ( "location", null )
+                    , ( "facilities"
+                      , object
+                            [ ( "toilets", null )
+                            , ( "picnicTables", null )
+                            , ( "barbecues", null )
+                            , ( "showers", null )
+                            , ( "drinkingWater", null )
+                            ]
+                      )
+                    , ( "access"
+                      , object
+                            [ ( "caravans", null )
+                            , ( "trailers", null )
+                            , ( "cars", null )
+                            ]
+                      )
+                    , ( "parkName", string "Park" )
+                    ]
+                )
             ]
         , describe "location"
             [ testED
