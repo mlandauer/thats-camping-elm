@@ -109,12 +109,15 @@ all =
                     { encoder = App.NewEncoder.toilets
                     , decoder = App.NewDecoder.toilets
                     }
+
+                test =
+                    testED ed
              in
-                [ testED ed Nothing null
-                , testED ed (Just NoToilets) (string "no")
-                , testED ed (Just FlushToilets) (string "flush")
-                , testED ed (Just NonFlushToilets) (string "non_flush")
-                , test "blah" <|
+                [ test Nothing null
+                , test (Just NoToilets) (string "no")
+                , test (Just FlushToilets) (string "flush")
+                , test (Just NonFlushToilets) (string "non_flush")
+                , Test.test "blah" <|
                     \() ->
                         Expect.equal True
                             (Result.Extra.isErr (Json.Decode.decodeString ed.decoder "\"blah\""))
@@ -122,72 +125,39 @@ all =
             )
         , describe "picnicTables"
             (let
-                ed =
-                    { encoder = App.NewEncoder.picnicTables
-                    , decoder = App.NewDecoder.picnicTables
-                    }
+                test =
+                    testED
+                        { encoder = App.NewEncoder.picnicTables
+                        , decoder = App.NewDecoder.picnicTables
+                        }
              in
-                [ testED ed Nothing null
-                , testED ed (Just PicnicTables) (bool True)
-                , testED ed (Just NoPicnicTables) (bool False)
+                [ test Nothing null
+                , test (Just PicnicTables) (bool True)
+                , test (Just NoPicnicTables) (bool False)
                 ]
             )
         , describe "barbecues"
-            [ test "wood" <|
-                \() ->
-                    Expect.equal (Ok (Just WoodBarbecues))
-                        (Json.Decode.decodeString App.NewDecoder.barbecues "\"wood\"")
-            , test "wood_supplied" <|
-                \() ->
-                    Expect.equal (Ok (Just WoodSuppliedBarbecues))
-                        (Json.Decode.decodeString App.NewDecoder.barbecues "\"wood_supplied\"")
-            , test "wood_bring_your_own" <|
-                \() ->
-                    Expect.equal (Ok (Just WoodBringYourOwnBarbecues))
-                        (Json.Decode.decodeString App.NewDecoder.barbecues "\"wood_bring_your_own\"")
-            , test "gas_electric" <|
-                \() ->
-                    Expect.equal (Ok (Just GasElectricBarbecues))
-                        (Json.Decode.decodeString App.NewDecoder.barbecues "\"gas_electric\"")
-            , test "no" <|
-                \() ->
-                    Expect.equal (Ok (Just NoBarbecues))
-                        (Json.Decode.decodeString App.NewDecoder.barbecues "\"no\"")
-            , test "blah" <|
-                \() ->
-                    Expect.equal True
-                        (Result.Extra.isErr (Json.Decode.decodeString App.NewDecoder.barbecues "\"blah\""))
-            , test "null" <|
-                \() ->
-                    Expect.equal (Ok Nothing)
-                        (Json.Decode.decodeString App.NewDecoder.barbecues "null")
-            ]
-        , describe "barbecues"
-            [ test "Nothing" <|
-                \() ->
-                    Expect.equal null
-                        (App.NewEncoder.barbecues Nothing)
-            , test "WoodBarbecues" <|
-                \() ->
-                    Expect.equal (string "wood")
-                        (App.NewEncoder.barbecues (Just WoodBarbecues))
-            , test "WoodSuppliedBarbecues" <|
-                \() ->
-                    Expect.equal (string "wood_supplied")
-                        (App.NewEncoder.barbecues (Just WoodSuppliedBarbecues))
-            , test "WoodBringYourOwnBarbecues" <|
-                \() ->
-                    Expect.equal (string "wood_bring_your_own")
-                        (App.NewEncoder.barbecues (Just WoodBringYourOwnBarbecues))
-            , test "GasElectricBarbecues" <|
-                \() ->
-                    Expect.equal (string "gas_electric")
-                        (App.NewEncoder.barbecues (Just GasElectricBarbecues))
-            , test "NoBarbecues" <|
-                \() ->
-                    Expect.equal (string "no")
-                        (App.NewEncoder.barbecues (Just NoBarbecues))
-            ]
+            (let
+                ed =
+                    { encoder = App.NewEncoder.barbecues
+                    , decoder = App.NewDecoder.barbecues
+                    }
+
+                test =
+                    testED ed
+             in
+                [ test Nothing null
+                , test (Just WoodBarbecues) (string "wood")
+                , test (Just WoodSuppliedBarbecues) (string "wood_supplied")
+                , test (Just WoodBringYourOwnBarbecues) (string "wood_bring_your_own")
+                , test (Just GasElectricBarbecues) (string "gas_electric")
+                , test (Just NoBarbecues) (string "no")
+                , Test.test "blah" <|
+                    \() ->
+                        Expect.equal True
+                            (Result.Extra.isErr (Json.Decode.decodeString ed.decoder "\"blah\""))
+                ]
+            )
         , describe "showers"
             [ test "hot" <|
                 \() ->
