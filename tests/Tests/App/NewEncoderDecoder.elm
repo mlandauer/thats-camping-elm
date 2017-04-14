@@ -36,18 +36,14 @@ type alias EncoderDecoder t =
 
 testED : EncoderDecoder t -> t -> Value -> Test
 testED ed v json =
-    let
-        jsonString =
-            (Json.Encode.encode 0 json)
-    in
-        describe jsonString
-            [ test "encode" <|
-                \() -> Expect.equal json (ed.encoder v)
-            , test "decode" <|
-                \() ->
-                    Expect.equal (Ok v)
-                        (Json.Decode.decodeString ed.decoder jsonString)
-            ]
+    describe (Json.Encode.encode 0 json)
+        [ test "encode" <|
+            \() ->
+                Expect.equal json (ed.encoder v)
+        , test "decode" <|
+            \() ->
+                Expect.equal (Ok v) (Json.Decode.decodeValue ed.decoder json)
+        ]
 
 
 all : Test
