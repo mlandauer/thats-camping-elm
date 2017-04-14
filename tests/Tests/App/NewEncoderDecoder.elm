@@ -1,4 +1,4 @@
-module Tests.App.NewDecoder exposing (all)
+module Tests.App.NewEncoderDecoder exposing (all)
 
 import Test exposing (..)
 import Expect
@@ -52,7 +52,7 @@ testED ed v json =
 
 all : Test
 all =
-    describe "NewEncoder"
+    describe "NewEncoderDecoder"
         [ describe "campsite"
             [ testED
                 { encoder = App.NewEncoder.campsite
