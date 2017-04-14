@@ -1,72 +1,72 @@
 module App.Decoder
     exposing
-        ( location
+        ( campsite
+        , location
         , toilets
         , picnicTables
         , barbecues
         , showers
         , drinkingWater
-        , facilities
-        , parksAndCampsites
-        , Campsite
-        , Park
+        , caravans
+        , trailers
+        , cars
         )
 
 import Json.Decode exposing (..)
-import Json.Decode.Pipeline exposing (decode, required, custom, hardcoded)
-import Location exposing (Location)
+import Json.Decode.Pipeline exposing (decode, required, requiredAt)
 import Campsite
     exposing
         ( Facilities
         , Access
-        , Toilets(..)
-        , PicnicTables(..)
-        , Barbecues(..)
-        , Showers(..)
         , DrinkingWater(..)
+        , Showers(..)
+        , Barbecues(..)
+        , PicnicTables(..)
+        , Toilets(..)
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
         )
+import Location exposing (Location)
 
 
-type alias Campsite =
-    { id : String
-    , shortName : String
-    , longName : String
-    , description : String
-    , location : Maybe Location
-    , facilities : Facilities
-    , access : Access
-    , parkId :
-        String
-        -- , revision : Maybe String
-    }
+-- TODO: Use Json.Decode.Pipeline everywhere for consistency and simplicity
 
 
-type alias Park =
-    { id : String
-    , shortName : String
-    , longName : String
-    , description : String
-    , campsiteIds :
-        List String
-        -- , revision : Maybe String
-    }
+campsite : Decoder Campsite.Campsite
+campsite =
+    decode Campsite.Campsite
+        |> required "_id" string
+        |> required "name" (map Campsite.name string)
+        |> required "description" string
+        |> required "location" (nullable location)
+        |> required "facilities" facilities
+        |> required "access" access
+        |> required "parkName" (map Campsite.name string)
+        |> required "_rev" (nullable string)
 
 
-location : Decoder (Maybe Location)
+location : Decoder Location
 location =
-    maybe
-        (map2 Location
-            (field "latitude" float)
-            (field "longitude" float)
-        )
+    (map2 Location
+        (field "latitude" float)
+        (field "longitude" float)
+    )
+
+
+facilities : Decoder Facilities
+facilities =
+    map5 Facilities
+        (field "toilets" toilets)
+        (field "picnicTables" picnicTables)
+        (field "barbecues" barbecues)
+        (field "showers" showers)
+        (field "drinkingWater" drinkingWater)
 
 
 toilets : Decoder (Maybe Toilets)
 toilets =
-    string |> andThen toiletsHelp |> map Just
+    nullable (string |> andThen toiletsHelp)
 
 
 toiletsHelp : String -> Decoder Toilets
@@ -78,7 +78,7 @@ toiletsHelp text =
         "flush" ->
             succeed FlushToilets
 
-        "none" ->
+        "no" ->
             succeed NoToilets
 
         _ ->
@@ -87,19 +87,21 @@ toiletsHelp text =
 
 picnicTables : Decoder (Maybe PicnicTables)
 picnicTables =
-    map
-        (\present ->
-            if present then
-                Just PicnicTables
-            else
-                Just NoPicnicTables
+    nullable
+        (map
+            (\present ->
+                if present then
+                    PicnicTables
+                else
+                    NoPicnicTables
+            )
+            bool
         )
-        bool
 
 
 barbecues : Decoder (Maybe Barbecues)
 barbecues =
-    string |> andThen barbecuesHelp |> map Just
+    nullable (string |> andThen barbecuesHelp)
 
 
 barbecuesHelp : String -> Decoder Barbecues
@@ -117,7 +119,7 @@ barbecuesHelp text =
         "gas_electric" ->
             succeed GasElectricBarbecues
 
-        "none" ->
+        "no" ->
             succeed NoBarbecues
 
         _ ->
@@ -126,7 +128,7 @@ barbecuesHelp text =
 
 showers : Decoder (Maybe Showers)
 showers =
-    string |> andThen showersHelp |> map Just
+    nullable (string |> andThen showersHelp)
 
 
 showersHelp : String -> Decoder Showers
@@ -138,7 +140,7 @@ showersHelp text =
         "cold" ->
             succeed ColdShowers
 
-        "none" ->
+        "no" ->
             succeed NoShowers
 
         _ ->
@@ -147,60 +149,54 @@ showersHelp text =
 
 drinkingWater : Decoder (Maybe DrinkingWater)
 drinkingWater =
-    map
-        (\present ->
-            if present then
-                Just DrinkingWater
-            else
-                Just NoDrinkingWater
-        )
-        bool
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    DrinkingWater
+                else
+                    NoDrinkingWater
+            )
+            bool
 
 
 caravans : Decoder (Maybe Caravans)
 caravans =
-    map
-        (\present ->
-            if present then
-                Just Caravans
-            else
-                Just NoCaravans
-        )
-        bool
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    Caravans
+                else
+                    NoCaravans
+            )
+            bool
 
 
 trailers : Decoder (Maybe Trailers)
 trailers =
-    map
-        (\present ->
-            if present then
-                Just Trailers
-            else
-                Just NoTrailers
-        )
-        bool
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    Trailers
+                else
+                    NoTrailers
+            )
+            bool
 
 
 cars : Decoder (Maybe Cars)
 cars =
-    map
-        (\present ->
-            if present then
-                Just Cars
-            else
-                Just NoCars
-        )
-        bool
-
-
-facilities : Decoder Facilities
-facilities =
-    map5 Facilities
-        (field "toilets" toilets)
-        (field "picnicTables" picnicTables)
-        (field "barbecues" barbecues)
-        (field "showers" showers)
-        (field "drinkingWater" drinkingWater)
+    nullable <|
+        map
+            (\present ->
+                if present then
+                    Cars
+                else
+                    NoCars
+            )
+            bool
 
 
 access : Decoder Access
@@ -208,38 +204,4 @@ access =
     map3 Access
         (field "caravans" caravans)
         (field "trailers" trailers)
-        (field "car" cars)
-
-
-campsite : Decoder Campsite
-campsite =
-    decode Campsite
-        |> required "id" (map (\id -> "c" ++ toString id) int)
-        |> required "shortName" string
-        |> required "longName" string
-        |> required "description" string
-        |> custom location
-        |> custom facilities
-        |> custom access
-        |> required "park" (map (\id -> "p" ++ toString id) int)
-
-
-park : Decoder Park
-park =
-    decode Park
-        |> required "id" (map (\id -> "p" ++ toString id) int)
-        |> required "shortName" string
-        |> required "longName" string
-        |> required "description" string
-        |> required "campsites" (list (map (\id -> "c" ++ toString id) int))
-
-
-type alias ParksAndCampsites =
-    { parks : List Park, campsites : List Campsite }
-
-
-parksAndCampsites : Decoder { parks : List Park, campsites : List Campsite }
-parksAndCampsites =
-    map2 ParksAndCampsites
-        (field "parks" (list park))
-        (field "campsites" (list campsite))
+        (field "cars" cars)

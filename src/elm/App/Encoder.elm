@@ -1,4 +1,4 @@
-module App.NewEncoder
+module App.Encoder
     exposing
         ( campsite
         , location

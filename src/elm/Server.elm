@@ -7,7 +7,7 @@ import HtmlToString
 import Dict
 import Campsite
 import Pouchdb
-import App.NewDecoder
+import App.Decoder
 import Dict
 import App.Routing
 
@@ -116,7 +116,7 @@ update msg model =
             -- TODO: Make it not duplicated
             let
                 o =
-                    Json.Decode.decodeValue App.NewDecoder.campsite change.doc
+                    Json.Decode.decodeValue App.Decoder.campsite change.doc
             in
                 case o of
                     Ok campsite ->

@@ -1,9 +1,9 @@
-module Tests.App.Decoder exposing (all)
+module Tests.App.GitHubDecoder exposing (all)
 
 import Test exposing (..)
 import Expect
 import Json.Decode
-import App.Decoder
+import App.GitHubDecoder
 import Campsite
     exposing
         ( Campsite
@@ -35,7 +35,7 @@ all =
                         expected =
                             Ok (Just (Location -33 150))
                     in
-                        Expect.equal expected (Json.Decode.decodeString App.Decoder.location json)
+                        Expect.equal expected (Json.Decode.decodeString App.GitHubDecoder.location json)
             , test "location data is absent" <|
                 \() ->
                     let
@@ -45,85 +45,85 @@ all =
                         expected =
                             Ok (Nothing)
                     in
-                        Expect.equal expected (Json.Decode.decodeString App.Decoder.location json)
+                        Expect.equal expected (Json.Decode.decodeString App.GitHubDecoder.location json)
             ]
         , describe "toilets"
             [ test "non flush" <|
                 \() ->
                     Expect.equal (Ok (Just NonFlushToilets))
-                        (Json.Decode.decodeString App.Decoder.toilets "\"non_flush\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.toilets "\"non_flush\"")
             , test "flush" <|
                 \() ->
                     Expect.equal (Ok (Just FlushToilets))
-                        (Json.Decode.decodeString App.Decoder.toilets "\"flush\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.toilets "\"flush\"")
             , test "none" <|
                 \() ->
                     Expect.equal (Ok (Just NoToilets))
-                        (Json.Decode.decodeString App.Decoder.toilets "\"none\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.toilets "\"none\"")
             , test "invalid value" <|
                 \() ->
                     Expect.equal True
-                        (Result.Extra.isErr (Json.Decode.decodeString App.Decoder.toilets "\"foo\""))
+                        (Result.Extra.isErr (Json.Decode.decodeString App.GitHubDecoder.toilets "\"foo\""))
             ]
         , describe "picnic tables"
             [ test "true" <|
                 \() ->
-                    Expect.equal (Ok (Just PicnicTables)) (Json.Decode.decodeString App.Decoder.picnicTables "true")
+                    Expect.equal (Ok (Just PicnicTables)) (Json.Decode.decodeString App.GitHubDecoder.picnicTables "true")
             , test "false" <|
                 \() ->
-                    Expect.equal (Ok (Just NoPicnicTables)) (Json.Decode.decodeString App.Decoder.picnicTables "false")
+                    Expect.equal (Ok (Just NoPicnicTables)) (Json.Decode.decodeString App.GitHubDecoder.picnicTables "false")
             ]
         , describe "barbecues"
             [ test "wood" <|
                 \() ->
                     Expect.equal (Ok (Just WoodBarbecues))
-                        (Json.Decode.decodeString App.Decoder.barbecues "\"wood\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood\"")
             , test "wood_supplied" <|
                 \() ->
                     Expect.equal (Ok (Just WoodSuppliedBarbecues))
-                        (Json.Decode.decodeString App.Decoder.barbecues "\"wood_supplied\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_supplied\"")
             , test "wood_bring_your_own" <|
                 \() ->
                     Expect.equal (Ok (Just WoodBringYourOwnBarbecues))
-                        (Json.Decode.decodeString App.Decoder.barbecues "\"wood_bring_your_own\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_bring_your_own\"")
             , test "gas_electric" <|
                 \() ->
                     Expect.equal (Ok (Just GasElectricBarbecues))
-                        (Json.Decode.decodeString App.Decoder.barbecues "\"gas_electric\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"gas_electric\"")
             , test "none" <|
                 \() ->
                     Expect.equal (Ok (Just NoBarbecues))
-                        (Json.Decode.decodeString App.Decoder.barbecues "\"none\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"none\"")
             , test "invalid value" <|
                 \() ->
                     Expect.equal True
-                        (Result.Extra.isErr (Json.Decode.decodeString App.Decoder.barbecues "\"foo\""))
+                        (Result.Extra.isErr (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"foo\""))
             ]
         , describe "showers"
             [ test "hot" <|
                 \() ->
                     Expect.equal (Ok (Just HotShowers))
-                        (Json.Decode.decodeString App.Decoder.showers "\"hot\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.showers "\"hot\"")
             , test "cold" <|
                 \() ->
                     Expect.equal (Ok (Just ColdShowers))
-                        (Json.Decode.decodeString App.Decoder.showers "\"cold\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.showers "\"cold\"")
             , test "none" <|
                 \() ->
                     Expect.equal (Ok (Just NoShowers))
-                        (Json.Decode.decodeString App.Decoder.showers "\"none\"")
+                        (Json.Decode.decodeString App.GitHubDecoder.showers "\"none\"")
             , test "unknown" <|
                 \() ->
                     Expect.equal True
-                        (Result.Extra.isErr (Json.Decode.decodeString App.Decoder.showers "\"blah\""))
+                        (Result.Extra.isErr (Json.Decode.decodeString App.GitHubDecoder.showers "\"blah\""))
             ]
         , describe "drinking water"
             [ test "true" <|
                 \() ->
-                    Expect.equal (Ok (Just DrinkingWater)) (Json.Decode.decodeString App.Decoder.drinkingWater "true")
+                    Expect.equal (Ok (Just DrinkingWater)) (Json.Decode.decodeString App.GitHubDecoder.drinkingWater "true")
             , test "false" <|
                 \() ->
-                    Expect.equal (Ok (Just NoDrinkingWater)) (Json.Decode.decodeString App.Decoder.drinkingWater "false")
+                    Expect.equal (Ok (Just NoDrinkingWater)) (Json.Decode.decodeString App.GitHubDecoder.drinkingWater "false")
             ]
         , describe "parksAndCampsites"
             [ test "example" <|
@@ -149,7 +149,7 @@ all =
                         expected =
                             Ok
                                 ({ campsites =
-                                    [ App.Decoder.Campsite
+                                    [ App.GitHubDecoder.Campsite
                                         "c4"
                                         "Campsite"
                                         "Long Campsite"
@@ -170,7 +170,7 @@ all =
                                         "p12"
                                     ]
                                  , parks =
-                                    [ App.Decoder.Park
+                                    [ App.GitHubDecoder.Park
                                         "p15"
                                         "A park"
                                         "A long park"
@@ -180,6 +180,6 @@ all =
                                  }
                                 )
                     in
-                        Expect.equal expected (Json.Decode.decodeString App.Decoder.parksAndCampsites json)
+                        Expect.equal expected (Json.Decode.decodeString App.GitHubDecoder.parksAndCampsites json)
             ]
         ]

@@ -21,8 +21,8 @@ import Campsite
         , Cars(..)
         )
 import Http
-import App.Decoder
-import App.NewEncoder
+import App.GitHubDecoder
+import App.Encoder
 import Dict exposing (Dict)
 import Errors
 import App.Model
@@ -30,7 +30,7 @@ import App.Model
 
 type Msg
     = LoadData
-    | NewData (Result Http.Error { parks : List App.Decoder.Park, campsites : List App.Decoder.Campsite })
+    | NewData (Result Http.Error { parks : List App.GitHubDecoder.Park, campsites : List App.GitHubDecoder.Campsite })
     | Put (Result Pouchdb.PutError Pouchdb.PutSuccess)
     | Destroy
     | DestroySuccess Pouchdb.DestroySuccess
@@ -138,7 +138,7 @@ merge campsites id c =
             c
 
 
-transform : List App.Decoder.Campsite -> List App.Decoder.Park -> List Campsite
+transform : List App.GitHubDecoder.Campsite -> List App.GitHubDecoder.Park -> List Campsite
 transform campsites parks =
     List.map
         (\campsite ->
@@ -159,14 +159,14 @@ transform campsites parks =
         campsites
 
 
-parkWithId : String -> List App.Decoder.Park -> Maybe App.Decoder.Park
+parkWithId : String -> List App.GitHubDecoder.Park -> Maybe App.GitHubDecoder.Park
 parkWithId id parks =
     List.head (List.filter (\park -> park.id == id) parks)
 
 
 putCampsite : Campsite -> Cmd msg
 putCampsite campsite =
-    Pouchdb.put (App.NewEncoder.campsite campsite)
+    Pouchdb.put (App.Encoder.campsite campsite)
 
 
 getLaneCove : Dict String Campsite -> Maybe Campsite
@@ -196,7 +196,7 @@ syncData =
             "https://raw.githubusercontent.com/mlandauer/thats-camping-react/master/data.json"
 
         request =
-            Http.get url App.Decoder.parksAndCampsites
+            Http.get url App.GitHubDecoder.parksAndCampsites
     in
         Http.send NewData request
 

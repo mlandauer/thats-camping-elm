@@ -20,7 +20,7 @@ import RouteUrl
 import Task
 import Pages.Admin.Update
 import Pouchdb
-import App.NewDecoder
+import App.Decoder
 import Json.Decode
 import Location exposing (Location)
 import Leaflet
@@ -70,7 +70,7 @@ type alias Flags =
 decodeInitialCampsites : List Json.Decode.Value -> List Campsite
 decodeInitialCampsites docs =
     -- We're just going to ignore any errors that we encounter while we decode
-    List.map (Json.Decode.decodeValue App.NewDecoder.campsite) docs
+    List.map (Json.Decode.decodeValue App.Decoder.campsite) docs
         |> List.filterMap Result.toMaybe
 
 
@@ -204,7 +204,7 @@ update msg model =
             -- something we actually need to handle?
             let
                 o =
-                    Json.Decode.decodeValue App.NewDecoder.campsite change.doc
+                    Json.Decode.decodeValue App.Decoder.campsite change.doc
             in
                 case o of
                     Ok campsite ->

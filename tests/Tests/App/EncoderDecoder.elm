@@ -1,9 +1,9 @@
-module Tests.App.NewEncoderDecoder exposing (all)
+module Tests.App.EncoderDecoder exposing (all)
 
 import Test exposing (..)
 import Expect
-import App.NewDecoder
-import App.NewEncoder
+import App.Decoder
+import App.Encoder
 import Campsite
     exposing
         ( name
@@ -51,8 +51,8 @@ all =
     describe "NewEncoderDecoder"
         [ describe "campsite"
             [ testED
-                { encoder = App.NewEncoder.campsite
-                , decoder = App.NewDecoder.campsite
+                { encoder = App.Encoder.campsite
+                , decoder = App.Decoder.campsite
                 }
                 { id = "1"
                 , name = name "Campsite"
@@ -102,7 +102,7 @@ all =
             ]
         , describe "location"
             [ testED
-                { encoder = App.NewEncoder.location, decoder = App.NewDecoder.location }
+                { encoder = App.Encoder.location, decoder = App.Decoder.location }
                 (Location 1.0 2.0)
                 (object
                     [ ( "latitude", float 1 )
@@ -121,13 +121,13 @@ all =
                                 , ( "longitude", float 2 )
                                 ]
                     in
-                        Expect.equal expected (App.NewEncoder.location l)
+                        Expect.equal expected (App.Encoder.location l)
             ]
         , describe "toilets"
             (let
                 ed =
-                    { encoder = App.NewEncoder.toilets
-                    , decoder = App.NewDecoder.toilets
+                    { encoder = App.Encoder.toilets
+                    , decoder = App.Decoder.toilets
                     }
 
                 test =
@@ -147,8 +147,8 @@ all =
             (let
                 test =
                     testED
-                        { encoder = App.NewEncoder.picnicTables
-                        , decoder = App.NewDecoder.picnicTables
+                        { encoder = App.Encoder.picnicTables
+                        , decoder = App.Decoder.picnicTables
                         }
              in
                 [ test Nothing null
@@ -159,8 +159,8 @@ all =
         , describe "barbecues"
             (let
                 ed =
-                    { encoder = App.NewEncoder.barbecues
-                    , decoder = App.NewDecoder.barbecues
+                    { encoder = App.Encoder.barbecues
+                    , decoder = App.Decoder.barbecues
                     }
 
                 test =
@@ -181,8 +181,8 @@ all =
         , describe "showers"
             (let
                 ed =
-                    { encoder = App.NewEncoder.showers
-                    , decoder = App.NewDecoder.showers
+                    { encoder = App.Encoder.showers
+                    , decoder = App.Decoder.showers
                     }
 
                 test =
@@ -202,8 +202,8 @@ all =
             (let
                 test =
                     testED
-                        { encoder = App.NewEncoder.drinkingWater
-                        , decoder = App.NewDecoder.drinkingWater
+                        { encoder = App.Encoder.drinkingWater
+                        , decoder = App.Decoder.drinkingWater
                         }
              in
                 [ test Nothing null
@@ -215,8 +215,8 @@ all =
             (let
                 test =
                     testED
-                        { encoder = App.NewEncoder.caravans
-                        , decoder = App.NewDecoder.caravans
+                        { encoder = App.Encoder.caravans
+                        , decoder = App.Decoder.caravans
                         }
              in
                 [ test Nothing null
@@ -228,8 +228,8 @@ all =
             (let
                 test =
                     testED
-                        { encoder = App.NewEncoder.trailers
-                        , decoder = App.NewDecoder.trailers
+                        { encoder = App.Encoder.trailers
+                        , decoder = App.Decoder.trailers
                         }
              in
                 [ test Nothing null
@@ -241,8 +241,8 @@ all =
             (let
                 test =
                     testED
-                        { encoder = App.NewEncoder.cars
-                        , decoder = App.NewDecoder.cars
+                        { encoder = App.Encoder.cars
+                        , decoder = App.Decoder.cars
                         }
              in
                 [ test Nothing null

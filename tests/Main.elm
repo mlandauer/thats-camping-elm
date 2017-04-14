@@ -3,8 +3,8 @@ port module Main exposing (..)
 import Test exposing (..)
 import Test.Runner.Node
 import Json.Encode exposing (Value)
-import Tests.App.Decoder
-import Tests.App.NewEncoderDecoder
+import Tests.App.GitHubDecoder
+import Tests.App.EncoderDecoder
 import Tests.Location
 import Tests.Campsite
 import Tests.SimpleFormat
@@ -20,8 +20,8 @@ main =
 all : Test
 all =
     describe "Test Suite"
-        [ Tests.App.Decoder.all
-        , Tests.App.NewEncoderDecoder.all
+        [ Tests.App.GitHubDecoder.all
+        , Tests.App.EncoderDecoder.all
         , Tests.Location.all
         , Tests.Campsite.all
         , Tests.SimpleFormat.all
