@@ -76,19 +76,4 @@ all =
                     in
                         Expect.equal expected (App.NewEncoder.campsite c)
             ]
-        , describe "location"
-            [ test "a location" <|
-                \() ->
-                    let
-                        l =
-                            Location 1.0 2.0
-
-                        expected =
-                            object
-                                [ ( "latitude", float 1 )
-                                , ( "longitude", float 2 )
-                                ]
-                    in
-                        Expect.equal expected (App.NewEncoder.location l)
-            ]
         ]

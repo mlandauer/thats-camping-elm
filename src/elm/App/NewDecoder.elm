@@ -1,6 +1,7 @@
 module App.NewDecoder
     exposing
         ( campsite
+        , location
         , toilets
         , picnicTables
         , barbecues

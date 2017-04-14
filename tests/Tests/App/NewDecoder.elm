@@ -19,6 +19,7 @@ import Campsite
 import Result.Extra
 import Json.Encode exposing (object, string, null, float, bool, Value)
 import Json.Decode exposing (Decoder)
+import Location exposing (Location)
 
 
 type alias EncoderDecoder t =
@@ -102,6 +103,29 @@ all =
                                 }
                     in
                         Expect.equal expected (Json.Decode.decodeString App.NewDecoder.campsite json)
+            ]
+        , describe "location"
+            [ testED
+                { encoder = App.NewEncoder.location, decoder = App.NewDecoder.location }
+                (Location 1.0 2.0)
+                (object
+                    [ ( "latitude", float 1 )
+                    , ( "longitude", float 2 )
+                    ]
+                )
+            , test "a location" <|
+                \() ->
+                    let
+                        l =
+                            Location 1.0 2.0
+
+                        expected =
+                            object
+                                [ ( "latitude", float 1 )
+                                , ( "longitude", float 2 )
+                                ]
+                    in
+                        Expect.equal expected (App.NewEncoder.location l)
             ]
         , describe "toilets"
             (let
