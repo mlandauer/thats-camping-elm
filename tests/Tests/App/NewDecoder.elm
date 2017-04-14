@@ -159,91 +159,75 @@ all =
                 ]
             )
         , describe "showers"
-            [ test "hot" <|
-                \() ->
-                    Expect.equal (Ok (Just HotShowers))
-                        (Json.Decode.decodeString App.NewDecoder.showers "\"hot\"")
-            , test "cold" <|
-                \() ->
-                    Expect.equal (Ok (Just ColdShowers))
-                        (Json.Decode.decodeString App.NewDecoder.showers "\"cold\"")
-            , test "no" <|
-                \() ->
-                    Expect.equal (Ok (Just NoShowers))
-                        (Json.Decode.decodeString App.NewDecoder.showers "\"no\"")
-            , test "blah" <|
-                \() ->
-                    Expect.equal True
-                        (Result.Extra.isErr (Json.Decode.decodeString App.NewDecoder.showers "\"blah\""))
-            , test "null" <|
-                \() ->
-                    Expect.equal (Ok Nothing)
-                        (Json.Decode.decodeString App.NewDecoder.showers "null")
-            ]
-        , describe "showers"
-            [ test "Nothing" <|
-                \() -> Expect.equal null (App.NewEncoder.showers Nothing)
-            , test "NoShowers" <|
-                \() -> Expect.equal (string "no") (App.NewEncoder.showers (Just NoShowers))
-            , test "HotShowers" <|
-                \() -> Expect.equal (string "hot") (App.NewEncoder.showers (Just HotShowers))
-            , test "ColdShowers" <|
-                \() -> Expect.equal (string "cold") (App.NewEncoder.showers (Just ColdShowers))
-            ]
+            (let
+                ed =
+                    { encoder = App.NewEncoder.showers
+                    , decoder = App.NewDecoder.showers
+                    }
+
+                test =
+                    testED ed
+             in
+                [ test (Just HotShowers) (string "hot")
+                , test (Just ColdShowers) (string "cold")
+                , test (Just NoShowers) (string "no")
+                , test Nothing null
+                , Test.test "blah" <|
+                    \() ->
+                        Expect.equal True
+                            (Result.Extra.isErr (Json.Decode.decodeString ed.decoder "\"blah\""))
+                ]
+            )
         , describe "drinkingWater"
-            [ test "true" <|
-                \() ->
-                    Expect.equal (Ok (Just DrinkingWater))
-                        (Json.Decode.decodeString App.NewDecoder.drinkingWater "true")
-            , test "false" <|
-                \() ->
-                    Expect.equal (Ok (Just NoDrinkingWater))
-                        (Json.Decode.decodeString App.NewDecoder.drinkingWater "false")
-            , test "null" <|
-                \() ->
-                    Expect.equal (Ok Nothing)
-                        (Json.Decode.decodeString App.NewDecoder.drinkingWater "null")
-            ]
+            (let
+                test =
+                    testED
+                        { encoder = App.NewEncoder.drinkingWater
+                        , decoder = App.NewDecoder.drinkingWater
+                        }
+             in
+                [ test Nothing null
+                , test (Just NoDrinkingWater) (bool False)
+                , test (Just DrinkingWater) (bool True)
+                ]
+            )
         , describe "caravans"
-            [ test "true" <|
-                \() ->
-                    Expect.equal (Ok (Just Caravans))
-                        (Json.Decode.decodeString App.NewDecoder.caravans "true")
-            , test "false" <|
-                \() ->
-                    Expect.equal (Ok (Just NoCaravans))
-                        (Json.Decode.decodeString App.NewDecoder.caravans "false")
-            , test "null" <|
-                \() ->
-                    Expect.equal (Ok Nothing)
-                        (Json.Decode.decodeString App.NewDecoder.caravans "null")
-            ]
+            (let
+                test =
+                    testED
+                        { encoder = App.NewEncoder.caravans
+                        , decoder = App.NewDecoder.caravans
+                        }
+             in
+                [ test Nothing null
+                , test (Just NoCaravans) (bool False)
+                , test (Just Caravans) (bool True)
+                ]
+            )
         , describe "trailers"
-            [ test "true" <|
-                \() ->
-                    Expect.equal (Ok (Just Trailers))
-                        (Json.Decode.decodeString App.NewDecoder.trailers "true")
-            , test "false" <|
-                \() ->
-                    Expect.equal (Ok (Just NoTrailers))
-                        (Json.Decode.decodeString App.NewDecoder.trailers "false")
-            , test "null" <|
-                \() ->
-                    Expect.equal (Ok Nothing)
-                        (Json.Decode.decodeString App.NewDecoder.trailers "null")
-            ]
+            (let
+                test =
+                    testED
+                        { encoder = App.NewEncoder.trailers
+                        , decoder = App.NewDecoder.trailers
+                        }
+             in
+                [ test Nothing null
+                , test (Just NoTrailers) (bool False)
+                , test (Just Trailers) (bool True)
+                ]
+            )
         , describe "cars"
-            [ test "true" <|
-                \() ->
-                    Expect.equal (Ok (Just Cars))
-                        (Json.Decode.decodeString App.NewDecoder.cars "true")
-            , test "false" <|
-                \() ->
-                    Expect.equal (Ok (Just NoCars))
-                        (Json.Decode.decodeString App.NewDecoder.cars "false")
-            , test "null" <|
-                \() ->
-                    Expect.equal (Ok Nothing)
-                        (Json.Decode.decodeString App.NewDecoder.cars "null")
-            ]
+            (let
+                test =
+                    testED
+                        { encoder = App.NewEncoder.cars
+                        , decoder = App.NewDecoder.cars
+                        }
+             in
+                [ test Nothing null
+                , test (Just NoCars) (bool False)
+                , test (Just Cars) (bool True)
+                ]
+            )
         ]

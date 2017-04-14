@@ -91,36 +91,4 @@ all =
                     in
                         Expect.equal expected (App.NewEncoder.location l)
             ]
-        , describe "drinkingWater"
-            [ test "Nothing" <|
-                \() -> Expect.equal null (App.NewEncoder.drinkingWater Nothing)
-            , test "NoDrinkingWater" <|
-                \() -> Expect.equal (bool False) (App.NewEncoder.drinkingWater (Just NoDrinkingWater))
-            , test "DrinkingWater" <|
-                \() -> Expect.equal (bool True) (App.NewEncoder.drinkingWater (Just DrinkingWater))
-            ]
-        , describe "caravans"
-            [ test "Nothing" <|
-                \() -> Expect.equal null (App.NewEncoder.caravans Nothing)
-            , test "NoCaravans" <|
-                \() -> Expect.equal (bool False) (App.NewEncoder.caravans (Just NoCaravans))
-            , test "Caravans" <|
-                \() -> Expect.equal (bool True) (App.NewEncoder.caravans (Just Caravans))
-            ]
-        , describe "trailers"
-            [ test "Nothing" <|
-                \() -> Expect.equal null (App.NewEncoder.trailers Nothing)
-            , test "NoTrailers" <|
-                \() -> Expect.equal (bool False) (App.NewEncoder.trailers (Just NoTrailers))
-            , test "Trailers" <|
-                \() -> Expect.equal (bool True) (App.NewEncoder.trailers (Just Trailers))
-            ]
-        , describe "cars"
-            [ test "Nothing" <|
-                \() -> Expect.equal null (App.NewEncoder.cars Nothing)
-            , test "NoCars" <|
-                \() -> Expect.equal (bool False) (App.NewEncoder.cars (Just NoCars))
-            , test "Cars" <|
-                \() -> Expect.equal (bool True) (App.NewEncoder.cars (Just Cars))
-            ]
         ]
