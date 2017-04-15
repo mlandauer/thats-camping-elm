@@ -21,14 +21,20 @@ import Campsite
         , Access
         , Toilets
         , ToiletsCore(..)
+        , PicnicTables
         , PicnicTablesCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
+        , Showers
         , ShowersCore(..)
+        , DrinkingWater
         , DrinkingWaterCore(..)
+        , Caravans
         , CaravansCore(..)
+        , Trailers
         , TrailersCore(..)
+        , Cars
         , CarsCore(..)
         )
 
@@ -88,7 +94,7 @@ toiletsHelp text =
             fail "Unexpected value"
 
 
-picnicTables : Decoder (Maybe PicnicTablesCore)
+picnicTables : Decoder PicnicTables
 picnicTables =
     map
         (\present ->
@@ -127,7 +133,7 @@ barbecuesHelp text =
             fail "Unexpected value"
 
 
-showers : Decoder (Maybe ShowersCore)
+showers : Decoder Showers
 showers =
     string |> andThen showersHelp |> map Just
 
@@ -148,7 +154,7 @@ showersHelp text =
             fail "Unexpected value"
 
 
-drinkingWater : Decoder (Maybe DrinkingWaterCore)
+drinkingWater : Decoder DrinkingWater
 drinkingWater =
     map
         (\present ->
@@ -160,7 +166,7 @@ drinkingWater =
         bool
 
 
-caravans : Decoder (Maybe CaravansCore)
+caravans : Decoder Caravans
 caravans =
     map
         (\present ->
@@ -172,7 +178,7 @@ caravans =
         bool
 
 
-trailers : Decoder (Maybe TrailersCore)
+trailers : Decoder Trailers
 trailers =
     map
         (\present ->
@@ -184,7 +190,7 @@ trailers =
         bool
 
 
-cars : Decoder (Maybe CarsCore)
+cars : Decoder Cars
 cars =
     map
         (\present ->

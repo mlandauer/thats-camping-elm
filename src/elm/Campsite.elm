@@ -6,14 +6,20 @@ module Campsite
         , Access
         , Toilets
         , ToiletsCore(..)
+        , PicnicTables
         , PicnicTablesCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
+        , Showers
         , ShowersCore(..)
+        , DrinkingWater
         , DrinkingWaterCore(..)
+        , Caravans
         , CaravansCore(..)
+        , Trailers
         , TrailersCore(..)
+        , Cars
         , CarsCore(..)
         , shortenName
         , name
@@ -57,18 +63,22 @@ type alias Campsite =
 
 type alias Facilities =
     { toilets : Toilets
-    , picnicTables : Maybe PicnicTablesCore
+    , picnicTables : PicnicTables
     , barbecues : Barbecues
-    , showers : Maybe ShowersCore
-    , drinkingWater : Maybe DrinkingWaterCore
+    , showers : Showers
+    , drinkingWater : DrinkingWater
     }
 
 
 type alias Access =
-    { caravans : Maybe CaravansCore
-    , trailers : Maybe TrailersCore
-    , cars : Maybe CarsCore
+    { caravans : Caravans
+    , trailers : Trailers
+    , cars : Cars
     }
+
+
+type alias Caravans =
+    Maybe CaravansCore
 
 
 type CaravansCore
@@ -76,9 +86,17 @@ type CaravansCore
     | NoCaravans
 
 
+type alias Trailers =
+    Maybe TrailersCore
+
+
 type TrailersCore
     = Trailers
     | NoTrailers
+
+
+type alias Cars =
+    Maybe CarsCore
 
 
 type CarsCore
@@ -93,6 +111,10 @@ type alias Toilets =
 type ToiletsCore
     = NonFlushToilets
     | FlushToilets
+
+
+type alias PicnicTables =
+    Maybe PicnicTablesCore
 
 
 type PicnicTablesCore
@@ -117,6 +139,10 @@ type BarbecuesCore
     | GasElectricBarbecues
 
 
+type alias Showers =
+    Maybe ShowersCore
+
+
 type ShowersCore
     = HotShowers
     | ColdShowers
@@ -128,6 +154,10 @@ type ShowersCore
    TODO: Doesn't really make sense to have these as custom types when a bool
    would work just fine. It makes everything very long winded
 -}
+
+
+type alias DrinkingWater =
+    Maybe DrinkingWaterCore
 
 
 type DrinkingWaterCore

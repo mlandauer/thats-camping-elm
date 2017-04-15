@@ -19,15 +19,21 @@ import Campsite
         ( Facilities
         , Toilets
         , ToiletsCore(..)
+        , PicnicTables
         , PicnicTablesCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
+        , Showers
         , ShowersCore(..)
+        , DrinkingWater
         , DrinkingWaterCore(..)
         , Access
+        , Caravans
         , CaravansCore(..)
+        , Trailers
         , TrailersCore(..)
+        , Cars
         , CarsCore(..)
         )
 
@@ -139,7 +145,7 @@ descriptionToilets toilets =
             "toilets"
 
 
-presentPicnicTables : Maybe PicnicTablesCore -> Maybe Bool
+presentPicnicTables : PicnicTables -> Maybe Bool
 presentPicnicTables picnicTables =
     case picnicTables of
         Just PicnicTables ->
@@ -152,7 +158,7 @@ presentPicnicTables picnicTables =
             Nothing
 
 
-descriptionPicnicTables : Maybe PicnicTablesCore -> String
+descriptionPicnicTables : PicnicTables -> String
 descriptionPicnicTables picnicTables =
     "picnic tables"
 
@@ -179,7 +185,7 @@ descriptionBarbecues barbecues =
             "BBQs"
 
 
-presentShowers : Maybe ShowersCore -> Maybe Bool
+presentShowers : Showers -> Maybe Bool
 presentShowers showers =
     case showers of
         Just HotShowers ->
@@ -195,7 +201,7 @@ presentShowers showers =
             Nothing
 
 
-descriptionShowers : Maybe ShowersCore -> String
+descriptionShowers : Showers -> String
 descriptionShowers showers =
     case showers of
         Just HotShowers ->
@@ -211,7 +217,7 @@ descriptionShowers showers =
             "showers"
 
 
-presentDrinkingWater : Maybe DrinkingWaterCore -> Maybe Bool
+presentDrinkingWater : DrinkingWater -> Maybe Bool
 presentDrinkingWater drinkingWater =
     case drinkingWater of
         Just DrinkingWater ->
@@ -224,12 +230,12 @@ presentDrinkingWater drinkingWater =
             Nothing
 
 
-descriptionDrinkingWater : Maybe DrinkingWaterCore -> String
+descriptionDrinkingWater : DrinkingWater -> String
 descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-presentCaravans : Maybe CaravansCore -> Maybe Bool
+presentCaravans : Caravans -> Maybe Bool
 presentCaravans caravans =
     case caravans of
         Just Caravans ->
@@ -242,12 +248,12 @@ presentCaravans caravans =
             Nothing
 
 
-descriptionCaravans : Maybe CaravansCore -> String
+descriptionCaravans : Caravans -> String
 descriptionCaravans _ =
     "caravans"
 
 
-presentTrailers : Maybe TrailersCore -> Maybe Bool
+presentTrailers : Trailers -> Maybe Bool
 presentTrailers trailers =
     case trailers of
         Just Trailers ->
@@ -260,12 +266,12 @@ presentTrailers trailers =
             Nothing
 
 
-descriptionTrailers : Maybe TrailersCore -> String
+descriptionTrailers : Trailers -> String
 descriptionTrailers _ =
     "trailers"
 
 
-presentCars : Maybe CarsCore -> Maybe Bool
+presentCars : Cars -> Maybe Bool
 presentCars cars =
     case cars of
         Just Cars ->
@@ -278,7 +284,7 @@ presentCars cars =
             Nothing
 
 
-descriptionCars : Maybe CarsCore -> String
+descriptionCars : Cars -> String
 descriptionCars _ =
     "car camping"
 
