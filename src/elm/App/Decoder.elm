@@ -31,9 +31,7 @@ import Campsite
         , ToiletsCore(..)
         , Caravans
         , Trailers
-        , TrailersCore(..)
         , Cars
-        , CarsCore(..)
         )
 import Location exposing (Location)
 
@@ -194,28 +192,32 @@ caravans =
 
 trailers : Decoder Trailers
 trailers =
-    nullable <|
-        map
+    Json.Decode.oneOf
+        [ null Unknown
+        , map
             (\present ->
                 if present then
-                    Trailers
+                    Yes ()
                 else
-                    NoTrailers
+                    No
             )
             bool
+        ]
 
 
 cars : Decoder Cars
 cars =
-    nullable <|
-        map
+    Json.Decode.oneOf
+        [ null Unknown
+        , map
             (\present ->
                 if present then
-                    Cars
+                    Yes ()
                 else
-                    NoCars
+                    No
             )
             bool
+        ]
 
 
 access : Decoder Access

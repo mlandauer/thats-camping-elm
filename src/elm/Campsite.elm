@@ -17,9 +17,7 @@ module Campsite
         , DrinkingWaterCore(..)
         , Caravans
         , Trailers
-        , TrailersCore(..)
         , Cars
-        , CarsCore(..)
         , shortenName
         , name
           -- TODO: Rename transform to something more descriptive
@@ -81,21 +79,11 @@ type alias Caravans =
 
 
 type alias Trailers =
-    Maybe TrailersCore
-
-
-type TrailersCore
-    = Trailers
-    | NoTrailers
+    Tri ()
 
 
 type alias Cars =
-    Maybe CarsCore
-
-
-type CarsCore
-    = Cars
-    | NoCars
+    Tri ()
 
 
 type alias Toilets =

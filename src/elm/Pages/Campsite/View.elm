@@ -31,9 +31,7 @@ import Campsite
         , Access
         , Caravans
         , Trailers
-        , TrailersCore(..)
         , Cars
-        , CarsCore(..)
         )
 
 
@@ -223,35 +221,9 @@ descriptionCaravans _ =
     "caravans"
 
 
-presentTrailers : Trailers -> Maybe Bool
-presentTrailers trailers =
-    case trailers of
-        Just Trailers ->
-            Just True
-
-        Just NoTrailers ->
-            Just False
-
-        Nothing ->
-            Nothing
-
-
 descriptionTrailers : Trailers -> String
 descriptionTrailers _ =
     "trailers"
-
-
-presentCars : Cars -> Maybe Bool
-presentCars cars =
-    case cars of
-        Just Cars ->
-            Just True
-
-        Just NoCars ->
-            Just False
-
-        Nothing ->
-            Nothing
 
 
 descriptionCars : Cars -> String
@@ -298,10 +270,10 @@ accessList p access =
         [ ( present access.caravans
           , descriptionCaravans access.caravans
           )
-        , ( presentTrailers access.trailers
+        , ( present access.trailers
           , descriptionTrailers access.trailers
           )
-        , ( presentCars access.cars
+        , ( present access.cars
           , descriptionCars access.cars
           )
         ]

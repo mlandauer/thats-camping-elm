@@ -13,8 +13,6 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , TrailersCore(..)
-        , CarsCore(..)
         )
 import Result.Extra
 import Json.Encode exposing (object, string, null, float, bool, Value)
@@ -68,8 +66,8 @@ all =
                     }
                 , access =
                     { caravans = Unknown
-                    , trailers = Nothing
-                    , cars = Nothing
+                    , trailers = Unknown
+                    , cars = Unknown
                     }
                 , parkName = name "Park"
                 , revision = Just "rev"
@@ -232,9 +230,9 @@ all =
                         , decoder = App.Decoder.trailers
                         }
              in
-                [ test Nothing null
-                , test (Just NoTrailers) (bool False)
-                , test (Just Trailers) (bool True)
+                [ test Unknown null
+                , test No (bool False)
+                , test (Yes ()) (bool True)
                 ]
             )
         , describe "cars"
@@ -245,9 +243,9 @@ all =
                         , decoder = App.Decoder.cars
                         }
              in
-                [ test Nothing null
-                , test (Just NoCars) (bool False)
-                , test (Just Cars) (bool True)
+                [ test Unknown null
+                , test No (bool False)
+                , test (Yes ()) (bool True)
                 ]
             )
         ]

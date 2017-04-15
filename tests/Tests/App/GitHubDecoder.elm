@@ -15,8 +15,6 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , TrailersCore(..)
-        , CarsCore(..)
         )
 import Location exposing (Location)
 import Result.Extra
@@ -164,8 +162,8 @@ all =
                                         )
                                         (Access
                                             No
-                                            (Just NoTrailers)
-                                            (Just Cars)
+                                            No
+                                            (Yes ())
                                         )
                                         "p12"
                                     ]

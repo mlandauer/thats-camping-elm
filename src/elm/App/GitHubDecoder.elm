@@ -32,9 +32,7 @@ import Campsite
         , DrinkingWaterCore(..)
         , Caravans
         , Trailers
-        , TrailersCore(..)
         , Cars
-        , CarsCore(..)
         )
 
 
@@ -182,9 +180,9 @@ trailers =
     map
         (\present ->
             if present then
-                Just Trailers
+                Yes ()
             else
-                Just NoTrailers
+                No
         )
         bool
 
@@ -194,9 +192,9 @@ cars =
     map
         (\present ->
             if present then
-                Just Cars
+                Yes ()
             else
-                Just NoCars
+                No
         )
         bool
 

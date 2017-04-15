@@ -10,8 +10,6 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , TrailersCore(..)
-        , CarsCore(..)
         )
 import Pages.Campsite.View exposing (..)
 
@@ -120,8 +118,8 @@ all =
                         "For caravans, trailers and car camping."
                         (accessText
                             { caravans = Yes ()
-                            , trailers = Just Trailers
-                            , cars = Just Cars
+                            , trailers = Yes ()
+                            , cars = Yes ()
                             }
                         )
             , test "example 2" <|
@@ -130,8 +128,8 @@ all =
                         "Not for caravans, trailers and car camping."
                         (accessText
                             { caravans = No
-                            , trailers = Just NoTrailers
-                            , cars = Just NoCars
+                            , trailers = No
+                            , cars = No
                             }
                         )
             , test "example 3" <|
@@ -140,8 +138,8 @@ all =
                         "For trailers and car camping but not for caravans."
                         (accessText
                             { caravans = No
-                            , trailers = Just Trailers
-                            , cars = Just Cars
+                            , trailers = Yes ()
+                            , cars = Yes ()
                             }
                         )
             ]

@@ -32,9 +32,7 @@ import Campsite
         , Toilets
         , ToiletsCore(..)
         , Cars
-        , CarsCore(..)
         , Trailers
-        , TrailersCore(..)
         , Caravans
         )
 
@@ -154,26 +152,26 @@ caravans caravans =
 trailers : Trailers -> Value
 trailers trailers =
     case trailers of
-        Just Trailers ->
+        Yes () ->
             bool True
 
-        Just NoTrailers ->
+        No ->
             bool False
 
-        Nothing ->
+        Unknown ->
             null
 
 
 cars : Cars -> Value
 cars cars =
     case cars of
-        Just Cars ->
+        Yes () ->
             bool True
 
-        Just NoCars ->
+        No ->
             bool False
 
-        Nothing ->
+        Unknown ->
             null
 
 

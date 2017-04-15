@@ -16,8 +16,8 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , TrailersCore(..)
-        , CarsCore(..)
+        
+        
         )
 import Http
 import App.GitHubDecoder
