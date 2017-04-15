@@ -309,50 +309,48 @@ descriptionCars _ =
 ---------
 
 
-listItem : Maybe Bool -> (Maybe f -> Maybe Bool) -> (Maybe f -> String) -> Maybe f -> Maybe String
-listItem p present description facility =
-    if (present facility) == p then
-        Just (description facility)
+filter : Maybe Bool -> ( Maybe Bool, String ) -> Maybe String
+filter p i =
+    if (Tuple.first i) == p then
+        Just (Tuple.second i)
     else
         Nothing
 
 
 facilitiesList : Maybe Bool -> Facilities -> List String
 facilitiesList p facilities =
-    values
-        [ (listItem p presentToilets descriptionToilets facilities.toilets)
-        , (listItem p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        , (listItem p presentBarbecuesCore descriptionBarbecuesCore facilities.barbecues)
-        , (listItem p presentShowers descriptionShowers facilities.showers)
-        , (listItem p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
+    List.filterMap (filter p)
+        [ ( presentToilets facilities.toilets
+          , descriptionToilets facilities.toilets
+          )
+        , ( presentPicnicTables facilities.picnicTables
+          , descriptionPicnicTables facilities.picnicTables
+          )
+        , ( presentBarbecuesCore facilities.barbecues
+          , descriptionBarbecuesCore facilities.barbecues
+          )
+        , ( presentShowers facilities.showers
+          , descriptionShowers facilities.showers
+          )
+        , ( presentDrinkingWater facilities.drinkingWater
+          , descriptionDrinkingWater facilities.drinkingWater
+          )
         ]
 
 
 accessList : Maybe Bool -> Access -> List String
 accessList p access =
-    values
-        [ (listItem p presentCaravans descriptionCaravans access.caravans)
-        , (listItem p presentTrailers descriptionTrailers access.trailers)
-        , (listItem p presentCars descriptionCars access.cars)
+    List.filterMap (filter p)
+        [ ( presentCaravans access.caravans
+          , descriptionCaravans access.caravans
+          )
+        , ( presentTrailers access.trailers
+          , descriptionTrailers access.trailers
+          )
+        , ( presentCars access.cars
+          , descriptionCars access.cars
+          )
         ]
-
-
-values : List (Maybe a) -> List a
-values l =
-    -- Implementing something like Maybe.Extra.values
-    -- Recursive so probably not efficient
-    -- TODO: Is there a more "standard" way to achieve the same end?
-    case l of
-        [] ->
-            []
-
-        first :: rest ->
-            case first of
-                Just value ->
-                    value :: (values rest)
-
-                Nothing ->
-                    values rest
 
 
 capitalise : String -> String
