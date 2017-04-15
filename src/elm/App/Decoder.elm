@@ -109,19 +109,19 @@ barbecuesHelp : String -> Decoder BarbecuesCore
 barbecuesHelp text =
     case text of
         "wood" ->
-            succeed WoodBarbecuesCore
+            succeed WoodBarbecues
 
         "wood_supplied" ->
-            succeed WoodSuppliedBarbecuesCore
+            succeed WoodSuppliedBarbecues
 
         "wood_bring_your_own" ->
-            succeed WoodBringYourOwnBarbecuesCore
+            succeed WoodBringYourOwnBarbecues
 
         "gas_electric" ->
-            succeed GasElectricBarbecuesCore
+            succeed GasElectricBarbecues
 
         "no" ->
-            succeed NoBarbecuesCore
+            succeed NoBarbecues
 
         _ ->
             fail "Unexpected value"

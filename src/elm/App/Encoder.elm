@@ -72,19 +72,19 @@ picnicTables picnicTables =
 barbecues : Barbecues -> Value
 barbecues barbecues =
     case barbecues of
-        Just WoodBarbecuesCore ->
+        Just WoodBarbecues ->
             string "wood"
 
-        Just WoodSuppliedBarbecuesCore ->
+        Just WoodSuppliedBarbecues ->
             string "wood_supplied"
 
-        Just WoodBringYourOwnBarbecuesCore ->
+        Just WoodBringYourOwnBarbecues ->
             string "wood_bring_your_own"
 
-        Just GasElectricBarbecuesCore ->
+        Just GasElectricBarbecues ->
             string "gas_electric"
 
-        Just NoBarbecuesCore ->
+        Just NoBarbecues ->
             string "no"
 
         Nothing ->

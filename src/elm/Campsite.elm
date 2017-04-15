@@ -110,11 +110,11 @@ type alias Barbecues =
 
 
 type BarbecuesCore
-    = WoodBarbecuesCore
-    | WoodSuppliedBarbecuesCore
-    | WoodBringYourOwnBarbecuesCore
-    | GasElectricBarbecuesCore
-    | NoBarbecuesCore
+    = WoodBarbecues
+    | WoodSuppliedBarbecues
+    | WoodBringYourOwnBarbecues
+    | GasElectricBarbecues
+    | NoBarbecues
 
 
 type Showers

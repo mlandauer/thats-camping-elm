@@ -160,19 +160,19 @@ descriptionPicnicTables picnicTables =
 presentBarbecues : Maybe BarbecuesCore -> Maybe Bool
 presentBarbecues barbecues =
     case barbecues of
-        Just WoodBarbecuesCore ->
+        Just WoodBarbecues ->
             Just True
 
-        Just WoodSuppliedBarbecuesCore ->
+        Just WoodSuppliedBarbecues ->
             Just True
 
-        Just WoodBringYourOwnBarbecuesCore ->
+        Just WoodBringYourOwnBarbecues ->
             Just True
 
-        Just GasElectricBarbecuesCore ->
+        Just GasElectricBarbecues ->
             Just True
 
-        Just NoBarbecuesCore ->
+        Just NoBarbecues ->
             Just False
 
         Nothing ->
@@ -182,19 +182,19 @@ presentBarbecues barbecues =
 descriptionBarbecues : Maybe BarbecuesCore -> String
 descriptionBarbecues barbecues =
     case barbecues of
-        Just WoodBarbecuesCore ->
+        Just WoodBarbecues ->
             "wood BBQs"
 
-        Just WoodSuppliedBarbecuesCore ->
+        Just WoodSuppliedBarbecues ->
             "wood BBQs"
 
-        Just WoodBringYourOwnBarbecuesCore ->
+        Just WoodBringYourOwnBarbecues ->
             "wood BBQs"
 
-        Just GasElectricBarbecuesCore ->
+        Just GasElectricBarbecues ->
             "gas/electric BBQs"
 
-        Just NoBarbecuesCore ->
+        Just NoBarbecues ->
             "BBQs"
 
         Nothing ->

@@ -27,7 +27,7 @@ all =
                         (facilitiesText
                             { toilets = Just FlushToilets
                             , picnicTables = Just PicnicTables
-                            , barbecues = Just WoodBarbecuesCore
+                            , barbecues = Just WoodBarbecues
                             , showers = Just HotShowers
                             , drinkingWater = Just DrinkingWater
                             }
@@ -51,7 +51,7 @@ all =
                         (facilitiesText
                             { toilets = Just NoToilets
                             , picnicTables = Nothing
-                            , barbecues = Just GasElectricBarbecuesCore
+                            , barbecues = Just GasElectricBarbecues
                             , showers = Just ColdShowers
                             , drinkingWater = Nothing
                             }

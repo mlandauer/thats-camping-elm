@@ -76,23 +76,23 @@ all =
         , describe "barbecues"
             [ test "wood" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodBarbecuesCore))
+                    Expect.equal (Ok (Just WoodBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood\"")
             , test "wood_supplied" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodSuppliedBarbecuesCore))
+                    Expect.equal (Ok (Just WoodSuppliedBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_supplied\"")
             , test "wood_bring_your_own" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodBringYourOwnBarbecuesCore))
+                    Expect.equal (Ok (Just WoodBringYourOwnBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_bring_your_own\"")
             , test "gas_electric" <|
                 \() ->
-                    Expect.equal (Ok (Just GasElectricBarbecuesCore))
+                    Expect.equal (Ok (Just GasElectricBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"gas_electric\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok (Just NoBarbecuesCore))
+                    Expect.equal (Ok (Just NoBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"none\"")
             , test "invalid value" <|
                 \() ->
@@ -158,7 +158,7 @@ all =
                                         (Facilities
                                             (Just FlushToilets)
                                             (Just NoPicnicTables)
-                                            (Just WoodBarbecuesCore)
+                                            (Just WoodBarbecues)
                                             (Just HotShowers)
                                             (Just NoDrinkingWater)
                                         )
