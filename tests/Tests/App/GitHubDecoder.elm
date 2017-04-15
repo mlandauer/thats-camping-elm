@@ -15,7 +15,6 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , CaravansCore(..)
         , TrailersCore(..)
         , CarsCore(..)
         )
@@ -164,7 +163,7 @@ all =
                                             (Just NoDrinkingWater)
                                         )
                                         (Access
-                                            (Just NoCaravans)
+                                            No
                                             (Just NoTrailers)
                                             (Just Cars)
                                         )

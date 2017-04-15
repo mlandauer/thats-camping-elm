@@ -30,7 +30,6 @@ import Campsite
         , DrinkingWaterCore(..)
         , Access
         , Caravans
-        , CaravansCore(..)
         , Trailers
         , TrailersCore(..)
         , Cars
@@ -235,19 +234,6 @@ descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-presentCaravans : Caravans -> Maybe Bool
-presentCaravans caravans =
-    case caravans of
-        Just Caravans ->
-            Just True
-
-        Just NoCaravans ->
-            Just False
-
-        Nothing ->
-            Nothing
-
-
 descriptionCaravans : Caravans -> String
 descriptionCaravans _ =
     "caravans"
@@ -325,7 +311,7 @@ facilitiesList p facilities =
 accessList : Maybe Bool -> Access -> List String
 accessList p access =
     List.filterMap (filter p)
-        [ ( presentCaravans access.caravans
+        [ ( present access.caravans
           , descriptionCaravans access.caravans
           )
         , ( presentTrailers access.trailers

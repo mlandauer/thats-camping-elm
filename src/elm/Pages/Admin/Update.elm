@@ -16,7 +16,6 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , CaravansCore(..)
         , TrailersCore(..)
         , CarsCore(..)
         )

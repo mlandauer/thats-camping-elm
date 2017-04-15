@@ -30,7 +30,6 @@ import Campsite
         , Toilets
         , ToiletsCore(..)
         , Caravans
-        , CaravansCore(..)
         , Trailers
         , TrailersCore(..)
         , Cars
@@ -177,15 +176,17 @@ drinkingWater =
 
 caravans : Decoder Caravans
 caravans =
-    nullable <|
-        map
+    Json.Decode.oneOf
+        [ null Unknown
+        , map
             (\present ->
                 if present then
-                    Caravans
+                    Yes ()
                 else
-                    NoCaravans
+                    No
             )
             bool
+        ]
 
 
 trailers : Decoder Trailers

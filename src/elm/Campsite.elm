@@ -16,7 +16,6 @@ module Campsite
         , DrinkingWater
         , DrinkingWaterCore(..)
         , Caravans
-        , CaravansCore(..)
         , Trailers
         , TrailersCore(..)
         , Cars
@@ -78,12 +77,7 @@ type alias Access =
 
 
 type alias Caravans =
-    Maybe CaravansCore
-
-
-type CaravansCore
-    = Caravans
-    | NoCaravans
+    Tri ()
 
 
 type alias Trailers =

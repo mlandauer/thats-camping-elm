@@ -10,7 +10,6 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , CaravansCore(..)
         , TrailersCore(..)
         , CarsCore(..)
         )
@@ -120,7 +119,7 @@ all =
                     Expect.equal
                         "For caravans, trailers and car camping."
                         (accessText
-                            { caravans = Just Caravans
+                            { caravans = Yes ()
                             , trailers = Just Trailers
                             , cars = Just Cars
                             }
@@ -130,7 +129,7 @@ all =
                     Expect.equal
                         "Not for caravans, trailers and car camping."
                         (accessText
-                            { caravans = Just NoCaravans
+                            { caravans = No
                             , trailers = Just NoTrailers
                             , cars = Just NoCars
                             }
@@ -140,7 +139,7 @@ all =
                     Expect.equal
                         "For trailers and car camping but not for caravans."
                         (accessText
-                            { caravans = Just NoCaravans
+                            { caravans = No
                             , trailers = Just Trailers
                             , cars = Just Cars
                             }

@@ -13,7 +13,6 @@ import Campsite
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
-        , CaravansCore(..)
         , TrailersCore(..)
         , CarsCore(..)
         )
@@ -68,7 +67,7 @@ all =
                     , drinkingWater = Nothing
                     }
                 , access =
-                    { caravans = Nothing
+                    { caravans = Unknown
                     , trailers = Nothing
                     , cars = Nothing
                     }
@@ -220,9 +219,9 @@ all =
                         , decoder = App.Decoder.caravans
                         }
              in
-                [ test Nothing null
-                , test (Just NoCaravans) (bool False)
-                , test (Just Caravans) (bool True)
+                [ test Unknown null
+                , test No (bool False)
+                , test (Yes ()) (bool True)
                 ]
             )
         , describe "trailers"
