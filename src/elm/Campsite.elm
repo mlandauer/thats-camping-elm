@@ -6,6 +6,7 @@ module Campsite
         , Access
         , Toilets(..)
         , PicnicTables(..)
+        , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
         , Showers(..)
@@ -105,8 +106,14 @@ type PicnicTables
     | NoPicnicTables
 
 
+type Tri t
+    = Yes t
+    | No
+    | Unknown
+
+
 type alias Barbecues =
-    Maybe BarbecuesCore
+    Tri BarbecuesCore
 
 
 type BarbecuesCore
@@ -114,7 +121,6 @@ type BarbecuesCore
     | WoodSuppliedBarbecues
     | WoodBringYourOwnBarbecues
     | GasElectricBarbecues
-    | NoBarbecues
 
 
 type Showers

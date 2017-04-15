@@ -20,6 +20,7 @@ import Campsite
         , Access
         , DrinkingWater(..)
         , Showers(..)
+        , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
         , PicnicTables(..)
@@ -102,26 +103,29 @@ picnicTables =
 
 barbecues : Decoder Barbecues
 barbecues =
-    nullable (string |> andThen barbecuesHelp)
+    Json.Decode.oneOf
+        [ null Unknown
+        , string |> andThen barbecuesHelp
+        ]
 
 
-barbecuesHelp : String -> Decoder BarbecuesCore
+barbecuesHelp : String -> Decoder Barbecues
 barbecuesHelp text =
     case text of
         "wood" ->
-            succeed WoodBarbecues
+            succeed (Yes WoodBarbecues)
 
         "wood_supplied" ->
-            succeed WoodSuppliedBarbecues
+            succeed (Yes WoodSuppliedBarbecues)
 
         "wood_bring_your_own" ->
-            succeed WoodBringYourOwnBarbecues
+            succeed (Yes WoodBringYourOwnBarbecues)
 
         "gas_electric" ->
-            succeed GasElectricBarbecues
+            succeed (Yes GasElectricBarbecues)
 
         "no" ->
-            succeed NoBarbecues
+            succeed No
 
         _ ->
             fail "Unexpected value"

@@ -9,6 +9,7 @@ import Campsite
         ( name
         , Toilets(..)
         , PicnicTables(..)
+        , Tri(..)
         , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
@@ -62,7 +63,7 @@ all =
                 , facilities =
                     { toilets = Nothing
                     , picnicTables = Nothing
-                    , barbecues = Nothing
+                    , barbecues = Unknown
                     , showers = Nothing
                     , drinkingWater = Nothing
                     }
@@ -166,12 +167,12 @@ all =
                 test =
                     testED ed
              in
-                [ test Nothing null
-                , test (Just WoodBarbecues) (string "wood")
-                , test (Just WoodSuppliedBarbecues) (string "wood_supplied")
-                , test (Just WoodBringYourOwnBarbecues) (string "wood_bring_your_own")
-                , test (Just GasElectricBarbecues) (string "gas_electric")
-                , test (Just NoBarbecues) (string "no")
+                [ test Unknown null
+                , test (Yes WoodBarbecues) (string "wood")
+                , test (Yes WoodSuppliedBarbecues) (string "wood_supplied")
+                , test (Yes WoodBringYourOwnBarbecues) (string "wood_bring_your_own")
+                , test (Yes GasElectricBarbecues) (string "gas_electric")
+                , test No (string "no")
                 , Test.test "blah" <|
                     \() ->
                         Expect.equal True

@@ -21,6 +21,7 @@ import Campsite
         , Access
         , Toilets(..)
         , PicnicTables(..)
+        , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
         , Showers(..)
@@ -100,26 +101,26 @@ picnicTables =
 
 barbecues : Decoder Barbecues
 barbecues =
-    string |> andThen barbecuesHelp |> map Just
+    string |> andThen barbecuesHelp
 
 
-barbecuesHelp : String -> Decoder BarbecuesCore
+barbecuesHelp : String -> Decoder Barbecues
 barbecuesHelp text =
     case text of
         "wood" ->
-            succeed WoodBarbecues
+            succeed (Yes WoodBarbecues)
 
         "wood_supplied" ->
-            succeed WoodSuppliedBarbecues
+            succeed (Yes WoodSuppliedBarbecues)
 
         "wood_bring_your_own" ->
-            succeed WoodBringYourOwnBarbecues
+            succeed (Yes WoodBringYourOwnBarbecues)
 
         "gas_electric" ->
-            succeed GasElectricBarbecues
+            succeed (Yes GasElectricBarbecues)
 
         "none" ->
-            succeed NoBarbecues
+            succeed No
 
         _ ->
             fail "Unexpected value"

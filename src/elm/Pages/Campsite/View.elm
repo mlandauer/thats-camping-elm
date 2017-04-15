@@ -19,6 +19,8 @@ import Campsite
         ( Facilities
         , Toilets(..)
         , PicnicTables(..)
+        , Tri(..)
+        , Barbecues
         , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
@@ -157,47 +159,38 @@ descriptionPicnicTables picnicTables =
     "picnic tables"
 
 
-presentBarbecues : Maybe BarbecuesCore -> Maybe Bool
+presentBarbecues : Tri BarbecuesCore -> Maybe Bool
 presentBarbecues barbecues =
     case barbecues of
-        Just WoodBarbecues ->
+        Yes _ ->
             Just True
 
-        Just WoodSuppliedBarbecues ->
-            Just True
-
-        Just WoodBringYourOwnBarbecues ->
-            Just True
-
-        Just GasElectricBarbecues ->
-            Just True
-
-        Just NoBarbecues ->
+        No ->
             Just False
 
-        Nothing ->
+        Unknown ->
             Nothing
 
 
-descriptionBarbecues : Maybe BarbecuesCore -> String
+descriptionBarbecues : Barbecues -> String
 descriptionBarbecues barbecues =
     case barbecues of
-        Just WoodBarbecues ->
+        Yes WoodBarbecues ->
             "wood BBQs"
 
-        Just WoodSuppliedBarbecues ->
+        Yes WoodSuppliedBarbecues ->
             "wood BBQs"
 
-        Just WoodBringYourOwnBarbecues ->
+        Yes WoodBringYourOwnBarbecues ->
             "wood BBQs"
 
-        Just GasElectricBarbecues ->
+        Yes GasElectricBarbecues ->
             "gas/electric BBQs"
 
-        Just NoBarbecues ->
+        No ->
             "BBQs"
 
-        Nothing ->
+        Unknown ->
             "BBQs"
 
 

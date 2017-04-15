@@ -11,6 +11,7 @@ import Campsite
         , Access
         , Toilets(..)
         , PicnicTables(..)
+        , Tri(..)
         , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
@@ -76,23 +77,23 @@ all =
         , describe "barbecues"
             [ test "wood" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodBarbecues))
+                    Expect.equal (Ok (Yes WoodBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood\"")
             , test "wood_supplied" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodSuppliedBarbecues))
+                    Expect.equal (Ok (Yes WoodSuppliedBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_supplied\"")
             , test "wood_bring_your_own" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodBringYourOwnBarbecues))
+                    Expect.equal (Ok (Yes WoodBringYourOwnBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_bring_your_own\"")
             , test "gas_electric" <|
                 \() ->
-                    Expect.equal (Ok (Just GasElectricBarbecues))
+                    Expect.equal (Ok (Yes GasElectricBarbecues))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"gas_electric\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok (Just NoBarbecues))
+                    Expect.equal (Ok No)
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"none\"")
             , test "invalid value" <|
                 \() ->
@@ -158,7 +159,7 @@ all =
                                         (Facilities
                                             (Just FlushToilets)
                                             (Just NoPicnicTables)
-                                            (Just WoodBarbecues)
+                                            (Yes WoodBarbecues)
                                             (Just HotShowers)
                                             (Just NoDrinkingWater)
                                         )

@@ -22,6 +22,7 @@ import Campsite
         , Access
         , DrinkingWater(..)
         , Showers(..)
+        , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
         , PicnicTables(..)
@@ -72,22 +73,22 @@ picnicTables picnicTables =
 barbecues : Barbecues -> Value
 barbecues barbecues =
     case barbecues of
-        Just WoodBarbecues ->
+        Yes WoodBarbecues ->
             string "wood"
 
-        Just WoodSuppliedBarbecues ->
+        Yes WoodSuppliedBarbecues ->
             string "wood_supplied"
 
-        Just WoodBringYourOwnBarbecues ->
+        Yes WoodBringYourOwnBarbecues ->
             string "wood_bring_your_own"
 
-        Just GasElectricBarbecues ->
+        Yes GasElectricBarbecues ->
             string "gas_electric"
 
-        Just NoBarbecues ->
+        No ->
             string "no"
 
-        Nothing ->
+        Unknown ->
             null
 
 
