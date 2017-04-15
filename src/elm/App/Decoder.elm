@@ -26,7 +26,6 @@ import Campsite
         , Barbecues
         , BarbecuesCore(..)
         , PicnicTables
-        , PicnicTablesCore(..)
         , Toilets
         , ToiletsCore(..)
         , Caravans
@@ -96,16 +95,17 @@ toiletsHelp text =
 
 picnicTables : Decoder PicnicTables
 picnicTables =
-    nullable
-        (map
+    Json.Decode.oneOf
+        [ null Unknown
+        , map
             (\present ->
                 if present then
-                    PicnicTables
+                    Yes ()
                 else
-                    NoPicnicTables
+                    No
             )
             bool
-        )
+        ]
 
 
 barbecues : Decoder Barbecues

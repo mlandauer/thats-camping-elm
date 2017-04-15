@@ -7,7 +7,6 @@ module Campsite
         , Toilets
         , ToiletsCore(..)
         , PicnicTables
-        , PicnicTablesCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
@@ -96,12 +95,7 @@ type ToiletsCore
 
 
 type alias PicnicTables =
-    Maybe PicnicTablesCore
-
-
-type PicnicTablesCore
-    = PicnicTables
-    | NoPicnicTables
+    Tri ()
 
 
 type Tri t

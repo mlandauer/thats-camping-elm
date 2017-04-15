@@ -28,7 +28,6 @@ import Campsite
         , Barbecues
         , BarbecuesCore(..)
         , PicnicTables
-        , PicnicTablesCore(..)
         , Toilets
         , ToiletsCore(..)
         , Cars
@@ -64,13 +63,13 @@ toilets toilets =
 picnicTables : PicnicTables -> Value
 picnicTables picnicTables =
     case picnicTables of
-        Just PicnicTables ->
+        Yes () ->
             bool True
 
-        Just NoPicnicTables ->
+        No ->
             bool False
 
-        Nothing ->
+        Unknown ->
             null
 
 

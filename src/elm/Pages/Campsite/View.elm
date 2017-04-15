@@ -20,7 +20,6 @@ import Campsite
         , Toilets
         , ToiletsCore(..)
         , PicnicTables
-        , PicnicTablesCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
@@ -142,19 +141,6 @@ descriptionToilets toilets =
             "toilets"
 
 
-presentPicnicTables : PicnicTables -> Maybe Bool
-presentPicnicTables picnicTables =
-    case picnicTables of
-        Just PicnicTables ->
-            Just True
-
-        Just NoPicnicTables ->
-            Just False
-
-        Nothing ->
-            Nothing
-
-
 descriptionPicnicTables : PicnicTables -> String
 descriptionPicnicTables picnicTables =
     "picnic tables"
@@ -249,7 +235,7 @@ facilitiesList p facilities =
         [ ( present facilities.toilets
           , descriptionToilets facilities.toilets
           )
-        , ( presentPicnicTables facilities.picnicTables
+        , ( present facilities.picnicTables
           , descriptionPicnicTables facilities.picnicTables
           )
         , ( present facilities.barbecues

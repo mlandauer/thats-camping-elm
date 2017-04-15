@@ -12,7 +12,7 @@ import Campsite
     exposing
         ( Campsite
         , ToiletsCore(..)
-        , PicnicTablesCore(..)
+        
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)

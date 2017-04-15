@@ -22,7 +22,6 @@ import Campsite
         , Toilets
         , ToiletsCore(..)
         , PicnicTables
-        , PicnicTablesCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
@@ -96,9 +95,9 @@ picnicTables =
     map
         (\present ->
             if present then
-                Just PicnicTables
+                Yes ()
             else
-                Just NoPicnicTables
+                No
         )
         bool
 

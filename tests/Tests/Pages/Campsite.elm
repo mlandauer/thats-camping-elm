@@ -5,7 +5,6 @@ import Expect
 import Campsite
     exposing
         ( ToiletsCore(..)
-        , PicnicTablesCore(..)
         , Tri(..)
         , BarbecuesCore(..)
         , ShowersCore(..)
@@ -24,7 +23,7 @@ all =
                         "Has flush toilets, picnic tables, wood BBQs, hot showers and drinking water."
                         (facilitiesText
                             { toilets = Yes FlushToilets
-                            , picnicTables = Just PicnicTables
+                            , picnicTables = Yes ()
                             , barbecues = Yes WoodBarbecues
                             , showers = Yes HotShowers
                             , drinkingWater = Just DrinkingWater
@@ -36,7 +35,7 @@ all =
                         "Has non-flush toilets but no picnic tables, showers and drinking water."
                         (facilitiesText
                             { toilets = Yes NonFlushToilets
-                            , picnicTables = Just NoPicnicTables
+                            , picnicTables = No
                             , barbecues = Unknown
                             , showers = No
                             , drinkingWater = Just NoDrinkingWater
@@ -48,7 +47,7 @@ all =
                         "Has gas/electric BBQs and cold showers but no toilets."
                         (facilitiesText
                             { toilets = No
-                            , picnicTables = Nothing
+                            , picnicTables = Unknown
                             , barbecues = Yes GasElectricBarbecues
                             , showers = Yes ColdShowers
                             , drinkingWater = Nothing

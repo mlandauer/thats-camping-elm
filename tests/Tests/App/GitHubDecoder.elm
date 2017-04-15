@@ -10,7 +10,6 @@ import Campsite
         , Facilities
         , Access
         , ToiletsCore(..)
-        , PicnicTablesCore(..)
         , Tri(..)
         , BarbecuesCore(..)
         , ShowersCore(..)
@@ -66,10 +65,10 @@ all =
         , describe "picnic tables"
             [ test "true" <|
                 \() ->
-                    Expect.equal (Ok (Just PicnicTables)) (Json.Decode.decodeString App.GitHubDecoder.picnicTables "true")
+                    Expect.equal (Ok (Yes ())) (Json.Decode.decodeString App.GitHubDecoder.picnicTables "true")
             , test "false" <|
                 \() ->
-                    Expect.equal (Ok (Just NoPicnicTables)) (Json.Decode.decodeString App.GitHubDecoder.picnicTables "false")
+                    Expect.equal (Ok No) (Json.Decode.decodeString App.GitHubDecoder.picnicTables "false")
             ]
         , describe "barbecues"
             [ test "wood" <|
@@ -155,7 +154,7 @@ all =
                                         (Just (Location -33 150))
                                         (Facilities
                                             (Yes FlushToilets)
-                                            (Just NoPicnicTables)
+                                            No
                                             (Yes WoodBarbecues)
                                             (Yes HotShowers)
                                             (Just NoDrinkingWater)

@@ -8,7 +8,6 @@ import Campsite
     exposing
         ( name
         , ToiletsCore(..)
-        , PicnicTablesCore(..)
         , Tri(..)
         , BarbecuesCore(..)
         , ShowersCore(..)
@@ -59,7 +58,7 @@ all =
                     Nothing
                 , facilities =
                     { toilets = Unknown
-                    , picnicTables = Nothing
+                    , picnicTables = Unknown
                     , barbecues = Unknown
                     , showers = Unknown
                     , drinkingWater = Nothing
@@ -149,9 +148,9 @@ all =
                         , decoder = App.Decoder.picnicTables
                         }
              in
-                [ test Nothing null
-                , test (Just PicnicTables) (bool True)
-                , test (Just NoPicnicTables) (bool False)
+                [ test Unknown null
+                , test (Yes ()) (bool True)
+                , test No (bool False)
                 ]
             )
         , describe "barbecues"
