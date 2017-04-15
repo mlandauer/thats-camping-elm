@@ -90,8 +90,8 @@ toiletsHelp text =
             fail "Unexpected value"
 
 
-picnicTables : Decoder PicnicTables
-picnicTables =
+tri : Decoder (Tri ())
+tri =
     Json.Decode.oneOf
         [ null Unknown
         , map
@@ -103,6 +103,11 @@ picnicTables =
             )
             bool
         ]
+
+
+picnicTables : Decoder PicnicTables
+picnicTables =
+    tri
 
 
 barbecues : Decoder Barbecues
@@ -161,62 +166,22 @@ showersHelp text =
 
 drinkingWater : Decoder DrinkingWater
 drinkingWater =
-    Json.Decode.oneOf
-        [ null Unknown
-        , map
-            (\present ->
-                if present then
-                    Yes ()
-                else
-                    No
-            )
-            bool
-        ]
+    tri
 
 
 caravans : Decoder Caravans
 caravans =
-    Json.Decode.oneOf
-        [ null Unknown
-        , map
-            (\present ->
-                if present then
-                    Yes ()
-                else
-                    No
-            )
-            bool
-        ]
+    tri
 
 
 trailers : Decoder Trailers
 trailers =
-    Json.Decode.oneOf
-        [ null Unknown
-        , map
-            (\present ->
-                if present then
-                    Yes ()
-                else
-                    No
-            )
-            bool
-        ]
+    tri
 
 
 cars : Decoder Cars
 cars =
-    Json.Decode.oneOf
-        [ null Unknown
-        , map
-            (\present ->
-                if present then
-                    Yes ()
-                else
-                    No
-            )
-            bool
-        ]
+    tri
 
 
 access : Decoder Access

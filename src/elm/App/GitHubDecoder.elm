@@ -89,14 +89,7 @@ toiletsHelp text =
 
 picnicTables : Decoder PicnicTables
 picnicTables =
-    map
-        (\present ->
-            if present then
-                Yes ()
-            else
-                No
-        )
-        bool
+    tri
 
 
 barbecues : Decoder Barbecues
@@ -147,52 +140,36 @@ showersHelp text =
             fail "Unexpected value"
 
 
-drinkingWater : Decoder DrinkingWater
-drinkingWater =
+tri : Decoder (Tri ())
+tri =
     map
-        (\present ->
-            if present then
+        (\a ->
+            if a then
                 Yes ()
             else
                 No
         )
         bool
+
+
+drinkingWater : Decoder DrinkingWater
+drinkingWater =
+    tri
 
 
 caravans : Decoder Caravans
 caravans =
-    map
-        (\present ->
-            if present then
-                Yes ()
-            else
-                No
-        )
-        bool
+    tri
 
 
 trailers : Decoder Trailers
 trailers =
-    map
-        (\present ->
-            if present then
-                Yes ()
-            else
-                No
-        )
-        bool
+    tri
 
 
 cars : Decoder Cars
 cars =
-    map
-        (\present ->
-            if present then
-                Yes ()
-            else
-                No
-        )
-        bool
+    tri
 
 
 facilities : Decoder Facilities

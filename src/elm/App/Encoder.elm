@@ -57,9 +57,9 @@ toilets toilets =
             null
 
 
-picnicTables : PicnicTables -> Value
-picnicTables picnicTables =
-    case picnicTables of
+tri : Tri () -> Value
+tri a =
+    case a of
         Yes () ->
             bool True
 
@@ -68,6 +68,11 @@ picnicTables picnicTables =
 
         Unknown ->
             null
+
+
+picnicTables : PicnicTables -> Value
+picnicTables picnicTables =
+    tri picnicTables
 
 
 barbecues : Barbecues -> Value
@@ -104,15 +109,7 @@ showers showers =
 
 drinkingWater : DrinkingWater -> Value
 drinkingWater drinkingWater =
-    case drinkingWater of
-        Yes () ->
-            bool True
-
-        No ->
-            bool False
-
-        Unknown ->
-            null
+    tri drinkingWater
 
 
 facilities : Facilities -> Value
@@ -128,41 +125,17 @@ facilities facilities =
 
 caravans : Caravans -> Value
 caravans caravans =
-    case caravans of
-        Yes () ->
-            bool True
-
-        No ->
-            bool False
-
-        Unknown ->
-            null
+    tri caravans
 
 
 trailers : Trailers -> Value
 trailers trailers =
-    case trailers of
-        Yes () ->
-            bool True
-
-        No ->
-            bool False
-
-        Unknown ->
-            null
+    tri trailers
 
 
 cars : Cars -> Value
 cars cars =
-    case cars of
-        Yes () ->
-            bool True
-
-        No ->
-            bool False
-
-        Unknown ->
-            null
+    tri cars
 
 
 access : Access -> Value
