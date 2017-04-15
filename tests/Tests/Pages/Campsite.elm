@@ -6,7 +6,7 @@ import Campsite
     exposing
         ( Toilets(..)
         , PicnicTables(..)
-        , Barbecues(..)
+        , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
         , Caravans(..)
@@ -27,7 +27,7 @@ all =
                         (facilitiesText
                             { toilets = Just FlushToilets
                             , picnicTables = Just PicnicTables
-                            , barbecues = Just WoodBarbecues
+                            , barbecues = Just WoodBarbecuesCore
                             , showers = Just HotShowers
                             , drinkingWater = Just DrinkingWater
                             }
@@ -51,7 +51,7 @@ all =
                         (facilitiesText
                             { toilets = Just NoToilets
                             , picnicTables = Nothing
-                            , barbecues = Just GasElectricBarbecues
+                            , barbecues = Just GasElectricBarbecuesCore
                             , showers = Just ColdShowers
                             , drinkingWater = Nothing
                             }

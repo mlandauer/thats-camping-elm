@@ -9,7 +9,7 @@ import Campsite
         ( name
         , Toilets(..)
         , PicnicTables(..)
-        , Barbecues(..)
+        , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
         , Caravans(..)
@@ -167,11 +167,11 @@ all =
                     testED ed
              in
                 [ test Nothing null
-                , test (Just WoodBarbecues) (string "wood")
-                , test (Just WoodSuppliedBarbecues) (string "wood_supplied")
-                , test (Just WoodBringYourOwnBarbecues) (string "wood_bring_your_own")
-                , test (Just GasElectricBarbecues) (string "gas_electric")
-                , test (Just NoBarbecues) (string "no")
+                , test (Just WoodBarbecuesCore) (string "wood")
+                , test (Just WoodSuppliedBarbecuesCore) (string "wood_supplied")
+                , test (Just WoodBringYourOwnBarbecuesCore) (string "wood_bring_your_own")
+                , test (Just GasElectricBarbecuesCore) (string "gas_electric")
+                , test (Just NoBarbecuesCore) (string "no")
                 , Test.test "blah" <|
                     \() ->
                         Expect.equal True

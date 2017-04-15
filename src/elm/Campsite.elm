@@ -6,7 +6,8 @@ module Campsite
         , Access
         , Toilets(..)
         , PicnicTables(..)
-        , Barbecues(..)
+        , Barbecues
+        , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
         , Caravans(..)
@@ -55,7 +56,7 @@ type alias Campsite =
 type alias Facilities =
     { toilets : Maybe Toilets
     , picnicTables : Maybe PicnicTables
-    , barbecues : Maybe Barbecues
+    , barbecues : Barbecues
     , showers : Maybe Showers
     , drinkingWater : Maybe DrinkingWater
     }
@@ -84,7 +85,7 @@ type Cars
 
 
 
--- TODO: Types for Toilets and Barbecues don't feel right. What would be better?
+-- TODO: Types for Toilets and BarbecuesCore don't feel right. What would be better?
 -- We're mixing up their presence with information about their properties
 -- Maybe we want something like this instead:
 -- type Toilets
@@ -104,12 +105,16 @@ type PicnicTables
     | NoPicnicTables
 
 
-type Barbecues
-    = WoodBarbecues
-    | WoodSuppliedBarbecues
-    | WoodBringYourOwnBarbecues
-    | GasElectricBarbecues
-    | NoBarbecues
+type alias Barbecues =
+    Maybe BarbecuesCore
+
+
+type BarbecuesCore
+    = WoodBarbecuesCore
+    | WoodSuppliedBarbecuesCore
+    | WoodBringYourOwnBarbecuesCore
+    | GasElectricBarbecuesCore
+    | NoBarbecuesCore
 
 
 type Showers

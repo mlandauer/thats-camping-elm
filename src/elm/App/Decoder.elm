@@ -20,7 +20,8 @@ import Campsite
         , Access
         , DrinkingWater(..)
         , Showers(..)
-        , Barbecues(..)
+        , Barbecues
+        , BarbecuesCore(..)
         , PicnicTables(..)
         , Toilets(..)
         , Caravans(..)
@@ -99,28 +100,28 @@ picnicTables =
         )
 
 
-barbecues : Decoder (Maybe Barbecues)
+barbecues : Decoder Barbecues
 barbecues =
     nullable (string |> andThen barbecuesHelp)
 
 
-barbecuesHelp : String -> Decoder Barbecues
+barbecuesHelp : String -> Decoder BarbecuesCore
 barbecuesHelp text =
     case text of
         "wood" ->
-            succeed WoodBarbecues
+            succeed WoodBarbecuesCore
 
         "wood_supplied" ->
-            succeed WoodSuppliedBarbecues
+            succeed WoodSuppliedBarbecuesCore
 
         "wood_bring_your_own" ->
-            succeed WoodBringYourOwnBarbecues
+            succeed WoodBringYourOwnBarbecuesCore
 
         "gas_electric" ->
-            succeed GasElectricBarbecues
+            succeed GasElectricBarbecuesCore
 
         "no" ->
-            succeed NoBarbecues
+            succeed NoBarbecuesCore
 
         _ ->
             fail "Unexpected value"

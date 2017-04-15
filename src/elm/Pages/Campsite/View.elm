@@ -19,7 +19,7 @@ import Campsite
         ( Facilities
         , Toilets(..)
         , PicnicTables(..)
-        , Barbecues(..)
+        , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
         , Access
@@ -148,41 +148,41 @@ descriptionPicnicTables picnicTables =
     "picnic tables"
 
 
-presentBarbecues : Barbecues -> Bool
-presentBarbecues barbecues =
+presentBarbecuesCore : BarbecuesCore -> Bool
+presentBarbecuesCore barbecues =
     case barbecues of
-        WoodBarbecues ->
+        WoodBarbecuesCore ->
             True
 
-        WoodSuppliedBarbecues ->
+        WoodSuppliedBarbecuesCore ->
             True
 
-        WoodBringYourOwnBarbecues ->
+        WoodBringYourOwnBarbecuesCore ->
             True
 
-        GasElectricBarbecues ->
+        GasElectricBarbecuesCore ->
             True
 
-        NoBarbecues ->
+        NoBarbecuesCore ->
             False
 
 
-descriptionBarbecues : Barbecues -> String
-descriptionBarbecues barbecues =
+descriptionBarbecuesCore : BarbecuesCore -> String
+descriptionBarbecuesCore barbecues =
     case barbecues of
-        WoodBarbecues ->
+        WoodBarbecuesCore ->
             "wood BBQs"
 
-        WoodSuppliedBarbecues ->
+        WoodSuppliedBarbecuesCore ->
             "wood BBQs"
 
-        WoodBringYourOwnBarbecues ->
+        WoodBringYourOwnBarbecuesCore ->
             "wood BBQs"
 
-        GasElectricBarbecues ->
+        GasElectricBarbecuesCore ->
             "gas/electric BBQs"
 
-        NoBarbecues ->
+        NoBarbecuesCore ->
             "BBQs"
 
 
@@ -294,7 +294,7 @@ facilitiesList p facilities =
     values
         [ (listItem p presentToilets descriptionToilets facilities.toilets)
         , (listItem p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        , (listItem p presentBarbecues descriptionBarbecues facilities.barbecues)
+        , (listItem p presentBarbecuesCore descriptionBarbecuesCore facilities.barbecues)
         , (listItem p presentShowers descriptionShowers facilities.showers)
         , (listItem p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
         ]

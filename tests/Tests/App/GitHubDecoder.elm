@@ -11,7 +11,7 @@ import Campsite
         , Access
         , Toilets(..)
         , PicnicTables(..)
-        , Barbecues(..)
+        , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
         , Caravans(..)
@@ -76,23 +76,23 @@ all =
         , describe "barbecues"
             [ test "wood" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodBarbecues))
+                    Expect.equal (Ok (Just WoodBarbecuesCore))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood\"")
             , test "wood_supplied" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodSuppliedBarbecues))
+                    Expect.equal (Ok (Just WoodSuppliedBarbecuesCore))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_supplied\"")
             , test "wood_bring_your_own" <|
                 \() ->
-                    Expect.equal (Ok (Just WoodBringYourOwnBarbecues))
+                    Expect.equal (Ok (Just WoodBringYourOwnBarbecuesCore))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_bring_your_own\"")
             , test "gas_electric" <|
                 \() ->
-                    Expect.equal (Ok (Just GasElectricBarbecues))
+                    Expect.equal (Ok (Just GasElectricBarbecuesCore))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"gas_electric\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok (Just NoBarbecues))
+                    Expect.equal (Ok (Just NoBarbecuesCore))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"none\"")
             , test "invalid value" <|
                 \() ->
@@ -158,7 +158,7 @@ all =
                                         (Facilities
                                             (Just FlushToilets)
                                             (Just NoPicnicTables)
-                                            (Just WoodBarbecues)
+                                            (Just WoodBarbecuesCore)
                                             (Just HotShowers)
                                             (Just NoDrinkingWater)
                                         )

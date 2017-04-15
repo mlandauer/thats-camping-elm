@@ -13,7 +13,7 @@ import Campsite
         ( Campsite
         , Toilets(..)
         , PicnicTables(..)
-        , Barbecues(..)
+        , BarbecuesCore(..)
         , Showers(..)
         , DrinkingWater(..)
         , Caravans(..)
