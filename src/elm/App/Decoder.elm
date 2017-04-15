@@ -18,17 +18,17 @@ import Campsite
     exposing
         ( Facilities
         , Access
-        , DrinkingWater(..)
-        , Showers(..)
+        , DrinkingWaterCore(..)
+        , ShowersCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
-        , PicnicTables(..)
+        , PicnicTablesCore(..)
         , Toilets
         , ToiletsCore(..)
-        , Caravans(..)
-        , Trailers(..)
-        , Cars(..)
+        , CaravansCore(..)
+        , TrailersCore(..)
+        , CarsCore(..)
         )
 import Location exposing (Location)
 
@@ -91,7 +91,7 @@ toiletsHelp text =
             fail "Unexpected value"
 
 
-picnicTables : Decoder (Maybe PicnicTables)
+picnicTables : Decoder (Maybe PicnicTablesCore)
 picnicTables =
     nullable
         (map
@@ -135,12 +135,12 @@ barbecuesHelp text =
             fail "Unexpected value"
 
 
-showers : Decoder (Maybe Showers)
+showers : Decoder (Maybe ShowersCore)
 showers =
     nullable (string |> andThen showersHelp)
 
 
-showersHelp : String -> Decoder Showers
+showersHelp : String -> Decoder ShowersCore
 showersHelp text =
     case text of
         "hot" ->
@@ -156,7 +156,7 @@ showersHelp text =
             fail "Unexpected value"
 
 
-drinkingWater : Decoder (Maybe DrinkingWater)
+drinkingWater : Decoder (Maybe DrinkingWaterCore)
 drinkingWater =
     nullable <|
         map
@@ -169,7 +169,7 @@ drinkingWater =
             bool
 
 
-caravans : Decoder (Maybe Caravans)
+caravans : Decoder (Maybe CaravansCore)
 caravans =
     nullable <|
         map
@@ -182,7 +182,7 @@ caravans =
             bool
 
 
-trailers : Decoder (Maybe Trailers)
+trailers : Decoder (Maybe TrailersCore)
 trailers =
     nullable <|
         map
@@ -195,7 +195,7 @@ trailers =
             bool
 
 
-cars : Decoder (Maybe Cars)
+cars : Decoder (Maybe CarsCore)
 cars =
     nullable <|
         map

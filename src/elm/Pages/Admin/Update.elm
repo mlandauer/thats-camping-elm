@@ -12,13 +12,13 @@ import Campsite
     exposing
         ( Campsite
         , ToiletsCore(..)
-        , PicnicTables(..)
+        , PicnicTablesCore(..)
         , BarbecuesCore(..)
-        , Showers(..)
-        , DrinkingWater(..)
-        , Caravans(..)
-        , Trailers(..)
-        , Cars(..)
+        , ShowersCore(..)
+        , DrinkingWaterCore(..)
+        , CaravansCore(..)
+        , TrailersCore(..)
+        , CarsCore(..)
         )
 import Http
 import App.GitHubDecoder

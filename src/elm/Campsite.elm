@@ -6,15 +6,15 @@ module Campsite
         , Access
         , Toilets
         , ToiletsCore(..)
-        , PicnicTables(..)
+        , PicnicTablesCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
-        , Showers(..)
-        , DrinkingWater(..)
-        , Caravans(..)
-        , Trailers(..)
-        , Cars(..)
+        , ShowersCore(..)
+        , DrinkingWaterCore(..)
+        , CaravansCore(..)
+        , TrailersCore(..)
+        , CarsCore(..)
         , shortenName
         , name
           -- TODO: Rename transform to something more descriptive
@@ -57,31 +57,31 @@ type alias Campsite =
 
 type alias Facilities =
     { toilets : Toilets
-    , picnicTables : Maybe PicnicTables
+    , picnicTables : Maybe PicnicTablesCore
     , barbecues : Barbecues
-    , showers : Maybe Showers
-    , drinkingWater : Maybe DrinkingWater
+    , showers : Maybe ShowersCore
+    , drinkingWater : Maybe DrinkingWaterCore
     }
 
 
 type alias Access =
-    { caravans : Maybe Caravans
-    , trailers : Maybe Trailers
-    , cars : Maybe Cars
+    { caravans : Maybe CaravansCore
+    , trailers : Maybe TrailersCore
+    , cars : Maybe CarsCore
     }
 
 
-type Caravans
+type CaravansCore
     = Caravans
     | NoCaravans
 
 
-type Trailers
+type TrailersCore
     = Trailers
     | NoTrailers
 
 
-type Cars
+type CarsCore
     = Cars
     | NoCars
 
@@ -95,7 +95,7 @@ type ToiletsCore
     | FlushToilets
 
 
-type PicnicTables
+type PicnicTablesCore
     = PicnicTables
     | NoPicnicTables
 
@@ -117,7 +117,7 @@ type BarbecuesCore
     | GasElectricBarbecues
 
 
-type Showers
+type ShowersCore
     = HotShowers
     | ColdShowers
     | NoShowers
@@ -130,7 +130,7 @@ type Showers
 -}
 
 
-type DrinkingWater
+type DrinkingWaterCore
     = DrinkingWater
     | NoDrinkingWater
 

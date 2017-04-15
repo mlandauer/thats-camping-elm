@@ -5,14 +5,14 @@ import Expect
 import Campsite
     exposing
         ( ToiletsCore(..)
-        , PicnicTables(..)
+        , PicnicTablesCore(..)
         , Tri(..)
         , BarbecuesCore(..)
-        , Showers(..)
-        , DrinkingWater(..)
-        , Caravans(..)
-        , Trailers(..)
-        , Cars(..)
+        , ShowersCore(..)
+        , DrinkingWaterCore(..)
+        , CaravansCore(..)
+        , TrailersCore(..)
+        , CarsCore(..)
         )
 import Pages.Campsite.View exposing (..)
 

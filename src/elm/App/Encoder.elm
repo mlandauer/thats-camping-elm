@@ -20,17 +20,17 @@ import Campsite
         ( Campsite
         , Facilities
         , Access
-        , DrinkingWater(..)
-        , Showers(..)
+        , DrinkingWaterCore(..)
+        , ShowersCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
-        , PicnicTables(..)
+        , PicnicTablesCore(..)
         , Toilets
         , ToiletsCore(..)
-        , Cars(..)
-        , Trailers(..)
-        , Caravans(..)
+        , CarsCore(..)
+        , TrailersCore(..)
+        , CaravansCore(..)
         )
 
 
@@ -58,7 +58,7 @@ toilets toilets =
             null
 
 
-picnicTables : Maybe PicnicTables -> Value
+picnicTables : Maybe PicnicTablesCore -> Value
 picnicTables picnicTables =
     case picnicTables of
         Just PicnicTables ->
@@ -93,7 +93,7 @@ barbecues barbecues =
             null
 
 
-showers : Maybe Showers -> Value
+showers : Maybe ShowersCore -> Value
 showers showers =
     case showers of
         Just HotShowers ->
@@ -109,7 +109,7 @@ showers showers =
             null
 
 
-drinkingWater : Maybe DrinkingWater -> Value
+drinkingWater : Maybe DrinkingWaterCore -> Value
 drinkingWater drinkingWater =
     case drinkingWater of
         Just DrinkingWater ->
@@ -133,7 +133,7 @@ facilities facilities =
         ]
 
 
-caravans : Maybe Caravans -> Value
+caravans : Maybe CaravansCore -> Value
 caravans caravans =
     case caravans of
         Just Caravans ->
@@ -146,7 +146,7 @@ caravans caravans =
             null
 
 
-trailers : Maybe Trailers -> Value
+trailers : Maybe TrailersCore -> Value
 trailers trailers =
     case trailers of
         Just Trailers ->
@@ -159,7 +159,7 @@ trailers trailers =
             null
 
 
-cars : Maybe Cars -> Value
+cars : Maybe CarsCore -> Value
 cars cars =
     case cars of
         Just Cars ->

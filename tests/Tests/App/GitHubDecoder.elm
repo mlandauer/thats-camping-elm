@@ -10,14 +10,14 @@ import Campsite
         , Facilities
         , Access
         , ToiletsCore(..)
-        , PicnicTables(..)
+        , PicnicTablesCore(..)
         , Tri(..)
         , BarbecuesCore(..)
-        , Showers(..)
-        , DrinkingWater(..)
-        , Caravans(..)
-        , Trailers(..)
-        , Cars(..)
+        , ShowersCore(..)
+        , DrinkingWaterCore(..)
+        , CaravansCore(..)
+        , TrailersCore(..)
+        , CarsCore(..)
         )
 import Location exposing (Location)
 import Result.Extra

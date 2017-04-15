@@ -8,14 +8,14 @@ import Campsite
     exposing
         ( name
         , ToiletsCore(..)
-        , PicnicTables(..)
+        , PicnicTablesCore(..)
         , Tri(..)
         , BarbecuesCore(..)
-        , Showers(..)
-        , DrinkingWater(..)
-        , Caravans(..)
-        , Trailers(..)
-        , Cars(..)
+        , ShowersCore(..)
+        , DrinkingWaterCore(..)
+        , CaravansCore(..)
+        , TrailersCore(..)
+        , CarsCore(..)
         )
 import Result.Extra
 import Json.Encode exposing (object, string, null, float, bool, Value)
