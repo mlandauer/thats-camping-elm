@@ -4,7 +4,7 @@ import Test exposing (..)
 import Expect
 import Campsite
     exposing
-        ( Toilets(..)
+        ( ToiletsCore(..)
         , PicnicTables(..)
         , Tri(..)
         , BarbecuesCore(..)

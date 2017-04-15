@@ -11,7 +11,7 @@ import Pouchdb
 import Campsite
     exposing
         ( Campsite
-        , Toilets(..)
+        , ToiletsCore(..)
         , PicnicTables(..)
         , BarbecuesCore(..)
         , Showers(..)

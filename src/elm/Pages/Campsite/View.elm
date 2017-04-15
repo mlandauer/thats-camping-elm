@@ -17,7 +17,7 @@ import Location exposing (Location)
 import Campsite
     exposing
         ( Facilities
-        , Toilets(..)
+        , ToiletsCore(..)
         , PicnicTables(..)
         , Tri(..)
         , Barbecues
@@ -109,7 +109,7 @@ accessText access =
 ------------
 
 
-presentToilets : Maybe Toilets -> Maybe Bool
+presentToilets : Maybe ToiletsCore -> Maybe Bool
 presentToilets toilets =
     case toilets of
         Just FlushToilets ->
@@ -125,7 +125,7 @@ presentToilets toilets =
             Nothing
 
 
-descriptionToilets : Maybe Toilets -> String
+descriptionToilets : Maybe ToiletsCore -> String
 descriptionToilets toilets =
     case toilets of
         Just FlushToilets ->

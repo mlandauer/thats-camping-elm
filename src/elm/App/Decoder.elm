@@ -24,7 +24,7 @@ import Campsite
         , Barbecues
         , BarbecuesCore(..)
         , PicnicTables(..)
-        , Toilets(..)
+        , ToiletsCore(..)
         , Caravans(..)
         , Trailers(..)
         , Cars(..)
@@ -66,12 +66,12 @@ facilities =
         (field "drinkingWater" drinkingWater)
 
 
-toilets : Decoder (Maybe Toilets)
+toilets : Decoder (Maybe ToiletsCore)
 toilets =
     nullable (string |> andThen toiletsHelp)
 
 
-toiletsHelp : String -> Decoder Toilets
+toiletsHelp : String -> Decoder ToiletsCore
 toiletsHelp text =
     case text of
         "non_flush" ->

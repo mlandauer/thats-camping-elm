@@ -7,7 +7,7 @@ import App.Encoder
 import Campsite
     exposing
         ( name
-        , Toilets(..)
+        , ToiletsCore(..)
         , PicnicTables(..)
         , Tri(..)
         , BarbecuesCore(..)

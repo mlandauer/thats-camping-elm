@@ -9,7 +9,7 @@ import Campsite
         ( Campsite
         , Facilities
         , Access
-        , Toilets(..)
+        , ToiletsCore(..)
         , PicnicTables(..)
         , Tri(..)
         , BarbecuesCore(..)

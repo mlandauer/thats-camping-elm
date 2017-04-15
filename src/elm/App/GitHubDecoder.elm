@@ -19,7 +19,7 @@ import Campsite
     exposing
         ( Facilities
         , Access
-        , Toilets(..)
+        , ToiletsCore(..)
         , PicnicTables(..)
         , Tri(..)
         , Barbecues
@@ -66,12 +66,12 @@ location =
         )
 
 
-toilets : Decoder (Maybe Toilets)
+toilets : Decoder (Maybe ToiletsCore)
 toilets =
     string |> andThen toiletsHelp |> map Just
 
 
-toiletsHelp : String -> Decoder Toilets
+toiletsHelp : String -> Decoder ToiletsCore
 toiletsHelp text =
     case text of
         "non_flush" ->
