@@ -26,7 +26,7 @@ all =
                     Expect.equal
                         "Has flush toilets, picnic tables, wood BBQs, hot showers and drinking water."
                         (facilitiesText
-                            { toilets = Just FlushToilets
+                            { toilets = Yes FlushToilets
                             , picnicTables = Just PicnicTables
                             , barbecues = Yes WoodBarbecues
                             , showers = Just HotShowers
@@ -38,7 +38,7 @@ all =
                     Expect.equal
                         "Has non-flush toilets but no picnic tables, showers and drinking water."
                         (facilitiesText
-                            { toilets = Just NonFlushToilets
+                            { toilets = Yes NonFlushToilets
                             , picnicTables = Just NoPicnicTables
                             , barbecues = Unknown
                             , showers = Just NoShowers
@@ -50,7 +50,7 @@ all =
                     Expect.equal
                         "Has gas/electric BBQs and cold showers but no toilets."
                         (facilitiesText
-                            { toilets = Just NoToilets
+                            { toilets = No
                             , picnicTables = Nothing
                             , barbecues = Yes GasElectricBarbecues
                             , showers = Just ColdShowers

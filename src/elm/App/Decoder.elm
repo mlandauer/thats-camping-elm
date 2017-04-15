@@ -69,20 +69,23 @@ facilities =
 
 toilets : Decoder Toilets
 toilets =
-    nullable (string |> andThen toiletsHelp)
+    Json.Decode.oneOf
+        [ null Unknown
+        , string |> andThen toiletsHelp
+        ]
 
 
-toiletsHelp : String -> Decoder ToiletsCore
+toiletsHelp : String -> Decoder Toilets
 toiletsHelp text =
     case text of
         "non_flush" ->
-            succeed NonFlushToilets
+            succeed (Yes NonFlushToilets)
 
         "flush" ->
-            succeed FlushToilets
+            succeed (Yes FlushToilets)
 
         "no" ->
-            succeed NoToilets
+            succeed No
 
         _ ->
             fail "Unexpected value"

@@ -87,13 +87,12 @@ type Cars
 
 
 type alias Toilets =
-    Maybe ToiletsCore
+    Tri ToiletsCore
 
 
 type ToiletsCore
     = NonFlushToilets
     | FlushToilets
-    | NoToilets
 
 
 type PicnicTables

@@ -61,7 +61,7 @@ all =
                 , location =
                     Nothing
                 , facilities =
-                    { toilets = Nothing
+                    { toilets = Unknown
                     , picnicTables = Nothing
                     , barbecues = Unknown
                     , showers = Nothing
@@ -134,10 +134,10 @@ all =
                 test =
                     testED ed
              in
-                [ test Nothing null
-                , test (Just NoToilets) (string "no")
-                , test (Just FlushToilets) (string "flush")
-                , test (Just NonFlushToilets) (string "non_flush")
+                [ test Unknown null
+                , test No (string "no")
+                , test (Yes FlushToilets) (string "flush")
+                , test (Yes NonFlushToilets) (string "non_flush")
                 , Test.test "blah" <|
                     \() ->
                         Expect.equal True

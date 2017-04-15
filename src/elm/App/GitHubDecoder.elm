@@ -69,20 +69,20 @@ location =
 
 toilets : Decoder Toilets
 toilets =
-    string |> andThen toiletsHelp |> map Just
+    string |> andThen toiletsHelp
 
 
-toiletsHelp : String -> Decoder ToiletsCore
+toiletsHelp : String -> Decoder Toilets
 toiletsHelp text =
     case text of
         "non_flush" ->
-            succeed NonFlushToilets
+            succeed (Yes NonFlushToilets)
 
         "flush" ->
-            succeed FlushToilets
+            succeed (Yes FlushToilets)
 
         "none" ->
-            succeed NoToilets
+            succeed No
 
         _ ->
             fail "Unexpected value"

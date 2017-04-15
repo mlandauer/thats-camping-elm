@@ -51,15 +51,15 @@ all =
         , describe "toilets"
             [ test "non flush" <|
                 \() ->
-                    Expect.equal (Ok (Just NonFlushToilets))
+                    Expect.equal (Ok (Yes NonFlushToilets))
                         (Json.Decode.decodeString App.GitHubDecoder.toilets "\"non_flush\"")
             , test "flush" <|
                 \() ->
-                    Expect.equal (Ok (Just FlushToilets))
+                    Expect.equal (Ok (Yes FlushToilets))
                         (Json.Decode.decodeString App.GitHubDecoder.toilets "\"flush\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok (Just NoToilets))
+                    Expect.equal (Ok No)
                         (Json.Decode.decodeString App.GitHubDecoder.toilets "\"none\"")
             , test "invalid value" <|
                 \() ->
@@ -157,7 +157,7 @@ all =
                                         "description"
                                         (Just (Location -33 150))
                                         (Facilities
-                                            (Just FlushToilets)
+                                            (Yes FlushToilets)
                                             (Just NoPicnicTables)
                                             (Yes WoodBarbecues)
                                             (Just HotShowers)

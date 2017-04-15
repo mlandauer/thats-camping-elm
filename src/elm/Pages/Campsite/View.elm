@@ -113,32 +113,29 @@ accessText access =
 presentToilets : Toilets -> Maybe Bool
 presentToilets toilets =
     case toilets of
-        Just FlushToilets ->
+        Yes _ ->
             Just True
 
-        Just NonFlushToilets ->
-            Just True
-
-        Just NoToilets ->
+        No ->
             Just False
 
-        Nothing ->
+        Unknown ->
             Nothing
 
 
 descriptionToilets : Toilets -> String
 descriptionToilets toilets =
     case toilets of
-        Just FlushToilets ->
+        Yes FlushToilets ->
             "flush toilets"
 
-        Just NonFlushToilets ->
+        Yes NonFlushToilets ->
             "non-flush toilets"
 
-        Just NoToilets ->
+        No ->
             "toilets"
 
-        Nothing ->
+        Unknown ->
             "toilets"
 
 

@@ -45,16 +45,16 @@ location location =
 toilets : Toilets -> Value
 toilets toilets =
     case toilets of
-        Just NonFlushToilets ->
+        Yes NonFlushToilets ->
             string "non_flush"
 
-        Just FlushToilets ->
+        Yes FlushToilets ->
             string "flush"
 
-        Just NoToilets ->
+        No ->
             string "no"
 
-        Nothing ->
+        Unknown ->
             null
 
 
