@@ -107,167 +107,200 @@ accessText access =
 ------------
 
 
-presentToilets : Toilets -> Bool
+presentToilets : Maybe Toilets -> Maybe Bool
 presentToilets toilets =
     case toilets of
-        FlushToilets ->
-            True
+        Just FlushToilets ->
+            Just True
 
-        NonFlushToilets ->
-            True
+        Just NonFlushToilets ->
+            Just True
 
-        NoToilets ->
-            False
+        Just NoToilets ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionToilets : Toilets -> String
+descriptionToilets : Maybe Toilets -> String
 descriptionToilets toilets =
     case toilets of
-        FlushToilets ->
+        Just FlushToilets ->
             "flush toilets"
 
-        NonFlushToilets ->
+        Just NonFlushToilets ->
             "non-flush toilets"
 
-        NoToilets ->
+        Just NoToilets ->
+            "toilets"
+
+        Nothing ->
             "toilets"
 
 
-presentPicnicTables : PicnicTables -> Bool
+presentPicnicTables : Maybe PicnicTables -> Maybe Bool
 presentPicnicTables picnicTables =
     case picnicTables of
-        PicnicTables ->
-            True
+        Just PicnicTables ->
+            Just True
 
-        NoPicnicTables ->
-            False
+        Just NoPicnicTables ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionPicnicTables : PicnicTables -> String
+descriptionPicnicTables : Maybe PicnicTables -> String
 descriptionPicnicTables picnicTables =
     "picnic tables"
 
 
-presentBarbecuesCore : BarbecuesCore -> Bool
+presentBarbecuesCore : Maybe BarbecuesCore -> Maybe Bool
 presentBarbecuesCore barbecues =
     case barbecues of
-        WoodBarbecuesCore ->
-            True
+        Just WoodBarbecuesCore ->
+            Just True
 
-        WoodSuppliedBarbecuesCore ->
-            True
+        Just WoodSuppliedBarbecuesCore ->
+            Just True
 
-        WoodBringYourOwnBarbecuesCore ->
-            True
+        Just WoodBringYourOwnBarbecuesCore ->
+            Just True
 
-        GasElectricBarbecuesCore ->
-            True
+        Just GasElectricBarbecuesCore ->
+            Just True
 
-        NoBarbecuesCore ->
-            False
+        Just NoBarbecuesCore ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionBarbecuesCore : BarbecuesCore -> String
+descriptionBarbecuesCore : Maybe BarbecuesCore -> String
 descriptionBarbecuesCore barbecues =
     case barbecues of
-        WoodBarbecuesCore ->
+        Just WoodBarbecuesCore ->
             "wood BBQs"
 
-        WoodSuppliedBarbecuesCore ->
+        Just WoodSuppliedBarbecuesCore ->
             "wood BBQs"
 
-        WoodBringYourOwnBarbecuesCore ->
+        Just WoodBringYourOwnBarbecuesCore ->
             "wood BBQs"
 
-        GasElectricBarbecuesCore ->
+        Just GasElectricBarbecuesCore ->
             "gas/electric BBQs"
 
-        NoBarbecuesCore ->
+        Just NoBarbecuesCore ->
+            "BBQs"
+
+        Nothing ->
             "BBQs"
 
 
-presentShowers : Showers -> Bool
+presentShowers : Maybe Showers -> Maybe Bool
 presentShowers showers =
     case showers of
-        HotShowers ->
-            True
+        Just HotShowers ->
+            Just True
 
-        ColdShowers ->
-            True
+        Just ColdShowers ->
+            Just True
 
-        NoShowers ->
-            False
+        Just NoShowers ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionShowers : Showers -> String
+descriptionShowers : Maybe Showers -> String
 descriptionShowers showers =
     case showers of
-        HotShowers ->
+        Just HotShowers ->
             "hot showers"
 
-        ColdShowers ->
+        Just ColdShowers ->
             "cold showers"
 
-        NoShowers ->
+        Just NoShowers ->
+            "showers"
+
+        Nothing ->
             "showers"
 
 
-presentDrinkingWater : DrinkingWater -> Bool
+presentDrinkingWater : Maybe DrinkingWater -> Maybe Bool
 presentDrinkingWater drinkingWater =
     case drinkingWater of
-        DrinkingWater ->
-            True
+        Just DrinkingWater ->
+            Just True
 
-        NoDrinkingWater ->
-            False
+        Just NoDrinkingWater ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionDrinkingWater : DrinkingWater -> String
+descriptionDrinkingWater : Maybe DrinkingWater -> String
 descriptionDrinkingWater drinkingWater =
     "drinking water"
 
 
-presentCaravans : Caravans -> Bool
+presentCaravans : Maybe Caravans -> Maybe Bool
 presentCaravans caravans =
     case caravans of
-        Caravans ->
-            True
+        Just Caravans ->
+            Just True
 
-        NoCaravans ->
-            False
+        Just NoCaravans ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionCaravans : Caravans -> String
+descriptionCaravans : Maybe Caravans -> String
 descriptionCaravans _ =
     "caravans"
 
 
-presentTrailers : Trailers -> Bool
+presentTrailers : Maybe Trailers -> Maybe Bool
 presentTrailers trailers =
     case trailers of
-        Trailers ->
-            True
+        Just Trailers ->
+            Just True
 
-        NoTrailers ->
-            False
+        Just NoTrailers ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionTrailers : Trailers -> String
+descriptionTrailers : Maybe Trailers -> String
 descriptionTrailers _ =
     "trailers"
 
 
-presentCars : Cars -> Bool
+presentCars : Maybe Cars -> Maybe Bool
 presentCars cars =
     case cars of
-        Cars ->
-            True
+        Just Cars ->
+            Just True
 
-        NoCars ->
-            False
+        Just NoCars ->
+            Just False
+
+        Nothing ->
+            Nothing
 
 
-descriptionCars : Cars -> String
+descriptionCars : Maybe Cars -> String
 descriptionCars _ =
     "car camping"
 
@@ -276,36 +309,31 @@ descriptionCars _ =
 ---------
 
 
-listItem : Bool -> (f -> Bool) -> (f -> String) -> Maybe f -> Maybe String
+listItem : Maybe Bool -> (Maybe f -> Maybe Bool) -> (Maybe f -> String) -> Maybe f -> Maybe String
 listItem p present description facility =
-    case facility of
-        Just facility ->
-            if (present facility) == p then
-                Just (description facility)
-            else
-                Nothing
-
-        Nothing ->
-            Nothing
+    if (present facility) == p then
+        Just (description facility)
+    else
+        Nothing
 
 
 facilitiesList : Bool -> Facilities -> List String
 facilitiesList p facilities =
     values
-        [ (listItem p presentToilets descriptionToilets facilities.toilets)
-        , (listItem p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        , (listItem p presentBarbecuesCore descriptionBarbecuesCore facilities.barbecues)
-        , (listItem p presentShowers descriptionShowers facilities.showers)
-        , (listItem p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
+        [ (listItem (Just p) presentToilets descriptionToilets facilities.toilets)
+        , (listItem (Just p) presentPicnicTables descriptionPicnicTables facilities.picnicTables)
+        , (listItem (Just p) presentBarbecuesCore descriptionBarbecuesCore facilities.barbecues)
+        , (listItem (Just p) presentShowers descriptionShowers facilities.showers)
+        , (listItem (Just p) presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
         ]
 
 
 accessList : Bool -> Access -> List String
 accessList p access =
     values
-        [ (listItem p presentCaravans descriptionCaravans access.caravans)
-        , (listItem p presentTrailers descriptionTrailers access.trailers)
-        , (listItem p presentCars descriptionCars access.cars)
+        [ (listItem (Just p) presentCaravans descriptionCaravans access.caravans)
+        , (listItem (Just p) presentTrailers descriptionTrailers access.trailers)
+        , (listItem (Just p) presentCars descriptionCars access.cars)
         ]
 
 
