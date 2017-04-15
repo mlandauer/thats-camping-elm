@@ -9,7 +9,6 @@ import Campsite
         ( name
         , Tri(..)
         , BarbecuesCore(..)
-        , DrinkingWaterCore(..)
         )
 import Result.Extra
 import Json.Encode exposing (object, string, null, float, bool, Value)
@@ -59,7 +58,7 @@ all =
                     , picnicTables = Unknown
                     , barbecues = Unknown
                     , showers = Unknown
-                    , drinkingWater = Nothing
+                    , drinkingWater = Unknown
                     }
                 , access =
                     { caravans = Unknown
@@ -201,9 +200,9 @@ all =
                         , decoder = App.Decoder.drinkingWater
                         }
              in
-                [ test Nothing null
-                , test (Just NoDrinkingWater) (bool False)
-                , test (Just DrinkingWater) (bool True)
+                [ test Unknown null
+                , test No (bool False)
+                , test (Yes ()) (bool True)
                 ]
             )
         , describe "caravans"

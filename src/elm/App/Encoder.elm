@@ -21,7 +21,6 @@ import Campsite
         , Facilities
         , Access
         , DrinkingWater
-        , DrinkingWaterCore(..)
         , Showers
         , Tri(..)
         , Barbecues
@@ -112,13 +111,13 @@ showers showers =
 drinkingWater : DrinkingWater -> Value
 drinkingWater drinkingWater =
     case drinkingWater of
-        Just DrinkingWater ->
+        Yes () ->
             bool True
 
-        Just NoDrinkingWater ->
+        No ->
             bool False
 
-        Nothing ->
+        Unknown ->
             null
 
 

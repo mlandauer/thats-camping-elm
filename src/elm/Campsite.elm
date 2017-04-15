@@ -11,7 +11,6 @@ module Campsite
         , BarbecuesCore(..)
         , Showers
         , DrinkingWater
-        , DrinkingWaterCore(..)
         , Caravans
         , Trailers
         , Cars
@@ -120,20 +119,8 @@ type alias Hot =
     Bool
 
 
-
-{-
-   TODO: Doesn't really make sense to have these as custom types when a bool
-   would work just fine. It makes everything very long winded
--}
-
-
 type alias DrinkingWater =
-    Maybe DrinkingWaterCore
-
-
-type DrinkingWaterCore
-    = DrinkingWater
-    | NoDrinkingWater
+    Tri ()
 
 
 shortenName : String -> String

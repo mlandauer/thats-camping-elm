@@ -24,7 +24,6 @@ import Campsite
         , BarbecuesCore(..)
         , Showers
         , DrinkingWater
-        , DrinkingWaterCore(..)
         , Access
         , Caravans
         , Trailers
@@ -182,19 +181,6 @@ descriptionShowers showers =
             "showers"
 
 
-presentDrinkingWater : DrinkingWater -> Maybe Bool
-presentDrinkingWater drinkingWater =
-    case drinkingWater of
-        Just DrinkingWater ->
-            Just True
-
-        Just NoDrinkingWater ->
-            Just False
-
-        Nothing ->
-            Nothing
-
-
 descriptionDrinkingWater : DrinkingWater -> String
 descriptionDrinkingWater drinkingWater =
     "drinking water"
@@ -242,7 +228,7 @@ facilitiesList p facilities =
         , ( present facilities.showers
           , descriptionShowers facilities.showers
           )
-        , ( presentDrinkingWater facilities.drinkingWater
+        , ( present facilities.drinkingWater
           , descriptionDrinkingWater facilities.drinkingWater
           )
         ]

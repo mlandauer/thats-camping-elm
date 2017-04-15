@@ -11,7 +11,6 @@ import Campsite
         , Access
         , Tri(..)
         , BarbecuesCore(..)
-        , DrinkingWaterCore(..)
         )
 import Location exposing (Location)
 import Result.Extra
@@ -115,10 +114,10 @@ all =
         , describe "drinking water"
             [ test "true" <|
                 \() ->
-                    Expect.equal (Ok (Just DrinkingWater)) (Json.Decode.decodeString App.GitHubDecoder.drinkingWater "true")
+                    Expect.equal (Ok (Yes ())) (Json.Decode.decodeString App.GitHubDecoder.drinkingWater "true")
             , test "false" <|
                 \() ->
-                    Expect.equal (Ok (Just NoDrinkingWater)) (Json.Decode.decodeString App.GitHubDecoder.drinkingWater "false")
+                    Expect.equal (Ok No) (Json.Decode.decodeString App.GitHubDecoder.drinkingWater "false")
             ]
         , describe "parksAndCampsites"
             [ test "example" <|
@@ -155,7 +154,7 @@ all =
                                             No
                                             (Yes WoodBarbecues)
                                             (Yes True)
-                                            (Just NoDrinkingWater)
+                                            No
                                         )
                                         (Access
                                             No

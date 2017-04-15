@@ -6,7 +6,6 @@ import Campsite
     exposing
         ( Tri(..)
         , BarbecuesCore(..)
-        , DrinkingWaterCore(..)
         )
 import Pages.Campsite.View exposing (..)
 
@@ -24,7 +23,7 @@ all =
                             , picnicTables = Yes ()
                             , barbecues = Yes WoodBarbecues
                             , showers = Yes True
-                            , drinkingWater = Just DrinkingWater
+                            , drinkingWater = Yes ()
                             }
                         )
             , test "example 2" <|
@@ -36,7 +35,7 @@ all =
                             , picnicTables = No
                             , barbecues = Unknown
                             , showers = No
-                            , drinkingWater = Just NoDrinkingWater
+                            , drinkingWater = No
                             }
                         )
             , test "example 3" <|
@@ -48,7 +47,7 @@ all =
                             , picnicTables = Unknown
                             , barbecues = Yes GasElectricBarbecues
                             , showers = Yes False
-                            , drinkingWater = Nothing
+                            , drinkingWater = Unknown
                             }
                         )
             ]

@@ -19,7 +19,6 @@ import Campsite
         ( Facilities
         , Access
         , DrinkingWater
-        , DrinkingWaterCore(..)
         , Showers
         , Tri(..)
         , Barbecues
@@ -162,15 +161,17 @@ showersHelp text =
 
 drinkingWater : Decoder DrinkingWater
 drinkingWater =
-    nullable <|
-        map
+    Json.Decode.oneOf
+        [ null Unknown
+        , map
             (\present ->
                 if present then
-                    DrinkingWater
+                    Yes ()
                 else
-                    NoDrinkingWater
+                    No
             )
             bool
+        ]
 
 
 caravans : Decoder Caravans
