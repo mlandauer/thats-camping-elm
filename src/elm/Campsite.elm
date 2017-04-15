@@ -134,13 +134,12 @@ type BarbecuesCore
 
 
 type alias Showers =
-    Maybe ShowersCore
+    Tri ShowersCore
 
 
 type ShowersCore
     = HotShowers
     | ColdShowers
-    | NoShowers
 
 
 

@@ -101,16 +101,16 @@ barbecues barbecues =
 showers : Showers -> Value
 showers showers =
     case showers of
-        Just HotShowers ->
+        Yes HotShowers ->
             string "hot"
 
-        Just ColdShowers ->
+        Yes ColdShowers ->
             string "cold"
 
-        Just NoShowers ->
+        No ->
             string "no"
 
-        Nothing ->
+        Unknown ->
             null
 
 

@@ -63,7 +63,7 @@ all =
                     { toilets = Unknown
                     , picnicTables = Nothing
                     , barbecues = Unknown
-                    , showers = Nothing
+                    , showers = Unknown
                     , drinkingWater = Nothing
                     }
                 , access =
@@ -188,10 +188,10 @@ all =
                 test =
                     testED ed
              in
-                [ test (Just HotShowers) (string "hot")
-                , test (Just ColdShowers) (string "cold")
-                , test (Just NoShowers) (string "no")
-                , test Nothing null
+                [ test (Yes HotShowers) (string "hot")
+                , test (Yes ColdShowers) (string "cold")
+                , test No (string "no")
+                , test Unknown null
                 , Test.test "blah" <|
                     \() ->
                         Expect.equal True

@@ -184,35 +184,19 @@ descriptionBarbecues barbecues =
             "BBQs"
 
 
-presentShowers : Showers -> Maybe Bool
-presentShowers showers =
-    case showers of
-        Just HotShowers ->
-            Just True
-
-        Just ColdShowers ->
-            Just True
-
-        Just NoShowers ->
-            Just False
-
-        Nothing ->
-            Nothing
-
-
 descriptionShowers : Showers -> String
 descriptionShowers showers =
     case showers of
-        Just HotShowers ->
+        Yes HotShowers ->
             "hot showers"
 
-        Just ColdShowers ->
+        Yes ColdShowers ->
             "cold showers"
 
-        Just NoShowers ->
+        No ->
             "showers"
 
-        Nothing ->
+        Unknown ->
             "showers"
 
 
@@ -299,7 +283,7 @@ facilitiesList p facilities =
         , ( present facilities.barbecues
           , descriptionBarbecues facilities.barbecues
           )
-        , ( presentShowers facilities.showers
+        , ( present facilities.showers
           , descriptionShowers facilities.showers
           )
         , ( presentDrinkingWater facilities.drinkingWater

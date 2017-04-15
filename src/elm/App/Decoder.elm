@@ -142,20 +142,23 @@ barbecuesHelp text =
 
 showers : Decoder Showers
 showers =
-    nullable (string |> andThen showersHelp)
+    Json.Decode.oneOf
+        [ null Unknown
+        , string |> andThen showersHelp
+        ]
 
 
-showersHelp : String -> Decoder ShowersCore
+showersHelp : String -> Decoder Showers
 showersHelp text =
     case text of
         "hot" ->
-            succeed HotShowers
+            succeed (Yes HotShowers)
 
         "cold" ->
-            succeed ColdShowers
+            succeed (Yes ColdShowers)
 
         "no" ->
-            succeed NoShowers
+            succeed No
 
         _ ->
             fail "Unexpected value"

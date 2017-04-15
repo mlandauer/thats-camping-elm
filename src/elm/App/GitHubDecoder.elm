@@ -134,20 +134,20 @@ barbecuesHelp text =
 
 showers : Decoder Showers
 showers =
-    string |> andThen showersHelp |> map Just
+    string |> andThen showersHelp
 
 
-showersHelp : String -> Decoder ShowersCore
+showersHelp : String -> Decoder Showers
 showersHelp text =
     case text of
         "hot" ->
-            succeed HotShowers
+            succeed (Yes HotShowers)
 
         "cold" ->
-            succeed ColdShowers
+            succeed (Yes ColdShowers)
 
         "none" ->
-            succeed NoShowers
+            succeed No
 
         _ ->
             fail "Unexpected value"

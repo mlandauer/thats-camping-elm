@@ -102,15 +102,15 @@ all =
         , describe "showers"
             [ test "hot" <|
                 \() ->
-                    Expect.equal (Ok (Just HotShowers))
+                    Expect.equal (Ok (Yes HotShowers))
                         (Json.Decode.decodeString App.GitHubDecoder.showers "\"hot\"")
             , test "cold" <|
                 \() ->
-                    Expect.equal (Ok (Just ColdShowers))
+                    Expect.equal (Ok (Yes ColdShowers))
                         (Json.Decode.decodeString App.GitHubDecoder.showers "\"cold\"")
             , test "none" <|
                 \() ->
-                    Expect.equal (Ok (Just NoShowers))
+                    Expect.equal (Ok No)
                         (Json.Decode.decodeString App.GitHubDecoder.showers "\"none\"")
             , test "unknown" <|
                 \() ->
@@ -159,7 +159,7 @@ all =
                                             (Yes FlushToilets)
                                             (Just NoPicnicTables)
                                             (Yes WoodBarbecues)
-                                            (Just HotShowers)
+                                            (Yes HotShowers)
                                             (Just NoDrinkingWater)
                                         )
                                         (Access

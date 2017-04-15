@@ -28,7 +28,7 @@ all =
                             { toilets = Yes FlushToilets
                             , picnicTables = Just PicnicTables
                             , barbecues = Yes WoodBarbecues
-                            , showers = Just HotShowers
+                            , showers = Yes HotShowers
                             , drinkingWater = Just DrinkingWater
                             }
                         )
@@ -40,7 +40,7 @@ all =
                             { toilets = Yes NonFlushToilets
                             , picnicTables = Just NoPicnicTables
                             , barbecues = Unknown
-                            , showers = Just NoShowers
+                            , showers = No
                             , drinkingWater = Just NoDrinkingWater
                             }
                         )
@@ -52,7 +52,7 @@ all =
                             { toilets = No
                             , picnicTables = Nothing
                             , barbecues = Yes GasElectricBarbecues
-                            , showers = Just ColdShowers
+                            , showers = Yes ColdShowers
                             , drinkingWater = Nothing
                             }
                         )
