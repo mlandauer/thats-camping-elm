@@ -157,8 +157,8 @@ descriptionPicnicTables picnicTables =
     "picnic tables"
 
 
-presentBarbecuesCore : Maybe BarbecuesCore -> Maybe Bool
-presentBarbecuesCore barbecues =
+presentBarbecues : Maybe BarbecuesCore -> Maybe Bool
+presentBarbecues barbecues =
     case barbecues of
         Just WoodBarbecuesCore ->
             Just True
@@ -179,8 +179,8 @@ presentBarbecuesCore barbecues =
             Nothing
 
 
-descriptionBarbecuesCore : Maybe BarbecuesCore -> String
-descriptionBarbecuesCore barbecues =
+descriptionBarbecues : Maybe BarbecuesCore -> String
+descriptionBarbecues barbecues =
     case barbecues of
         Just WoodBarbecuesCore ->
             "wood BBQs"
@@ -326,8 +326,8 @@ facilitiesList p facilities =
         , ( presentPicnicTables facilities.picnicTables
           , descriptionPicnicTables facilities.picnicTables
           )
-        , ( presentBarbecuesCore facilities.barbecues
-          , descriptionBarbecuesCore facilities.barbecues
+        , ( presentBarbecues facilities.barbecues
+          , descriptionBarbecues facilities.barbecues
           )
         , ( presentShowers facilities.showers
           , descriptionShowers facilities.showers
