@@ -10,7 +10,6 @@ module Campsite
         , Barbecues
         , BarbecuesCore(..)
         , Showers
-        , ShowersCore(..)
         , DrinkingWater
         , DrinkingWaterCore(..)
         , Caravans
@@ -114,12 +113,11 @@ type BarbecuesCore
 
 
 type alias Showers =
-    Tri ShowersCore
+    Tri Hot
 
 
-type ShowersCore
-    = HotShowers
-    | ColdShowers
+type alias Hot =
+    Bool
 
 
 

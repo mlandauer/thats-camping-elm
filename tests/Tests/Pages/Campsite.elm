@@ -6,7 +6,6 @@ import Campsite
     exposing
         ( Tri(..)
         , BarbecuesCore(..)
-        , ShowersCore(..)
         , DrinkingWaterCore(..)
         )
 import Pages.Campsite.View exposing (..)
@@ -24,7 +23,7 @@ all =
                             { toilets = Yes True
                             , picnicTables = Yes ()
                             , barbecues = Yes WoodBarbecues
-                            , showers = Yes HotShowers
+                            , showers = Yes True
                             , drinkingWater = Just DrinkingWater
                             }
                         )
@@ -48,7 +47,7 @@ all =
                             { toilets = No
                             , picnicTables = Unknown
                             , barbecues = Yes GasElectricBarbecues
-                            , showers = Yes ColdShowers
+                            , showers = Yes False
                             , drinkingWater = Nothing
                             }
                         )

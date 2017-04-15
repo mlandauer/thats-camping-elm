@@ -9,7 +9,6 @@ import Campsite
         ( name
         , Tri(..)
         , BarbecuesCore(..)
-        , ShowersCore(..)
         , DrinkingWaterCore(..)
         )
 import Result.Extra
@@ -184,8 +183,8 @@ all =
                 test =
                     testED ed
              in
-                [ test (Yes HotShowers) (string "hot")
-                , test (Yes ColdShowers) (string "cold")
+                [ test (Yes True) (string "hot")
+                , test (Yes False) (string "cold")
                 , test No (string "no")
                 , test Unknown null
                 , Test.test "blah" <|

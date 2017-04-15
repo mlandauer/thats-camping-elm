@@ -23,7 +23,6 @@ import Campsite
         , DrinkingWater
         , DrinkingWaterCore(..)
         , Showers
-        , ShowersCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
@@ -97,10 +96,10 @@ barbecues barbecues =
 showers : Showers -> Value
 showers showers =
     case showers of
-        Yes HotShowers ->
+        Yes True ->
             string "hot"
 
-        Yes ColdShowers ->
+        Yes False ->
             string "cold"
 
         No ->

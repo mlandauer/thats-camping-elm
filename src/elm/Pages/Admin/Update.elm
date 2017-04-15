@@ -14,7 +14,7 @@ import Campsite
         
         
         , BarbecuesCore(..)
-        , ShowersCore(..)
+        
         , DrinkingWaterCore(..)
         
         

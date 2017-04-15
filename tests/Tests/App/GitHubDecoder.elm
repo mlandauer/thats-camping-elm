@@ -11,7 +11,6 @@ import Campsite
         , Access
         , Tri(..)
         , BarbecuesCore(..)
-        , ShowersCore(..)
         , DrinkingWaterCore(..)
         )
 import Location exposing (Location)
@@ -98,11 +97,11 @@ all =
         , describe "showers"
             [ test "hot" <|
                 \() ->
-                    Expect.equal (Ok (Yes HotShowers))
+                    Expect.equal (Ok (Yes True))
                         (Json.Decode.decodeString App.GitHubDecoder.showers "\"hot\"")
             , test "cold" <|
                 \() ->
-                    Expect.equal (Ok (Yes ColdShowers))
+                    Expect.equal (Ok (Yes False))
                         (Json.Decode.decodeString App.GitHubDecoder.showers "\"cold\"")
             , test "none" <|
                 \() ->
@@ -155,7 +154,7 @@ all =
                                             (Yes True)
                                             No
                                             (Yes WoodBarbecues)
-                                            (Yes HotShowers)
+                                            (Yes True)
                                             (Just NoDrinkingWater)
                                         )
                                         (Access

@@ -23,7 +23,6 @@ import Campsite
         , Barbecues
         , BarbecuesCore(..)
         , Showers
-        , ShowersCore(..)
         , DrinkingWater
         , DrinkingWaterCore(..)
         , Access
@@ -170,10 +169,10 @@ descriptionBarbecues barbecues =
 descriptionShowers : Showers -> String
 descriptionShowers showers =
     case showers of
-        Yes HotShowers ->
+        Yes True ->
             "hot showers"
 
-        Yes ColdShowers ->
+        Yes False ->
             "cold showers"
 
         No ->

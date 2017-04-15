@@ -21,7 +21,6 @@ import Campsite
         , DrinkingWater
         , DrinkingWaterCore(..)
         , Showers
-        , ShowersCore(..)
         , Tri(..)
         , Barbecues
         , BarbecuesCore(..)
@@ -149,10 +148,10 @@ showersHelp : String -> Decoder Showers
 showersHelp text =
     case text of
         "hot" ->
-            succeed (Yes HotShowers)
+            succeed (Yes True)
 
         "cold" ->
-            succeed (Yes ColdShowers)
+            succeed (Yes False)
 
         "no" ->
             succeed No
