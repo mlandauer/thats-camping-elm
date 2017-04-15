@@ -26,6 +26,7 @@ import Campsite
         , Barbecues
         , BarbecuesCore(..)
         , PicnicTables(..)
+        , Toilets
         , ToiletsCore(..)
         , Cars(..)
         , Trailers(..)
@@ -41,7 +42,7 @@ location location =
         ]
 
 
-toilets : Maybe ToiletsCore -> Value
+toilets : Toilets -> Value
 toilets toilets =
     case toilets of
         Just NonFlushToilets ->

@@ -19,6 +19,7 @@ import Campsite
     exposing
         ( Facilities
         , Access
+        , Toilets
         , ToiletsCore(..)
         , PicnicTables(..)
         , Tri(..)
@@ -66,7 +67,7 @@ location =
         )
 
 
-toilets : Decoder (Maybe ToiletsCore)
+toilets : Decoder Toilets
 toilets =
     string |> andThen toiletsHelp |> map Just
 

@@ -24,6 +24,7 @@ import Campsite
         , Barbecues
         , BarbecuesCore(..)
         , PicnicTables(..)
+        , Toilets
         , ToiletsCore(..)
         , Caravans(..)
         , Trailers(..)
@@ -66,7 +67,7 @@ facilities =
         (field "drinkingWater" drinkingWater)
 
 
-toilets : Decoder (Maybe ToiletsCore)
+toilets : Decoder Toilets
 toilets =
     nullable (string |> andThen toiletsHelp)
 
