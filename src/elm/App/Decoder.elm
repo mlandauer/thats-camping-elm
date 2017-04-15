@@ -27,7 +27,6 @@ import Campsite
         , BarbecuesCore(..)
         , PicnicTables
         , Toilets
-        , ToiletsCore(..)
         , Caravans
         , Trailers
         , Cars
@@ -81,10 +80,10 @@ toiletsHelp : String -> Decoder Toilets
 toiletsHelp text =
     case text of
         "non_flush" ->
-            succeed (Yes NonFlushToilets)
+            succeed (Yes False)
 
         "flush" ->
-            succeed (Yes FlushToilets)
+            succeed (Yes True)
 
         "no" ->
             succeed No

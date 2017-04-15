@@ -18,7 +18,6 @@ import Campsite
     exposing
         ( Facilities
         , Toilets
-        , ToiletsCore(..)
         , PicnicTables
         , Tri(..)
         , Barbecues
@@ -128,10 +127,10 @@ present facility =
 descriptionToilets : Toilets -> String
 descriptionToilets toilets =
     case toilets of
-        Yes FlushToilets ->
+        Yes True ->
             "flush toilets"
 
-        Yes NonFlushToilets ->
+        Yes False ->
             "non-flush toilets"
 
         No ->

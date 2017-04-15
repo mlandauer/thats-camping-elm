@@ -29,7 +29,6 @@ import Campsite
         , BarbecuesCore(..)
         , PicnicTables
         , Toilets
-        , ToiletsCore(..)
         , Cars
         , Trailers
         , Caravans
@@ -47,10 +46,10 @@ location location =
 toilets : Toilets -> Value
 toilets toilets =
     case toilets of
-        Yes NonFlushToilets ->
+        Yes False ->
             string "non_flush"
 
-        Yes FlushToilets ->
+        Yes True ->
             string "flush"
 
         No ->

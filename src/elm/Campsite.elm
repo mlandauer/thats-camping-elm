@@ -5,7 +5,6 @@ module Campsite
         , Facilities
         , Access
         , Toilets
-        , ToiletsCore(..)
         , PicnicTables
         , Tri(..)
         , Barbecues
@@ -86,12 +85,11 @@ type alias Cars =
 
 
 type alias Toilets =
-    Tri ToiletsCore
+    Tri Flushable
 
 
-type ToiletsCore
-    = NonFlushToilets
-    | FlushToilets
+type alias Flushable =
+    Bool
 
 
 type alias PicnicTables =

@@ -7,7 +7,6 @@ import App.Encoder
 import Campsite
     exposing
         ( name
-        , ToiletsCore(..)
         , Tri(..)
         , BarbecuesCore(..)
         , ShowersCore(..)
@@ -132,8 +131,8 @@ all =
              in
                 [ test Unknown null
                 , test No (string "no")
-                , test (Yes FlushToilets) (string "flush")
-                , test (Yes NonFlushToilets) (string "non_flush")
+                , test (Yes True) (string "flush")
+                , test (Yes False) (string "non_flush")
                 , Test.test "blah" <|
                     \() ->
                         Expect.equal True

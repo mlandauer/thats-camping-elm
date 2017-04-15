@@ -4,8 +4,7 @@ import Test exposing (..)
 import Expect
 import Campsite
     exposing
-        ( ToiletsCore(..)
-        , Tri(..)
+        ( Tri(..)
         , BarbecuesCore(..)
         , ShowersCore(..)
         , DrinkingWaterCore(..)
@@ -22,7 +21,7 @@ all =
                     Expect.equal
                         "Has flush toilets, picnic tables, wood BBQs, hot showers and drinking water."
                         (facilitiesText
-                            { toilets = Yes FlushToilets
+                            { toilets = Yes True
                             , picnicTables = Yes ()
                             , barbecues = Yes WoodBarbecues
                             , showers = Yes HotShowers
@@ -34,7 +33,7 @@ all =
                     Expect.equal
                         "Has non-flush toilets but no picnic tables, showers and drinking water."
                         (facilitiesText
-                            { toilets = Yes NonFlushToilets
+                            { toilets = Yes False
                             , picnicTables = No
                             , barbecues = Unknown
                             , showers = No

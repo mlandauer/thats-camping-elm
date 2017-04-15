@@ -9,7 +9,6 @@ import Campsite
         ( Campsite
         , Facilities
         , Access
-        , ToiletsCore(..)
         , Tri(..)
         , BarbecuesCore(..)
         , ShowersCore(..)
@@ -47,11 +46,11 @@ all =
         , describe "toilets"
             [ test "non flush" <|
                 \() ->
-                    Expect.equal (Ok (Yes NonFlushToilets))
+                    Expect.equal (Ok (Yes False))
                         (Json.Decode.decodeString App.GitHubDecoder.toilets "\"non_flush\"")
             , test "flush" <|
                 \() ->
-                    Expect.equal (Ok (Yes FlushToilets))
+                    Expect.equal (Ok (Yes True))
                         (Json.Decode.decodeString App.GitHubDecoder.toilets "\"flush\"")
             , test "none" <|
                 \() ->
@@ -153,7 +152,7 @@ all =
                                         "description"
                                         (Just (Location -33 150))
                                         (Facilities
-                                            (Yes FlushToilets)
+                                            (Yes True)
                                             No
                                             (Yes WoodBarbecues)
                                             (Yes HotShowers)
