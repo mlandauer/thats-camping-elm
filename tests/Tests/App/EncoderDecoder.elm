@@ -161,10 +161,10 @@ all =
                     testED ed
              in
                 [ test Unknown null
-                , test (Yes WoodBarbecues) (string "wood")
-                , test (Yes WoodSuppliedBarbecues) (string "wood_supplied")
-                , test (Yes WoodBringYourOwnBarbecues) (string "wood_bring_your_own")
-                , test (Yes GasElectricBarbecues) (string "gas_electric")
+                , test (Yes (Wood Unknown)) (string "wood")
+                , test (Yes (Wood (Yes ()))) (string "wood_supplied")
+                , test (Yes (Wood No)) (string "wood_bring_your_own")
+                , test (Yes GasElectric) (string "gas_electric")
                 , test No (string "no")
                 , Test.test "blah" <|
                     \() ->

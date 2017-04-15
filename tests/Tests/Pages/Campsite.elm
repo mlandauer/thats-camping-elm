@@ -21,7 +21,7 @@ all =
                         (facilitiesText
                             { toilets = Yes True
                             , picnicTables = Yes ()
-                            , barbecues = Yes WoodBarbecues
+                            , barbecues = Yes (Wood Unknown)
                             , showers = Yes True
                             , drinkingWater = Yes ()
                             }
@@ -45,7 +45,7 @@ all =
                         (facilitiesText
                             { toilets = No
                             , picnicTables = Unknown
-                            , barbecues = Yes GasElectricBarbecues
+                            , barbecues = Yes GasElectric
                             , showers = Yes False
                             , drinkingWater = Unknown
                             }

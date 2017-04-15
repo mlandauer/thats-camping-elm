@@ -146,16 +146,10 @@ descriptionPicnicTables picnicTables =
 descriptionBarbecues : Barbecues -> String
 descriptionBarbecues barbecues =
     case barbecues of
-        Yes WoodBarbecues ->
+        Yes (Wood _) ->
             "wood BBQs"
 
-        Yes WoodSuppliedBarbecues ->
-            "wood BBQs"
-
-        Yes WoodBringYourOwnBarbecues ->
-            "wood BBQs"
-
-        Yes GasElectricBarbecues ->
+        Yes GasElectric ->
             "gas/electric BBQs"
 
         No ->
