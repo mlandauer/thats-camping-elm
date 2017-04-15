@@ -110,9 +110,9 @@ accessText access =
 ------------
 
 
-presentToilets : Toilets -> Maybe Bool
-presentToilets toilets =
-    case toilets of
+present : Tri t -> Maybe Bool
+present facility =
+    case facility of
         Yes _ ->
             Just True
 
@@ -155,19 +155,6 @@ presentPicnicTables picnicTables =
 descriptionPicnicTables : Maybe PicnicTables -> String
 descriptionPicnicTables picnicTables =
     "picnic tables"
-
-
-presentBarbecues : Tri BarbecuesCore -> Maybe Bool
-presentBarbecues barbecues =
-    case barbecues of
-        Yes _ ->
-            Just True
-
-        No ->
-            Just False
-
-        Unknown ->
-            Nothing
 
 
 descriptionBarbecues : Barbecues -> String
@@ -311,13 +298,13 @@ filter p i =
 facilitiesList : Maybe Bool -> Facilities -> List String
 facilitiesList p facilities =
     List.filterMap (filter p)
-        [ ( presentToilets facilities.toilets
+        [ ( present facilities.toilets
           , descriptionToilets facilities.toilets
           )
         , ( presentPicnicTables facilities.picnicTables
           , descriptionPicnicTables facilities.picnicTables
           )
-        , ( presentBarbecues facilities.barbecues
+        , ( present facilities.barbecues
           , descriptionBarbecues facilities.barbecues
           )
         , ( presentShowers facilities.showers
