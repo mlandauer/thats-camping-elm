@@ -70,15 +70,15 @@ all =
         , describe "barbecues"
             [ test "wood" <|
                 \() ->
-                    Expect.equal (Ok (Yes (Wood Unknown)))
+                    Expect.equal (Ok (Yes Wood))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood\"")
             , test "wood_supplied" <|
                 \() ->
-                    Expect.equal (Ok (Yes (Wood (Yes ()))))
+                    Expect.equal (Ok (Yes Wood))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_supplied\"")
             , test "wood_bring_your_own" <|
                 \() ->
-                    Expect.equal (Ok (Yes (Wood No)))
+                    Expect.equal (Ok (Yes Wood))
                         (Json.Decode.decodeString App.GitHubDecoder.barbecues "\"wood_bring_your_own\"")
             , test "gas_electric" <|
                 \() ->
@@ -152,7 +152,7 @@ all =
                                         (Facilities
                                             (Yes True)
                                             No
-                                            (Yes (Wood Unknown))
+                                            (Yes Wood)
                                             (Yes True)
                                             No
                                         )

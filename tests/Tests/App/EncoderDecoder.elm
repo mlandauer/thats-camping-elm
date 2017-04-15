@@ -161,9 +161,14 @@ all =
                     testED ed
              in
                 [ test Unknown null
-                , test (Yes (Wood Unknown)) (string "wood")
-                , test (Yes (Wood (Yes ()))) (string "wood_supplied")
-                , test (Yes (Wood No)) (string "wood_bring_your_own")
+                , test (Yes Wood) (string "wood")
+                  -- These are here for backwards compatibility for the time being
+                , Test.test "wood_supplied" <|
+                    \() ->
+                        Expect.equal (Ok (Yes Wood)) (Json.Decode.decodeString ed.decoder "\"wood_supplied\"")
+                , Test.test "wood_bring_your_own" <|
+                    \() ->
+                        Expect.equal (Ok (Yes Wood)) (Json.Decode.decodeString ed.decoder "\"wood_bring_your_own\"")
                 , test (Yes GasElectric) (string "gas_electric")
                 , test No (string "no")
                 , Test.test "blah" <|

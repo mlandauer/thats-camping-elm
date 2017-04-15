@@ -73,14 +73,8 @@ picnicTables picnicTables =
 barbecues : Barbecues -> Value
 barbecues barbecues =
     case barbecues of
-        Yes (Wood Unknown) ->
+        Yes Wood ->
             string "wood"
-
-        Yes (Wood (Yes ())) ->
-            string "wood_supplied"
-
-        Yes (Wood No) ->
-            string "wood_bring_your_own"
 
         Yes GasElectric ->
             string "gas_electric"

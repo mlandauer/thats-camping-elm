@@ -117,13 +117,13 @@ barbecuesHelp : String -> Decoder Barbecues
 barbecuesHelp text =
     case text of
         "wood" ->
-            succeed (Yes (Wood Unknown))
+            succeed (Yes Wood)
 
         "wood_supplied" ->
-            succeed (Yes (Wood (Yes ())))
+            succeed (Yes Wood)
 
         "wood_bring_your_own" ->
-            succeed (Yes (Wood No))
+            succeed (Yes Wood)
 
         "gas_electric" ->
             succeed (Yes GasElectric)

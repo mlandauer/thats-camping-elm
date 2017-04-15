@@ -105,12 +105,8 @@ type alias Barbecues =
 
 
 type BarbecuesCore
-    = Wood Supplied
+    = Wood
     | GasElectric
-
-
-type alias Supplied =
-    Tri ()
 
 
 type alias Showers =
