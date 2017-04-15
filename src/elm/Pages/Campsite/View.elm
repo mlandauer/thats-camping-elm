@@ -84,10 +84,10 @@ facilitiesText facilities =
     Maybe.withDefault ""
         (haveAndHaveNotSentence
             "has"
-            (listAsText (facilitiesList True facilities))
+            (listAsText (facilitiesList (Just True) facilities))
             "but"
             "no"
-            (listAsText (facilitiesList False facilities))
+            (listAsText (facilitiesList (Just False) facilities))
         )
 
 
@@ -96,10 +96,10 @@ accessText access =
     Maybe.withDefault ""
         (haveAndHaveNotSentence
             "for"
-            (listAsText (accessList True access))
+            (listAsText (accessList (Just True) access))
             "but"
             "not for"
-            (listAsText (accessList False access))
+            (listAsText (accessList (Just False) access))
         )
 
 
@@ -317,23 +317,23 @@ listItem p present description facility =
         Nothing
 
 
-facilitiesList : Bool -> Facilities -> List String
+facilitiesList : Maybe Bool -> Facilities -> List String
 facilitiesList p facilities =
     values
-        [ (listItem (Just p) presentToilets descriptionToilets facilities.toilets)
-        , (listItem (Just p) presentPicnicTables descriptionPicnicTables facilities.picnicTables)
-        , (listItem (Just p) presentBarbecuesCore descriptionBarbecuesCore facilities.barbecues)
-        , (listItem (Just p) presentShowers descriptionShowers facilities.showers)
-        , (listItem (Just p) presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
+        [ (listItem p presentToilets descriptionToilets facilities.toilets)
+        , (listItem p presentPicnicTables descriptionPicnicTables facilities.picnicTables)
+        , (listItem p presentBarbecuesCore descriptionBarbecuesCore facilities.barbecues)
+        , (listItem p presentShowers descriptionShowers facilities.showers)
+        , (listItem p presentDrinkingWater descriptionDrinkingWater facilities.drinkingWater)
         ]
 
 
-accessList : Bool -> Access -> List String
+accessList : Maybe Bool -> Access -> List String
 accessList p access =
     values
-        [ (listItem (Just p) presentCaravans descriptionCaravans access.caravans)
-        , (listItem (Just p) presentTrailers descriptionTrailers access.trailers)
-        , (listItem (Just p) presentCars descriptionCars access.cars)
+        [ (listItem p presentCaravans descriptionCaravans access.caravans)
+        , (listItem p presentTrailers descriptionTrailers access.trailers)
+        , (listItem p presentCars descriptionCars access.cars)
         ]
 
 
