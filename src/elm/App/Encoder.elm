@@ -41,14 +41,11 @@ location location =
         ]
 
 
-toilets : Toilets -> Value
-toilets toilets =
-    case toilets of
-        Yes False ->
-            string "non_flush"
-
-        Yes True ->
-            string "flush"
+tri : (t -> Value) -> Tri t -> Value
+tri encoder value =
+    case value of
+        Yes v ->
+            encoder v
 
         No ->
             string "no"
@@ -57,8 +54,23 @@ toilets toilets =
             null
 
 
-tri : Tri () -> Value
-tri a =
+toiletsCore : Bool -> Value
+toiletsCore v =
+    string
+        (if v then
+            "flush"
+         else
+            "non_flush"
+        )
+
+
+toilets : Toilets -> Value
+toilets toilets =
+    tri toiletsCore toilets
+
+
+triToBool : Tri () -> Value
+triToBool a =
     case a of
         Yes () ->
             bool True
@@ -72,44 +84,42 @@ tri a =
 
 picnicTables : PicnicTables -> Value
 picnicTables picnicTables =
-    tri picnicTables
+    triToBool picnicTables
+
+
+barbecuesCore : BarbecuesCore -> Value
+barbecuesCore v =
+    case v of
+        Wood ->
+            string "wood"
+
+        GasElectric ->
+            string "gas_electric"
 
 
 barbecues : Barbecues -> Value
 barbecues barbecues =
-    case barbecues of
-        Yes Wood ->
-            string "wood"
+    tri barbecuesCore barbecues
 
-        Yes GasElectric ->
-            string "gas_electric"
 
-        No ->
-            string "no"
-
-        Unknown ->
-            null
+showersCore : Bool -> Value
+showersCore v =
+    string
+        (if v then
+            "hot"
+         else
+            "cold"
+        )
 
 
 showers : Showers -> Value
 showers showers =
-    case showers of
-        Yes True ->
-            string "hot"
-
-        Yes False ->
-            string "cold"
-
-        No ->
-            string "no"
-
-        Unknown ->
-            null
+    tri showersCore showers
 
 
 drinkingWater : DrinkingWater -> Value
 drinkingWater drinkingWater =
-    tri drinkingWater
+    triToBool drinkingWater
 
 
 facilities : Facilities -> Value
@@ -125,17 +135,17 @@ facilities facilities =
 
 caravans : Caravans -> Value
 caravans caravans =
-    tri caravans
+    triToBool caravans
 
 
 trailers : Trailers -> Value
 trailers trailers =
-    tri trailers
+    triToBool trailers
 
 
 cars : Cars -> Value
 cars cars =
-    tri cars
+    triToBool cars
 
 
 access : Access -> Value
