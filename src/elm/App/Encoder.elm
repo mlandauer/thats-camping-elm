@@ -51,19 +51,6 @@ tri encoder value =
             string "no"
 
         Unknown ->
-            null
-
-
-tri2 : (t -> Value) -> Tri t -> Value
-tri2 encoder value =
-    case value of
-        Yes v ->
-            encoder v
-
-        No ->
-            string "no"
-
-        Unknown ->
             string "unknown"
 
 
@@ -79,7 +66,7 @@ toiletsCore v =
 
 toilets : Toilets -> Value
 toilets toilets =
-    tri2 toiletsCore toilets
+    tri toiletsCore toilets
 
 
 triToBool : Tri () -> Value
@@ -112,7 +99,7 @@ barbecuesCore v =
 
 barbecues : Barbecues -> Value
 barbecues barbecues =
-    tri2 barbecuesCore barbecues
+    tri barbecuesCore barbecues
 
 
 showersCore : Bool -> Value
@@ -127,7 +114,7 @@ showersCore v =
 
 showers : Showers -> Value
 showers showers =
-    tri2 showersCore showers
+    tri showersCore showers
 
 
 drinkingWater : DrinkingWater -> Value
