@@ -73,13 +73,13 @@ triToBool : Tri () -> Value
 triToBool a =
     case a of
         Yes () ->
-            bool True
+            string "yes"
 
         No ->
-            bool False
+            string "no"
 
         Unknown ->
-            null
+            string "unknown"
 
 
 picnicTables : PicnicTables -> Value

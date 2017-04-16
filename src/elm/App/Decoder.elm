@@ -88,6 +88,7 @@ triFromBool : Decoder (Tri ())
 triFromBool =
     Json.Decode.oneOf
         [ null Unknown
+        , string |> andThen unknownHelp
         , map
             (\present ->
                 if present then
@@ -97,6 +98,22 @@ triFromBool =
             )
             bool
         ]
+
+
+unknownHelp : String -> Decoder (Tri ())
+unknownHelp value =
+    case value of
+        "unknown" ->
+            succeed Unknown
+
+        "yes" ->
+            succeed (Yes ())
+
+        "no" ->
+            succeed No
+
+        _ ->
+            fail "Unexpected value"
 
 
 picnicTables : Decoder PicnicTables

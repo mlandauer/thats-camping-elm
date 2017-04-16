@@ -77,17 +77,17 @@ all =
                     , ( "facilities"
                       , object
                             [ ( "toilets", string "unknown" )
-                            , ( "picnicTables", null )
+                            , ( "picnicTables", string "unknown" )
                             , ( "barbecues", string "unknown" )
                             , ( "showers", string "unknown" )
-                            , ( "drinkingWater", null )
+                            , ( "drinkingWater", string "unknown" )
                             ]
                       )
                     , ( "access"
                       , object
-                            [ ( "caravans", null )
-                            , ( "trailers", null )
-                            , ( "cars", null )
+                            [ ( "caravans", string "unknown" )
+                            , ( "trailers", string "unknown" )
+                            , ( "cars", string "unknown" )
                             ]
                       )
                     , ( "parkName", string "Park" )
@@ -142,15 +142,24 @@ all =
             )
         , describe "picnicTables"
             (let
+                ed =
+                    { encoder = App.Encoder.picnicTables
+                    , decoder = App.Decoder.picnicTables
+                    }
+
                 test =
-                    testED
-                        { encoder = App.Encoder.picnicTables
-                        , decoder = App.Decoder.picnicTables
-                        }
+                    testED ed
              in
-                [ test Unknown null
-                , test (Yes ()) (bool True)
-                , test No (bool False)
+                [ test Unknown (string "unknown")
+                , test (Yes ()) (string "yes")
+                , test No (string "no")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
+                , Test.test "true" <|
+                    \() -> Expect.equal (Ok (Yes ())) (Json.Decode.decodeString ed.decoder "true")
+                , Test.test "false" <|
+                    \() -> Expect.equal (Ok No) (Json.Decode.decodeString ed.decoder "false")
                 ]
             )
         , describe "barbecues"
@@ -208,54 +217,90 @@ all =
             )
         , describe "drinkingWater"
             (let
+                ed =
+                    { encoder = App.Encoder.drinkingWater
+                    , decoder = App.Decoder.drinkingWater
+                    }
+
                 test =
-                    testED
-                        { encoder = App.Encoder.drinkingWater
-                        , decoder = App.Decoder.drinkingWater
-                        }
+                    testED ed
              in
-                [ test Unknown null
-                , test No (bool False)
-                , test (Yes ()) (bool True)
+                [ test Unknown (string "unknown")
+                , test No (string "no")
+                , test (Yes ()) (string "yes")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
+                , Test.test "true" <|
+                    \() -> Expect.equal (Ok (Yes ())) (Json.Decode.decodeString ed.decoder "true")
+                , Test.test "false" <|
+                    \() -> Expect.equal (Ok No) (Json.Decode.decodeString ed.decoder "false")
                 ]
             )
         , describe "caravans"
             (let
+                ed =
+                    { encoder = App.Encoder.caravans
+                    , decoder = App.Decoder.caravans
+                    }
+
                 test =
-                    testED
-                        { encoder = App.Encoder.caravans
-                        , decoder = App.Decoder.caravans
-                        }
+                    testED ed
              in
-                [ test Unknown null
-                , test No (bool False)
-                , test (Yes ()) (bool True)
+                [ test Unknown (string "unknown")
+                , test No (string "no")
+                , test (Yes ()) (string "yes")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
+                , Test.test "true" <|
+                    \() -> Expect.equal (Ok (Yes ())) (Json.Decode.decodeString ed.decoder "true")
+                , Test.test "false" <|
+                    \() -> Expect.equal (Ok No) (Json.Decode.decodeString ed.decoder "false")
                 ]
             )
         , describe "trailers"
             (let
+                ed =
+                    { encoder = App.Encoder.trailers
+                    , decoder = App.Decoder.trailers
+                    }
+
                 test =
-                    testED
-                        { encoder = App.Encoder.trailers
-                        , decoder = App.Decoder.trailers
-                        }
+                    testED ed
              in
-                [ test Unknown null
-                , test No (bool False)
-                , test (Yes ()) (bool True)
+                [ test Unknown (string "unknown")
+                , test No (string "no")
+                , test (Yes ()) (string "yes")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
+                , Test.test "true" <|
+                    \() -> Expect.equal (Ok (Yes ())) (Json.Decode.decodeString ed.decoder "true")
+                , Test.test "false" <|
+                    \() -> Expect.equal (Ok No) (Json.Decode.decodeString ed.decoder "false")
                 ]
             )
         , describe "cars"
             (let
+                ed =
+                    { encoder = App.Encoder.cars
+                    , decoder = App.Decoder.cars
+                    }
+
                 test =
-                    testED
-                        { encoder = App.Encoder.cars
-                        , decoder = App.Decoder.cars
-                        }
+                    testED ed
              in
-                [ test Unknown null
-                , test No (bool False)
-                , test (Yes ()) (bool True)
+                [ test Unknown (string "unknown")
+                , test No (string "no")
+                , test (Yes ()) (string "yes")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
+                , Test.test "true" <|
+                    \() -> Expect.equal (Ok (Yes ())) (Json.Decode.decodeString ed.decoder "true")
+                , Test.test "false" <|
+                    \() -> Expect.equal (Ok No) (Json.Decode.decodeString ed.decoder "false")
                 ]
             )
         ]
