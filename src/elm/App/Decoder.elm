@@ -68,7 +68,7 @@ facilities =
 
 toilets : Decoder Toilets
 toilets =
-    tri2 (string |> andThen toiletsHelp)
+    tri (string |> andThen toiletsHelp)
 
 
 toiletsHelp : String -> Decoder Bool
@@ -84,8 +84,8 @@ toiletsHelp text =
             fail "Unexpected value"
 
 
-tri : Decoder (Tri ())
-tri =
+triFromBool : Decoder (Tri ())
+triFromBool =
     Json.Decode.oneOf
         [ null Unknown
         , map
@@ -101,11 +101,11 @@ tri =
 
 picnicTables : Decoder PicnicTables
 picnicTables =
-    tri
+    triFromBool
 
 
-tri2 : Decoder t -> Decoder (Tri t)
-tri2 decoder =
+tri : Decoder t -> Decoder (Tri t)
+tri decoder =
     Json.Decode.oneOf
         [ null Unknown
         , string |> andThen noHelp
@@ -125,7 +125,7 @@ noHelp text =
 
 barbecues : Decoder Barbecues
 barbecues =
-    tri2 (string |> andThen barbecuesHelp)
+    tri (string |> andThen barbecuesHelp)
 
 
 barbecuesHelp : String -> Decoder BarbecuesCore
@@ -149,7 +149,7 @@ barbecuesHelp text =
 
 showers : Decoder Showers
 showers =
-    tri2 (string |> andThen showersHelp)
+    tri (string |> andThen showersHelp)
 
 
 showersHelp : String -> Decoder Bool
@@ -167,22 +167,22 @@ showersHelp text =
 
 drinkingWater : Decoder DrinkingWater
 drinkingWater =
-    tri
+    triFromBool
 
 
 caravans : Decoder Caravans
 caravans =
-    tri
+    triFromBool
 
 
 trailers : Decoder Trailers
 trailers =
-    tri
+    triFromBool
 
 
 cars : Decoder Cars
 cars =
-    tri
+    triFromBool
 
 
 access : Decoder Access
