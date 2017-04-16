@@ -68,23 +68,17 @@ facilities =
 
 toilets : Decoder Toilets
 toilets =
-    Json.Decode.oneOf
-        [ null Unknown
-        , string |> andThen toiletsHelp
-        ]
+    tri2 (string |> andThen toiletsHelp)
 
 
-toiletsHelp : String -> Decoder Toilets
+toiletsHelp : String -> Decoder Bool
 toiletsHelp text =
     case text of
         "non_flush" ->
-            succeed (Yes False)
+            succeed False
 
         "flush" ->
-            succeed (Yes True)
-
-        "no" ->
-            succeed No
+            succeed True
 
         _ ->
             fail "Unexpected value"
@@ -110,29 +104,18 @@ picnicTables =
     tri
 
 
-barbecues : Decoder Barbecues
-barbecues =
+tri2 : Decoder t -> Decoder (Tri t)
+tri2 decoder =
     Json.Decode.oneOf
         [ null Unknown
-        , string |> andThen barbecuesHelp
+        , string |> andThen noHelp
+        , decoder |> map Yes
         ]
 
 
-barbecuesHelp : String -> Decoder Barbecues
-barbecuesHelp text =
+noHelp : String -> Decoder (Tri t)
+noHelp text =
     case text of
-        "wood" ->
-            succeed (Yes Wood)
-
-        "wood_supplied" ->
-            succeed (Yes Wood)
-
-        "wood_bring_your_own" ->
-            succeed (Yes Wood)
-
-        "gas_electric" ->
-            succeed (Yes GasElectric)
-
         "no" ->
             succeed No
 
@@ -140,25 +123,43 @@ barbecuesHelp text =
             fail "Unexpected value"
 
 
+barbecues : Decoder Barbecues
+barbecues =
+    tri2 (string |> andThen barbecuesHelp)
+
+
+barbecuesHelp : String -> Decoder BarbecuesCore
+barbecuesHelp text =
+    case text of
+        "wood" ->
+            succeed Wood
+
+        "wood_supplied" ->
+            succeed Wood
+
+        "wood_bring_your_own" ->
+            succeed Wood
+
+        "gas_electric" ->
+            succeed GasElectric
+
+        _ ->
+            fail "Unexpected value"
+
+
 showers : Decoder Showers
 showers =
-    Json.Decode.oneOf
-        [ null Unknown
-        , string |> andThen showersHelp
-        ]
+    tri2 (string |> andThen showersHelp)
 
 
-showersHelp : String -> Decoder Showers
+showersHelp : String -> Decoder Bool
 showersHelp text =
     case text of
         "hot" ->
-            succeed (Yes True)
+            succeed True
 
         "cold" ->
-            succeed (Yes False)
-
-        "no" ->
-            succeed No
+            succeed False
 
         _ ->
             fail "Unexpected value"
