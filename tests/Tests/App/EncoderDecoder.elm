@@ -76,10 +76,10 @@ all =
                     , ( "location", null )
                     , ( "facilities"
                       , object
-                            [ ( "toilets", null )
+                            [ ( "toilets", string "unknown" )
                             , ( "picnicTables", null )
-                            , ( "barbecues", null )
-                            , ( "showers", null )
+                            , ( "barbecues", string "unknown" )
+                            , ( "showers", string "unknown" )
                             , ( "drinkingWater", null )
                             ]
                       )
@@ -127,7 +127,10 @@ all =
                 test =
                     testED ed
              in
-                [ test Unknown null
+                [ test Unknown (string "unknown")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
                 , test No (string "no")
                 , test (Yes True) (string "flush")
                 , test (Yes False) (string "non_flush")
@@ -160,7 +163,10 @@ all =
                 test =
                     testED ed
              in
-                [ test Unknown null
+                [ test Unknown (string "unknown")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
                 , test (Yes Wood) (string "wood")
                   -- These are here for backwards compatibility for the time being
                 , Test.test "wood_supplied" <|
@@ -190,7 +196,10 @@ all =
                 [ test (Yes True) (string "hot")
                 , test (Yes False) (string "cold")
                 , test No (string "no")
-                , test Unknown null
+                , test Unknown (string "unknown")
+                  -- For backwards compatibility
+                , Test.test "null" <|
+                    \() -> Expect.equal (Ok Unknown) (Json.Decode.decodeString ed.decoder "null")
                 , Test.test "blah" <|
                     \() ->
                         Expect.equal True

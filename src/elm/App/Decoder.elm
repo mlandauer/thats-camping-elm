@@ -119,6 +119,9 @@ noHelp text =
         "no" ->
             succeed No
 
+        "unknown" ->
+            succeed Unknown
+
         _ ->
             fail "Unexpected value"
 
