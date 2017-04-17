@@ -57,7 +57,9 @@ function getAllDocs() {
 }
 
 // Get sequence and all docs in parallel before we start the app
-Promise.all([getSequence(), getAllDocs()]).then(function([sequence, docs]){
+Promise.all([getSequence(), getAllDocs()]).then(function(result){
+  var sequence = result[0];
+  var docs = result[1];
   // Pass elm the current git version and whether it's running fullscreen
   var app = Elm.App.embed(node, {
     version: VERSION,
