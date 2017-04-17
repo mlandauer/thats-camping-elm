@@ -2,6 +2,9 @@
   "name": "thats-camping-elm",
   "version": "0.0.1",
   "description": "That's Camping",
+  "engines": {
+    "node": "6.9.4"
+  },
   "main": "index.js",
   "directories": {
     "test": "tests"
