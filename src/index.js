@@ -31,11 +31,23 @@ if (location) {
   location = JSON.parse(location)
 }
 
+function getSequence() {
+  return Pouchdb.db.info().then(function(result) {
+    return result.update_seq;
+  });
+}
+
+function getAllDocs() {
+  return Pouchdb.db.allDocs({include_docs: true}).then(function(result){
+    return result.rows.map(function(row){return row.doc});
+  });
+}
+
 // Before we start the app let's load all the campsites
-Pouchdb.db.info().then(function(result) {
-  var sequence = result.update_seq;
-  Pouchdb.db.allDocs({include_docs: true}).then(function(result){
-    var docs = result.rows.map(function(row){return row.doc});
+getSequence().then(function(sequence){
+  console.log("sequence", sequence);
+  getAllDocs().then(function(docs){
+    console.log("docs", docs);
     // Pass elm the current git version and whether it's running fullscreen
     var app = Elm.App.embed(node, {
       version: VERSION,
