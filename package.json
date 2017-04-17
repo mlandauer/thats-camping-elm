@@ -12,7 +12,7 @@
     "dev": "webpack-dev-server --port 3000 --history-api-fallback",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "elm-github-install install; webpack -p",
-    "server": "webpack -p; node docs/server.js",
+    "server": "webpack; node docs/server.js",
     "start": "node docs/server.js"
   },
   "repository": {

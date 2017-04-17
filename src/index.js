@@ -37,9 +37,22 @@ function getSequence() {
   });
 }
 
-function getAllDocs() {
-  return Pouchdb.db.allDocs({include_docs: true}).then(function(result){
+function getDocsFromDb(db) {
+  return db.allDocs({include_docs: true}).then(function(result){
     return result.rows.map(function(row){return row.doc});
+  });
+}
+
+function getAllDocs() {
+  // First try to load the documents from the local database
+  return getDocsFromDb(Pouchdb.db).then(function(docs) {
+    if (docs.length == 0) {
+      // If there's nothing locally just load from the remote database directly
+      return getDocsFromDb(Pouchdb.remoteDb);
+    }
+    else {
+      return docs;
+    }
   });
 }
 
