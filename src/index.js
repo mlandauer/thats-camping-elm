@@ -56,8 +56,18 @@ function getAllDocs() {
   });
 }
 
-// Get sequence and all docs in parallel before we start the app
-Promise.all([getSequence(), getAllDocs()]).then(function(result){
+// We need to get the sequence *before* we get all the docs so that
+// when we stream changes (started from sequence) we can be confident that
+// we haven't missed any changes
+function getSequenceAndDocs() {
+  return getSequence().then(function(sequence){
+    return getAllDocs().then(function(docs){
+      return [sequence, docs];
+    });
+  });
+}
+
+getSequenceAndDocs().then(function(result){
   var sequence = result[0];
   var docs = result[1];
   // Pass elm the current git version and whether it's running fullscreen
