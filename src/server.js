@@ -12,7 +12,7 @@ pouchdb.db.sync(pouchdb.remoteDb).then(function(info){
   console.log("Finished synching campsite data...");
   // TODO: Start live sync
   console.log("Loading campsite data...");
-  pouchdb.db.changes({include_docs: true}).on('complete', function(info) {
+  pouchdb.db.changes({include_docs: true}).then(function(info){
     // Process all the changes at once
     info["results"].forEach(function(change){
       app.ports.changeSuccess.send(change);
