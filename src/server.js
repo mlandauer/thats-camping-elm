@@ -9,13 +9,12 @@ var fs = require('fs');
 
 console.log("First, synching campsite data...");
 pouchdb.db.sync(pouchdb.remoteDb).then(function(info){
-  // TODO: Start live sync
   pouchdb.db.changes({include_docs: true}).then(function(info){
     // Process all the changes at once
     info["results"].forEach(function(change){
       app.ports.changeSuccess.send(change);
     });
-    // TODO: Now start collecting live changes
+    // TODO: Now start doing the live sync
     startServer();
   });
 });
