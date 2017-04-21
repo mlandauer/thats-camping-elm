@@ -15,9 +15,13 @@ pouchdb.db.sync(pouchdb.remoteDb).then(function(info){
   info["results"].forEach(function(change){
     app.ports.changeSuccess.send(change);
   });
-}).then(function(){
-  // TODO: Now start doing the live sync
-  startServer();  
+  return info["last_seq"];
+}).then(function(last_seq){
+  pouchdb.db.changes({include_docs: true, since: last_seq, live: true}).on('change', function(change) {
+    console.log("change", change);
+    app.ports.changeSuccess.send(change);
+  });
+  startServer();
 });
 
 var connectionId = 0;
