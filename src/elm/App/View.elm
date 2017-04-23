@@ -34,6 +34,7 @@ view model =
                     , starredCampsites = model.starredCampsites
                     , displayType = displayType
                     , synching = model.synching
+                    , limitList = model.limitList
                     }
 
             CampsitePage id ->

@@ -40,6 +40,7 @@ view model =
                             App.CampsiteList.view model.location
                                 model.campsites
                                 model.starredCampsites
+                                model.limitList
 
                         Map ->
                             {- Don't show anything because we actually have a

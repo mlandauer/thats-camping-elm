@@ -45,4 +45,5 @@ type alias Model =
     , sequence : Int
     , synching : Bool
     , firstPageLoaded : Bool
+    , limitList : Bool
     }

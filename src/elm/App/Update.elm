@@ -64,6 +64,7 @@ type alias Flags =
     , location : Maybe Location
     , docs : List Json.Decode.Value
     , sequence : Int
+    , limitList : Bool
     }
 
 
@@ -96,6 +97,7 @@ initModel flags =
     , sequence = flags.sequence
     , synching = True
     , firstPageLoaded = False
+    , limitList = flags.limitList
     }
 
 

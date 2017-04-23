@@ -76,6 +76,7 @@ update msg model =
                         , location = Nothing
                         , docs = []
                         , sequence = 0
+                        , limitList = True
                         }
 
                 page =

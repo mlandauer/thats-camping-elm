@@ -78,7 +78,8 @@ getSequenceAndDocs().then(function(result){
     online: Online.online(),
     location: location,
     docs: docs,
-    sequence: sequence
+    sequence: sequence,
+    limitList : false
   });
 
   app.ports.storeStarredCampsites.subscribe(function(state) {

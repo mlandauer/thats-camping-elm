@@ -10,14 +10,23 @@ import Location exposing (Location)
 import App.ViewHelpers
 
 
-view : Maybe Location -> List Campsite -> List String -> Html Msg
-view location campsites starredCampsites =
+view : Maybe Location -> List Campsite -> List String -> Bool -> Html Msg
+view location campsites starredCampsites limitList =
     Html.Keyed.node "div"
         [ class "list-group" ]
         (List.map
             (\c -> ( c.campsite.id, campsiteListItem location c ))
-            (sortCampsitesWithStarred location
-                (Campsite.transform campsites starredCampsites)
+            (let
+                sortedCampsites =
+                    (sortCampsitesWithStarred location
+                        (Campsite.transform campsites starredCampsites)
+                    )
+             in
+                if limitList then
+                    -- Only show the first twenty in this case
+                    List.take 20 sortedCampsites
+                else
+                    sortedCampsites
             )
         )
 

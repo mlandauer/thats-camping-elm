@@ -12,4 +12,5 @@ type alias Model =
     , starredCampsites : List String
     , displayType : CampsitesPageOption
     , synching : Bool
+    , limitList : Bool
     }
