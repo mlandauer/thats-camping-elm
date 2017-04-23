@@ -17,6 +17,7 @@ all =
             , location = Nothing
             , docs = []
             , sequence = 0
+            , limitList = False
             }
 
         standaloneFlags =
