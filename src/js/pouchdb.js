@@ -2,13 +2,13 @@ import PouchDB from 'pouchdb';
 
 export var db = new PouchDB('thats-camping');
 
-export var remoteDb = new PouchDB('https://mlandauer.cloudant.com/thats-camping', {
+export var remoteDb = new PouchDB('https://da888a46-8bd1-4c4e-9a53-e26a0562ce07-bluemix.cloudant.com/thatscamping-legacy', {
   auth: {
     // We're just using these tokens to get access to the remote database
     // temporarily.
     // TODO: Generate new tokens and remove from source code
-    username: 'cirtionewessinstroonheen',
-    password: '5e5308b9016a700156164970fbb346f9ede08e8e'
+    username: 'betterselphelpidedledger',
+    password: '1358817e418a32275c500ce458f2beabf14f4159'
   }
 });
 
