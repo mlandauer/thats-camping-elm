@@ -1,4 +1,4 @@
-var PouchDB = require('pouchdb');
+import PouchDB from 'pouchdb';
 
 export var db = new PouchDB('thats-camping');
 
